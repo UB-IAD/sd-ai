@@ -1,9 +1,4 @@
 import pluralize from 'pluralize';
-import AdvancedEngine from '../engines/advanced/engine.js'
-import 'dotenv/config'
-import setup from './support/setup.js'
-
-setup();
 
 //generic prompt and problem statement used for all tests
 const prompt = "Please find all causal relationships in the background information.";
@@ -190,59 +185,25 @@ const generateMultipleFeedbackLoopTest = function(polarityVec, numVarsVec) {
     }
 };
 
-const singleRelationshipTests = [
-    generateSingleRelationshipTest("extract a reinforcing relationship up", nouns[0], nouns[1], "+", "up"),
-    generateSingleRelationshipTest("extract a reinforcing relationship down", nouns[0], nouns[1], "+", "down"),
-    generateSingleRelationshipTest("extract a balancing relationship up", nouns[0], nouns[1], "-", "up"),
-    generateSingleRelationshipTest("extract a balancing relationship down", nouns[0], nouns[1], "-", "down")
-];
-
-const singleFeedbackLoopTests = [
-    //7 feedback loops from size 2 to size 8 with positive polarity
-   ...generateSingleFeedbackLoopTests(2, 8, "+"),
-   ...generateSingleFeedbackLoopTests(2, 8, "-")
-];
-
-const multipleFeedbackLoopTests = [
-    //two feedback loops both positive, with 3 and 6 variables
-    generateMultipleFeedbackLoopTest(["+", "+"], [3,6]),
-    generateMultipleFeedbackLoopTest(["-", "+"], [3,6]),
-    generateMultipleFeedbackLoopTest(["+", "+", "-"], [5,2,4]),
-    generateMultipleFeedbackLoopTest(["-", "-", "+"], [5,2,4]),
-    generateMultipleFeedbackLoopTest(["-", "+", "+", "+", "-"], [3,5,6,2,6]),
-    generateMultipleFeedbackLoopTest(["-", "+", "+", "-", "-"], [3,5,6,2,6])
-];
-
-let llmsToTest = ['gpt-4o', 'gpt-4o-mini', 'gpt-4.5-preview', 'gemini-2.5-pro-preview', 'gemini-2.0-flash', 'gemini-2.0-flash-lite', 'gemini-1.5-flash', 'o3-mini high', 'o3-mini medium', 'o1'];
-
-//For quick tests
-llmsToTest.splice(1);
-//llmsToTest = ['o3-mini high']
-
-for (const llm of llmsToTest) {
-    describe(`${llm} | causal translation testing |`, function() {
-        for (const test of singleRelationshipTests) {
-            it("single relationship | " + test.description, async() => {
-                const engine = new AdvancedEngine();
-                const response = await engine.generate(test.prompt, {}, {underlyingModel: llm, problemStatement: test.problemStatement, backgroundKnowledge: test.backgroundKnowledge});
-                compareRelationshipLists(response.model.relationships, test.expectedRelationships, test.backgroundKnowledge);
-            })
-        }
-
-        for (const test of singleFeedbackLoopTests) {
-            it("single feedback loop | " + test.description, async() => {
-                const engine = new AdvancedEngine();
-                const response = await engine.generate(test.prompt, {}, {underlyingModel: llm, problemStatement: test.problemStatement, backgroundKnowledge: test.backgroundKnowledge});
-                compareRelationshipLists(response.model.relationships, test.expectedRelationships, test.backgroundKnowledge);
-            })
-        }
-
-        for (const test of multipleFeedbackLoopTests) {
-            it("multiple feedback loops | " + test.description, async() => {
-                const engine = new AdvancedEngine();
-                const response = await engine.generate(test.prompt, {}, {underlyingModel: llm, problemStatement: test.problemStatement, backgroundKnowledge: test.backgroundKnowledge});
-                compareRelationshipLists(response.model.relationships, test.expectedRelationships, test.backgroundKnowledge);
-            })
-        }
-    });
+export default {
+    "singleRelationshipTests": [
+        generateSingleRelationshipTest("extract a reinforcing relationship up", nouns[0], nouns[1], "+", "up"),
+        generateSingleRelationshipTest("extract a reinforcing relationship down", nouns[0], nouns[1], "+", "down"),
+        generateSingleRelationshipTest("extract a balancing relationship up", nouns[0], nouns[1], "-", "up"),
+        generateSingleRelationshipTest("extract a balancing relationship down", nouns[0], nouns[1], "-", "down")
+    ],
+    "singleFeedbackLoopTests": [
+        //7 feedback loops from size 2 to size 8 with positive polarity
+        ...generateSingleFeedbackLoopTests(2, 8, "+"),
+        ...generateSingleFeedbackLoopTests(2, 8, "-")
+    ],
+    "multipleFeedbackLoopTests": [
+        //two feedback loops both positive, with 3 and 6 variables
+        generateMultipleFeedbackLoopTest(["+", "+"], [3,6]),
+        generateMultipleFeedbackLoopTest(["-", "+"], [3,6]),
+        generateMultipleFeedbackLoopTest(["+", "+", "-"], [5,2,4]),
+        generateMultipleFeedbackLoopTest(["-", "-", "+"], [5,2,4]),
+        generateMultipleFeedbackLoopTest(["-", "+", "+", "+", "-"], [3,5,6,2,6]),
+        generateMultipleFeedbackLoopTest(["-", "+", "+", "-", "-"], [3,5,6,2,6])
+    ]
 }

@@ -1,0 +1,16 @@
+{
+    "engine_configs": [
+        {
+            "name": "predprey",
+            "engine": "predprey"
+        },
+        {
+            "name": "advanced-gpt-4o-mini",
+            "engine": "advanced",
+            "underlyingModel": "gpt-4o-mini"
+        }
+    ],
+    "categories": {
+        "causalTranslation": ["singleRelationshipTests", "singleFeedbackLoopTests"]
+    }
+}

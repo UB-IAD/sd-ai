@@ -1,13 +1,18 @@
 {
   "dependencies": {
     "async": "^3.2.6",
+    "cli-progress": "^3.12.0",
+    "cli-table3": "^0.6.5",
     "cors": "^2.8.5",
+    "data-forge": "^1.10.2",
     "express": "^4.21.2",
+    "limiter": "^3.0.0",
     "openai": "^4.73.1",
     "zod": "^3.24.1"
   },
   "scripts": {
     "start": "nodemon --env-file=.env app.js",
+    "eval": "node evals/run.js",
     "test": "jasmine"
   },
   "type": "module",
