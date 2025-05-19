@@ -1,0 +1,3 @@
+The following background knowledge is important context when generating a response for the user:
+
+{backgroundKnowledge}

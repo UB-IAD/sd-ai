@@ -1,0 +1,13 @@
+{
+  "relationships": [
+    {
+      "from": "frimbulators",
+      "to": "whatajigs",
+      "polarity": "+"
+    }
+  ],
+  "variables": [
+    "frimbulators",
+    "whatajigs"
+  ]
+}

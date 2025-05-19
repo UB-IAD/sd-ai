@@ -42,8 +42,12 @@ const experiment = JSON.parse(fs.readFileSync(argv.experiment, "utf8"));
 // but all keyed on engine name so that we can easily rate limit by engine
 const tests = Object.fromEntries(
   await Promise.all(
-    Object.entries(experiment.engineConfigs).map(
-      async ([engineConfigName, engineConfig]) => {
+    Object.entries(experiment.engineConfigs)
+      .filter(([engineConfigName, engineConfig]) => {
+        // FIXME: this is just for testing
+        return engineConfigName.startsWith('causal');
+      })
+      .map(async ([engineConfigName, engineConfig]) => {
         // return all the map of all tests in a group if filter is true
         // return only the tests in the groups specified by filter if list is provided
         // return nothing if criteria isn't mentioned
@@ -294,8 +298,7 @@ const runSingleTest = async (
 
   const testWithResult = structuredClone(test);
   testWithResult["duration"] = Date.now() - startTime;
-  testWithResult["generatedRelationships"] =
-    generateResponse.model.relationships;
+  testWithResult["generatedRelationships"] = generateResponse.model?.relationships || {};
 
   if (experiment.verbose) {
     console.log(
