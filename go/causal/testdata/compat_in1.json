@@ -1,0 +1,17 @@
+{
+  "causal_chains": [
+    {
+      "initial_variable": "Frimbulators",
+      "reasoning": "A decrease in frimbulators leads to a decrease in whatajigs—this is a direct causal relationship.",
+      "relationships": [
+        {
+          "polarity": "+",
+          "polarity_reasoning": "Fewer frimbulators causes fewer whatajigs, and more frimbulators causes more whatajigs, indicating a positive relationship.",
+          "variable": "Whatajigs"
+        }
+      ]
+    }
+  ],
+  "explanation": "I identified that the number of frimbulators directly influences the number of whatajigs in the same direction, so I represented it as a positive causal link.",
+  "title": "Frimbulators Affect Whatajigs"
+}

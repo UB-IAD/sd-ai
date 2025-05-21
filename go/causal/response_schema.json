@@ -1,0 +1,76 @@
+{
+    "type": "object",
+    "properties": {
+        "causal_chains": {
+            "type": "array",
+            "description": "The list of relationships you think are appropriate to satisfy my request based on all of the information I have given you",
+            "items": {
+                "type": "object",
+                "description": "This is a relationship between two variables, from and to (from is the cause, to is the effect).  The relationship also contains a polarity which describes how a change in the from variable impacts the to variable",
+                "properties": {
+                    "initial_variable": {
+                        "type": "string",
+                        "description": "The first variable in this causal chain."
+                    },
+                    "reasoning": {
+                        "type": "string",
+                        "description": "This is an explanation for why this causal chain exists.  If it represents a feedback loop, use the words \"feedback loop\", and if it does not represent a feedback loop don't use that term."
+                    },
+                    "relationships": {
+                        "type": "array",
+                        "description": "Each entry identifies a causal relationship between the previous variable and the current variable, or in the case of the first entry in the array a causal relationship between the variable named in the initial_variable field and the first variable.  If this causal chain represents a feedback loop, the final variable in the chain MUST be the same (have the same name) as the initial_variable.  Every entry in a causal chain MUST have a distinct variable name.",
+                        "items": {
+                            "type": "object",
+                            "description": "This named variable is influenced by the previous variable, with a given polarity.",
+                            "properties": {
+                                "polarity": {
+                                    "type": "string",
+                                    "description": "Polarity is either + (positive) or - (negative).  In relationships with positive polarity (+), a change in the previous variable causes a change in the same direction in the current variable.  In relationships with negative polarity (-), an increase in the previous variable causes a decrease in the current variable, and a decrease in the previous variable would cause the current variable to increase.",
+                                    "enum": [
+                                        "+",
+                                        "-"
+                                    ]
+                                },
+                                "polarity_reasoning": {
+                                    "type": "string",
+                                    "description": "This is the reason for why the polarity for this relationship was choosen"
+                                },
+                                "variable": {
+                                    "type": "string",
+                                    "description": "A variable in this causal chain.  It is directly influenced by the previous variable in the parent array, and directly influences the next variable in the parent array (if one exists)."
+                                }
+                            },
+                            "required": [
+                                "variable",
+                                "polarity",
+                                "polarity_reasoning"
+                            ],
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "required": [
+                    "initial_variable",
+                    "relationships",
+                    "reasoning"
+                ],
+                "additionalProperties": false
+            }
+        },
+        "explanation": {
+            "type": "string",
+            "description": "Concisely explain your reasoning for each change you made to the old CLD to create the new CLD. Speak in plain English, don't reference JSON specifically. Don't reiterate the request or any of these instructions."
+        },
+        "title": {
+            "type": "string",
+            "description": "A highly descriptive title describing your explanation, with a maximum of 7 words."
+        }
+    },
+    "required": [
+        "explanation",
+        "title",
+        "causal_chains"
+    ],
+    "additionalProperties": false,
+    "$schema": "http://json-schema.org/draft-07/schema#"
+}
