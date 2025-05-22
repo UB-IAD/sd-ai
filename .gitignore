@@ -46,4 +46,3 @@ build/
 .idea/
 
 /engines/causal-chains/causal-chains
-/engines/causal-chains/testdata
