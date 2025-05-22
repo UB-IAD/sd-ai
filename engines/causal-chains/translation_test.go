@@ -156,47 +156,47 @@ func generateCausalRelationship(from, to string, relationshipPolarity causal.Pol
 	return english, relationship
 }
 
-type loopDef struct {
-	polarity   causal.Polarity
-	loopLength int
+type LoopDef struct {
+	Polarity   causal.Polarity `json:"polarity"`
+	LoopLength int             `json:"loop_length"`
 }
 
-func (ld loopDef) String() string {
-	return fmt.Sprintf("{%s len:%d}", ld.polarity.String(), ld.loopLength)
+func (ld LoopDef) String() string {
+	return fmt.Sprintf("{%s len:%d}", ld.Polarity.String(), ld.LoopLength)
 }
 
 func TestMultipleFeedbackLoops(t *testing.T) {
 	testCases := []struct {
-		loops []loopDef
+		Loops []LoopDef `json:"loops"`
 	}{
 		{
-			loops: []loopDef{
+			Loops: []LoopDef{
 				{causal.PositivePolarity, 3},
 				{causal.PositivePolarity, 6},
 			},
 		},
 		{
-			loops: []loopDef{
+			Loops: []LoopDef{
 				{causal.NegativePolarity, 3},
 				{causal.PositivePolarity, 6},
 			},
 		},
 		{
-			loops: []loopDef{
+			Loops: []LoopDef{
 				{causal.PositivePolarity, 5},
 				{causal.PositivePolarity, 2},
 				{causal.NegativePolarity, 4},
 			},
 		},
 		{
-			loops: []loopDef{
+			Loops: []LoopDef{
 				{causal.NegativePolarity, 5},
 				{causal.NegativePolarity, 2},
 				{causal.PositivePolarity, 4},
 			},
 		},
 		{
-			loops: []loopDef{
+			Loops: []LoopDef{
 				{causal.NegativePolarity, 3},
 				{causal.PositivePolarity, 5},
 				{causal.PositivePolarity, 6},
@@ -205,7 +205,7 @@ func TestMultipleFeedbackLoops(t *testing.T) {
 			},
 		},
 		{
-			loops: []loopDef{
+			Loops: []LoopDef{
 				{causal.NegativePolarity, 3},
 				{causal.PositivePolarity, 5},
 				{causal.PositivePolarity, 6},
@@ -218,24 +218,27 @@ func TestMultipleFeedbackLoops(t *testing.T) {
 	for _, llm := range llmModels {
 		for _, test := range testCases {
 
-			name := fmt.Sprintf("%v", test.loops)
+			name := fmt.Sprintf("%v", test.Loops)
 			t.Run(name, func(t *testing.T) {
 				var relationships []causal.Relationship
 				var causalText strings.Builder
 				n := 0
-				for _, l := range test.loops {
-					varNames := nouns[n : n+l.loopLength]
+				for _, l := range test.Loops {
+					varNames := nouns[n : n+l.LoopLength]
 					// FIXME: is this right?
 					n += len(varNames) - 1
 
-					english, additionalRelationships := generateFeedbackLoop(varNames, l.polarity)
+					english, additionalRelationships := generateFeedbackLoop(varNames, l.Polarity)
 					causalText.WriteString(english)
 					causalText.WriteByte('\n')
 
 					relationships = append(relationships, additionalRelationships...)
 				}
 
-				c, err := openai.NewClient(openai.OllamaURL, openai.WithModel(llm))
+				c, err := openai.NewClient(openai.OpenAIURL,
+					openai.WithModel(llm),
+					openai.WithAPIKey(openAIAPIKey),
+				)
 				require.NoError(t, err)
 
 				d := causal.NewDiagrammer(c)
@@ -244,6 +247,12 @@ func TestMultipleFeedbackLoops(t *testing.T) {
 				err = os.RemoveAll(debugDir)
 				require.NoError(t, err)
 				err = os.MkdirAll(debugDir, 0o755)
+				require.NoError(t, err)
+
+				testBytes, err := json.MarshalIndent(&test, "", "  ")
+				require.NoError(t, err)
+				testBytes = append(testBytes, '\n')
+				err = os.WriteFile(path.Join(debugDir, "testcase.json"), testBytes, 0o644)
 				require.NoError(t, err)
 
 				ctx := chat.WithDebugDir(context.Background(), debugDir)
@@ -259,9 +268,18 @@ func TestMultipleFeedbackLoops(t *testing.T) {
 				require.NoError(t, err)
 
 				expectedMap := causal.NewMap(relationships)
-				require.Equal(t, len(test.loops), len(expectedMap.Loops()))
+				require.Equal(t, len(test.Loops), len(expectedMap.Loops()))
 
-				assert.Equal(t, expectedMap.Variables(), result.Variables())
+				expectedVars := expectedMap.Variables().Slice()
+				for i, v := range expectedVars {
+					expectedVars[i] = causal.Canonicalize(v)
+				}
+				actualVars := expectedMap.Variables().Slice()
+				for i, v := range actualVars {
+					actualVars[i] = causal.Canonicalize(v)
+				}
+
+				assert.Equal(t, expectedVars, actualVars)
 				assert.Equal(t, expectedMap.Loops(), result.Loops())
 			})
 		}

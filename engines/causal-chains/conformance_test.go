@@ -234,7 +234,11 @@ func TestConformance(t *testing.T) {
 				err = os.WriteFile(path.Join(debugDir, "result.json"), resultJson, 0o644)
 				require.NoError(t, err)
 
-				vars := result.Variables()
+				vars := causal.NewSet[string]()
+				for _, v := range result.Variables().Slice() {
+					vars.Add(causal.Canonicalize(v))
+				}
+
 				loops := result.Loops()
 
 				requirements := testCase.conformance.response

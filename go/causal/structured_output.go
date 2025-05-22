@@ -21,8 +21,22 @@ var responseSchemaJson string
 type Polarity int
 
 func (p Polarity) MarshalJSON() ([]byte, error) {
-	return []byte(p.Symbol()), nil
+	return []byte("\"" + p.Symbol() + "\""), nil
 }
+
+func (p *Polarity) UnmarshalJSON(b []byte) error {
+	switch string(b) {
+	case `"+"`:
+		*p = PositivePolarity
+	case `"-"`:
+		*p = NegativePolarity
+	default:
+		return fmt.Errorf("unknown polarity: %q", string(b))
+	}
+	return nil
+}
+
+var _ json.Unmarshaler = (*Polarity)(nil)
 
 const (
 	NegativePolarity Polarity = iota
