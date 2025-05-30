@@ -51,6 +51,11 @@ router.post("/:engine/generate", async (req, res) => {
     if ('supportingInfo' in generateResponse) {
       response.supportingInfo = generateResponse.supportingInfo
     }
+
+    const isDebugging = typeof v8debug === 'object';
+    if (isDebugging) {
+      console.log(response);
+    }
   
     return res.send(response)
 })

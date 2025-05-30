@@ -85,8 +85,8 @@ We welcome Github Issues and Pull Requests from everyone! Here are some ideas fo
 {
     success: <bool>,
     format: <string>,
-    model: {variables: [], relationships: []},
-    supportingInfo: {} # only provided if supported by engine
+    model: {variables: [], relationships: [], specs?: {} },
+    supportingInfo?: {} # only provided if supported by engine
 }
 ```
 
@@ -96,17 +96,34 @@ We welcome Github Issues and Pull Requests from everyone! Here are some ideas fo
     variables: [{
         name: <string>,
         type: <string - stock|flow|variable>,
-        eqn: <string - XMILE equation, not used yet>
+        equation?: <string>,
+        documentation?: <string>,
+        units?: <string>,
+        inflows?: Array<string>,
+        outflows?: Array<string>,
+        graphicalFunction?: {
+            points: [
+                {x: <number>, y: <number>}
+                ...
+            ]
+        }
     }], 
     relationships: [{
-        "reasoning": <string, explanation for why this relationship is here> 
+        "reasoning?": <string, explanation for why this relationship is here> 
         "from": <string, the variable the connection starts wtih>,
         "to": <string, the variable the connection ends with>,  
         "polarity": <string "+" or "-" or "" >, 
-        "polarityReasoning": <string explanation for why this polarity was chosen> 
-    }]
+        "polarityReasoning?": <string explanation for why this polarity was chosen> 
+    }],
+    specs?: {
+        startTime: <number>,
+        stopTime: <number>,
+        dt?: <number>,
+        timeUnits?: <string>
+    }
 }
 ```  
+? denotes an optional attribute
 
 # Setup
 1. fork this repo and git clone your fork locally 
@@ -121,6 +138,8 @@ AUTHENTICATION_KEY="my_secret_key" # only needed for securing publically accessi
 5. (optional) npm run evals -- -e evals/experiments/careful.json 
 
 We recommend VSCode using a launch.json for the Node type applications (you get a debugger, and hot-reloading)
+
+If you wish to run using the causal-chains engine you'll need to install the [Go toolchain](https://go.dev/doc/install) onto your PATH.
 
 ## Evals
 - checkout the [Evals README](evals/README.md)

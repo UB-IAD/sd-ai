@@ -196,7 +196,8 @@ const generateConformanceTest = function(conformanceElement, specificCase) {
 };
 
 
-export const evaluate = function(fromAI, requirements) {
+export const evaluate = function(generatedResponse, groundTruth) {
+    const fromAI = generatedResponse.model?.relationships || [];
     const fromAIVariables = extractVariables(fromAI);
     const fromAIFeedbackLoops = countLoops(fromAI);
 

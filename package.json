@@ -16,13 +16,13 @@
   "scripts": {
     "postinstall": "which go >/dev/null 2>&1 && (cd engines/causal-chains && go build) || (echo 'go toolchain not found, not building causal-chains engine.'; true)",
     "start": "nodemon --env-file=.env app.js",
-    "evals": "node evals/run.js",
-    "test": "jasmine"
+    "evals": "node evals/run.js"
   },
   "type": "module",
   "devDependencies": {
     "dotenv": "^16.4.7",
     "nodemon": "^3.1.7",
-    "pluralize": "^8.0.0"
+    "pluralize": "^8.0.0",
+    "number-to-words": "^1.2.4"
   }
 }

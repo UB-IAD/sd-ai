@@ -83,7 +83,7 @@ Example 6 of a user input:
 Corresponding JSON response:
 {}`
 
-    static DEFAULT_SYSTEM_PROPMT = 
+    static DEFAULT_SYSTEM_PROMPT = 
 `You are a System Dynamics Professional Modeler. Users will give you text, and it is your job to generate causal relationships from that text.
 
 You will conduct a multistep process:
@@ -98,7 +98,7 @@ You will conduct a multistep process:
 
 5. If there are no causal relationships at all in the provided text, return an empty JSON array.  Do not create relationships which do not exist in reality.
 
-6. Try as hard as you can to close feedback loops between the variables you find. It is very important that your answer includes feedback.  A feedback loop happens when there is a closed causal chain of relationships.  An example would be “Variable1” causes “Variable2” to increase, which causes “Variable3” to decrease which causes “Variable1” to again increase.  Try to find as many of the feedback loops as you can.`
+6. Try as hard as you can to close feedback loops between the variables you find. It is very important that your answer includes feedback.  A feedback loop happens when there is a closed causal chain of relationships.  An example would be "Variable1" causes "Variable2" to increase, which causes "Variable3" to decrease which causes "Variable1" to again increase.  Try to find as many of the feedback loops as you can.`
 
     static DEFAULT_ASSISTANT_PROMPT = 
 `I want your response to consider all of the above relationships which you have already so helpfully given to us.  Your response should add new relationships and close feedback loops wherever you have evidence to support the existence of the relationships needed to close the feedback loop.  Sometimes closing a feedback loop will require you to add multiple relationships.`
@@ -122,7 +122,7 @@ You will conduct a multistep process:
         openAIKey: null,
         googleKey: null,
         underlyingModel: LLMWrapper.DEFAULT_MODEL,
-        systemPrompt: AdvancedEngineBrain.DEFAULT_SYSTEM_PROPMT,
+        systemPrompt: AdvancedEngineBrain.DEFAULT_SYSTEM_PROMPT,
         assistantPrompt: AdvancedEngineBrain.DEFAULT_ASSISTANT_PROMPT,
         feedbackPrompt: AdvancedEngineBrain.DEFAULT_FEEDBACK_PROMPT,
         backgroundPrompt: AdvancedEngineBrain.DEFAULT_BACKGROUND_PROMPT,
@@ -145,10 +145,6 @@ You will conduct a multistep process:
         this.#llmWrapper = new LLMWrapper(params);
        
     }
-    
-    #sameVars(a,b) {
-        return projectUtils.caseFold(a) === projectUtils.caseFold(b);
-    }
 
     #processResponse(originalResponse) {
         let origRelationships = originalResponse.relationships || [];
@@ -157,7 +153,7 @@ You will conduct a multistep process:
             let ret = Object.assign({}, relationship);
             ret.from = relationship.from.trim();
             ret.to = relationship.to.trim();
-            ret.valid = !this.#sameVars(ret.from, ret.to);
+            ret.valid = !projectUtils.sameVars(ret.from, ret.to);
             return ret;
         });
             
@@ -171,7 +167,7 @@ You will conduct a multistep process:
                 if (!relI.valid || !relJ.valid)
                     continue;
 
-                if (this.#sameVars(relJ.from, relI.from) && this.#sameVars(relJ.to, relI.to)) {
+                if (projectUtils.sameVars(relJ.from, relI.from) && projectUtils.sameVars(relJ.to, relI.to)) {
                     relI.valid = false;
                 }
             }
@@ -195,7 +191,7 @@ You will conduct a multistep process:
         let underlyingModel = this.#data.underlyingModel;
         let systemRole = this.#llmWrapper.model.systemModeUser;
         let systemPrompt = this.#data.systemPrompt;
-        let responseFormat = this.#llmWrapper.generateSDJSONResponseSchema();
+        let responseFormat = this.#llmWrapper.generateQualitativeSDJSONResponseSchema();
         let temperature = 0;
         let reasoningEffort = undefined;
 

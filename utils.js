@@ -29,23 +29,37 @@ utils.caseFold = function(name) {
   return xname.toLowerCase();
 }
 
-utils.convertToXMILE = function(sdJSON) {
+utils.prettyifyName = function(variable) {
+  return variable.replaceAll("\n", "\\\n").replaceAll("\r", "\\\r");
+}
 
+utils.sameVars = function(a,b) {
+    return utils.caseFold(a) === utils.caseFold(b);
+}
+
+utils.convertToXMILE = function(sdJSON) {
+  const variables = sdJSON.variables;
   const relationships = sdJSON.relationships;
+
+  const sdJSONHasVariableDefinition = (variable) => {
+      return sdJSON.variables.findIndex((v) => {
+          return utils.sameVars(v.name, variable) && v.equation && v.equation.length > 0;
+      }) >= 0;
+  };
 
   let xmileConnectors = "";
   let xmileEqns = "";
 
-  let variablesObj = {}; //variable to causers
-  relationships.forEach(function(relationship) {
-    if (!variablesObj[relationship.end]) {
-      variablesObj[relationship.end] = [];
+  let qualitativeVariablesObj = {}; //variable to causers
+  relationships.forEach((relationship) => {
+    if (!qualitativeVariablesObj[relationship.end]) {
+      qualitativeVariablesObj[relationship.end] = [];
     }
 
     let arr = variablesObj[relationship.end];
     if (!arr.includes(relationship.start)) {
       arr.push(relationship.start);
-      variablesObj[relationship.end] = arr;
+      qualitativeVariablesObj[relationship.end] = arr;
 
       let polarity = "";
       if (relationship.polarity !== "?")
@@ -58,8 +72,36 @@ utils.convertToXMILE = function(sdJSON) {
     }
   });
 
-  for (const [variable, causers] of Object.entries(variablesObj)) {
-    let prettyName = variable.replaceAll("\n", "\\\n").replaceAll("\r", "\\\r");
+  variables.forEach((variable)=> {
+    if (!(variable.equation && variable.equation.length >= 0))
+      return;
+
+    const prettyName = utils.prettyifyName(variable);
+    let type = variable.type;
+    if (type === "variable") {
+      type = "aux";
+    }
+
+    xmileEqns += "<" + type + " name=\"" + prettyName + "\">";
+    xmileEqns += "<eqn>" + variable.equation + "</eqn>";
+    if (type === "stock") {
+      variable.inflows.forEach((inflow) => {
+        xmileEqns += "<inflow>" + inflow + "</inflow>";
+      });
+      variable.outflows.forEach((inflow) => {
+        xmileEqns += "<outflow>" + inflow + "</outflow>";
+      });
+    } else if (type === "flow") {
+      xmileEqns += "<non_negative/>"
+    }
+    xmileEqns += "</" + type + ">";
+  });
+
+  for (const [variable, causers] of Object.entries(qualitativeVariablesObj)) {
+    if (sdJSONHasVariableDefinition(variable))
+      continue;
+
+    const prettyName = utils.prettyifyName(variable);
     xmileEqns += "<aux name=\"" + prettyName + "\">";
     xmileEqns += "<eqn>NAN(";
     causers.forEach(function(cause, index) {
@@ -186,6 +228,27 @@ export class LLMWrapper {
     }
   }
 
+  static MODELS = [
+      {label: "GPT-4o", value: 'gpt-4o'},
+      {label: "GPT-4o-mini", value: 'gpt-4o-mini'},
+      {label: "GPT-4.5-preview", value: 'gpt-4.5-preview'},
+      {label: "GPT-4.1", value: 'gpt-4.1'},
+      {label: "GPT-4.1-mini", value: 'gpt-4.1-mini'},
+      {label: "GPT-4.1-nano", value: 'gpt-4.1-nano'},
+      {label: "Gemini 2.5-flash", value: 'gemini-2.5-flash-preview-04-17'},
+      {label: "Gemini 2.5-pro", value: 'gemini-2.5-pro-preview-03-25'},
+      {label: "Gemini 2.0", value: 'gemini-2.0-flash'},
+      {label: "Gemini 2.0-Lite", value: 'gemini-2.0-flash-lite'},
+      {label: "Gemini 1.5", value: 'gemini-1.5-flash'},
+      {label: "o1", value: 'o1'},
+      {label: "o3-mini low", value: 'o3-mini low'},
+      {label: "o3-mini medium", value: 'o3-mini medium'},
+      {label: "o3-mini high", value: 'o3-mini high'},
+      {label: "o4-mini", value: 'o4-mini'}
+  ];
+
+  static DEFAULT_MODEL = 'gpt-4o';
+
   static SCHEMA_STRINGS = {
     "from": "This is a variable which causes the to variable in this relationship that is between two variables, from and to.  The from variable is the equivalent of a cause.  The to variable is the equivalent of an effect",
     "to": "This is a variable which is impacted by the from variable in this relationship that is between two variables, from and to.  The from variable is the equivalent of a cause.  The to variable is the equivalent of an effect",
@@ -195,31 +258,34 @@ export class LLMWrapper {
     "relationship": "This is a relationship between two variables, from and to (from is the cause, to is the effect).  The relationship also contains a polarity which describes how a change in the from variable impacts the to variable",
     "relationships": "The list of relationships you think are appropriate to satisfy my request based on all of the information I have given you",
     "explanation": "Concisely explain your reasoning for each change you made to the old CLD to create the new CLD. Speak in plain English, don't reference json specifically. Don't reiterate the request or any of these instructions.",
-    "title": "A highly descriptive 7 word max title describing your explanation."
-};
+    "title": "A highly descriptive 7 word max title describing your explanation.",
 
-  static MODELS = [
-        {label: "GPT-4o", value: 'gpt-4o'},
-        {label: "GPT-4o-mini", value: 'gpt-4o-mini'},
-        {label: "GPT-4.5-preview", value: 'gpt-4.5-preview'},
-        {label: "GPT-4.1", value: 'gpt-4.1'},
-        {label: "GPT-4.1-mini", value: 'gpt-4.1-mini'},
-        {label: "GPT-4.1-nano", value: 'gpt-4.1-nano'},
-        {label: "Gemini 2.5-flash", value: 'gemini-2.5-flash-preview-04-17'},
-        {label: "Gemini 2.5-pro", value: 'gemini-2.5-pro-preview-03-25'},
-        {label: "Gemini 2.0", value: 'gemini-2.0-flash'},
-        {label: "Gemini 2.0-Lite", value: 'gemini-2.0-flash-lite'},
-        {label: "Gemini 1.5", value: 'gemini-1.5-flash'},
-        {label: "o1", value: 'o1'},
-        {label: "o3-mini low", value: 'o3-mini low'},
-        {label: "o3-mini medium", value: 'o3-mini medium'},
-        {label: "o3-mini high", value: 'o3-mini high'},
-        {label: "o4-mini", value: 'o4-mini'}
-    ];
+    "equation": "The XMILE equation for this variable.  This equation can be a number, or an algebraic expression of other variables. Make sure that whenever you include a variable name with spaces that you replace those spaces with underscores. If the type for this variable is a stock, then the equation is its initial value, do not use INTEG for the equation of a stock, only its initial value. Do not ever use IF THEN ELSE or conditional functions inside of equations. If this variable is a table function, lookup function or graphical function, the equation should be an algebraic expression containing only the inputs to the function, it cannot contain the name of the graphical function itself!  If a variable is making use of a graphical function only the name of the variable with the graphical function should appear in the equation.  Never write an equation that uses parentheses after a variable name without a mathematical operator between the variable name and the parenthesis. When you are writing an equation, do not include the name of the variable in its own equation ever.",
 
-    static DEFAULT_MODEL = 'gpt-4o';
+    "type": "There are three types of variables, stock, flow, and variable. A stock is an accumulation of its flows, it is an integral.  A stock can only change because of its flows. A flow is the derivative of a stock.  A plain variable is used for algebraic expressions.",
+    "name": "The name of a variable",
+ 
+    "inflows": "Only used on variables that are of type stock.  It is an array of variable names representing flows that add to this stock.",
+    "outflows": "Only used on variables that are of type stock.  It is an array of variable names representing flows that subtract from this stock.",
+    "documentation": "Documentation for the variable including the reason why it was chosen, what it represents, and a simple explanation why it is calculated this way",
+    "units": "The units of measure for this variable",
+    "gfEquation": "Only used on variables which contain a table function, lookup function, or graphical function.",
 
-  generateSDJSONResponseSchema() {
+    "gf": "This object represents a table function, lookup function or graphical function.  It is a list of value pairs or points.  The value computed by the equation is looked up in this list of points using the \"x\" value, and the \"y\" value is returned.",
+    "gfPoint": "This object represens a single value pair used in a table function, lookup function, or graphical function.",
+    "gfPointX": "This is the \"x\" value in the x,y value pair, or graphical function point. This is the value used for the lookup.",
+    "gfPointY": "This is the \"y\" value in the x,y value pair, or graphical function point. This is the value returned by the lookup.",
+
+    "simSpecs": "This object describes settings for the model and how its run.",
+    "startTime": "The time at which this model starts calculating.  It is measured in the units of \"timeUnit\".",
+    "stopTime": "The time at which this model stops calculating.  It is measured in the units of \"timeUnit\".",
+    "dt": "The time step for the model, how often is it calculated.  The most common dt is 0.25. It is measured in the units of \"timeUnit\".",
+    "timeUnits": "The unit of time for this model.  This should match with the equations that you generate."
+  };
+
+  static DEFAULT_MODEL = 'gemini-2.5-flash-preview-04-17';
+
+  generateQualitativeSDJSONResponseSchema() {
       const PolarityEnum = z.enum(["+", "-"]).describe(LLMWrapper.SCHEMA_STRINGS.polarity);
 
       const Relationship = z.object({
@@ -237,6 +303,60 @@ export class LLMWrapper {
       });
 
       return zodResponseFormat(Relationships, "relationships_response");
+  }
+
+  generateQuantitativeSDJSONResponseSchema() {
+      const TypeEnum = z.enum(["stock", "flow", "variable"]).describe(LLMWrapper.SCHEMA_STRINGS.type);
+      const PolarityEnum = z.enum(["+", "-"]).describe(LLMWrapper.SCHEMA_STRINGS.polarity);
+      
+      const GFPoint = z.object({
+        x: z.number().describe(LLMWrapper.SCHEMA_STRINGS.gfPointX),
+        y: z.number().describe(LLMWrapper.SCHEMA_STRINGS.gfPointY)
+      }).describe(LLMWrapper.SCHEMA_STRINGS.gfPoint);
+
+      const GF = z.object({
+        points: z.array(GFPoint)
+      }).describe(LLMWrapper.SCHEMA_STRINGS.gf);
+
+      const Relationship = z.object({
+          from: z.string().describe(LLMWrapper.SCHEMA_STRINGS.from),
+          to: z.string().describe(LLMWrapper.SCHEMA_STRINGS.to),
+          polarity: PolarityEnum,
+          reasoning: z.string().describe(LLMWrapper.SCHEMA_STRINGS.reasoning),
+          polarityReasoning: z.string().describe(LLMWrapper.SCHEMA_STRINGS.polarityReasoning)
+      }).describe(LLMWrapper.SCHEMA_STRINGS.relationship);
+      
+      const Relationships = z.array(Relationship).describe(LLMWrapper.SCHEMA_STRINGS.relationships);
+
+      const Variable = z.object({
+        name: z.string().describe(LLMWrapper.SCHEMA_STRINGS.name),
+        equation: z.string().describe(LLMWrapper.SCHEMA_STRINGS.equation),
+        inflows: z.array(z.string()).optional().describe(LLMWrapper.SCHEMA_STRINGS.inflows),
+        outflows: z.array(z.string()).optional().describe(LLMWrapper.SCHEMA_STRINGS.outflows),
+        graphicalFunction: GF.optional().describe(LLMWrapper.SCHEMA_STRINGS.gfEquation),
+        type: TypeEnum,
+        documentation: z.string().describe(LLMWrapper.SCHEMA_STRINGS.documentation),
+        units: z.string().describe(LLMWrapper.SCHEMA_STRINGS.units)
+      });
+      
+      const Variables = z.array(Variable).describe(LLMWrapper.SCHEMA_STRINGS.variables);
+
+      const SimSpecs = z.object({
+        startTime: z.number().describe(LLMWrapper.SCHEMA_STRINGS.startTime),
+        stopTime: z.number().describe(LLMWrapper.SCHEMA_STRINGS.stopTime),
+        dt: z.number().describe(LLMWrapper.SCHEMA_STRINGS.dt),
+        timeUnits: z.string().describe(LLMWrapper.SCHEMA_STRINGS.timeUnits)
+      }).describe(LLMWrapper.SCHEMA_STRINGS.simSpecs);
+
+      const Model = z.object({
+        variables: Variables,
+        relationships: Relationships,
+        explanation: z.string().describe(LLMWrapper.SCHEMA_STRINGS.explanation),
+        title: z.string().describe(LLMWrapper.SCHEMA_STRINGS.title),
+        specs: SimSpecs
+      });
+
+      return zodResponseFormat(Model, "model_response");
   }
 
   static additionalParameters() {

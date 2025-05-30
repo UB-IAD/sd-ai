@@ -1,0 +1,17 @@
+{
+    "engineConfigs": {
+        "quantitative-gemini-2.5-flash-preview-04-17": {
+            "engine": "quantitative",
+            "additionalParameters": {
+                "underlyingModel": "gemini-2.5-flash-preview-04-17"
+            },
+            "limits": {
+                "tokensPerMinute": 90000,
+                "requestsPerMinute": 10
+            }
+        }
+    },
+    "categories": {
+        "quantitativeTranslation": true
+    }
+}

@@ -36,7 +36,7 @@ It ensures the AI’s responses align with the intended user experience, such as
         return parameters.concat([{
                 name: "systemPrompt",
                 type: "string",
-                defaultValue: AdvancedEngineBrain.DEFAULT_SYSTEM_PROPMT,
+                defaultValue: AdvancedEngineBrain.DEFAULT_SYSTEM_PROMPT,
                 required: false,
                 uiElement: "textarea",
                 saveForUser: "global",

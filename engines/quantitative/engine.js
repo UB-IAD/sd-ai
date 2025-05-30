@@ -1,4 +1,5 @@
-import AdvancedEngineBrain from './AdvancedEngineBrain.js'
+import { LLMWrapper } from '../../utils.js';
+import QuantitativeEngineBrain from './QuantitativeEngineBrain.js'
 
 class Engine {
     constructor() {
@@ -6,19 +7,12 @@ class Engine {
     }
 
     static supportedModes() {
-        return ["cld"];
+        return ["sfd"];
     }
 
     additionalParameters()  {
-        return [{
-            name: "googleKey",
-            type: "string",
-            required: true,
-            uiElement: "password",
-            saveForUser: "global",
-            label: "Google API Key",
-            description: "Leave blank for the default, or your Google API key - XXXXXX"
-        },{
+        const additionalParameters = LLMWrapper.additionalParameters();
+        return additionalParameters.concat([{
             name: "problemStatement",
             type: "string",
             required: false,
@@ -35,26 +29,28 @@ class Engine {
             uiElement: "textarea",
             saveForUser: "local",
             label: "Background Knowledge",
-            description: "Background information you want the LLM model to consider when generating a diagram for you",
+            description: "Background information you want the LLM model to consider when generating a model for you",
             minHeight: 100
-        }];
+        }]);
     }
 
     async generate(prompt, currentModel, parameters) {
         try {
-            let brain = new AdvancedEngineBrain(parameters);
-            const response = await brain.generateDiagram(prompt, currentModel);
-            const variables =  [...new Set([...response.relationships.map( e => e.from),...response.relationships.map( e => e.to )])];
-            return {
+            let brain = new QuantitativeEngineBrain(parameters);
+            const response = await brain.generateModel(prompt, currentModel);
+            let returnValue = {
                 supportingInfo: {
                     explanation: response.explanation,
                     title: response.title
                 },
                 model: {
                     relationships: response.relationships,
-                    variables: variables
+                    variables: response.variables
                 }
             };
+            if (response.specs)
+                returnValue.model.specs = response.specs;
+            return returnValue;
         } catch(err) {
             console.error(err);
             return { 

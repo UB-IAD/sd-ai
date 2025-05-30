@@ -75,6 +75,11 @@
   </div>
 
   <script>
+    const leaderboards = {
+      "Casual Loop Diagram": "leaderboardCLD_full_results.json",
+      "Stock and Flow Diagram": "leaderboardSFD_full_results.json",
+    }
+    // rewrite this to create one full leaderboard tab for each leaderboard above
     fetch('full_results.json')
       .then(response => response.json())
       .then(data => {

@@ -138,7 +138,8 @@ const generateMultipleFeedbackLoopTest = function(polarityVec, numVarsVec) {
     }
 };
 
-export const evaluate = function(fromAI, groundTruth) {
+export const evaluate = function(generatedResponse, groundTruth) {
+    const fromAI = generatedResponse.model?.relationships || [];
     const failures = [];
     
     const stringifyRelationship = function(r) {
@@ -185,14 +186,14 @@ export const evaluate = function(fromAI, groundTruth) {
         failures.push({
             type: "Fake relationships found",
             details: "Fake relationships found\n" + addedStr + "\nGround Truth\n" + groundTruthStr
-        })
+        });
     }
     
     if (removed.length > 0) {
         failures.push({
             type: "Real relationships not found",
             details: "Real relationships not found\n" + removedStr + "\nGround Truth\n" + groundTruthStr
-        })
+        });
     }
 
     for (const groundTruthRelationship of sortedGroundTruth) {

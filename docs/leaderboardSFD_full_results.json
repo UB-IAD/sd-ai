@@ -1,0 +1,1051 @@
+{
+  "results": [
+    {
+      "engineConfig": {
+        "engine": "quantitative",
+        "additionalParameters": {
+          "underlyingModel": "gemini-2.5-flash-preview-04-17"
+        },
+        "limits": {
+          "tokensPerMinute": 90000,
+          "requestsPerMinute": 10,
+          "baselineTokenUsage": 3000
+        }
+      },
+      "engineConfigName": "quantitative-gemini-2.5-flash-preview-04-17",
+      "category": "quantitativeTranslation",
+      "group": "singleStock",
+      "testParams": {
+        "name": "Extract a single stock with one flow",
+        "prompt": "Please give me a model which includes all causal relationships in the background information.",
+        "additionalParameters": {
+          "problemStatement": "I'm trying to do causal discovery, and extract every cause and effect relationship from the information I give you.",
+          "backgroundKnowledge": "I start with twenty frimbulators. Each day my collection of frimbulators increases by 2%."
+        },
+        "expectations": {
+          "timeUnit": "day",
+          "stocks": [
+            {
+              "name": "frimbulator",
+              "initialValue": 20,
+              "inflows": [
+                {
+                  "rate": 0.02,
+                  "of": "frimbulator"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "duration": 9173,
+      "generatedResponse": {
+        "supportingInfo": {
+          "explanation": "Based on the information provided, the core dynamic is the growth of a stock (Frimbulators) by a fixed percentage each day. This implies a stock variable for the number of frimbulators, a flow variable representing the daily increase, and a variable for the growth rate percentage. The increase flow is calculated based on the current stock and the growth rate. This flow then adds to the stock. This structure inherently creates a positive feedback loop: more frimbulators lead to a larger absolute increase, which in turn leads to even more frimbulators.",
+          "title": "Frimbulator Percentage Growth Causal Model"
+        },
+        "model": {
+          "relationships": [
+            {
+              "polarityReasoning": "An increase in the number of Frimbulators directly causes an increase in the calculated Increase in Frimbulators flow because the flow is a percentage of the stock.",
+              "polarity": "+",
+              "from": "Frimbulators",
+              "to": "Increase_in_Frimbulators",
+              "reasoning": "The daily increase is calculated as a percentage of the current number of frimbulators."
+            },
+            {
+              "polarityReasoning": "An increase in the Growth Rate Percentage directly causes an increase in the calculated Increase in Frimbulators flow because the flow is proportional to this percentage.",
+              "polarity": "+",
+              "from": "Growth_Rate_Percentage",
+              "to": "Increase_in_Frimbulators",
+              "reasoning": "The daily increase is calculated using this percentage rate."
+            },
+            {
+              "polarityReasoning": "An increase in the Increase in Frimbulators flow directly causes an increase in the Frimbulators stock over time as the flow adds to the stock.",
+              "polarity": "+",
+              "from": "Increase_in_Frimbulators",
+              "to": "Frimbulators",
+              "reasoning": "This flow represents the rate at which frimbulators are added to the collection, thus increasing the stock."
+            }
+          ],
+          "variables": [
+            {
+              "documentation": "Represents the total number of frimbulators at any given time. It starts at 20 and increases daily based on the growth rate.",
+              "inflows": [
+                "Increase_in_Frimbulators"
+              ],
+              "outflows": [],
+              "equation": "20",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Frimbulators",
+              "units": "frimbulators",
+              "type": "stock"
+            },
+            {
+              "documentation": "Represents the daily percentage increase in the number of frimbulators, given as 2% or 0.02.",
+              "inflows": [],
+              "outflows": [],
+              "equation": "0.02",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Growth_Rate_Percentage",
+              "units": "dimensionless",
+              "type": "variable"
+            },
+            {
+              "documentation": "Represents the daily rate at which the number of frimbulators increases. It is calculated as the current number of frimbulators multiplied by the daily growth rate percentage.",
+              "inflows": [],
+              "outflows": [],
+              "equation": "Frimbulators * Growth_Rate_Percentage",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Increase_in_Frimbulators",
+              "units": "frimbulators/day",
+              "type": "flow"
+            }
+          ],
+          "specs": {
+            "startTime": 0,
+            "stopTime": 100,
+            "timeUnits": "day",
+            "dt": 0.25
+          }
+        }
+      },
+      "failures": [],
+      "failureSummary": {},
+      "pass": true,
+      "name": "Extract a single stock with one flow"
+    },
+    {
+      "engineConfig": {
+        "engine": "quantitative",
+        "additionalParameters": {
+          "underlyingModel": "gemini-2.5-flash-preview-04-17"
+        },
+        "limits": {
+          "tokensPerMinute": 90000,
+          "requestsPerMinute": 10,
+          "baselineTokenUsage": 3000
+        }
+      },
+      "engineConfigName": "quantitative-gemini-2.5-flash-preview-04-17",
+      "category": "quantitativeTranslation",
+      "group": "singleStock",
+      "testParams": {
+        "name": "Extract a single stock with two flows",
+        "prompt": "Please give me a model which includes all causal relationships in the background information.",
+        "additionalParameters": {
+          "problemStatement": "I'm trying to do causal discovery, and extract every cause and effect relationship from the information I give you.",
+          "backgroundKnowledge": "I start with one hundred frimbulators. Each week my collection of frimbulators increases by 5%. Each week five frimbulators are removed from my collection of frimbulators."
+        },
+        "expectations": {
+          "timeUnit": "week",
+          "stocks": [
+            {
+              "name": "frimbulator",
+              "initialValue": 100,
+              "inflows": [
+                {
+                  "rate": 0.05,
+                  "of": "frimbulator"
+                }
+              ],
+              "outflows": [
+                {
+                  "fixed": 5
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "duration": 15327,
+      "generatedResponse": {
+        "supportingInfo": {
+          "explanation": "The model represents the collection of frimbulators as a stock variable. This stock is increased by an inflow called 'Percentage Increase', which is calculated as a fixed percentage of the current stock level. This creates a positive feedback loop where a larger stock leads to a larger increase, further growing the stock. The stock is decreased by a constant outflow called 'Fixed Removal'. The rates for the percentage growth and fixed removal are represented by constant variables.",
+          "title": "Frimbulator Collection Growth and Removal Model"
+        },
+        "model": {
+          "relationships": [
+            {
+              "polarity": "+",
+              "polarityReasoning": "An increase in the number of frimbulators leads to a larger absolute increase when the percentage growth rate is constant.",
+              "reasoning": "The rate of percentage increase is calculated as a percentage of the current number of frimbulators.",
+              "from": "Frimbulators",
+              "to": "Percentage_Increase"
+            },
+            {
+              "polarity": "+",
+              "polarityReasoning": "An increase in the inflow rate leads to an increase in the stock level over time.",
+              "reasoning": "Percentage Increase is an inflow that adds to the stock of Frimbulators.",
+              "from": "Percentage_Increase",
+              "to": "Frimbulators"
+            },
+            {
+              "polarity": "-",
+              "polarityReasoning": "An increase in the outflow rate leads to a decrease in the stock level over time.",
+              "reasoning": "Fixed Removal is an outflow that subtracts from the stock of Frimbulators.",
+              "from": "Fixed_Removal",
+              "to": "Frimbulators"
+            },
+            {
+              "polarity": "+",
+              "polarityReasoning": "A higher growth rate results in a higher percentage increase flow.",
+              "reasoning": "The percentage growth rate directly determines the magnitude of the percentage increase flow.",
+              "from": "Percentage_Growth_Rate",
+              "to": "Percentage_Increase"
+            },
+            {
+              "polarity": "+",
+              "polarityReasoning": "A higher fixed removal rate results in a higher fixed removal flow.",
+              "reasoning": "The fixed removal rate directly determines the magnitude of the fixed removal flow.",
+              "from": "Fixed_Removal_Rate",
+              "to": "Fixed_Removal"
+            }
+          ],
+          "variables": [
+            {
+              "units": "frimbulators",
+              "graphicalFunction": {
+                "points": []
+              },
+              "type": "stock",
+              "equation": "100",
+              "outflows": [
+                "Fixed_Removal"
+              ],
+              "documentation": "The total number of frimbulators in the collection at any given time. It starts at 100 and changes based on inflows and outflows.",
+              "inflows": [
+                "Percentage_Increase"
+              ],
+              "name": "Frimbulators"
+            },
+            {
+              "units": "frimbulators/week",
+              "graphicalFunction": {
+                "points": []
+              },
+              "type": "flow",
+              "equation": "Frimbulators * Percentage_Growth_Rate",
+              "outflows": [],
+              "documentation": "The rate at which frimbulators are added to the collection based on a percentage of the current number of frimbulators.",
+              "inflows": [],
+              "name": "Percentage_Increase"
+            },
+            {
+              "units": "frimbulators/week",
+              "graphicalFunction": {
+                "points": []
+              },
+              "type": "flow",
+              "equation": "Fixed_Removal_Rate",
+              "outflows": [],
+              "documentation": "The constant rate at which frimbulators are removed from the collection each week.",
+              "inflows": [],
+              "name": "Fixed_Removal"
+            },
+            {
+              "units": "1/week",
+              "graphicalFunction": {
+                "points": []
+              },
+              "type": "variable",
+              "equation": "0.05",
+              "outflows": [],
+              "documentation": "The constant rate of percentage growth (5%) applied to the frimbulator collection each week.",
+              "inflows": [],
+              "name": "Percentage_Growth_Rate"
+            },
+            {
+              "units": "frimbulators/week",
+              "graphicalFunction": {
+                "points": []
+              },
+              "type": "variable",
+              "equation": "5",
+              "outflows": [],
+              "documentation": "The constant number of frimbulators removed from the collection each week.",
+              "inflows": [],
+              "name": "Fixed_Removal_Rate"
+            }
+          ],
+          "specs": {
+            "startTime": 0,
+            "timeUnits": "week",
+            "stopTime": 10,
+            "dt": 0.25
+          }
+        }
+      },
+      "failures": [],
+      "failureSummary": {},
+      "pass": true,
+      "name": "Extract a single stock with two flows"
+    },
+    {
+      "engineConfig": {
+        "engine": "quantitative",
+        "additionalParameters": {
+          "underlyingModel": "gemini-2.5-flash-preview-04-17"
+        },
+        "limits": {
+          "tokensPerMinute": 90000,
+          "requestsPerMinute": 10,
+          "baselineTokenUsage": 3000
+        }
+      },
+      "engineConfigName": "quantitative-gemini-2.5-flash-preview-04-17",
+      "category": "quantitativeTranslation",
+      "group": "twoStock",
+      "testParams": {
+        "name": "Extract a two stock system",
+        "prompt": "Please give me a model which includes all causal relationships in the background information.",
+        "additionalParameters": {
+          "problemStatement": "I'm trying to do causal discovery, and extract every cause and effect relationship from the information I give you.",
+          "backgroundKnowledge": "I start with one hundred whatajigs. Each year my collection of whatajigs increases by 5%. Each year my collection of whatajigs decreases by 300% of how ever many balack I currently have. I start with two hundred balacks. Each year my collection of balacks increases by 5% of how ever many whatajig I currently have. Each year my collection of balacks decreases by 3%."
+        },
+        "expectations": {
+          "timeUnit": "year",
+          "stocks": [
+            {
+              "name": "whatajig",
+              "initialValue": 100,
+              "inflows": [
+                {
+                  "rate": 0.05,
+                  "of": "whatajig"
+                }
+              ],
+              "outflows": [
+                {
+                  "rate": 3,
+                  "of": "balack"
+                }
+              ]
+            },
+            {
+              "name": "balack",
+              "initialValue": 200,
+              "inflows": [
+                {
+                  "rate": 0.05,
+                  "of": "whatajig"
+                }
+              ],
+              "outflows": [
+                {
+                  "rate": 0.03,
+                  "of": "balack"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "duration": 28440,
+      "generatedResponse": {
+        "supportingInfo": {
+          "explanation": "The model represents the dynamics of Whatajigs and Balacks populations as stocks accumulating their respective inflows and outflows. Whatajigs increase based on their own quantity and decrease based on the quantity of Balacks. Balacks increase based on the quantity of Whatajigs and decrease based on their own quantity. This structure creates three feedback loops: a reinforcing loop where Whatajigs growth depends on Whatajigs (R1: Whatajigs -> Whatajigs_Growth -> Whatajigs), a balancing loop where Balacks decay depends on Balacks (B2: Balacks -> Balacks_Decrease -> Balacks), and a cross-species balancing loop where Whatajigs increase Balacks, which in turn decrease Whatajigs (B1: Whatajigs -> Balacks_Growth -> Balacks -> Whatajigs_Decrease -> Whatajigs). All described causal relationships necessary to form these loops and calculate the flows have been included.",
+          "title": "Whatajigs and Balacks Population Dynamics Model"
+        },
+        "model": {
+          "relationships": [
+            {
+              "to": "Whatajigs_Growth",
+              "from": "Whatajigs",
+              "polarity": "+",
+              "polarityReasoning": "As the number of Whatajigs increases, the calculated growth flow, which is a percentage of Whatajigs, also increases.",
+              "reasoning": "The growth rate of Whatajigs is dependent on the current number of Whatajigs."
+            },
+            {
+              "to": "Whatajigs",
+              "from": "Whatajigs_Growth",
+              "polarity": "+",
+              "polarityReasoning": "An increase in an inflow rate directly causes the stock it flows into to increase.",
+              "reasoning": "Whatajigs_Growth is an inflow that adds to the Whatajigs stock."
+            },
+            {
+              "to": "Whatajigs_Decrease",
+              "from": "Balacks",
+              "polarity": "+",
+              "polarityReasoning": "As the number of Balacks increases, the calculated decrease flow for Whatajigs, which is proportional to Balacks, also increases.",
+              "reasoning": "The decrease rate of Whatajigs is dependent on the current number of Balacks."
+            },
+            {
+              "to": "Whatajigs",
+              "from": "Whatajigs_Decrease",
+              "polarity": "-",
+              "polarityReasoning": "An increase in an outflow rate directly causes the stock it flows from to decrease.",
+              "reasoning": "Whatajigs_Decrease is an outflow that subtracts from the Whatajigs stock."
+            },
+            {
+              "to": "Balacks_Growth",
+              "from": "Whatajigs",
+              "polarity": "+",
+              "polarityReasoning": "As the number of Whatajigs increases, the calculated growth flow for Balacks, which is a percentage of Whatajigs, also increases.",
+              "reasoning": "The growth rate of Balacks is dependent on the current number of Whatajigs."
+            },
+            {
+              "to": "Balacks",
+              "from": "Balacks_Growth",
+              "polarity": "+",
+              "polarityReasoning": "An increase in an inflow rate directly causes the stock it flows into to increase.",
+              "reasoning": "Balacks_Growth is an inflow that adds to the Balacks stock."
+            },
+            {
+              "to": "Balacks_Decrease",
+              "from": "Balacks",
+              "polarity": "+",
+              "polarityReasoning": "As the number of Balacks increases, the calculated decrease flow, which is a percentage of Balacks, also increases.",
+              "reasoning": "The decrease rate of Balacks is dependent on the current number of Balacks."
+            },
+            {
+              "to": "Balacks",
+              "from": "Balacks_Decrease",
+              "polarity": "-",
+              "polarityReasoning": "An increase in an outflow rate directly causes the stock it flows from to decrease.",
+              "reasoning": "Balacks_Decrease is an outflow that subtracts from the Balacks stock."
+            },
+            {
+              "to": "Whatajigs_Growth",
+              "from": "Whatajigs_Growth_Rate",
+              "polarity": "+",
+              "polarityReasoning": "A higher growth rate, when multiplied by the stock, results in a higher growth flow.",
+              "reasoning": "The Whatajigs_Growth flow is calculated using the Whatajigs_Growth_Rate."
+            },
+            {
+              "to": "Whatajigs_Decrease",
+              "from": "Whatajigs_Decrease_Factor",
+              "polarity": "+",
+              "polarityReasoning": "A higher decrease factor, when multiplied by Balacks, results in a higher decrease flow.",
+              "reasoning": "The Whatajigs_Decrease flow is calculated using the Whatajigs_Decrease_Factor."
+            },
+            {
+              "to": "Balacks_Growth",
+              "from": "Balacks_Growth_Factor",
+              "polarity": "+",
+              "polarityReasoning": "A higher growth factor, when multiplied by Whatajigs, results in a higher growth flow.",
+              "reasoning": "The Balacks_Growth flow is calculated using the Balacks_Growth_Factor."
+            },
+            {
+              "to": "Balacks_Decrease",
+              "from": "Balacks_Decrease_Rate",
+              "polarity": "+",
+              "polarityReasoning": "A higher decrease rate, when multiplied by the stock, results in a higher decrease flow.",
+              "reasoning": "The Balacks_Decrease flow is calculated using the Balacks_Decrease_Rate."
+            }
+          ],
+          "variables": [
+            {
+              "outflows": [
+                "Whatajigs_Decrease"
+              ],
+              "type": "stock",
+              "units": "items",
+              "documentation": "The current number of whatajigs in the collection.",
+              "equation": "100",
+              "name": "Whatajigs",
+              "inflows": [
+                "Whatajigs_Growth"
+              ],
+              "graphicalFunction": {
+                "points": []
+              }
+            },
+            {
+              "outflows": [
+                "Balacks_Decrease"
+              ],
+              "type": "stock",
+              "units": "items",
+              "documentation": "The current number of balacks in the collection.",
+              "equation": "200",
+              "name": "Balacks",
+              "inflows": [
+                "Balacks_Growth"
+              ],
+              "graphicalFunction": {
+                "points": []
+              }
+            },
+            {
+              "outflows": [],
+              "type": "flow",
+              "units": "items/Year",
+              "documentation": "The rate at which the Whatajigs collection increases each year.",
+              "equation": "Whatajigs_Growth_Rate * Whatajigs",
+              "name": "Whatajigs_Growth",
+              "inflows": [],
+              "graphicalFunction": {
+                "points": []
+              }
+            },
+            {
+              "outflows": [],
+              "type": "flow",
+              "units": "items/Year",
+              "documentation": "The rate at which the Whatajigs collection decreases each year due to Balacks.",
+              "equation": "Whatajigs_Decrease_Factor * Balacks",
+              "name": "Whatajigs_Decrease",
+              "inflows": [],
+              "graphicalFunction": {
+                "points": []
+              }
+            },
+            {
+              "outflows": [],
+              "type": "flow",
+              "units": "items/Year",
+              "documentation": "The rate at which the Balacks collection increases each year due to Whatajigs.",
+              "equation": "Balacks_Growth_Factor * Whatajigs",
+              "name": "Balacks_Growth",
+              "inflows": [],
+              "graphicalFunction": {
+                "points": []
+              }
+            },
+            {
+              "outflows": [],
+              "type": "flow",
+              "units": "items/Year",
+              "documentation": "The rate at which the Balacks collection decreases each year.",
+              "equation": "Balacks_Decrease_Rate * Balacks",
+              "name": "Balacks_Decrease",
+              "inflows": [],
+              "graphicalFunction": {
+                "points": []
+              }
+            },
+            {
+              "outflows": [],
+              "type": "variable",
+              "units": "1/Year",
+              "documentation": "The fractional growth rate of Whatajigs per year (5%).",
+              "equation": "0.05",
+              "name": "Whatajigs_Growth_Rate",
+              "inflows": [],
+              "graphicalFunction": {
+                "points": []
+              }
+            },
+            {
+              "outflows": [],
+              "type": "variable",
+              "units": "1/Year",
+              "documentation": "The factor by which Balacks decrease Whatajigs per year (300%).",
+              "equation": "3.00",
+              "name": "Whatajigs_Decrease_Factor",
+              "inflows": [],
+              "graphicalFunction": {
+                "points": []
+              }
+            },
+            {
+              "outflows": [],
+              "type": "variable",
+              "units": "1/Year",
+              "documentation": "The factor by which Whatajigs increase Balacks per year (5%).",
+              "equation": "0.05",
+              "name": "Balacks_Growth_Factor",
+              "inflows": [],
+              "graphicalFunction": {
+                "points": []
+              }
+            },
+            {
+              "outflows": [],
+              "type": "variable",
+              "units": "1/Year",
+              "documentation": "The fractional decay rate of Balacks per year (3%).",
+              "equation": "0.03",
+              "name": "Balacks_Decrease_Rate",
+              "inflows": [],
+              "graphicalFunction": {
+                "points": []
+              }
+            }
+          ],
+          "specs": {
+            "timeUnits": "Year",
+            "startTime": 0,
+            "stopTime": 20,
+            "dt": 0.25
+          }
+        }
+      },
+      "failures": [],
+      "failureSummary": {},
+      "pass": true,
+      "name": "Extract a two stock system"
+    },
+    {
+      "engineConfig": {
+        "engine": "quantitative",
+        "additionalParameters": {
+          "underlyingModel": "gemini-2.5-flash-preview-04-17"
+        },
+        "limits": {
+          "tokensPerMinute": 90000,
+          "requestsPerMinute": 10,
+          "baselineTokenUsage": 3000
+        }
+      },
+      "engineConfigName": "quantitative-gemini-2.5-flash-preview-04-17",
+      "category": "quantitativeTranslation",
+      "group": "fiveStock",
+      "testParams": {
+        "name": "Extract a five stock system",
+        "prompt": "Please give me a model which includes all causal relationships in the background information.",
+        "additionalParameters": {
+          "problemStatement": "I'm trying to do causal discovery, and extract every cause and effect relationship from the information I give you.",
+          "backgroundKnowledge": "I start with one hundred whatajigs. Each year my collection of whatajigs increases by 5%. Each year three whatajigs are removed from my collection of whatajigs. I start with two hundred balacks. Each year my collection of balacks increases by 5% of how ever many whatajig I currently have. Each year my collection of balacks decreases by 3%. I start with two hundred whoziewhats. Each year my collection of whoziewhats increases by 5% of how ever many balack I currently have. Each year my collection of whoziewhats decreases by 3%. I start with twelve funkados. Each year my collection of funkados increases by 5% of how ever many whoziewhat I currently have. Each year my collection of funkados decreases by 3% of how ever many maxabizer I currently have. I start with eighty-eight maxabizers. Each year my collection of maxabizers increases by 5% of how ever many funkado I currently have. Each year my collection of maxabizers decreases by 3% of how ever many whoziewhat I currently have."
+        },
+        "expectations": {
+          "timeUnit": "year",
+          "stocks": [
+            {
+              "name": "whatajig",
+              "initialValue": 100,
+              "inflows": [
+                {
+                  "rate": 0.05,
+                  "of": "whatajig"
+                }
+              ],
+              "outflows": [
+                {
+                  "fixed": 3
+                }
+              ]
+            },
+            {
+              "name": "balack",
+              "initialValue": 200,
+              "inflows": [
+                {
+                  "rate": 0.05,
+                  "of": "whatajig"
+                }
+              ],
+              "outflows": [
+                {
+                  "rate": 0.03,
+                  "of": "balack"
+                }
+              ]
+            },
+            {
+              "name": "whoziewhat",
+              "initialValue": 200,
+              "inflows": [
+                {
+                  "rate": 0.05,
+                  "of": "balack"
+                }
+              ],
+              "outflows": [
+                {
+                  "rate": 0.03,
+                  "of": "whoziewhat"
+                }
+              ]
+            },
+            {
+              "name": "funkado",
+              "initialValue": 12,
+              "inflows": [
+                {
+                  "rate": 0.05,
+                  "of": "whoziewhat"
+                }
+              ],
+              "outflows": [
+                {
+                  "rate": 0.03,
+                  "of": "maxabizer"
+                }
+              ]
+            },
+            {
+              "name": "maxabizer",
+              "initialValue": 88,
+              "inflows": [
+                {
+                  "rate": 0.05,
+                  "of": "funkado"
+                }
+              ],
+              "outflows": [
+                {
+                  "rate": 0.03,
+                  "of": "whoziewhat"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "duration": 39239,
+      "generatedResponse": {
+        "supportingInfo": {
+          "explanation": "I have identified the five types of items mentioned in the text as stocks, as they accumulate or deplete over time. The rates of change for these stocks are represented by flows, which are calculated based on the rules provided. For each stock, there is at least one inflow (increase) and one outflow (decrease). The equations for the flows directly reflect the percentages or fixed amounts described. To fully represent the causal structure and close feedback loops inherent in system dynamics, I have included relationships showing how stocks influence their dependent flows (as described in the text) and how flows influence the stocks they enter or leave. This latter set of relationships (flow to stock) is fundamental to the definition of a stock and is necessary to show how the rates of change actually alter the levels of the stocks, thereby completing the feedback loops.",
+          "title": "Causal Model of Interdependent Item Collections"
+        },
+        "model": {
+          "relationships": [
+            {
+              "polarityReasoning": "An increase in the number of Whatajigs leads to a larger calculated increase amount when taking 5% of the total.",
+              "reasoning": "The increase in Whatajigs is stated to be 5% of the current number of Whatajigs.",
+              "polarity": "+",
+              "to": "Whatajigs_Increase",
+              "from": "Whatajigs"
+            },
+            {
+              "polarityReasoning": "An increase in the inflow rate directly adds to the stock, causing the stock level to rise.",
+              "reasoning": "By definition, an inflow increases the stock it flows into.",
+              "polarity": "+",
+              "to": "Whatajigs",
+              "from": "Whatajigs_Increase"
+            },
+            {
+              "polarityReasoning": "An increase in the outflow rate directly subtracts from the stock, causing the stock level to fall.",
+              "reasoning": "By definition, an outflow decreases the stock it flows from.",
+              "polarity": "-",
+              "to": "Whatajigs",
+              "from": "Whatajigs_Decrease"
+            },
+            {
+              "polarityReasoning": "An increase in the number of Whatajigs leads to a larger calculated increase amount for Balacks when taking 5% of the Whatajigs total.",
+              "reasoning": "The increase in Balacks is stated to be 5% of the current number of Whatajigs.",
+              "polarity": "+",
+              "to": "Balacks_Increase",
+              "from": "Whatajigs"
+            },
+            {
+              "polarityReasoning": "An increase in the inflow rate directly adds to the stock, causing the stock level to rise.",
+              "reasoning": "By definition, an inflow increases the stock it flows into.",
+              "polarity": "+",
+              "to": "Balacks",
+              "from": "Balacks_Increase"
+            },
+            {
+              "polarityReasoning": "An increase in the number of Balacks leads to a larger calculated decrease amount when taking 3% of the total.",
+              "reasoning": "The decrease in Balacks is stated to be 3% of the current number of Balacks.",
+              "polarity": "+",
+              "to": "Balacks_Decrease",
+              "from": "Balacks"
+            },
+            {
+              "polarityReasoning": "An increase in the outflow rate directly subtracts from the stock, causing the stock level to fall.",
+              "reasoning": "By definition, an outflow decreases the stock it flows from.",
+              "polarity": "-",
+              "to": "Balacks",
+              "from": "Balacks_Decrease"
+            },
+            {
+              "polarityReasoning": "An increase in the number of Balacks leads to a larger calculated increase amount for Whoziewhats when taking 5% of the Balacks total.",
+              "reasoning": "The increase in Whoziewhats is stated to be 5% of the current number of Balacks.",
+              "polarity": "+",
+              "to": "Whoziewhats_Increase",
+              "from": "Balacks"
+            },
+            {
+              "polarityReasoning": "An increase in the inflow rate directly adds to the stock, causing the stock level to rise.",
+              "reasoning": "By definition, an inflow increases the stock it flows into.",
+              "polarity": "+",
+              "to": "Whoziewhats",
+              "from": "Whoziewhats_Increase"
+            },
+            {
+              "polarityReasoning": "An increase in the number of Whoziewhats leads to a larger calculated decrease amount when taking 3% of the total.",
+              "reasoning": "The decrease in Whoziewhats is stated to be 3% of the current number of Whoziewhats.",
+              "polarity": "+",
+              "to": "Whoziewhats_Decrease",
+              "from": "Whoziewhats"
+            },
+            {
+              "polarityReasoning": "An increase in the outflow rate directly subtracts from the stock, causing the stock level to fall.",
+              "reasoning": "By definition, an outflow decreases the stock it flows from.",
+              "polarity": "-",
+              "to": "Whoziewhats",
+              "from": "Whoziewhats_Decrease"
+            },
+            {
+              "polarityReasoning": "An increase in the number of Whoziewhats leads to a larger calculated increase amount for Funkados when taking 5% of the Whoziewhats total.",
+              "reasoning": "The increase in Funkados is stated to be 5% of the current number of Whoziewhats.",
+              "polarity": "+",
+              "to": "Funkados_Increase",
+              "from": "Whoziewhats"
+            },
+            {
+              "polarityReasoning": "An increase in the inflow rate directly adds to the stock, causing the stock level to rise.",
+              "reasoning": "By definition, an inflow increases the stock it flows into.",
+              "polarity": "+",
+              "to": "Funkados",
+              "from": "Funkados_Increase"
+            },
+            {
+              "polarityReasoning": "An increase in the number of Maxabizers leads to a larger calculated decrease amount for Funkados when taking 3% of the Maxabizers total.",
+              "reasoning": "The decrease in Funkados is stated to be 3% of the current number of Maxabizers.",
+              "polarity": "+",
+              "to": "Funkados_Decrease",
+              "from": "Maxabizers"
+            },
+            {
+              "polarityReasoning": "An increase in the outflow rate directly subtracts from the stock, causing the stock level to fall.",
+              "reasoning": "By definition, an outflow decreases the stock it flows from.",
+              "polarity": "-",
+              "to": "Funkados",
+              "from": "Funkados_Decrease"
+            },
+            {
+              "polarityReasoning": "An increase in the number of Funkados leads to a larger calculated increase amount for Maxabizers when taking 5% of the Funkados total.",
+              "reasoning": "The increase in Maxabizers is stated to be 5% of the current number of Funkados.",
+              "polarity": "+",
+              "to": "Maxabizers_Increase",
+              "from": "Funkados"
+            },
+            {
+              "polarityReasoning": "An increase in the inflow rate directly adds to the stock, causing the stock level to rise.",
+              "reasoning": "By definition, an inflow increases the stock it flows into.",
+              "polarity": "+",
+              "to": "Maxabizers",
+              "from": "Maxabizers_Increase"
+            },
+            {
+              "polarityReasoning": "An increase in the number of Whoziewhats leads to a larger calculated decrease amount for Maxabizers when taking 3% of the Whoziewhats total.",
+              "reasoning": "The decrease in Maxabizers is stated to be 3% of the current number of Whoziewhats.",
+              "polarity": "+",
+              "to": "Maxabizers_Decrease",
+              "from": "Whoziewhats"
+            },
+            {
+              "polarityReasoning": "An increase in the outflow rate directly subtracts from the stock, causing the stock level to fall.",
+              "reasoning": "By definition, an outflow decreases the stock it flows from.",
+              "polarity": "-",
+              "to": "Maxabizers",
+              "from": "Maxabizers_Decrease"
+            }
+          ],
+          "variables": [
+            {
+              "type": "stock",
+              "equation": "100",
+              "documentation": "The collection of whatajigs. It starts at 100 and changes based on its inflows and outflows.",
+              "outflows": [
+                "Whatajigs_Decrease"
+              ],
+              "units": "Whatajigs",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Whatajigs",
+              "inflows": [
+                "Whatajigs_Increase"
+              ]
+            },
+            {
+              "type": "flow",
+              "equation": "Whatajigs * 0.05",
+              "documentation": "The rate at which the collection of whatajigs increases each year, calculated as 5% of the current number of whatajigs.",
+              "outflows": [],
+              "units": "Whatajigs/Year",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Whatajigs_Increase",
+              "inflows": []
+            },
+            {
+              "type": "flow",
+              "equation": "3",
+              "documentation": "The rate at which whatajigs are removed from the collection each year, a constant value of 3.",
+              "outflows": [],
+              "units": "Whatajigs/Year",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Whatajigs_Decrease",
+              "inflows": []
+            },
+            {
+              "type": "stock",
+              "equation": "200",
+              "documentation": "The collection of balacks. It starts at 200 and changes based on its inflows and outflows.",
+              "outflows": [
+                "Balacks_Decrease"
+              ],
+              "units": "Balacks",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Balacks",
+              "inflows": [
+                "Balacks_Increase"
+              ]
+            },
+            {
+              "type": "flow",
+              "equation": "Whatajigs * 0.05",
+              "documentation": "The rate at which the collection of balacks increases each year, calculated as 5% of the current number of whatajigs.",
+              "outflows": [],
+              "units": "Balacks/Year",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Balacks_Increase",
+              "inflows": []
+            },
+            {
+              "type": "flow",
+              "equation": "Balacks * 0.03",
+              "documentation": "The rate at which balacks are removed from the collection each year, calculated as 3% of the current number of balacks.",
+              "outflows": [],
+              "units": "Balacks/Year",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Balacks_Decrease",
+              "inflows": []
+            },
+            {
+              "type": "stock",
+              "equation": "200",
+              "documentation": "The collection of whoziewhats. It starts at 200 and changes based on its inflows and outflows.",
+              "outflows": [
+                "Whoziewhats_Decrease"
+              ],
+              "units": "Whoziewhats",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Whoziewhats",
+              "inflows": [
+                "Whoziewhats_Increase"
+              ]
+            },
+            {
+              "type": "flow",
+              "equation": "Balacks * 0.05",
+              "documentation": "The rate at which the collection of whoziewhats increases each year, calculated as 5% of the current number of balacks.",
+              "outflows": [],
+              "units": "Whoziewhats/Year",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Whoziewhats_Increase",
+              "inflows": []
+            },
+            {
+              "type": "flow",
+              "equation": "Whoziewhats * 0.03",
+              "documentation": "The rate at which whoziewhats are removed from the collection each year, calculated as 3% of the current number of whoziewhats.",
+              "outflows": [],
+              "units": "Whoziewhats/Year",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Whoziewhats_Decrease",
+              "inflows": []
+            },
+            {
+              "type": "stock",
+              "equation": "12",
+              "documentation": "The collection of funkados. It starts at 12 and changes based on its inflows and outflows.",
+              "outflows": [
+                "Funkados_Decrease"
+              ],
+              "units": "Funkados",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Funkados",
+              "inflows": [
+                "Funkados_Increase"
+              ]
+            },
+            {
+              "type": "flow",
+              "equation": "Whoziewhats * 0.05",
+              "documentation": "The rate at which the collection of funkados increases each year, calculated as 5% of the current number of whoziewhats.",
+              "outflows": [],
+              "units": "Funkados/Year",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Funkados_Increase",
+              "inflows": []
+            },
+            {
+              "type": "flow",
+              "equation": "Maxabizers * 0.03",
+              "documentation": "The rate at which funkados are removed from the collection each year, calculated as 3% of the current number of maxabizers.",
+              "outflows": [],
+              "units": "Funkados/Year",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Funkados_Decrease",
+              "inflows": []
+            },
+            {
+              "type": "stock",
+              "equation": "88",
+              "documentation": "The collection of maxabizers. It starts at 88 and changes based on its inflows and outflows.",
+              "outflows": [
+                "Maxabizers_Decrease"
+              ],
+              "units": "Maxabizers",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Maxabizers",
+              "inflows": [
+                "Maxabizers_Increase"
+              ]
+            },
+            {
+              "type": "flow",
+              "equation": "Funkados * 0.05",
+              "documentation": "The rate at which the collection of maxabizers increases each year, calculated as 5% of the current number of funkados.",
+              "outflows": [],
+              "units": "Maxabizers/Year",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Maxabizers_Increase",
+              "inflows": []
+            },
+            {
+              "type": "flow",
+              "equation": "Whoziewhats * 0.03",
+              "documentation": "The rate at which maxabizers are removed from the collection each year, calculated as 3% of the current number of whoziewhats.",
+              "outflows": [],
+              "units": "Maxabizers/Year",
+              "graphicalFunction": {
+                "points": []
+              },
+              "name": "Maxabizers_Decrease",
+              "inflows": []
+            }
+          ],
+          "specs": {
+            "stopTime": 20,
+            "startTime": 0,
+            "dt": 0.25,
+            "timeUnits": "Years"
+          }
+        }
+      },
+      "failures": [],
+      "failureSummary": {},
+      "pass": true,
+      "name": "Extract a five stock system"
+    }
+  ]
+}
