@@ -21,6 +21,28 @@ router.post("/:engine/generate", async (req, res) => {
        return ["prompt", "currentModel", "format"].indexOf(k) == -1
     }));
 
+    instance.additionalParameters().forEach((param) => {
+      let uncastedValue = engineSpecificParameters[param.name];
+      let castedValue = uncastedValue;
+      if (uncastedValue) { //if the uncasted value is not defined skip it... only cast defined values to the proper type
+        switch (param.type) {
+          case "number":
+            castedValue = Number(uncastedValue);
+            break;
+
+          case "boolean":
+            castedValue = Boolean(uncastedValue);
+            break;
+
+          case "string":
+            castedValue = uncastedValue.toString();
+            break;
+        }
+
+        engineSpecificParameters[param.name] = castedValue;
+      }
+    });
+
     let currentModel = {variables: [], relationships: []};
     if ('currentModel' in req.body) {
       currentModel = req.body.currentModel

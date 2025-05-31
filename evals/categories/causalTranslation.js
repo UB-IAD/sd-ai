@@ -68,39 +68,42 @@ const generateFeedbackLoop = function(variables, polarity) {
 };
 
 const generateSingleRelationshipTest = function(name, fromRaw, toRaw, polarity, polarityStart) {
-    const result = generateCausalRelationship(fromRaw, toRaw, polarity, polarityStart);
-    return {
-        name: name,
-        prompt: prompt,
-        additionalParameters: {
-            problemStatement: problemStatement,
-            backgroundKnowledge: result.english,
-        },
-        expectations: [result.relationship]
-    };
+  const result = generateCausalRelationship(fromRaw, toRaw, polarity, polarityStart);
+  return {
+    name: name,
+    prompt: prompt,
+    additionalParameters: {
+      problemStatement: problemStatement,
+      backgroundKnowledge: result.english,
+      mainTopics: "",  
+      depth: 1
+    },
+    expectations: [result.relationship]
+  };
 };
+
 
 const generateSingleFeedbackLoopTest = function(offset, numVars, polarity) {
-    if (["+", "-"].indexOf(polarity) < 0)
-        throw "Invalid polarity must be + or - you supplied " + polarity;
+  if (offset + numVars >= nouns.length) {
+    throw "Bad variable selection -- you'd select past the end of the list of variables";
+  }
 
-    if (offset + numVars >= nouns.length) {
-        throw "Bad variable selection -- you'd select past the end of the list of variables";
-    }
-    
-    const kind = polarity === "+" ? "reinforcing" : "balancing";
-    const variables = nouns.slice(offset, offset+numVars);
-    const response = generateFeedbackLoop(variables, polarity);
-    return {
-        name: "extract a " + kind + " feedback loop with " + numVars + " variables",
-        prompt: prompt,
-        additionalParameters: {
-            problemStatement: problemStatement,
-            backgroundKnowledge: response.english
-        },
-        expectations: response.relationships,
-    }
+  const kind = polarity === "+" ? "reinforcing" : "balancing";
+  const variables = nouns.slice(offset, offset + numVars);
+  const response = generateFeedbackLoop(variables, polarity);
+  return {
+    name: "extract a " + kind + " feedback loop with " + numVars + " variables",
+    prompt: prompt,
+    additionalParameters: {
+      problemStatement: problemStatement,
+      backgroundKnowledge: response.english,
+      mainTopics: "", 
+      depth: 1
+    },
+    expectations: response.relationships,
+  };
 };
+
 
 const generateSingleFeedbackLoopTests = function(minNumVars, maxNumVars, polarity) {
     let cases = [];
@@ -111,31 +114,36 @@ const generateSingleFeedbackLoopTests = function(minNumVars, maxNumVars, polarit
 };
 
 const generateMultipleFeedbackLoopTest = function(polarityVec, numVarsVec) {
-    if (polarityVec.length != numVarsVec.length)
-        throw "Invalid specification to generateMultipleFeedbackLoopTest polarityVec and numVarsVec must be equal length";
+  if (polarityVec.length != numVarsVec.length)
+    throw "Invalid specification to generateMultipleFeedbackLoopTest";
 
-    let causalText = "";
-    let relationships = [];
+  let causalText = "";
+  let relationships = [];
 
-    let offset = 0;
-    for (let loop=0; loop < polarityVec.length; ++loop) {
-        const variables = nouns.slice(offset, offset + numVarsVec[loop]);
-        offset += numVarsVec[loop] - 1;
+  let offset = 0;
+  let allTopics = [];
 
-        let response = generateFeedbackLoop(variables, polarityVec[loop]);
-        causalText += " " + response.english;
-        relationships = relationships.concat(response.relationships);
-    }
+  for (let loop = 0; loop < polarityVec.length; ++loop) {
+    const variables = nouns.slice(offset, offset + numVarsVec[loop]);
+    offset += numVarsVec[loop] - 1;
 
-    return {
-        name: "extract " + polarityVec.length + " feedback loops with [" + polarityVec.join(", ") + "] polarities",
-        prompt: prompt,
-        additionalParameters: {
-            problemStatement: problemStatement,
-            backgroundKnowledge: causalText.trim(),
-        },
-        expectations: relationships,
-    }
+    let response = generateFeedbackLoop(variables, polarityVec[loop]);
+    causalText += " " + response.english;
+    relationships = relationships.concat(response.relationships);
+    allTopics.push(variables[0]);  // first variable in each loop
+  }
+
+  return {
+    name: "extract " + polarityVec.length + " feedback loops with [" + polarityVec.join(", ") + "] polarities",
+    prompt: prompt,
+    additionalParameters: {
+      problemStatement: problemStatement,
+      backgroundKnowledge: causalText.trim(),
+      mainTopics: "",
+      depth: 2
+    },
+    expectations: relationships,
+  };
 };
 
 export const evaluate = function(fromAI, groundTruth) {
