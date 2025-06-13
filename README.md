@@ -125,6 +125,15 @@ We welcome Github Issues and Pull Requests from everyone! Here are some ideas fo
 ```  
 ? denotes an optional attribute
 
+## Discussion Engine JSON response
+```
+{
+    output: {
+        textContent: <string, the response to the query from the user>
+    }
+}
+```  
+
 # Setup
 1. fork this repo and git clone your fork locally 
 2. create an `.env` file at the top level which has the following keys:

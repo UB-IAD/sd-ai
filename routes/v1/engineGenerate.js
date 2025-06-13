@@ -63,21 +63,28 @@ router.post("/:engine/generate", async (req, res) => {
     if (generateResponse.err) {
       return res.send({
         success: false,
-        message: "Failed to generate a diagram: " + generateResponse.err
+        message: "Request failed: " + generateResponse.err
       })
     }
   
-    let model = generateResponse.model
-    if (format == "xmile") {
-      model = utils.convertToXMILE(model)
-    } else {
-      format = "sd-json";
+    let response = {
+      success: true
+    };
+
+    if ('model' in generateResponse) {
+      let model = generateResponse.model
+      if (format == "xmile") {
+        model = utils.convertToXMILE(model)
+      } else {
+        format = "sd-json";
+      }
+
+      response.format = format;
+      response.model = model;
     }
     
-    let response = {
-      success: true,
-      format: format,
-      model: model,
+    if ('output' in generateResponse) {
+      response.output = generateResponse.output;
     }
 
     if ('supportingInfo' in generateResponse) {
