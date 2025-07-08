@@ -6,6 +6,7 @@
     "cli-table3": "^0.6.5",
     "cors": "^2.8.5",
     "data-forge": "^1.10.2",
+    "data-forge-fs": "^0.0.9",
     "express": "^4.21.2",
     "js-tiktoken": "^1.0.19",
     "limiter": "^3.0.0",

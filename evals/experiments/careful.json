@@ -2,15 +2,17 @@
     "sequential": true,
     "verbose": true,
     "engineConfigs": {
-        "qualitative-gpt-4o": {
+        "qualitative-gemini-pro-philippe-paper-test": {
             "engine": "qualitative",
             "additionalParameters": {
-                "underlyingModel": "gpt-4o"
+                "underlyingModel": "gemini-2.5-flash-preview-05-20"
+            },
+            "limits": {
+                "requestsPerMinute": 10
             }
         }
     },
     "categories": {
-        "conformance": true,
-        "causalTranslation": true 
+        "moreCausalTranslation": true 
     }
 }
