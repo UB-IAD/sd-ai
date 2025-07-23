@@ -1,0 +1,49 @@
+**/.DS_Store
+
+# ignore the eval results in the home folder
+/*_summary.csv
+/*_results.json
+/*_in_progress.jsonl
+
+# Node.js dependencies
+node_modules/
+
+# Logs and temporary files
+output.csv
+*.log
+npm-debug.log*
+pids/
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Environment variables
+.env
+.env*
+
+# Build output directories
+dist/
+out/
+build/
+
+#vscode stuff
+.vscode/
+.aider*
+
+#emacs temporary files
+*~
+
+# IntelliJ state
+.idea/
+
+/engines/causal-chains/causal-chains
