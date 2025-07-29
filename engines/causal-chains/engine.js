@@ -1,17 +1,43 @@
+import { spawn } from 'node:child_process';
 import { promises as fs, statSync } from 'node:fs';
-import {exec} from "child_process"
 import path from 'node:path';
 import {tmpdir} from 'node:os';
 import {fileURLToPath} from 'url';
-import util from 'node:util';
 
-const promiseExec = util.promisify(exec);
 
 import {LLMWrapper} from "../../utils.js";
 import logger from "../../logger.js";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
+
+
+function spawnWithInheritedStderr(command, args = [], opts = {}) {
+    return new Promise((resolve, reject) => {
+        // Merge stdio option with user-provided options
+        const spawnOpts = {
+            ...opts,
+            stdio: ['pipe', 'pipe', 'inherit'], // default: inherit stderr
+        };
+
+        const child = spawn(command, args,  spawnOpts);
+
+        let stdout = '';
+        child.stdout.on('data', (data) => {
+            stdout += data;
+        });
+
+        child.on('close', (code) => {
+            if (code !== 0) {
+                reject(new Error(`Command failed with exit code ${code}`));
+            } else {
+                resolve({ stdout });
+            }
+        });
+
+        child.on('error', reject);
+    });
+}
 
 class Engine {
     constructor() {
@@ -126,7 +152,7 @@ focus on chains of relationships, rather then individual links.`
             const inputPath = path.resolve(path.join(tempDir, 'data.json'));
             // logger.log(`input path is ${inputPath}`);
             await fs.writeFile(inputPath, JSON.stringify(input));
-            const { stdout, stderr } = await promiseExec(`${__dirname}/causal-chains ${inputPath}`, {cwd: tempDir});
+            const { stdout } = await spawnWithInheritedStderr(`${__dirname}/causal-chains`, [`${inputPath}`], {cwd: tempDir});
             return JSON.parse(stdout.toString());
         } catch (err) {
             logger.log(`causal-chains returned non-zero exit code: ${err}`);

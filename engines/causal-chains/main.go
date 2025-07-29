@@ -94,6 +94,9 @@ func main() {
 		input.Parameters.ClaudeKey = os.Getenv("ANTHROPIC_API_KEY")
 	}
 
+	// Check for debug mode
+	debugMode := os.Getenv("SD_AI_DEBUG") != ""
+
 	var c chat.Client
 
 	if isClaudeModel(input.Parameters.UnderlyingModel) {
@@ -104,6 +107,7 @@ func main() {
 		c, err = claude.NewClient(claude.ClaudeURL,
 			claude.WithModel(input.Parameters.UnderlyingModel),
 			claude.WithAPIKey(apiKey),
+			claude.WithDebug(debugMode),
 		)
 		if err != nil {
 			log.Fatalf("claude.NewClient: %s", err)
@@ -117,6 +121,7 @@ func main() {
 		c, err = openai.NewClient(url,
 			openai.WithModel(input.Parameters.UnderlyingModel),
 			openai.WithAPIKey(apiKey),
+			openai.WithDebug(debugMode),
 		)
 		if err != nil {
 			log.Fatalf("openai.NewClient: %s", err)
@@ -130,6 +135,7 @@ func main() {
 		c, err = openai.NewClient(url,
 			openai.WithModel(input.Parameters.UnderlyingModel),
 			openai.WithAPIKey(apiKey),
+			openai.WithDebug(debugMode),
 		)
 		if err != nil {
 			log.Fatalf("openai.NewClient: %s", err)
@@ -141,6 +147,7 @@ func main() {
 		c, err = openai.NewClient(url,
 			openai.WithModel(input.Parameters.UnderlyingModel),
 			openai.WithAPIKey(apiKey),
+			openai.WithDebug(debugMode),
 		)
 		if err != nil {
 			log.Fatalf("openai.NewClient: %s", err)

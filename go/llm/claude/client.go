@@ -1,6 +1,7 @@
 package claude
 
 import (
+	"bufio"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -26,6 +27,7 @@ type client struct {
 	apiBaseUrl string
 	modelName  string
 	apiKey     string
+	debug      bool
 }
 
 var _ chat.Client = &client{}
@@ -41,6 +43,12 @@ func WithModel(modelName string) Option {
 func WithAPIKey(apiKey string) Option {
 	return func(c *client) {
 		c.apiKey = strings.TrimSpace(apiKey)
+	}
+}
+
+func WithDebug(debug bool) Option {
+	return func(c *client) {
+		c.debug = debug
 	}
 }
 
@@ -60,6 +68,10 @@ func NewClient(apiBase string, opts ...Option) (chat.Client, error) {
 
 	if c.apiKey == "" {
 		return nil, fmt.Errorf("WithAPIKey is a required option for Claude API")
+	}
+
+	if c.debug {
+		log.Printf("claude.Client: using %q model\n", c.modelName)
 	}
 
 	return c, nil
@@ -82,7 +94,7 @@ type chatClient struct {
 	msgs []chat.Message
 }
 
-func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte, error) {
+func (c *chatClient) doHttpRequestStream(ctx context.Context, body io.Reader) (*http.Response, error) {
 	httpReq, err := http.NewRequest(http.MethodPost, c.apiBaseUrl+"/messages", body)
 	if err != nil {
 		return nil, fmt.Errorf("http.NewRequest: %w", err)
@@ -136,19 +148,14 @@ func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte,
 			continue
 		}
 
-		bodyBytes, err := io.ReadAll(resp.Body)
-		_ = resp.Body.Close()
-
 		lastStatusCode = resp.StatusCode
 
 		switch resp.StatusCode {
 		case http.StatusOK:
-			if err != nil {
-				return nil, fmt.Errorf("io.ReadAll(resp.Body): %w", err)
-			}
-
-			return bodyBytes, nil
+			return resp, nil
 		case http.StatusBadRequest, http.StatusInternalServerError, http.StatusBadGateway, http.StatusServiceUnavailable, http.StatusGatewayTimeout:
+			bodyBytes, _ := io.ReadAll(resp.Body)
+			_ = resp.Body.Close()
 			log.Printf("claude.Client (sleep: %s): received HTTP %d/%s, retrying\n%s\n", jitteredSleep, resp.StatusCode, resp.Status, string(bodyBytes))
 			for k, v := range resp.Header {
 				log.Printf("\t%s: %s\n", k, strings.Join(v, ", "))
@@ -156,6 +163,8 @@ func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte,
 			time.Sleep(jitteredSleep)
 			continue
 		default:
+			bodyBytes, _ := io.ReadAll(resp.Body)
+			_ = resp.Body.Close()
 			return nil, fmt.Errorf("http status code: %d (%s)", resp.StatusCode, string(bodyBytes))
 		}
 	}
@@ -165,6 +174,16 @@ func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte,
 	}
 
 	return nil, fmt.Errorf("http status code: %d", lastStatusCode)
+}
+
+func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte, error) {
+	resp, err := c.doHttpRequestStream(ctx, body)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	return io.ReadAll(resp.Body)
 }
 
 func (c *chatClient) Message(ctx context.Context, msg chat.Message, opts ...chat.Option) (chat.Message, error) {
@@ -196,6 +215,7 @@ func (c *chatClient) Message(ctx context.Context, msg chat.Message, opts ...chat
 		Messages:    claudeMsgs,
 		MaxTokens:   4096, // Claude requires this field
 		Temperature: reqOpts.Temperature,
+		Stream:      true, // Enable streaming
 	}
 
 	// Add system prompt if provided
@@ -226,32 +246,71 @@ func (c *chatClient) Message(ctx context.Context, msg chat.Message, opts ...chat
 
 	if debugDir := chat.DebugDir(ctx); debugDir != "" {
 		outputPath := path.Join(debugDir, "request.json")
-		if err = os.WriteFile(outputPath, bodyBytes, 0o644); err != nil {
-			return chat.Message{}, fmt.Errorf("os.WriteFile(%s): %w", outputPath, err)
+		if writeErr := os.WriteFile(outputPath, bodyBytes, 0o644); writeErr != nil {
+			return chat.Message{}, fmt.Errorf("os.WriteFile(%s): %w", outputPath, writeErr)
 		}
 	}
 
-	if bodyBytes, err = c.doHttpRequest(ctx, body); err != nil {
-		return chat.Message{}, fmt.Errorf("c.doHttpRequest: %w", err)
+	// Get streaming response
+	resp, err := c.doHttpRequestStream(ctx, body)
+	if err != nil {
+		return chat.Message{}, fmt.Errorf("c.doHttpRequestStream: %w", err)
+	}
+	defer resp.Body.Close()
+
+	// Process SSE stream
+	var respContent string
+	scanner := bufio.NewScanner(resp.Body)
+	var responseBytes []byte
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		if !strings.HasPrefix(line, "data: ") {
+			continue
+		}
+
+		data := strings.TrimPrefix(line, "data: ")
+		if data == "[DONE]" {
+			break
+		}
+
+		var event claudeStreamEvent
+		if err = json.Unmarshal([]byte(data), &event); err != nil {
+			continue
+		}
+
+		responseBytes = append(responseBytes, []byte(data)...)
+		responseBytes = append(responseBytes, '\n')
+
+		switch event.Type {
+		case "content_block_delta":
+			if event.Delta.Type == "text_delta" {
+				respContent += event.Delta.Text
+
+				// Debug log incremental content to stderr if enabled
+				if c.client.debug {
+					fmt.Fprint(os.Stderr, event.Delta.Text)
+				}
+			}
+		case "message_stop":
+			break
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		return chat.Message{}, fmt.Errorf("scanner error: %w", err)
+	}
+
+	// Print trailing newline after streaming completes if debug is enabled
+	if c.client.debug && respContent != "" {
+		fmt.Fprintln(os.Stderr)
 	}
 
 	if debugDir := chat.DebugDir(ctx); debugDir != "" {
 		outputPath := path.Join(debugDir, "response.json")
-		if err = os.WriteFile(outputPath, bodyBytes, 0o644); err != nil {
-			return chat.Message{}, fmt.Errorf("os.WriteFile(%s): %w", outputPath, err)
-		}
-	}
-
-	var resp claudeResponse
-	if err = json.Unmarshal(bodyBytes, &resp); err != nil {
-		return chat.Message{}, fmt.Errorf("json.Unmarshal: %w", err)
-	}
-
-	// Extract text content from response
-	var respContent string
-	for _, content := range resp.Content {
-		if content.Type == "text" {
-			respContent += content.Text
+		if writeErr := os.WriteFile(outputPath, responseBytes, 0o644); writeErr != nil {
+			return chat.Message{}, fmt.Errorf("os.WriteFile(%s): %w", outputPath, writeErr)
 		}
 	}
 
@@ -293,6 +352,7 @@ type claudeRequest struct {
 	System      string          `json:"system,omitempty"`
 	MaxTokens   int             `json:"max_tokens"`
 	Temperature *float64        `json:"temperature,omitempty"`
+	Stream      bool            `json:"stream,omitempty"`
 }
 
 type claudeContent struct {
@@ -310,4 +370,13 @@ type claudeResponse struct {
 		InputTokens  int `json:"input_tokens"`
 		OutputTokens int `json:"output_tokens"`
 	} `json:"usage"`
+}
+
+type claudeStreamEvent struct {
+	Type  string `json:"type"`
+	Index int    `json:"index,omitempty"`
+	Delta struct {
+		Type string `json:"type"`
+		Text string `json:"text,omitempty"`
+	} `json:"delta,omitempty"`
 }
