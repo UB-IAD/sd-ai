@@ -69,6 +69,15 @@ focus on chains of relationships, rather then individual links.`
                 description: "Leave blank for the default, or your Google API key (required for Gemini models)",
             },
             {
+                name: "claudeKey",
+                type: "string",
+                required: false,
+                uiElement: "password",
+                saveForUser: "global",
+                label: "Anthropic Claude API Key",
+                description: "Leave blank for the default, or your Anthropic API key (required for Claude models)",
+            },
+            {
                 name: "underlyingModel",
                 type: "string",
                 defaultValue: Engine.DEFAULT_MODEL,
@@ -120,7 +129,7 @@ focus on chains of relationships, rather then individual links.`
             const { stdout, stderr } = await promiseExec(`${__dirname}/causal-chains ${inputPath}`, {cwd: tempDir});
             return JSON.parse(stdout.toString());
         } catch (err) {
-            logger.log(`causal-chains returned non-zero exit code: ${err.status}`);
+            logger.log(`causal-chains returned non-zero exit code: ${err}`);
             if (err.stderr) {
                 return {
                  err: err.stderr.toString(),

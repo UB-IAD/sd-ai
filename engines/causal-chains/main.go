@@ -11,6 +11,7 @@ import (
 
 	"github.com/UB-IAD/sd-ai/go/causal"
 	"github.com/UB-IAD/sd-ai/go/chat"
+	"github.com/UB-IAD/sd-ai/go/llm/claude"
 	"github.com/UB-IAD/sd-ai/go/llm/openai"
 	"github.com/UB-IAD/sd-ai/go/sdjson"
 )
@@ -18,6 +19,7 @@ import (
 type parameters struct {
 	ApiKey              string `json:"apiKey"`
 	GoogleKey           string `json:"googleKey"`
+	ClaudeKey           string `json:"claudeKey"`
 	UnderlyingModel     string `json:"underlyingModel"`
 	ProblemStatement    string `json:"problemStatement"`
 	BackgroundKnowledge string `json:"backgroundKnowledge"`
@@ -60,6 +62,12 @@ func isGeminiModel(model string) bool {
 	return strings.Contains(model, "gemini")
 }
 
+// isClaudeModel returns true if the given model is an Anthropic Claude model.
+func isClaudeModel(model string) bool {
+	model = strings.ToLower(model)
+	return strings.HasPrefix(model, "claude-")
+}
+
 func main() {
 	argv := os.Args
 	if len(argv) < 2 {
@@ -72,7 +80,7 @@ func main() {
 	}
 
 	input := new(input)
-	if err = json.Unmarshal(inputBytes, &input); err != nil {
+	if err := json.Unmarshal(inputBytes, &input); err != nil {
 		log.Fatalf("json.Unmarshal: %s", err)
 	}
 
@@ -82,34 +90,61 @@ func main() {
 	if input.Parameters.GoogleKey == "" {
 		input.Parameters.GoogleKey = os.Getenv("GOOGLE_API_KEY")
 	}
+	if input.Parameters.ClaudeKey == "" {
+		input.Parameters.ClaudeKey = os.Getenv("ANTHROPIC_API_KEY")
+	}
 
-	var url string
-	var apiKey string
+	var c chat.Client
 
-	if isGeminiModel(input.Parameters.UnderlyingModel) {
-		url = openai.GeminiURL
-		apiKey = input.Parameters.GoogleKey
+	if isClaudeModel(input.Parameters.UnderlyingModel) {
+		apiKey := input.Parameters.ClaudeKey
+		if apiKey == "" {
+			log.Fatalf("Anthropic API key is required for Claude models")
+		}
+		c, err = claude.NewClient(claude.ClaudeURL,
+			claude.WithModel(input.Parameters.UnderlyingModel),
+			claude.WithAPIKey(apiKey),
+		)
+		if err != nil {
+			log.Fatalf("claude.NewClient: %s", err)
+		}
+	} else if isGeminiModel(input.Parameters.UnderlyingModel) {
+		url := openai.GeminiURL
+		apiKey := input.Parameters.GoogleKey
 		if apiKey == "" {
 			log.Fatalf("Google API key is required for Gemini models")
 		}
+		c, err = openai.NewClient(url,
+			openai.WithModel(input.Parameters.UnderlyingModel),
+			openai.WithAPIKey(apiKey),
+		)
+		if err != nil {
+			log.Fatalf("openai.NewClient: %s", err)
+		}
 	} else if isOpenAIModel(input.Parameters.UnderlyingModel) {
-		url = openai.OpenAIURL
-		apiKey = input.Parameters.ApiKey
+		url := openai.OpenAIURL
+		apiKey := input.Parameters.ApiKey
 		if apiKey == "" {
 			log.Fatalf("OpenAI API key is required for OpenAI models")
 		}
+		c, err = openai.NewClient(url,
+			openai.WithModel(input.Parameters.UnderlyingModel),
+			openai.WithAPIKey(apiKey),
+		)
+		if err != nil {
+			log.Fatalf("openai.NewClient: %s", err)
+		}
 	} else {
 		// Default to Ollama for local models
-		url = openai.OllamaURL
-		apiKey = "" // Ollama doesn't need an API key
-	}
-
-	c, err := openai.NewClient(url,
-		openai.WithModel(input.Parameters.UnderlyingModel),
-		openai.WithAPIKey(apiKey),
-	)
-	if err != nil {
-		log.Fatalf("openai.NewClient: %s", err)
+		url := openai.OllamaURL
+		apiKey := "" // Ollama doesn't need an API key
+		c, err = openai.NewClient(url,
+			openai.WithModel(input.Parameters.UnderlyingModel),
+			openai.WithAPIKey(apiKey),
+		)
+		if err != nil {
+			log.Fatalf("openai.NewClient: %s", err)
+		}
 	}
 
 	d := causal.NewDiagrammer(c)
