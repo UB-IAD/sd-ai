@@ -186,6 +186,54 @@ func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte,
 	return io.ReadAll(resp.Body)
 }
 
+func (c *chatClient) incrementallyRead(resp *http.Response) ([]byte, error) {
+	scanner := bufio.NewScanner(resp.Body)
+	var responseBytes []byte
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		if !strings.HasPrefix(line, "data: ") {
+			continue
+		}
+
+		data := strings.TrimPrefix(line, "data: ")
+		if data == "[DONE]" {
+			break
+		}
+
+		var event claudeStreamEvent
+		if err := json.Unmarshal([]byte(data), &event); err != nil {
+			continue
+		}
+
+		switch event.Type {
+		case "content_block_delta":
+			if event.Delta.Type == "text_delta" {
+				responseBytes = append(responseBytes, []byte(event.Delta.Text)...)
+
+				// Debug log incremental content to stderr if enabled
+				if c.client.debug {
+					_, _ = fmt.Fprint(os.Stderr, event.Delta.Text)
+				}
+			}
+		case "message_stop":
+			break
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		return nil, fmt.Errorf("scanner error: %w", err)
+	}
+
+	// Print trailing newline after streaming completes if debug is enabled
+	if c.client.debug && len(responseBytes) > 0 {
+		_, _ = fmt.Fprintln(os.Stderr)
+	}
+
+	return responseBytes, nil
+}
+
 func (c *chatClient) Message(ctx context.Context, msg chat.Message, opts ...chat.Option) (chat.Message, error) {
 	reqMsg := msg
 	reqOpts := chat.ApplyOptions(opts...)
@@ -259,68 +307,23 @@ func (c *chatClient) Message(ctx context.Context, msg chat.Message, opts ...chat
 	defer resp.Body.Close()
 
 	// Process SSE stream
-	var respContent string
-	scanner := bufio.NewScanner(resp.Body)
-	var responseBytes []byte
-
-	for scanner.Scan() {
-		line := scanner.Text()
-
-		if !strings.HasPrefix(line, "data: ") {
-			continue
-		}
-
-		data := strings.TrimPrefix(line, "data: ")
-		if data == "[DONE]" {
-			break
-		}
-
-		var event claudeStreamEvent
-		if err = json.Unmarshal([]byte(data), &event); err != nil {
-			continue
-		}
-
-		responseBytes = append(responseBytes, []byte(data)...)
-		responseBytes = append(responseBytes, '\n')
-
-		switch event.Type {
-		case "content_block_delta":
-			if event.Delta.Type == "text_delta" {
-				respContent += event.Delta.Text
-
-				// Debug log incremental content to stderr if enabled
-				if c.client.debug {
-					fmt.Fprint(os.Stderr, event.Delta.Text)
-				}
-			}
-		case "message_stop":
-			break
-		}
-	}
-
-	if err := scanner.Err(); err != nil {
-		return chat.Message{}, fmt.Errorf("scanner error: %w", err)
-	}
-
-	// Print trailing newline after streaming completes if debug is enabled
-	if c.client.debug && respContent != "" {
-		fmt.Fprintln(os.Stderr)
-	}
+	respContentBytes, err := c.incrementallyRead(resp)
+	respContent := string(respContentBytes)
 
 	if debugDir := chat.DebugDir(ctx); debugDir != "" {
 		outputPath := path.Join(debugDir, "response.json")
-		if writeErr := os.WriteFile(outputPath, responseBytes, 0o644); writeErr != nil {
+		if writeErr := os.WriteFile(outputPath, respContentBytes, 0o644); writeErr != nil {
 			return chat.Message{}, fmt.Errorf("os.WriteFile(%s): %w", outputPath, writeErr)
 		}
 	}
-
-	respContent = strings.TrimPrefix(respContent, "```json")
-	respContent = strings.TrimSuffix(respContent, "```")
 
 	respMsg := chat.Message{
 		Role:    chat.AssistantRole,
 		Content: respContent,
 	}
+
+	respContent = strings.TrimPrefix(respContent, "```json")
+	respContent = strings.TrimSuffix(respContent, "```")
 
 	// Add messages to history
 	c.msgs = append(c.msgs, reqMsg)
