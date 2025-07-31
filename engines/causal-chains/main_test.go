@@ -64,3 +64,34 @@ func TestIsGeminiModel(t *testing.T) {
 		})
 	}
 }
+
+func TestIsClaudeModel(t *testing.T) {
+	for _, name := range []string{
+		"claude-sonnet-4-20250514",
+		"claude-3-opus-20240229",
+		"claude-3-sonnet-20240229",
+		"claude-3-haiku-20240307",
+		"claude-3.5-sonnet-20241022",
+		"CLAUDE-3-OPUS",
+		"Claude-Haiku",
+	} {
+		t.Run(name, func(t *testing.T) {
+			assert.True(t, isClaudeModel(name))
+		})
+	}
+
+	for _, name := range []string{
+		"gpt-4o",
+		"llama4:scout",
+		"qwen3:32b",
+		"gemini-2.5-flash",
+		"phi4",
+		"o3-mini",
+		"anthropic-claude", // doesn't start with "claude-"
+		"claudius",         // doesn't start with "claude-"
+	} {
+		t.Run(name, func(t *testing.T) {
+			assert.False(t, isClaudeModel(name))
+		})
+	}
+}

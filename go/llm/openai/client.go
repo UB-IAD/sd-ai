@@ -1,6 +1,7 @@
 package openai
 
 import (
+	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -27,6 +28,7 @@ type client struct {
 	apiBaseUrl string
 	modelName  string
 	apiKey     string
+	debug      bool
 }
 
 var _ chat.Client = &client{}
@@ -45,6 +47,12 @@ func WithAPIKey(apiKey string) Option {
 	}
 }
 
+func WithDebug(debug bool) Option {
+	return func(c *client) {
+		c.debug = debug
+	}
+}
+
 // NewClient returns a chat client that can begin chat sessions with an LLM service that speaks
 // the OpenAI chat completion API.
 func NewClient(apiBase string, opts ...Option) (chat.Client, error) {
@@ -58,6 +66,10 @@ func NewClient(apiBase string, opts ...Option) (chat.Client, error) {
 
 	if c.modelName == "" {
 		return nil, fmt.Errorf("WithModelName is a required option")
+	}
+
+	if c.debug {
+		log.Printf("openai.Client: using %q model (URL: %s)\n", c.modelName, c.apiBaseUrl)
 	}
 
 	return c, nil
@@ -80,14 +92,14 @@ type chatClient struct {
 	msgs []chat.Message
 }
 
-func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte, error) {
+func (c *chatClient) doHttpRequestStream(ctx context.Context, body io.Reader) (*http.Response, error) {
 	httpReq, err := http.NewRequest(http.MethodPost, c.apiBaseUrl+"/chat/completions", body)
 	if err != nil {
 		return nil, fmt.Errorf("http.NewRequest: %w", err)
 	}
 
 	// thread through the context, so users can control things like timeouts and cancellation
-	httpReq.WithContext(ctx)
+	httpReq = httpReq.WithContext(ctx)
 
 	httpReq.Header.Set("Content-Type", "application/json")
 	if c.apiKey != "" {
@@ -136,19 +148,14 @@ func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte,
 			continue
 		}
 
-		bodyBytes, err := io.ReadAll(resp.Body)
-		_ = resp.Body.Close()
-
 		lastStatusCode = resp.StatusCode
 
 		switch resp.StatusCode {
 		case http.StatusOK:
-			if err != nil {
-				return nil, fmt.Errorf("io.ReadAll(resp.Body): %w", err)
-			}
-
-			return bodyBytes, nil
+			return resp, nil
 		case http.StatusBadRequest, http.StatusInternalServerError, http.StatusBadGateway, http.StatusServiceUnavailable, http.StatusGatewayTimeout:
+			bodyBytes, _ := io.ReadAll(resp.Body)
+			_ = resp.Body.Close()
 			log.Printf("openai.Client (sleep: %s): received HTTP %d/%s, retrying\n%s\n", jitteredSleep, resp.StatusCode, resp.Status, string(bodyBytes))
 			for k, v := range resp.Header {
 				log.Printf("\t%s: %s\n", k, strings.Join(v, ", "))
@@ -156,6 +163,8 @@ func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte,
 			time.Sleep(jitteredSleep)
 			continue
 		default:
+			bodyBytes, _ := io.ReadAll(resp.Body)
+			_ = resp.Body.Close()
 			return nil, fmt.Errorf("http status code: %d (%s)", resp.StatusCode, string(bodyBytes))
 		}
 	}
@@ -165,6 +174,16 @@ func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte,
 	}
 
 	return nil, fmt.Errorf("http status code: %d", lastStatusCode)
+}
+
+func (c *chatClient) doHttpRequest(ctx context.Context, body io.Reader) ([]byte, error) {
+	resp, err := c.doHttpRequestStream(ctx, body)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	return io.ReadAll(resp.Body)
 }
 
 func (c *chatClient) Message(ctx context.Context, msg chat.Message, opts ...chat.Option) (chat.Message, error) {
@@ -194,6 +213,7 @@ func (c *chatClient) Message(ctx context.Context, msg chat.Message, opts ...chat
 		Model:           c.client.modelName,
 		Temperature:     reqOpts.Temperature,
 		ReasoningEffort: reqOpts.ReasoningEffort,
+		Stream:          true, // Enable streaming
 	}
 
 	if reqOpts.ResponseFormat != nil {
@@ -216,32 +236,73 @@ func (c *chatClient) Message(ctx context.Context, msg chat.Message, opts ...chat
 		}
 	}
 
-	if bodyBytes, err = c.doHttpRequest(ctx, body); err != nil {
-		return chat.Message{}, fmt.Errorf("c.doHttpRequest: %w", err)
+	// Get streaming response
+	resp, err := c.doHttpRequestStream(ctx, body)
+	if err != nil {
+		return chat.Message{}, fmt.Errorf("c.doHttpRequestStream: %w", err)
+	}
+	defer resp.Body.Close()
+
+	// Process SSE stream
+	var respContent string
+	scanner := bufio.NewScanner(resp.Body)
+	var responseBytes []byte
+
+	for scanner.Scan() {
+		line := scanner.Text()
+
+		if !strings.HasPrefix(line, "data: ") {
+			continue
+		}
+
+		data := strings.TrimPrefix(line, "data: ")
+		if data == "[DONE]" {
+			break
+		}
+
+		var chunk streamChunk
+		if err = json.Unmarshal([]byte(data), &chunk); err != nil {
+			continue
+		}
+
+		responseBytes = append(responseBytes, []byte(data)...)
+		responseBytes = append(responseBytes, '\n')
+
+		if len(chunk.Choices) > 0 && chunk.Choices[0].Delta.Content != "" {
+			respContent += chunk.Choices[0].Delta.Content
+
+			// Debug log incremental content to stderr if enabled
+			if c.client.debug {
+				fmt.Fprint(os.Stderr, chunk.Choices[0].Delta.Content)
+			}
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		return chat.Message{}, fmt.Errorf("scanner error: %w", err)
+	}
+
+	// Print trailing newline after streaming completes if debug is enabled
+	if c.client.debug && respContent != "" {
+		fmt.Fprintln(os.Stderr)
 	}
 
 	if debugDir := chat.DebugDir(ctx); debugDir != "" {
 		outputPath := path.Join(debugDir, "response.json")
-		if err = os.WriteFile(outputPath, bodyBytes, 0o644); err != nil {
-			return chat.Message{}, fmt.Errorf("os.WriteFile(%s): %w", outputPath, err)
+		if writeErr := os.WriteFile(outputPath, responseBytes, 0o644); writeErr != nil {
+			return chat.Message{}, fmt.Errorf("os.WriteFile(%s): %w", outputPath, writeErr)
 		}
 	}
 
-	var ccr chatCompletionResponse
-	if err = json.Unmarshal(bodyBytes, &ccr); err != nil {
-		return chat.Message{}, fmt.Errorf("json.Unmarshal: %w", err)
+	respMsg := chat.Message{
+		Role:    chat.AssistantRole,
+		Content: respContent,
 	}
-
-	if len(ccr.Choices) != 1 {
-		return chat.Message{}, fmt.Errorf("expected a single choice but got %d (%s)", len(ccr.Choices), string(bodyBytes))
-	}
-
-	respMsg := ccr.Choices[0].Message
 
 	// add them to the history only at the end, when we have both and know that we'll
 	// leave history in a consistent state
-	msgs = append(msgs, reqMsg)
-	msgs = append(msgs, respMsg)
+	c.msgs = append(c.msgs, reqMsg)
+	c.msgs = append(c.msgs, respMsg)
 
 	return respMsg, nil
 }
@@ -268,6 +329,7 @@ type chatCompletionRequest struct {
 	Temperature     *float64        `json:"temperature,omitzero"`
 	ReasoningEffort string          `json:"reasoning_effort,omitzero"`
 	MaxTokens       int             `json:"max_tokens,omitzero"`
+	Stream          bool            `json:"stream,omitzero"`
 }
 
 type chatCompletionChoice struct {
@@ -281,4 +343,18 @@ type chatCompletionResponse struct {
 	Created int                    `json:"created"`
 	Model   string                 `json:"model"`
 	Choices []chatCompletionChoice `json:"choices"`
+}
+
+type streamChunk struct {
+	Id      string `json:"id"`
+	Object  string `json:"object"`
+	Created int    `json:"created"`
+	Model   string `json:"model"`
+	Choices []struct {
+		Index int `json:"index"`
+		Delta struct {
+			Content string `json:"content"`
+		} `json:"delta"`
+		FinishReason *string `json:"finish_reason"`
+	} `json:"choices"`
 }

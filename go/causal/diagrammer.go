@@ -54,7 +54,7 @@ func (d diagrammer) Generate(ctx context.Context, prompt, backgroundKnowledge st
 
 	resp, err := c.Message(ctx, msg,
 		chat.WithResponseFormat("relationships_response", true, RelationshipsResponseSchema),
-		chat.WithMaxTokens(64*1024),
+		chat.WithMaxTokens(64000),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("c.ChatCompletion: %w", err)
@@ -62,7 +62,7 @@ func (d diagrammer) Generate(ctx context.Context, prompt, backgroundKnowledge st
 
 	var rr Map
 	if err := json.Unmarshal([]byte(resp.Content), &rr); err != nil {
-		return nil, fmt.Errorf("json.Unmarshal: %w", err)
+		return nil, fmt.Errorf("json.Unmarshal: %w\n%s\n", err, resp.Content)
 	}
 
 	return &rr, nil
