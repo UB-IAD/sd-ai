@@ -86,7 +86,8 @@ describe('Engines Route', () => {
         'quantitative',
         'recursivecausal',
         'seldon-experimental',
-        'seldon'
+        'seldon',
+        'seldon-questions'
       ];
 
       const returnedEngineNames = response.body.engines.map(engine => engine.name);
