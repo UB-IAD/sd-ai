@@ -537,8 +537,8 @@ describe('QuantitativeEngineBrain', () => {
       expect(assistantMessage).toBeDefined();
       expect(assistantMessage.content).toContain('Population');
       
-      const assistantPromptMessage = result.messages.find(m => 
-        m.role === 'user' && m.content.includes('consider the model which you have already')
+      const assistantPromptMessage = result.messages.find(m =>
+        m.role === 'user' && m.content.toLowerCase().includes('consider the model you have already')
       );
       expect(assistantPromptMessage).toBeDefined();
     });
@@ -549,8 +549,8 @@ describe('QuantitativeEngineBrain', () => {
       const assistantMessage = result.messages.find(m => m.role === 'assistant');
       expect(assistantMessage).toBeUndefined();
 
-      const assistantPromptMessage = result.messages.find(m => 
-        m.role === 'user' && m.content.includes('consider the model which you have already')
+      const assistantPromptMessage = result.messages.find(m =>
+        m.role === 'user' && m.content.toLowerCase().includes('consider the model you have already')
       );
       expect(assistantPromptMessage).toBeUndefined();
     });
