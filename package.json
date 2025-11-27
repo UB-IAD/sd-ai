@@ -18,7 +18,7 @@
     "zod": "^3.24.1"
   },
   "scripts": {
-    "postinstall": "which go >/dev/null 2>&1 && (cd engines/causal-chains && go build) || (echo 'go toolchain not found, not building causal-chains engine.'; true)",
+    "postinstall": "which go >/dev/null 2>&1 && (cd engines/causal-chains && go build) || (echo 'go toolchain not found, not building causal-chains engine.'; true) && (command -v python3 >/dev/null 2>&1 && python3 -m pip install -r engines/causal-decoder/requirements.txt || command -v python >/dev/null 2>&1 && python -m pip install -r engines/causal-decoder/requirements.txt || echo 'Python not found, skipping requirements for causal-decoder.')",
     "start": "nodemon --env-file=.env app.js",
     "evals": "node evals/run.js",
     "test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest",

@@ -33,6 +33,7 @@ logs/
 # Environment variables
 .env
 .env*
+.venv
 
 # Build output directories
 dist/

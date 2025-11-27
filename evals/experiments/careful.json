@@ -2,17 +2,17 @@
     "sequential": true,
     "verbose": true,
     "engineConfigs": {
-        "qualitative-gemini-2.5-flash": {
-            "engine": "qualitative",
+        "causal-decoder": {
+            "engine": "causal-decoder",
             "additionalParameters": {
-                "underlyingModel": "gemini-2.5-flash"
+                "underlyingModel": "Qwen-1.5B-base"
             }
         }
     },
     "categories": {
-        "conformance": false,
-        "qualitativeTranslation": false,
-        "quantitativeCausalReasoning": false,
+        "conformance": true,
+        "qualitativeTranslation": true,
+        "quantitativeCausalReasoning": true,
         "qualitativeIteration": true
     }
 }

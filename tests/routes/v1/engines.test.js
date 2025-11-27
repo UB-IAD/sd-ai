@@ -118,7 +118,8 @@ describe('Engines Route', () => {
         'seldon',
         'ltm-narrative',
         'seldon-mentor',
-        'quantitative-mentor'
+        'quantitative-mentor',
+        'causal-decoder'
       ];
 
       const returnedEngineNames = response.body.engines.map(engine => engine.name);
