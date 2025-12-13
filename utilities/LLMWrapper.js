@@ -138,7 +138,9 @@ export class LLMWrapper {
       {label: "Gemini 2.0", value: 'gemini-2.0-flash'},
       {label: "Gemini 2.0-Lite", value: 'gemini-2.0-flash-lite'},
       {label: "Gemini 1.5", value: 'gemini-1.5-flash'},
-      {label: "Claude Sonnet 4.5", value: 'claude-sonnet-4-5-20250929'},
+      {label: "Claude Haiku 4.5", value: 'claude-haiku-4-5-20251001'},
+      {label: "Claude Opus 4.5", value: 'claude-sonnet-4-5-20250929'},
+      {label: "Claude Sonnet 4.5", value: 'claude-opus-4-5-20251101'},
       {label: "Claude Opus 4.1", value: 'claude-opus-4-1-20250805'},
       {label: "Claude Sonnet 4", value: 'claude-sonnet-4-20250514'},
       {label: "o1", value: 'o1'},
@@ -426,7 +428,7 @@ export class LLMWrapper {
     const completionParams = {
       model,
       messages: claudeMessages.messages,
-      max_tokens: 8192    
+      max_tokens: 8192
     };
 
     if (claudeMessages.system) {
@@ -437,20 +439,28 @@ export class LLMWrapper {
       completionParams.temperature = temperature;
     }
 
+    // Use structured outputs with output_format parameter
     if (zodSchema) {
-      completionParams.tools = [{
-        name: "structured_output",
-        description: "Output structured data according to the schema",
-        input_schema: this.#zodToStructuredOutputConverter.convert(zodSchema)
-      }];
-      completionParams.tool_choice = { type: "tool", name: "structured_output" };
+      completionParams.output_format = {
+        type: "json_schema",
+        schema: this.#zodToStructuredOutputConverter.convert(zodSchema)
+      };
     }
 
-    const completion = await this.#anthropicAPI.messages.create(completionParams);
+    // Set the beta header for structured outputs
+    const headers = zodSchema ? {
+      'anthropic-beta': 'structured-outputs-2025-11-13'
+    } : undefined;
 
-    if (zodSchema && completion.content[0].type === 'tool_use') {
+    const completion = await this.#anthropicAPI.messages.create(
+      completionParams,
+      { headers }
+    );
+
+    // With output_format, the response is always in content[0].text as JSON
+    if (zodSchema) {
       return {
-        content: JSON.stringify(completion.content[0].input)
+        content: completion.content[0].text
       };
     }
 

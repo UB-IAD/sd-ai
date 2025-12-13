@@ -109,7 +109,7 @@ describe('ZodToStructuredOutputConverter', () => {
   });
 
   describe('object conversion', () => {
-    it('should convert simple ZodObject to Gemini object schema', () => {
+    it('should convert simple ZodObject to structured output schema', () => {
       const zodSchema = z.object({
         name: z.string(),
         age: z.number()
@@ -123,7 +123,7 @@ describe('ZodToStructuredOutputConverter', () => {
           age: { type: 'number' }
         },
         required: ['name', 'age'],
-        propertyOrdering: ['name', 'age']
+        additionalProperties: false
       });
     });
 
@@ -139,11 +139,11 @@ describe('ZodToStructuredOutputConverter', () => {
         type: 'object',
         properties: {
           name: { type: 'string' },
-          age: { type: 'number', nullable: true },
-          email: { type: 'string', nullable: true }
+          age: { type: 'number' },
+          email: { type: 'string' }
         },
         required: ['name'],
-        propertyOrdering: ['name', 'age', 'email']
+        additionalProperties: false
       });
     });
 
@@ -159,7 +159,7 @@ describe('ZodToStructuredOutputConverter', () => {
           id: { type: 'string' }
         },
         required: ['id'],
-        propertyOrdering: ['id'],
+        additionalProperties: false,
         description: 'Test object'
       });
     });
@@ -192,27 +192,27 @@ describe('ZodToStructuredOutputConverter', () => {
                 type: 'object',
                 properties: {
                   email: { type: 'string' },
-                  phone: { type: 'string', nullable: true }
+                  phone: { type: 'string' }
                 },
                 required: ['email'],
-                propertyOrdering: ['email', 'phone']
+                additionalProperties: false
               }
             },
             required: ['name', 'contact'],
-            propertyOrdering: ['name', 'contact']
+            additionalProperties: false
           },
           metadata: {
             type: 'object',
             properties: {
               created: { type: 'string' },
-              updated: { type: 'string', nullable: true }
+              updated: { type: 'string' }
             },
             required: ['created'],
-            propertyOrdering: ['created', 'updated']
+            additionalProperties: false
           }
         },
         required: ['user', 'metadata'],
-        propertyOrdering: ['user', 'metadata']
+        additionalProperties: false
       });
     });
   });
@@ -241,23 +241,21 @@ describe('ZodToStructuredOutputConverter', () => {
   });
 
   describe('union and optional conversion', () => {
-    it('should convert ZodOptional to nullable schema', () => {
+    it('should convert ZodOptional by unwrapping to inner type', () => {
       const zodSchema = z.string().optional();
       const result = converter.convert(zodSchema);
 
       expect(result).toEqual({
-        type: 'string',
-        nullable: true
+        type: 'string'
       });
     });
 
-    it('should convert ZodUnion with null to nullable schema', () => {
+    it('should convert ZodUnion with null by unwrapping to non-null type', () => {
       const zodSchema = z.union([z.string(), z.null()]);
       const result = converter.convert(zodSchema);
 
       expect(result).toEqual({
-        type: 'string',
-        nullable: true
+        type: 'string'
       });
     });
 
@@ -335,7 +333,7 @@ describe('ZodToStructuredOutputConverter', () => {
       expect(result.required).toContain('relationships');
       expect(result.required).toContain('explanation');
       expect(result.required).toContain('title');
-      expect(result.propertyOrdering).toBeDefined();
+      expect(result.additionalProperties).toBe(false);
     });
 
     it('should convert generateQuantitativeSDJSONResponseSchema', () => {
@@ -359,7 +357,7 @@ describe('ZodToStructuredOutputConverter', () => {
       expect(result.required).toContain('variables');
       expect(result.required).toContain('relationships');
       expect(result.required).toContain('specs');
-      expect(result.propertyOrdering).toBeDefined();
+      expect(result.additionalProperties).toBe(false);
     });
 
     it('should convert generateLTMNarrativeResponseSchema', () => {
@@ -377,7 +375,7 @@ describe('ZodToStructuredOutputConverter', () => {
       expect(result.properties.narrativeMarkdown.type).toBe('string');
       expect(result.required).toContain('feedbackLoops');
       expect(result.required).toContain('narrativeMarkdown');
-      expect(result.propertyOrdering).toBeDefined();
+      expect(result.additionalProperties).toBe(false);
     });
   });
 
@@ -411,7 +409,8 @@ describe('ZodToStructuredOutputConverter', () => {
       expect(result).toEqual({
         type: 'object',
         properties: {},
-        required: []
+        required: [],
+        additionalProperties: false
       });
     });
 
