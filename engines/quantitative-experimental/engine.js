@@ -77,17 +77,7 @@ to experiment with the specific prompts passed to the LLM.`;
                 uiElement: "textarea",
                 saveForUser: "global",
                 label: "Assistant Prompt",
-                description: "A prompt given to the AI immediately after it has recieved a copy of the current state of the model.  This prompt should remind the AI to close feedback, and to include the information that it has already generated into its next response",
-                minHeight: 50,
-            },{
-                name: "feedbackPrompt",
-                type: "string",
-                defaultValue: QuantitativeEngineBrain.DEFAULT_FEEDBACK_PROMPT,
-                required: false,
-                uiElement: "textarea",
-                saveForUser: "global",
-                label: "Feedback Prompt",
-                description: "This is the final message given to the AI before it generates a diagram.  Typically this prompt urges the AI to include feedback in its response",
+                description: "A prompt given to the AI immediately after it has recieved a copy of the current state of the model.  This prompt should remind the AI to include the information that it has already generated into its next response",
                 minHeight: 50,
             },{
                 name: "problemStatement",

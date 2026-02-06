@@ -173,11 +173,11 @@ export class LLMWrapper {
 
     "variables": "The list of variables you think are appropriate to satisfy my request based on all of the information I have given you",
 
-    "equation": "The XMILE equation for this variable.  This equation can be a number, or an algebraic expression of other variables. Make sure that whenever you include a variable name with spaces that you replace those spaces with underscores. If the type for this variable is a stock, then the equation is its initial value, do not use INTEG for the equation of a stock, only its initial value. NEVER use IF THEN ELSE or conditional functions inside of equations.  If you want to check for division by zero use the operator //. If this variable is a table function, lookup function or graphical function, the equation should be an algebraic expression containing only the inputs to the function!  If a variable is making use of a graphical function only the name of the variable with the graphical function should appear in the equation.",
+    "equation": "The XMILE equation for this variable. CRITICAL: Every variable MUST have either this 'equation' field OR the 'arrayEquations' field populated - never both, never neither (exception: cross-level ghost variables have neither). For scalar (non-arrayed) variables: ALWAYS use this field. For arrayed variables where all elements use the SAME formula: use this field. For arrayed variables where elements have DIFFERENT formulas OR for arrayed stocks: use 'arrayEquations' instead and leave this empty. This equation can be a number, or an algebraic expression of other variables. Make sure that whenever you include a variable name with spaces that you replace those spaces with underscores. If the type for this variable is a stock, then the equation is its initial value, do not use INTEG for the equation of a stock, only its initial value. NEVER use IF THEN ELSE or conditional functions inside of equations. If you want to check for division by zero use the operator //. If this variable is a table function, lookup function or graphical function, the equation should be an algebraic expression containing only the inputs to the function! If a variable is making use of a graphical function only the name of the variable with the graphical function should appear in the equation.",
 
     "type": "There are three types of variables, stock, flow, and variable. A stock is an accumulation of its flows, it is an integral.  A stock can only change because of its flows. A flow is the derivative of a stock.  A plain variable is used for algebraic expressions.",
     "name": "The name of a variable",
-
+    "crossLevelGhostOf": "The module qualified name of the variable that this variable is representing from another module",
     "inflows": "Only used on variables that are of type stock.  It is an array of variable names representing flows that add to this stock.",
     "outflows": "Only used on variables that are of type stock.  It is an array of variable names representing flows that subtract from this stock.",
     "documentation": "Documentation for the variable including the reason why it was chosen, what it represents, and a simple explanation why it is calculated this way",
@@ -204,7 +204,18 @@ export class LLMWrapper {
     "variableName": "The name of the variable being documented",
     "variableDocumentation": "Clear, comprehensive documentation for this variable describing what it represents, its role within the model, and how it relates to other elements. Should be 2-4 sentences that are informative without being overly verbose.",
     "documentedVariables": "A list of variables with their generated documentation",
-    "documentationSummary": "A markdown formatted summary that provides an overview of the documentation generated, highlights key variables in the model, and is helpful for understanding the structure of the model."
+    "documentationSummary": "A markdown formatted summary that provides an overview of the documentation generated, highlights key variables in the model, and is helpful for understanding the structure of the model.",
+
+    "dimensionType": "The type of this dimension: either 'numeric' or 'labels'. For numeric dimensions, the element names are automatically generated as strings based on indices (e.g., '1', '2', '3'). For label dimensions, element names are explicitly defined by the user with meaningful names.",
+    "dimensionName": "The XMILE name for an array dimension. Must be singular (never pluralized), containing only alphanumeric characters (letters and numbers), no punctuation or special symbols allowed.",
+    "dimensionSize": "The total count of elements in this array dimension. Must be a positive integer. For numeric dimensions, this determines how many auto-generated numeric element names to create. For label dimensions, this should match the length of the elements array.",
+    "dimensionElements": "An array of names for each element within this dimension. Each element name must contain only alphanumeric characters (letters and numbers), with no punctuation or special symbols. For numeric dimensions, this will be auto-generated as string numbers (e.g., ['1', '2', '3']). For label dimensions, provide meaningful names that describe each element (e.g., ['North', 'South', 'East', 'West']).",
+    "dimension": "A definition of an XMILE array dimension that defines a set of indices over which variables can be arrayed. Every dimension must specify: type ('numeric' or 'label'), name (singular, alphanumeric), size (positive integer), and elements (array of element names). For numeric dimensions, elements are auto-generated numeric strings. For label dimensions, elements are user-defined meaningful names. Variables can be subscripted by one or more dimensions to create multi-dimensional arrays.",
+    "arrayDimensions": "The complete list of all array dimension definitions used anywhere in this model. Each dimension must be fully defined here in the simulation specs before it can be referenced by variables in their 'dimensions' field. All dimensions must have all four required fields: type, name, size, and elements.",
+    "variableDimensions": "An ordered list of dimension names that define the subscript structure for this arrayed variable. The order matters: each element in the forElements arrays must correspond positionally to the dimensions listed here (first element matches first dimension, second element matches second dimension, etc.). If empty or omitted, this is a scalar (non-arrayed) variable.",
+    "arrayElementEquation": "Specifies the equation for a specific subset of array elements in an arrayed variable. The 'equation' field contains the XMILE equation, and the 'forElements' field specifies which array elements this equation applies to (ordered to match the variable's dimensions list).",
+    "arrayEquationForElements": "An ordered list of array element names that identifies which specific array element(s) use this equation. Each element name in this list corresponds positionally to the dimensions in the variable's 'dimensions' field (first element name matches first dimension, second matches second, etc.). For single-dimension arrays, this list has one element name. For multi-dimensional arrays, this list has multiple element names in the same order as the dimensions.",
+    "variableArrayEquation": "CRITICAL: Used for arrayed variables when elements need different equations OR for arrayed stocks to specify initial values. Every variable MUST have either this field OR the 'equation' field populated - never both, never neither (exception: cross-level ghost variables have neither). For arrayed variables: if elements have DIFFERENT formulas OR if it's an arrayed stock, you MUST use this field and leave 'equation' empty. This is a list of equation objects, where each object specifies an equation and the array elements it applies to (via the forElements field). You MUST provide equations that cover EVERY valid combination of array elements across all dimensions. For arrayed STOCKS, you MUST use this field to provide initial values for each stock element. If all array elements of a non-stock variable use the identical equation, you may use the 'equation' field instead and omit this field entirely."
   };
 
   generateSeldonResponseSchema() {
@@ -316,6 +327,14 @@ export class LLMWrapper {
       const TypeEnum = z.enum(["stock", "flow", "variable"]).describe(LLMWrapper.SCHEMA_STRINGS.type);
       const PolarityEnum = z.enum(["+", "-"]).describe(LLMWrapper.SCHEMA_STRINGS.polarity);
 
+      const Dimension = z.object({
+        type: z.enum(["labels", "numeric"]).describe(LLMWrapper.SCHEMA_STRINGS.dimensionType),
+        name: z.string().describe(LLMWrapper.SCHEMA_STRINGS.dimensionName),
+        size: z.number().describe(LLMWrapper.SCHEMA_STRINGS.dimensionSize),
+        elements: z.array(z.string()).describe(LLMWrapper.SCHEMA_STRINGS.dimensionElements)
+      }).describe(LLMWrapper.SCHEMA_STRINGS.dimension);
+
+
       const GFPoint = z.object({
         x: z.number().describe(LLMWrapper.SCHEMA_STRINGS.gfPointX),
         y: z.number().describe(LLMWrapper.SCHEMA_STRINGS.gfPointY)
@@ -335,15 +354,23 @@ export class LLMWrapper {
 
       const Relationships = z.array(Relationship).describe(LLMWrapper.SCHEMA_STRINGS.relationships);
 
+      const ArrayElementEquation = z.object({
+        equation: z.string().describe(LLMWrapper.SCHEMA_STRINGS.equation),
+        forElements: z.array(z.string()).describe(LLMWrapper.SCHEMA_STRINGS.arrayEquationForElements)
+      }).describe(LLMWrapper.SCHEMA_STRINGS.arrayElementEquation);
+
       const Variable = z.object({
         name: z.string().describe(LLMWrapper.SCHEMA_STRINGS.name),
-        equation: z.string().describe(LLMWrapper.SCHEMA_STRINGS.equation),
+        equation: z.string().optional().describe(LLMWrapper.SCHEMA_STRINGS.equation),
         inflows: z.array(z.string()).optional().describe(LLMWrapper.SCHEMA_STRINGS.inflows),
         outflows: z.array(z.string()).optional().describe(LLMWrapper.SCHEMA_STRINGS.outflows),
         graphicalFunction: GF.optional().describe(LLMWrapper.SCHEMA_STRINGS.gfEquation),
         type: TypeEnum,
+        crossLevelGhostOf: z.string().optional().describe(LLMWrapper.SCHEMA_STRINGS.crossLevelGhostOf),
         documentation: z.string().describe(LLMWrapper.SCHEMA_STRINGS.documentation),
-        units: z.string().describe(LLMWrapper.SCHEMA_STRINGS.units)
+        units: z.string().describe(LLMWrapper.SCHEMA_STRINGS.units),
+        dimensions: z.array(z.string()).optional().describe(LLMWrapper.SCHEMA_STRINGS.variableDimensions),
+        arrayEquations: z.array(ArrayElementEquation).optional().describe(LLMWrapper.SCHEMA_STRINGS.variableArrayEquation)
       });
 
       const Variables = z.array(Variable).describe(LLMWrapper.SCHEMA_STRINGS.variables);
@@ -352,7 +379,8 @@ export class LLMWrapper {
         startTime: z.number().describe(LLMWrapper.SCHEMA_STRINGS.startTime),
         stopTime: z.number().describe(LLMWrapper.SCHEMA_STRINGS.stopTime),
         dt: z.number().describe(LLMWrapper.SCHEMA_STRINGS.dt),
-        timeUnits: z.string().describe(LLMWrapper.SCHEMA_STRINGS.timeUnits)
+        timeUnits: z.string().describe(LLMWrapper.SCHEMA_STRINGS.timeUnits),
+        arrayDimensions: z.array(Dimension).describe(LLMWrapper.SCHEMA_STRINGS.arrayDimensions)
       }).describe(LLMWrapper.SCHEMA_STRINGS.simSpecs);
 
       const Model = z.object({

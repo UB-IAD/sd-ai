@@ -429,7 +429,7 @@ describe('QuantitativeEngineBrain', () => {
       expect(result.responseFormat).toBeDefined();
       expect(result.messages).toBeInstanceOf(Array);
       expect(result.messages.length).toBeGreaterThan(0);
-      expect(result.messages[result.messages.length - 2].content).toBe(userPrompt);
+      expect(result.messages[result.messages.length - 1].content).toBe(userPrompt);
     });
 
     it('should handle o3-mini model with reasoning effort', () => {
@@ -556,14 +556,12 @@ describe('QuantitativeEngineBrain', () => {
       expect(assistantPromptMessage).toBeUndefined();
     });
 
-    it('should always include feedback prompt in messages', () => {
+    it('should include user prompt as last message', () => {
       const result = quantitativeEngine.setupLLMParameters('Test prompt');
 
-      const feedbackMessage = result.messages.find(m => 
-        m.content.includes('closed feedback loops')
-      );
-      expect(feedbackMessage).toBeDefined();
-      expect(feedbackMessage.role).toBe('user');
+      const lastMessage = result.messages[result.messages.length - 1];
+      expect(lastMessage.content).toBe('Test prompt');
+      expect(lastMessage.role).toBe('user');
     });
 
     it('should handle custom prompts', () => {
@@ -571,28 +569,22 @@ describe('QuantitativeEngineBrain', () => {
         openAIKey: 'test-key',
         googleKey: 'test-google-key',
         systemPrompt: 'Custom quantitative system prompt',
-        assistantPrompt: 'Custom quantitative assistant prompt',
-        feedbackPrompt: 'Custom quantitative feedback prompt'
+        assistantPrompt: 'Custom quantitative assistant prompt'
       });
 
-      const lastModel = { 
+      const lastModel = {
         variables: [{ name: 'Test', type: 'variable', equation: '10' }],
-        relationships: [{ from: 'X', to: 'Y', polarity: '+' }] 
+        relationships: [{ from: 'X', to: 'Y', polarity: '+' }]
       };
       const result = engineWithCustomPrompts.setupLLMParameters('Test prompt', lastModel);
 
       const systemMessage = result.messages[0];
       expect(systemMessage.content).toBe('Custom quantitative system prompt');
 
-      const assistantPromptMessage = result.messages.find(m => 
+      const assistantPromptMessage = result.messages.find(m =>
         m.content === 'Custom quantitative assistant prompt'
       );
       expect(assistantPromptMessage).toBeDefined();
-
-      const feedbackMessage = result.messages.find(m => 
-        m.content === 'Custom quantitative feedback prompt'
-      );
-      expect(feedbackMessage).toBeDefined();
     });
 
     it('should properly order messages in the conversation', () => {
@@ -603,9 +595,9 @@ describe('QuantitativeEngineBrain', () => {
         problemStatement: 'Problem to solve'
       });
 
-      const lastModel = { 
+      const lastModel = {
         variables: [{ name: 'Test', type: 'variable', equation: '10' }],
-        relationships: [{ from: 'A', to: 'B', polarity: '+' }] 
+        relationships: [{ from: 'A', to: 'B', polarity: '+' }]
       };
       const result = engineWithAll.setupLLMParameters('User prompt', lastModel);
 
@@ -617,7 +609,7 @@ describe('QuantitativeEngineBrain', () => {
       expect(result.messages[3].role).toBe('assistant');
       expect(result.messages[4].role).toBe('user');
       expect(result.messages[5].content).toBe('User prompt');
-      expect(result.messages[6].content).toContain('closed feedback loops');
+      expect(result.messages.length).toBe(6);
     });
 
     it('should handle edge case with null lastModel', () => {
@@ -625,7 +617,7 @@ describe('QuantitativeEngineBrain', () => {
 
       const assistantMessage = result.messages.find(m => m.role === 'assistant');
       expect(assistantMessage).toBeUndefined();
-      expect(result.messages[result.messages.length - 2].content).toBe('Test prompt');
+      expect(result.messages[result.messages.length - 1].content).toBe('Test prompt');
     });
 
     it('should handle edge case with undefined lastModel', () => {
@@ -633,7 +625,7 @@ describe('QuantitativeEngineBrain', () => {
 
       const assistantMessage = result.messages.find(m => m.role === 'assistant');
       expect(assistantMessage).toBeUndefined();
-      expect(result.messages[result.messages.length - 2].content).toBe('Test prompt');
+      expect(result.messages[result.messages.length - 1].content).toBe('Test prompt');
     });
 
     it('should return all required parameters for OpenAI API call', () => {
