@@ -237,6 +237,7 @@ Unit tests are provided for:
   - `QualitativeEngineBrain.test.js` - Tests qualitative diagram generation
   - `SeldonBrain.test.js` - Tests discussion engine functionality
 - **Evaluation methods** in `/evals/categories` - Tests cover causal relationship evaluation, conformance validation, and quantitative model assessment
+- **Model output evaluation** in `/evals/model_output_evaluation` - Standalone tools for classifying System Dynamics model output (time series) into behavioral patterns like exponential growth, oscillation, or S-shaped growth
 
 Run tests with:
 ```bash
@@ -252,6 +253,7 @@ Tests are built using Jest and Supertest, and use the actual engine implementati
 
 ## Evals
 - checkout the [Evals README](evals/README.md)
+- for model output behavior classification, see [Model Output Evaluation](evals/model_output_evaluation/behavioral_evaluation_using_ists/README.md)
 
   
 # Inspiration and Related Work
