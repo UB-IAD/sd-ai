@@ -4,6 +4,17 @@ import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { ZodToStructuredOutputConverter } from "./ZodToStructuredOutputConverter.js";
+import logger from "./logger.js";
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+// Get the directory of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load pricing data from JSON file
+const pricingData = JSON.parse(readFileSync(join(__dirname, 'model-pricing.json'), 'utf-8'));
 
 export const ModelType = Object.freeze({
   GEMINI:   Symbol("Gemini"),
@@ -60,6 +71,10 @@ export class LLMWrapper {
   #zodToStructuredOutputConverter = new ZodToStructuredOutputConverter();
 
   model = new ModelCapabilities(LLMWrapper.BUILD_DEFAULT_MODEL);
+
+  // Pricing per million tokens (input/output) in USD
+  // Loaded dynamically from model-pricing.json
+  static MODEL_PRICING = pricingData.pricing;
 
   constructor(parameters) {
     if (!parameters.openAIKey) {
@@ -413,6 +428,40 @@ export class LLMWrapper {
   }
 
   /**
+   * Calculates the cost in USD for a given model and token usage
+   * @param {string} model - The model name
+   * @param {number} inputTokens - Number of input tokens
+   * @param {number} outputTokens - Number of output tokens
+   * @returns {number} Cost in USD, or NaN if pricing is unavailable
+   */
+  #calculateCostEstimate(model, inputTokens, outputTokens) {
+    // Get pricing for the model (strip reasoning effort suffixes if present)
+    const baseModel = model.split(' ')[0];
+    const pricing = LLMWrapper.MODEL_PRICING[baseModel];
+
+    if (!pricing) {
+      // Unknown model, return NaN to indicate pricing unavailable
+      logger.debug(`[Cost Tracking] No pricing available for model: ${model}, returning NaN`);
+      return NaN;
+    }
+
+    // Validate pricing data
+    if (typeof pricing.input !== 'number' || typeof pricing.output !== 'number') {
+      logger.warn(`[Cost Tracking] Invalid pricing data for model: ${model}, returning NaN`);
+      return NaN;
+    }
+
+    // Calculate cost: (tokens / 1,000,000) * price_per_million
+    const inputCost = (inputTokens / 1000000) * pricing.input;
+    const outputCost = (outputTokens / 1000000) * pricing.output;
+    const totalCost = inputCost + outputCost;
+
+    logger.debug(`[Cost Tracking] Model: ${model}, Input: ${inputTokens} tokens ($${inputCost.toFixed(6)}), Output: ${outputTokens} tokens ($${outputCost.toFixed(6)}), Total: $${totalCost.toFixed(6)}`);
+
+    return totalCost;
+  }
+
+  /**
    * Gets the LLM parameters based on model capabilities
    * @param {number} defaultTemperature - The default temperature to use (default: 0)
    * @returns {{underlyingModel: string, systemRole: string, temperature: number|undefined, reasoningEffort: string|undefined}}
@@ -460,6 +509,10 @@ export class LLMWrapper {
     return { underlyingModel, systemRole, temperature, reasoningEffort };
   }
 
+  /**
+   * Creates a chat completion with cost tracking
+   * @returns {Promise<{content: string, cost: number}>} Object with content and cost in USD
+   */
   async createChatCompletion(messages, model, zodSchema = null, temperature = null, reasoningEffort = null) {
     if (this.model.kind === ModelType.GEMINI) {
       return await this.#createGeminiChatCompletion(messages, model, zodSchema, temperature, reasoningEffort);
@@ -489,7 +542,19 @@ export class LLMWrapper {
     }
 
     const completion = await this.#openAIAPI.chat.completions.create(completionParams);
-    return completion.choices[0].message;
+    const message = completion.choices[0].message;
+
+    // Calculate cost from usage data
+    const usage = completion.usage || {};
+    const inputTokens = usage.prompt_tokens || 0;
+    const outputTokens = usage.completion_tokens || 0;
+    const costEstimate = this.#calculateCostEstimate(model, inputTokens, outputTokens);
+
+    // Return message content along with cost
+    return {
+      ...message,
+      costEstimate
+    };
   }
 
   async #createGeminiChatCompletion(messages, model, zodSchema = null, temperature = null, reasoningEffort = null) {
@@ -533,9 +598,16 @@ export class LLMWrapper {
 
     const result = await this.#geminiAPI.models.generateContent(requestConfig);
 
-    // Convert Gemini response to OpenAI format
+    // Extract usage metadata from Gemini response
+    const usageMetadata = result.usageMetadata || {};
+    const inputTokens = usageMetadata.promptTokenCount || 0;
+    const outputTokens = usageMetadata.candidatesTokenCount || 0;
+    const costEstimate = this.#calculateCostEstimate(model, inputTokens, outputTokens);
+
+    // Convert Gemini response to OpenAI format with cost
     return {
-      content: result.text
+      content: result.text,
+      costEstimate
     };
   }
 
@@ -574,15 +646,16 @@ export class LLMWrapper {
       { headers }
     );
 
-    // With output_format, the response is always in content[0].text as JSON
-    if (zodSchema) {
-      return {
-        content: completion.content[0].text
-      };
-    }
+    // Extract usage from Claude response
+    const usage = completion.usage || {};
+    const inputTokens = usage.input_tokens || 0;
+    const outputTokens = usage.output_tokens || 0;
+    const costEstimate = this.#calculateCostEstimate(model, inputTokens, outputTokens);
 
+    // Return content with cost
     return {
-      content: completion.content[0].text
+      content: completion.content[0].text,
+      costEstimate
     };
   }
 

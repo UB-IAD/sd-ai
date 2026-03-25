@@ -1,0 +1,209 @@
+{
+  "lastUpdated": "2026-03-24",
+  "pricing": {
+    "gpt-4o": {
+      "input": 2.5,
+      "output": 10
+    },
+    "gpt-4o-mini": {
+      "input": 0.15,
+      "output": 0.6
+    },
+    "gpt-4.1": {
+      "input": 4.1,
+      "output": 1
+    },
+    "gpt-4.1-mini": {
+      "input": 4.1,
+      "output": 1
+    },
+    "gpt-4.1-nano": {
+      "input": 4.1,
+      "output": 1
+    },
+    "gpt-5": {
+      "input": 0.625,
+      "output": 5
+    },
+    "gpt-5.1": {
+      "input": 5.1,
+      "output": 0.625
+    },
+    "gpt-5.2": {
+      "input": 5.2,
+      "output": 0.875
+    },
+    "gpt-5-mini": {
+      "input": 0.25,
+      "output": 2
+    },
+    "gpt-5-nano": {
+      "input": 0.05,
+      "output": 0.4
+    },
+    "o1": {
+      "input": 15,
+      "output": 60
+    },
+    "o1-mini": {
+      "input": 0.55,
+      "output": 2.2
+    },
+    "o3": {
+      "input": 2,
+      "output": 8
+    },
+    "o3-mini": {
+      "input": 1.1,
+      "output": 4.4
+    },
+    "o4-mini": {
+      "input": 2,
+      "output": 8
+    },
+    "gemini-2.5-pro": {
+      "input": 1.25,
+      "output": 5
+    },
+    "gemini-2.5-flash": {
+      "input": 0.075,
+      "output": 0.3
+    },
+    "gemini-2.5-flash-lite": {
+      "input": 0.0375,
+      "output": 0.15
+    },
+    "gemini-3-flash-preview": {
+      "input": 0.1,
+      "output": 0.4
+    },
+    "gemini-3.1-pro-preview": {
+      "input": 2.5,
+      "output": 10
+    },
+    "claude-opus-4-6": {
+      "input": 15,
+      "output": 75
+    },
+    "claude-opus-4-5": {
+      "input": 15,
+      "output": 75
+    },
+    "claude-opus-4-1-20250805": {
+      "input": 15,
+      "output": 75
+    },
+    "claude-sonnet-4-6": {
+      "input": 3,
+      "output": 15
+    },
+    "claude-sonnet-4-5": {
+      "input": 3,
+      "output": 15
+    },
+    "claude-sonnet-4-20250514": {
+      "input": 3,
+      "output": 15
+    },
+    "claude-haiku-4-5": {
+      "input": 0.8,
+      "output": 4
+    },
+    "llama": {
+      "input": 0,
+      "output": 0
+    },
+    "deepseek": {
+      "input": 0,
+      "output": 0
+    },
+    "gpt-oss-20b": {
+      "input": 1,
+      "output": 1
+    },
+    "gpt-5.4-nano": {
+      "input": 5.4,
+      "output": 0.2
+    },
+    "gpt-5.1-codex": {
+      "input": 5.1,
+      "output": 1.25
+    },
+    "gpt-3.5-turbo": {
+      "input": 3.5,
+      "output": 3
+    },
+    "gpt-5.1-chat": {
+      "input": 5.1,
+      "output": 0.625
+    },
+    "gpt-5.4-mini": {
+      "input": 5.4,
+      "output": 0.75
+    },
+    "gpt-5.2-chat": {
+      "input": 5.2,
+      "output": 0.875
+    },
+    "gpt-5-codex": {
+      "input": 1.25,
+      "output": 10
+    },
+    "gpt-5-chat": {
+      "input": 1.25,
+      "output": 10
+    },
+    "gpt-5.3-codex": {
+      "input": 5.3,
+      "output": 1.75
+    },
+    "gpt-5.2-codex": {
+      "input": 5.2,
+      "output": 1.75
+    },
+    "gpt-5.3-chat": {
+      "input": 5.3,
+      "output": 1.75
+    },
+    "gpt-5.4": {
+      "input": 5.4,
+      "output": 1.1
+    },
+    "gpt-4-turbo": {
+      "input": 5,
+      "output": 15
+    },
+    "o3-deep": {
+      "input": 10,
+      "output": 40
+    },
+    "gpt-5.2-pro": {
+      "input": 5.2,
+      "output": 10.5
+    },
+    "gpt-5-pro": {
+      "input": 15,
+      "output": 120
+    },
+    "o3-pro": {
+      "input": 20,
+      "output": 80
+    },
+    "gpt-5.4-pro": {
+      "input": 5.4,
+      "output": 1.1
+    },
+    "gpt-4": {
+      "input": 30,
+      "output": 60
+    },
+    "gpt-4.5": {
+      "input": 4.5,
+      "output": 75
+    },
+    "o1-pro": {
+      "input": 150,
+      "output": 600
+    }
+  }
+}
