@@ -23,8 +23,9 @@ RUN pip install --no-cache-dir pysimlin
 RUN npm install -g @simlin/mcp@0.1.4 @anthropic-ai/claude-code
 
 COPY mcp.json /opt/simlin-agent/mcp.json
+COPY CLAUDE.md /opt/simlin-agent/CLAUDE.md
 
 WORKDIR /workspace
 
-ENTRYPOINT ["claude", "-p", "--bare", "--dangerously-skip-permissions", "--mcp-config", "/opt/simlin-agent/mcp.json"]
+ENTRYPOINT ["claude", "-p", "--bare", "--dangerously-skip-permissions", "--mcp-config", "/opt/simlin-agent/mcp.json", "--system-prompt-file", "/opt/simlin-agent/CLAUDE.md"]
 CMD ["--model", "claude-opus-4-6"]
