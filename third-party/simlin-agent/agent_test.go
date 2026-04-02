@@ -40,6 +40,13 @@ type relationship struct {
 	Polarity string `json:"polarity"`
 }
 
+// podman's rootless mode remaps UIDs, so volume mounts are inaccessible
+// to the non-root container user without --userns=keep-id
+func isPodman() bool {
+	out, _ := exec.Command("docker", "--version").CombinedOutput()
+	return strings.Contains(string(out), "podman")
+}
+
 func TestSimlinAgentSimpleSFD(t *testing.T) {
 	apiKey := os.Getenv("ANTHROPIC_API_KEY")
 	if apiKey == "" {
@@ -58,11 +65,16 @@ func TestSimlinAgentSimpleSFD(t *testing.T) {
 	inputPath := filepath.Join(tempDir, "input.sd.json")
 	require.NoError(t, os.WriteFile(inputPath, []byte(`{"variables":[],"relationships":[],"specs":{}}`), 0644))
 
-	cmd := exec.Command("docker", "run", "--rm", "-i",
+	dockerArgs := []string{"run", "--rm", "-i"}
+	if isPodman() {
+		dockerArgs = append(dockerArgs, "--userns=keep-id")
+	}
+	dockerArgs = append(dockerArgs,
 		"-v", tempDir+":/workspace",
 		"-e", "ANTHROPIC_API_KEY="+apiKey,
 		"sd-ai-simlin-agent",
 		"--model", "claude-sonnet-4-6")
+	cmd := exec.Command("docker", dockerArgs...)
 	cmd.Stdin = strings.NewReader(fixture.Prompt)
 
 	output, err := cmd.CombinedOutput()

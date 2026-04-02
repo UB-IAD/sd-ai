@@ -25,6 +25,12 @@ RUN npm install -g @simlin/mcp@0.1.4 @anthropic-ai/claude-code
 COPY mcp.json /opt/simlin-agent/mcp.json
 COPY CLAUDE.md /opt/simlin-agent/CLAUDE.md
 
+RUN useradd -m -s /bin/bash agent && \
+    mkdir -p /workspace && chown agent:agent /workspace && \
+    git config --system user.name "simlin-agent" && \
+    git config --system user.email "simlin-agent@localhost"
+
+USER agent
 WORKDIR /workspace
 
 ENTRYPOINT ["claude", "-p", "--bare", "--dangerously-skip-permissions", "--mcp-config", "/opt/simlin-agent/mcp.json", "--system-prompt-file", "/opt/simlin-agent/CLAUDE.md"]

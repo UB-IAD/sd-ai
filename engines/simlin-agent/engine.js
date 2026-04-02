@@ -9,6 +9,17 @@ const IMAGE_NAME = 'sd-ai-simlin-agent';
 
 const promiseExecFile = util.promisify(execFile);
 
+// podman's rootless mode remaps UIDs, so volume mounts are inaccessible
+// to the non-root container user without --userns=keep-id
+const usesPodman = (() => {
+    try {
+        const result = spawnSync('docker', ['--version'], { encoding: 'utf8' });
+        return result.stdout?.includes('podman');
+    } catch {
+        return false;
+    }
+})();
+
 class SimlinAgentEngine {
     constructor() {}
 
@@ -113,6 +124,7 @@ class SimlinAgentEngine {
 
             const args = [
                 'run', '--rm', '-i',
+                ...(usesPodman ? ['--userns=keep-id'] : []),
                 '-v', `${tempDir}:/workspace`,
                 '-e', `ANTHROPIC_API_KEY=${anthropicKey}`,
                 IMAGE_NAME,
