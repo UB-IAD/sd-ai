@@ -1,0 +1,3 @@
+{
+    "prompt": "Create a model with one stock called population with initial value 100 and an inflow called births with equation population * 0.05. Use time units of years and simulate from 0 to 100."
+}
