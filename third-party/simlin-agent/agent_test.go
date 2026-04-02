@@ -74,8 +74,18 @@ func TestSimlinAgentSimpleSFD(t *testing.T) {
 		"-e", "ANTHROPIC_API_KEY="+apiKey,
 		"sd-ai-simlin-agent",
 		"--model", "claude-sonnet-4-6")
+	taskPrompt := "## Task\n\n" + fixture.Prompt +
+		"\n\n## Input\n\n" +
+		"The current model is at /workspace/input.sd.json. " +
+		"If it is empty or minimal, build a new model from scratch. " +
+		"If it is populated, iterate on or fix it.\n\n" +
+		"## Output\n\n" +
+		"Write your final model to /workspace/output.json in SD-JSON format.\n\n" +
+		"IMPORTANT: if the task asks you to provide an explanation or description, " +
+		"write it to /workspace/explanation.txt as plain text."
+
 	cmd := exec.Command("docker", dockerArgs...)
-	cmd.Stdin = strings.NewReader(fixture.Prompt)
+	cmd.Stdin = strings.NewReader(taskPrompt)
 
 	output, err := cmd.CombinedOutput()
 	if err != nil {

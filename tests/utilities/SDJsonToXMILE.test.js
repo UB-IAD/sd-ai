@@ -101,7 +101,7 @@ describe('SDJsonToXMILE', () => {
     });
 
     describe('Flows', () => {
-        test('should generate flow with non_negative tag by default', () => {
+        test('should NOT generate non_negative tag by default', () => {
             const sdJson = {
                 variables: [
                     { name: 'births', type: 'flow', equation: 'population * 0.1' }
@@ -112,7 +112,7 @@ describe('SDJsonToXMILE', () => {
             const xmile = SDJsonToXMILE(sdJson);
 
             expect(xmile).toContain('<flow name="births">');
-            expect(xmile).toContain('<non_negative/>');
+            expect(xmile).not.toContain('<non_negative/>');
             expect(xmile).toContain('<eqn>population * 0.1</eqn>');
         });
 
@@ -130,7 +130,7 @@ describe('SDJsonToXMILE', () => {
             expect(xmile).toContain('<non_negative/>');
         });
 
-        test('should include non_negative when uniflow is undefined (backward compatibility)', () => {
+        test('should NOT include non_negative when uniflow is undefined', () => {
             const sdJson = {
                 variables: [
                     { name: 'production', type: 'flow', equation: '50' }
@@ -140,7 +140,7 @@ describe('SDJsonToXMILE', () => {
 
             const xmile = SDJsonToXMILE(sdJson);
 
-            expect(xmile).toContain('<non_negative/>');
+            expect(xmile).not.toContain('<non_negative/>');
         });
 
         test('should NOT include non_negative when uniflow is false', () => {

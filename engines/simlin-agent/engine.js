@@ -105,13 +105,21 @@ class SimlinAgentEngine {
 
         const model = parameters.underlyingModel || 'claude-opus-4-6';
 
-        let promptText = prompt;
+        let promptText = `## Task\n\n${prompt}`;
         if (parameters.problemStatement) {
             promptText += `\n\nProblem Statement:\n${parameters.problemStatement}`;
         }
         if (parameters.backgroundKnowledge) {
             promptText += `\n\nBackground Knowledge:\n${parameters.backgroundKnowledge}`;
         }
+        promptText += `\n\n## Input\n\n`;
+        promptText += `The current model is at /workspace/input.sd.json. `;
+        promptText += `If it is empty or minimal, build a new model from scratch. `;
+        promptText += `If it is populated, iterate on or fix it.\n\n`;
+        promptText += `## Output\n\n`;
+        promptText += `Write your final model to /workspace/output.json in SD-JSON format.\n\n`;
+        promptText += `IMPORTANT: if the task asks you to provide an explanation or description, `;
+        promptText += `write it to /workspace/explanation.txt as plain text.`;
 
         let tempDir;
         try {
@@ -165,6 +173,13 @@ class SimlinAgentEngine {
                 return { err: 'output.json missing or invalid specs object' };
             }
 
+            let explanation = '';
+            try {
+                explanation = await fs.readFile(path.join(tempDir, 'explanation.txt'), 'utf8');
+            } catch {
+                // explanation.txt is optional
+            }
+
             return {
                 model: {
                     variables: parsed.variables,
@@ -172,7 +187,7 @@ class SimlinAgentEngine {
                     specs: parsed.specs
                 },
                 supportingInfo: {
-                    explanation: parsed.explanation || '',
+                    explanation: explanation || parsed.explanation || '',
                     title: parsed.title || ''
                 }
             };
