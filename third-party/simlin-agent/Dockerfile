@@ -33,5 +33,5 @@ RUN useradd -m -s /bin/bash agent && \
 USER agent
 WORKDIR /workspace
 
-ENTRYPOINT ["claude", "-p", "--bare", "--dangerously-skip-permissions", "--mcp-config", "/opt/simlin-agent/mcp.json", "--system-prompt-file", "/opt/simlin-agent/CLAUDE.md"]
+ENTRYPOINT ["claude", "-p", "--bare", "--dangerously-skip-permissions", "--effort", "high", "--mcp-config", "/opt/simlin-agent/mcp.json", "--system-prompt-file", "/opt/simlin-agent/CLAUDE.md"]
 CMD ["--model", "claude-opus-4-6"]
