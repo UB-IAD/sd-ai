@@ -2,12 +2,8 @@ import { execFile, spawnSync } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
-import { fileURLToPath } from 'node:url';
 import util from 'node:util';
 import logger from '../../utilities/logger.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const IMAGE_NAME = 'sd-ai-simlin-agent';
 
@@ -153,7 +149,7 @@ class SimlinAgentEngine {
             if (!parsed.relationships || !Array.isArray(parsed.relationships)) {
                 return { err: 'output.json missing or invalid relationships array' };
             }
-            if (!parsed.specs || typeof parsed.specs !== 'object') {
+            if (!parsed.specs || typeof parsed.specs !== 'object' || Array.isArray(parsed.specs)) {
                 return { err: 'output.json missing or invalid specs object' };
             }
 
@@ -169,9 +165,9 @@ class SimlinAgentEngine {
                 }
             };
         } catch (err) {
-            logger.log(`simlin-agent Docker exited with code: ${err.status}`);
+            logger.log(`simlin-agent Docker error (exit code ${err.code}): ${err.message}`);
             if (err.stderr) {
-                return { err: err.stderr.toString() };
+                return { err: err.stderr };
             }
             return { err: err.toString() };
         } finally {
