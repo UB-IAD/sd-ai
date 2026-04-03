@@ -9,6 +9,8 @@ const IMAGE_NAME = 'sd-ai-simlin-agent';
 
 const promiseExecFile = util.promisify(execFile);
 
+export const DOCKER_TIMEOUT_MS = 20 * 60 * 1000;
+
 // podman's rootless mode remaps UIDs, so volume mounts are inaccessible
 // to the non-root container user without --userns=keep-id
 const usesPodman = (() => {
@@ -141,7 +143,7 @@ class SimlinAgentEngine {
 
             const promise = promiseExecFile('docker', args, {
                 maxBuffer: 10 * 1024 * 1024,
-                timeout: 10 * 60 * 1000
+                timeout: DOCKER_TIMEOUT_MS
             });
             promise.child.stdin.write(promptText);
             promise.child.stdin.end();
