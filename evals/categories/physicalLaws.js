@@ -29,13 +29,136 @@ Hooke's law, and the ideal gas law. It tests whether models exhibit correct ener
 force-acceleration relationships, thermodynamic behavior, and physically realistic dynamics.`;
 };
 
+const MIN_OSCILLATOR_FIT_R_SQUARED = 0.90;
+const MAX_VELOCITY_COEFFICIENT_NOISE = 1e-4;
+
+const solveTwoPredictorLeastSquares = (feature1, feature2, target) => {
+    let s11 = 0;
+    let s12 = 0;
+    let s22 = 0;
+    let b1 = 0;
+    let b2 = 0;
+
+    for (let i = 0; i < target.length; i++) {
+        s11 += feature1[i] * feature1[i];
+        s12 += feature1[i] * feature2[i];
+        s22 += feature2[i] * feature2[i];
+        b1 += feature1[i] * target[i];
+        b2 += feature2[i] * target[i];
+    }
+
+    const determinant = s11 * s22 - s12 * s12;
+    if (Math.abs(determinant) < 1e-12) {
+        return null;
+    }
+
+    const coefficient1 = (b1 * s22 - b2 * s12) / determinant;
+    const coefficient2 = (s11 * b2 - s12 * b1) / determinant;
+    const meanTarget = target.reduce((sum, value) => sum + value, 0) / target.length;
+
+    let sumSquaredResiduals = 0;
+    let sumSquaredTotal = 0;
+    for (let i = 0; i < target.length; i++) {
+        const prediction = coefficient1 * feature1[i] + coefficient2 * feature2[i];
+        sumSquaredResiduals += Math.pow(target[i] - prediction, 2);
+        sumSquaredTotal += Math.pow(target[i] - meanTarget, 2);
+    }
+
+    const rSquared = sumSquaredTotal > 1e-12
+        ? 1 - (sumSquaredResiduals / sumSquaredTotal)
+        : (sumSquaredResiduals <= 1e-12 ? 1 : 0);
+
+    return {
+        coefficient1,
+        coefficient2,
+        rSquared
+    };
+};
+
+const findSignChangeIndices = (series) => {
+    const indices = [];
+    let previousSign = Math.sign(series[0]);
+    let previousIndex = 0;
+
+    for (let i = 1; i < series.length; i++) {
+        const currentSign = Math.sign(series[i]);
+        if (currentSign === 0) {
+            continue;
+        }
+
+        if (previousSign !== 0 && currentSign !== previousSign) {
+            indices.push(Math.abs(series[previousIndex]) <= Math.abs(series[i]) ? previousIndex : i);
+        }
+
+        previousSign = currentSign;
+        previousIndex = i;
+    }
+
+    return indices;
+};
+
+const validateOscillatorEquation = ({
+    displacement,
+    velocity,
+    acceleration,
+    restoringFeature,
+    forceViolationType,
+    forceViolationDetails,
+    accelerationDescriptor
+}) => {
+    const fails = [];
+
+    const n = acceleration.length;
+    const meanRestoring = restoringFeature.reduce((s, v) => s + v, 0) / n;
+    const meanVelocity = velocity.reduce((s, v) => s + v, 0) / n;
+    const meanAcceleration = acceleration.reduce((s, v) => s + v, 0) / n;
+
+    const centeredRestoring = restoringFeature.map(v => v - meanRestoring);
+    const centeredVelocity = velocity.map(v => v - meanVelocity);
+    const centeredAcceleration = acceleration.map(v => v - meanAcceleration);
+
+    const fit = solveTwoPredictorLeastSquares(centeredRestoring, centeredVelocity, centeredAcceleration);
+    if (!fit) {
+        fails.push({
+            type: "Equation of motion violation",
+            details: `Could not fit ${accelerationDescriptor} to a restoring-force-plus-damping model.`
+        });
+        return fails;
+    }
+
+    if (fit.coefficient1 >= 0) {
+        fails.push({
+            type: forceViolationType,
+            details: forceViolationDetails(fit)
+        });
+    }
+
+    if (fit.rSquared < MIN_OSCILLATOR_FIT_R_SQUARED) {
+        fails.push({
+            type: "Equation of motion violation",
+            details: `${accelerationDescriptor} should be well explained by a restoring-force-plus-damping model. ` +
+                    `Best-fit R²: ${fit.rSquared.toFixed(3)} (expected >= ${MIN_OSCILLATOR_FIT_R_SQUARED.toFixed(2)})`
+        });
+    }
+
+    if (fit.coefficient2 > MAX_VELOCITY_COEFFICIENT_NOISE) {
+        fails.push({
+            type: "Energy conservation violation",
+            details: `${accelerationDescriptor} should not include a positive feedback term that adds energy. ` +
+                    `Best-fit velocity coefficient: ${fit.coefficient2.toFixed(6)} (expected <= 0)`
+        });
+    }
+
+    return fails;
+};
+
 /**
  * Validates that a pendulum model obeys Newton's laws of motion
  * @param {Object} simulationResults - Results from simulation containing time, angle, angular_velocity, angular_acceleration
  * @param {Object} model - The model object containing variables
  * @returns {Array<Object>} A list of failures with type and details
  */
-const validateNewtonsLaws = (simulationResults, model) => {
+export const validateNewtonsLaws = (simulationResults, model) => {
     const fails = [];
 
     // Extract time series data
@@ -75,12 +198,7 @@ const validateNewtonsLaws = (simulationResults, model) => {
     }
 
     // Check for sign changes in angle (crosses equilibrium)
-    let signChanges = 0;
-    for (let i = 1; i < angle.length; i++) {
-        if ((angle[i] > 0 && angle[i - 1] < 0) || (angle[i] < 0 && angle[i - 1] > 0)) {
-            signChanges++;
-        }
-    }
+    const signChanges = findSignChangeIndices(angle).length;
 
     if (signChanges < 2) {
         fails.push({
@@ -89,75 +207,17 @@ const validateNewtonsLaws = (simulationResults, model) => {
         });
     }
 
-    // Newton's Second Law for rotational motion: τ = I * α
-    // For a simple pendulum: α = -(g/L) * sin(θ)
-    // Check that angular_acceleration has the correct relationship with angle
-    // We expect: angular_acceleration ≈ -constant * sin(angle) or for small angles: -constant * angle
-
-    // Calculate correlation between angle and angular_acceleration
-    // They should be negatively correlated (when angle is positive, acceleration should be negative)
-    let correlationSum = 0;
-    let angleSum = 0;
-    let accelSum = 0;
-    let validPoints = 0;
-
-    for (let i = 0; i < angle.length; i++) {
-        // Skip points with very small angles to avoid noise
-        if (Math.abs(angle[i]) > 0.001) {
-            correlationSum += angle[i] * angularAcceleration[i];
-            angleSum += angle[i] * angle[i];
-            accelSum += angularAcceleration[i] * angularAcceleration[i];
-            validPoints++;
-        }
-    }
-
-    if (validPoints > 0 && angleSum > 0 && accelSum > 0) {
-        // Simplified correlation (should be negative for pendulum)
-        const correlation = correlationSum / Math.sqrt(angleSum * accelSum);
-
-        if (correlation > -0.5) {
-            fails.push({
-                type: "Newton's second law violation",
-                details: `Angular acceleration should be negatively correlated with angle (restoring force). ` +
-                        `Correlation coefficient: ${correlation.toFixed(3)} (expected < -0.5)`
-            });
-        }
-    }
-
-    // Check velocity-acceleration relationship
-    // Angular velocity should be at maximum when angle is zero (conservation of energy)
-    // Find indices where angle is closest to zero
-    const zeroAngles = [];
-    for (let i = 1; i < angle.length - 1; i++) {
-        if (Math.abs(angle[i]) < Math.abs(angle[i - 1]) && Math.abs(angle[i]) < Math.abs(angle[i + 1])) {
-            if (Math.abs(angle[i]) < 0.1 * angleRange) {
-                zeroAngles.push(i);
-            }
-        }
-    }
-
-    // At zero angles, angular velocity should be at or near maximum
-    if (zeroAngles.length > 0) {
-        const maxVelocity = Math.max(...angularVelocity.map(Math.abs));
-        let velocityAtZeroSum = 0;
-
-        for (const idx of zeroAngles) {
-            velocityAtZeroSum += Math.abs(angularVelocity[idx]);
-        }
-
-        const avgVelocityAtZero = velocityAtZeroSum / zeroAngles.length;
-
-        // Average velocity at zero should be at least 60% of max (accounting for damping)
-        if (avgVelocityAtZero < 0.5 * maxVelocity) {
-            fails.push({
-                type: "Energy conservation violation",
-                details: `Angular velocity should be maximum when angle is zero (energy conservation). ` +
-                        `Average velocity at zero: ${avgVelocityAtZero.toFixed(3)}, ` +
-                        `Maximum velocity: ${maxVelocity.toFixed(3)} ` +
-                        `(ratio: ${(avgVelocityAtZero / maxVelocity).toFixed(3)})`
-            });
-        }
-    }
+    fails.push(...validateOscillatorEquation({
+        displacement: angle,
+        velocity: angularVelocity,
+        acceleration: angularAcceleration,
+        restoringFeature: angle.map(Math.sin),
+        forceViolationType: "Newton's second law violation",
+        forceViolationDetails: (fit) =>
+            `Angular acceleration should point back toward equilibrium. ` +
+            `Best-fit sin(angle) coefficient: ${fit.coefficient1.toFixed(3)} (expected < 0)`,
+        accelerationDescriptor: "Angular acceleration"
+    }));
 
     // Check that angular velocity is the derivative of angle
     // For discrete time: velocity[i] ≈ (angle[i+1] - angle[i]) / dt
@@ -383,7 +443,7 @@ const pendulumTests = [
  * @param {Object} model - The model object containing variables
  * @returns {Array<Object>} A list of failures with type and details
  */
-const validateSpringMassLaws = (simulationResults, model) => {
+export const validateSpringMassLaws = (simulationResults, model) => {
     const fails = [];
 
     // Extract time series data
@@ -422,12 +482,7 @@ const validateSpringMassLaws = (simulationResults, model) => {
     }
 
     // Check for sign changes in position (crosses equilibrium)
-    let signChanges = 0;
-    for (let i = 1; i < position.length; i++) {
-        if ((position[i] > 0 && position[i - 1] < 0) || (position[i] < 0 && position[i - 1] > 0)) {
-            signChanges++;
-        }
-    }
+    const signChanges = findSignChangeIndices(position).length;
 
     if (signChanges < 2) {
         fails.push({
@@ -436,66 +491,17 @@ const validateSpringMassLaws = (simulationResults, model) => {
         });
     }
 
-    // Hooke's Law: F = -kx, therefore a = -(k/m)*x
-    // Check that acceleration has the correct relationship with position
-    // They should be negatively correlated
-    let correlationSum = 0;
-    let posSum = 0;
-    let accelSum = 0;
-    let validPoints = 0;
-
-    for (let i = 0; i < position.length; i++) {
-        if (Math.abs(position[i]) > 0.001) {
-            correlationSum += position[i] * acceleration[i];
-            posSum += position[i] * position[i];
-            accelSum += acceleration[i] * acceleration[i];
-            validPoints++;
-        }
-    }
-
-    if (validPoints > 0 && posSum > 0 && accelSum > 0) {
-        const correlation = correlationSum / Math.sqrt(posSum * accelSum);
-
-        if (correlation > -0.5) {
-            fails.push({
-                type: "Hooke's law violation",
-                details: `Acceleration should be negatively correlated with position (restoring force). ` +
-                        `Correlation coefficient: ${correlation.toFixed(3)} (expected < -0.5)`
-            });
-        }
-    }
-
-    // Check velocity-position relationship (energy conservation)
-    // Velocity should be maximum when position is zero
-    const zeroPositions = [];
-    for (let i = 1; i < position.length - 1; i++) {
-        if (Math.abs(position[i]) < Math.abs(position[i - 1]) && Math.abs(position[i]) < Math.abs(position[i + 1])) {
-            if (Math.abs(position[i]) < 0.1 * posRange) {
-                zeroPositions.push(i);
-            }
-        }
-    }
-
-    if (zeroPositions.length > 0) {
-        const maxVelocity = Math.max(...velocity.map(Math.abs));
-        let velocityAtZeroSum = 0;
-
-        for (const idx of zeroPositions) {
-            velocityAtZeroSum += Math.abs(velocity[idx]);
-        }
-
-        const avgVelocityAtZero = velocityAtZeroSum / zeroPositions.length;
-
-        if (avgVelocityAtZero < 0.5 * maxVelocity) {
-            fails.push({
-                type: "Energy conservation violation",
-                details: `Velocity should be maximum when position is zero (energy conservation). ` +
-                        `Average velocity at zero: ${avgVelocityAtZero.toFixed(3)}, ` +
-                        `Maximum velocity: ${maxVelocity.toFixed(3)} ` +
-                        `(ratio: ${(avgVelocityAtZero / maxVelocity).toFixed(3)})`
-            });
-        }
-    }
+    fails.push(...validateOscillatorEquation({
+        displacement: position,
+        velocity,
+        acceleration,
+        restoringFeature: position,
+        forceViolationType: "Hooke's law violation",
+        forceViolationDetails: (fit) =>
+            `Acceleration should point back toward equilibrium. ` +
+            `Best-fit position coefficient: ${fit.coefficient1.toFixed(3)} (expected < 0)`,
+        accelerationDescriptor: "Acceleration"
+    }));
 
     // Check that velocity is the derivative of position
     if (time.length >= 3) {
