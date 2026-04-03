@@ -1,9 +1,23 @@
-import { DOCKER_TIMEOUT_MS } from '../../../engines/simlin-agent/engine.js';
+import SimlinAgentEngine from '../../../engines/simlin-agent/engine.js';
 
 describe('SimlinAgentEngine', () => {
-    describe('DOCKER_TIMEOUT_MS', () => {
-        it('should be set to 20 minutes for complex error-fixing tasks', () => {
-            expect(DOCKER_TIMEOUT_MS).toBe(20 * 60 * 1000);
+    const savedKey = process.env.ANTHROPIC_API_KEY;
+
+    beforeEach(() => {
+        delete process.env.ANTHROPIC_API_KEY;
+    });
+
+    afterEach(() => {
+        if (savedKey !== undefined) {
+            process.env.ANTHROPIC_API_KEY = savedKey;
+        }
+    });
+
+    it('returns an error when no anthropicKey is provided', async () => {
+        const engine = new SimlinAgentEngine();
+        const result = await engine.generate('test prompt', null, {});
+        expect(result).toEqual({
+            err: 'Missing anthropicKey parameter (set via request or ANTHROPIC_API_KEY env var)'
         });
     });
 });
