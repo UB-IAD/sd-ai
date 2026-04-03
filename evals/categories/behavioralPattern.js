@@ -61,6 +61,81 @@ const generateBasicBehaviorModeTest = function(name, patternDescription, expecte
 
 
 /**
+ * Fallback oscillation detector using zero-crossing analysis.
+ *
+ * The curve-fitting classifier (third-party) can misclassify non-sinusoidal
+ * oscillations (e.g. relaxation oscillations from a Van der Pol oscillator)
+ * because its sine model is a poor fit for the waveform shape. This heuristic
+ * catches those cases by looking at sign changes after detrending.
+ *
+ * @param {Array<number>} timeSeries - The time series values
+ * @returns {{ isOscillating: boolean, zeroCrossings: number, amplitude: number, sustainedInBothHalves: boolean }}
+ */
+export function detectOscillationFallback(timeSeries) {
+    if (!timeSeries || timeSeries.length < 3) {
+        return { isOscillating: false, zeroCrossings: 0, amplitude: 0, sustainedInBothHalves: false };
+    }
+
+    const n = timeSeries.length;
+    const mean = timeSeries.reduce((a, b) => a + b, 0) / n;
+
+    // Detrend by subtracting the mean so we can count zero-crossings
+    const detrended = timeSeries.map(v => v - mean);
+
+    // Count zero-crossings (sign changes) and record their positions
+    const crossingIndices = [];
+    for (let i = 1; i < n; i++) {
+        if ((detrended[i - 1] >= 0 && detrended[i] < 0) ||
+            (detrended[i - 1] < 0 && detrended[i] >= 0)) {
+            crossingIndices.push(i);
+        }
+    }
+    const zeroCrossings = crossingIndices.length;
+
+    const dataMax = timeSeries.reduce((max, v) => v > max ? v : max, -Infinity);
+    const dataMin = timeSeries.reduce((min, v) => v < min ? v : min, Infinity);
+    const amplitude = dataMax - dataMin;
+    const absMean = Math.abs(mean);
+
+    // Check that oscillation is present in both halves of the series
+    const mid = Math.floor(n / 2);
+    const firstHalfCrossings = crossingIndices.filter(idx => idx < mid).length;
+    const secondHalfCrossings = crossingIndices.filter(idx => idx >= mid).length;
+    const sustainedInBothHalves = firstHalfCrossings >= 1 && secondHalfCrossings >= 1;
+
+    const hasEnoughCrossings = zeroCrossings >= 4;
+
+    // Amplitude must be above an absolute floor (to reject constant series)
+    // AND, when the mean is far from zero, must also be significant relative
+    // to the mean (to reject tiny ripples on a large offset).
+    const AMPLITUDE_FLOOR = 1e-6;
+    const hasSignificantAmplitude =
+        amplitude > AMPLITUDE_FLOOR &&
+        (absMean < AMPLITUDE_FLOOR || amplitude > 0.1 * absMean);
+
+    // Periodicity check: true oscillation has roughly regular intervals
+    // between zero crossings. Noise or detrended trends have irregular ones.
+    // Require the coefficient of variation (std/mean) to be below a threshold.
+    let isPeriodic = false;
+    if (crossingIndices.length >= 4) {
+        const intervals = [];
+        for (let i = 1; i < crossingIndices.length; i++) {
+            intervals.push(crossingIndices[i] - crossingIndices[i - 1]);
+        }
+        const intervalMean = intervals.reduce((a, b) => a + b, 0) / intervals.length;
+        const intervalVariance = intervals.reduce((sum, v) => sum + (v - intervalMean) ** 2, 0) / intervals.length;
+        const intervalStd = Math.sqrt(intervalVariance);
+        const cv = intervalStd / intervalMean;
+        isPeriodic = cv < 0.5;
+    }
+
+    const isOscillating = hasEnoughCrossings && hasSignificantAmplitude && sustainedInBothHalves && isPeriodic;
+
+    return { isOscillating, zeroCrossings, amplitude, sustainedInBothHalves };
+}
+
+
+/**
  * Evaluates whether the generated model produces the expected behavioral pattern
  * @param {Object} generatedResponse The response from the engine containing the model
  * @param {Object} requirements The expected behavioral pattern
@@ -148,6 +223,23 @@ export const evaluate = async function(generatedResponse, requirements) {
                 details: `Failed to classify behavior: ${error.message}`
             });
             return validateEvaluationResult(fails);
+        }
+
+        // Fallback: the curve-fitting classifier can miss non-sinusoidal
+        // oscillations (e.g. relaxation oscillations).  If the expected pattern
+        // is in the oscillation family and the classifier disagrees, run a
+        // simple zero-crossing heuristic before reporting a failure.
+        const oscillationFamilyPatterns = new Set(['oscillating', 'dampening']);
+        if (!patternCheck.matches && oscillationFamilyPatterns.has(expectedPattern)) {
+            const fallback = detectOscillationFallback(outputTimeSeries);
+            if (fallback.isOscillating) {
+                patternCheck = {
+                    ...patternCheck,
+                    matches: true,
+                    detected: expectedPattern,
+                    confidence: 0.75,
+                };
+            }
         }
 
         if (!patternCheck.matches) {
