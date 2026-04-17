@@ -1,0 +1,24 @@
+{
+    "sequential": true,
+    "verbose": true,
+    "engineConfigs": {
+        "simlin-agent-opus": {
+            "engine": "simlin-agent",
+            "additionalParameters": {
+                "underlyingModel": "claude-opus-4-6"
+            },
+            "limits": {
+                "requestsPerMinute": 2
+            }
+        }
+    },
+    "categories": {
+        "quantitativeTranslation": true,
+        "quantitativeCausalReasoning": true,
+        "quantitativeIteration": true,
+        "conformance": true,
+        "quantitativeErrorFixing": true,
+        "behavioralPattern": true,
+        "physicalLaws": true
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "simlin": {
+      "command": "npx",
+      "args": ["@simlin/mcp@0.1.4"]
+    }
+  }
+}
