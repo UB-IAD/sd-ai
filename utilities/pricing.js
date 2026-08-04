@@ -224,6 +224,28 @@ export const openai = {
   },
 };
 
+// ─── DeepSeek ────────────────────────────────────────────────────────────────
+// Source: https://api-docs.deepseek.com/zh-cn/quick_start/pricing
+// Native API rates (USD per 1M tokens). Cache hits are reported top-level as
+// prompt_cache_hit_tokens and bill at the reduced cachedTokens rate.
+export const deepseek = {
+  'deepseek-v4-pro': {
+    inputTokens: 0.435,
+    cachedTokens: 0.003625,
+    outputTokens: 0.87,
+  },
+  'deepseek-v4-flash': {
+    inputTokens: 0.14,
+    cachedTokens: 0.0028,
+    outputTokens: 0.28,
+  },
+  default: {
+    inputTokens: 0.14,
+    cachedTokens: 0.0028,
+    outputTokens: 0.28,
+  },
+};
+
 // NOTE: No `openrouter` pricing table here. OpenRouter responses include an
 // authoritative `usage.cost` field that is the source of truth for billed USD;
 // TokenUsageReporter trusts that value directly for Provider.OPENROUTER and
@@ -248,6 +270,8 @@ export function getPricing(provider, model, inputTokens = 0) {
     table = openai; aliases = openaiAliases; resolvedProvider = Provider.OPENAI;
   } else if (provider === Provider.GOOGLE) {
     table = gemini; aliases = {}; resolvedProvider = Provider.GOOGLE;
+  } else if (provider === Provider.DEEPSEEK) {
+    table = deepseek; aliases = {}; resolvedProvider = Provider.DEEPSEEK;
   } else {
     logger.error(`!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!`);
     logger.error(`[pricing] !!! UNKNOWN PROVIDER "${provider}" !!! falling back to openai pricing — UPDATE pricing.js`);
