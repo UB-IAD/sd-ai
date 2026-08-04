@@ -1,5 +1,6 @@
 import { SessionManager } from '../../agent/utilities/SessionManager.js';
 import { AgentOrchestrator } from '../../agent/AgentOrchestrator.js';
+import config from '../../config.js';
 import { jest } from '@jest/globals';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -42,6 +43,19 @@ function makeOpenRouterMock(summaryText = 'Mocked summary.') {
   };
 }
 
+function makeDeepSeekMock(summaryText = 'Mocked summary.') {
+  return {
+    chat: {
+      completions: {
+        create: jest.fn().mockResolvedValue({
+          choices: [{ message: { content: summaryText } }],
+          usage: { prompt_tokens: 10, completion_tokens: 20 }
+        })
+      }
+    }
+  };
+}
+
 // Pre-populate every SDK instance property with a throw-on-call guard so a test
 // that triggers summarization without first wiring the provider it exercises
 // fails loudly instead of attempting a real LLM call. The lazy loaders in
@@ -59,6 +73,7 @@ function installSdkGuards(sessionManager) {
   sessionManager.anthropic = { messages: { create: guard('anthropic') } };
   sessionManager.gemini = { models: { generateContent: guard('gemini') } };
   sessionManager.openRouter = { chat: { send: guard('openRouter') } };
+  sessionManager.deepSeek = { chat: { completions: { create: guard('deepSeek') } } };
 }
 
 function userTextMsg(text) {
@@ -402,7 +417,7 @@ describe('SessionManager.cleanupContext (OpenRouter)', () => {
 
   afterEach(() => { sessionManager.shutdown(); });
 
-  it.each(['qwen', 'deepseek', 'moonshotai'])(
+  it.each(['qwen', 'moonshotai'])(
     'routes %s provider through the OpenRouter SDK', async (provider) => {
       for (let i = 0; i < 10; i++) {
         sessionManager.addToConversationHistory(sessionId, userTextMsg(`Message ${i}`));
@@ -472,6 +487,68 @@ describe('SessionManager.cleanupContext (OpenRouter)', () => {
   });
 });
 
+// ─── SessionManager.cleanupContext (native DeepSeek provider) ───────────────
+
+describe('SessionManager.cleanupContext (native DeepSeek)', () => {
+  let sessionManager;
+  let sessionId;
+
+  beforeEach(() => {
+    sessionManager = new SessionManager();
+    sessionId = sessionManager.createSession(null);
+    sessionManager.initializeSession(sessionId, 'cld', {}, [], {}, 'test-client');
+    installSdkGuards(sessionManager);
+    sessionManager.deepSeek = makeDeepSeekMock();
+  });
+
+  afterEach(() => { sessionManager.shutdown(); });
+
+  it('routes deepseek provider through the native DeepSeek API', async () => {
+    for (let i = 0; i < 10; i++) {
+      sessionManager.addToConversationHistory(sessionId, userTextMsg(`Message ${i}`));
+      sessionManager.addToConversationHistory(sessionId, assistantTextMsg(`Response ${i}`));
+    }
+
+    await sessionManager.cleanupContext(sessionId, 1, 'deepseek');
+
+    expect(sessionManager.deepSeek.chat.completions.create).toHaveBeenCalled();
+    const context = sessionManager.getConversationContext(sessionId);
+    expect(context[0].role).toBe('user');
+    expect(typeof context[0].content).toBe('string');
+    expect(context[0].content).toMatch(/\[Previous conversation summary\]/);
+  });
+
+  it('passes the native summary model to the DeepSeek API', async () => {
+    for (let i = 0; i < 10; i++) {
+      sessionManager.addToConversationHistory(sessionId, userTextMsg(`Message ${i}`));
+      sessionManager.addToConversationHistory(sessionId, assistantTextMsg(`Response ${i}`));
+    }
+
+    await sessionManager.cleanupContext(sessionId, 1, 'deepseek');
+
+    const callArgs = sessionManager.deepSeek.chat.completions.create.mock.calls[0][0];
+    expect(callArgs.model).toBe(config.nativeAgentProviders.deepseek.summaryModel);
+    expect(callArgs.messages[0].role).toBe('user');
+  });
+
+  it('throws a clear error when DEEPSEEK_API_KEY is missing and no client is installed', async () => {
+    delete process.env.DEEPSEEK_API_KEY;
+    sessionManager.deepSeek = null;
+    for (let i = 0; i < 5; i++) {
+      sessionManager.addToConversationHistory(sessionId, userTextMsg(`Message ${i}`));
+      sessionManager.addToConversationHistory(sessionId, assistantTextMsg(`Response ${i}`));
+    }
+
+    // The missing-key throw is caught inside #summarizeMessages and converted to
+    // a fallback summary; the error must not escape cleanupContext.
+    await sessionManager.cleanupContext(sessionId, 1, 'deepseek');
+
+    const context = sessionManager.getConversationContext(sessionId);
+    const summaryText = context[0].content;
+    expect(summaryText).toMatch(/condensed/);
+  });
+});
+
 // ─── SDK guards ──────────────────────────────────────────────────────────────
 // Guards short-circuit the lazy SDK loader path: when a test triggers
 // summarization without first mocking the provider it routes to, the guard
@@ -497,7 +574,7 @@ describe('SessionManager.cleanupContext SDK guards', () => {
     ['google', 'gemini', sm => sm.gemini.models.generateContent],
     ['anthropic', 'anthropic', sm => sm.anthropic.messages.create],
     ['qwen', 'openRouter', sm => sm.openRouter.chat.send],
-    ['deepseek', 'openRouter', sm => sm.openRouter.chat.send],
+    ['deepseek', 'deepSeek', sm => sm.deepSeek.chat.completions.create],
     ['moonshotai', 'openRouter', sm => sm.openRouter.chat.send],
   ])('guard for %s fires when no working mock is installed', async (provider, _instance, getMockFn) => {
     for (let i = 0; i < 5; i++) {

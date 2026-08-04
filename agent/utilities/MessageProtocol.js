@@ -161,7 +161,7 @@ const SelectAgentMessageSchema = z.object({
   sessionId: z.string().describe('Unique session identifier'),
   agentId: z.string().optional().describe('Agent ID to use (e.g., "merlin", "socrates")'),
   agentConfig: z.string().optional().describe('Custom agent configuration as a markdown string with YAML frontmatter (name, agent_mode, supported_modes, supported_providers, can_write_to_local_sandbox) followed by agent instructions'),
-  provider: z.enum(config.agentProviders).optional().default('anthropic').describe('LLM provider to use. anthropic/google reach their vendor APIs directly; every other id is an upstream LLM brand (see config.openRouterAgentProviders) routed via OpenRouter. Ignored if the selected agent supports only one provider.'),
+  provider: z.enum(config.agentProviders).optional().default('anthropic').describe('LLM provider to use. anthropic/google reach their vendor APIs directly; ids in config.nativeAgentProviders reach their vendor APIs directly too (e.g. deepseek); every other id is an upstream LLM brand (see config.openRouterAgentProviders) routed via OpenRouter. Ignored if the selected agent supports only one provider.'),
   timestamp: z.string().optional().describe('ISO 8601 timestamp of when the message was created')
 }).refine(msg => msg.agentId || msg.agentConfig, {
   message: 'Either agentId or agentConfig must be provided'

@@ -38,6 +38,18 @@ const config = {
     "agentAnthropicSummaryModel": 'claude-haiku-4-5', // Model used for conversation history summarization MUST BE Anthropic models
     "agentGeminiModel": 'gemini-3.6-flash', // Model used for agent conversations MUST BE gemini models
     "agentGeminiSummaryModel": 'gemini-3.5-flash-lite', // Model used for conversation history summarization MUST BE gemini models
+    // Native-API agent providers — the single source of truth for every provider
+    // that reaches its vendor's API directly rather than via OpenRouter. Same
+    // derivation contract as openRouterAgentProviders: keys are the provider IDs
+    // clients send in `select_agent`, `displayName` is the UI label, and
+    // `model`/`summaryModel` are the vendor's own model ids.
+    "nativeAgentProviders": {
+        deepseek: {
+            displayName: 'DeepSeek',
+            model: 'deepseek-v4-pro',
+            summaryModel: 'deepseek-v4-flash'
+        }
+    },
     // OpenRouter-backed agent providers — the single source of truth for every
     // OpenRouter-routed brand. Add or remove an entry here and the whole agent stack
     // picks it up: the orchestrator's model/summary-model resolution, the context
@@ -46,25 +58,20 @@ const config = {
     // provider IDs clients send in `select_agent`; `displayName` is the UI label;
     // `model`/`summaryModel` MUST be OpenRouter slugs (provider/model form).
     "openRouterAgentProviders": {
-        qwen: { 
-            displayName: 'Qwen',     
-            model: 'qwen/qwen3.7-max',         
-            summaryModel: 'qwen/qwen3.7-plus' 
+        qwen: {
+            displayName: 'Qwen',
+            model: 'qwen/qwen3.7-max',
+            summaryModel: 'qwen/qwen3.7-plus'
         },
-        deepseek:   { 
-            displayName: 'Deepseek', 
-            model: 'deepseek/deepseek-v4-pro', 
-            summaryModel: 'deepseek/deepseek-v4-flash' 
+        moonshotai: {
+            displayName: 'Kimi',
+            model: 'moonshotai/kimi-k3',
+            summaryModel: 'moonshotai/kimi-k3'
         },
-        moonshotai: { 
-            displayName: 'Kimi',     
-            model: 'moonshotai/kimi-k3',     
-            summaryModel: 'moonshotai/kimi-k3' 
-        },
-        zai: { 
-            displayName: 'GLM',      
-            model: 'z-ai/glm-5.2',             
-            summaryModel: 'z-ai/glm-5.2' 
+        zai: {
+            displayName: 'GLM',
+            model: 'z-ai/glm-5.2',
+            summaryModel: 'z-ai/glm-5.2'
         }
     },
     // Underlying model the engine tools use, by provider. `default` is the fallback
@@ -82,11 +89,12 @@ const config = {
         }
     },
     // Full ordered list of valid agent provider IDs: the two direct-API providers
-    // plus every OpenRouter-backed brand above. A getter so it always tracks the
-    // registry — adding/removing a brand above is the only edit needed. Drives the
-    // select_agent provider enum and the per-agent supported_providers defaults.
+    // plus every native-API and OpenRouter-backed brand above. A getter so it always
+    // tracks the registries — adding/removing a brand above is the only edit needed.
+    // Drives the select_agent provider enum and the per-agent supported_providers
+    // defaults.
     get agentProviders() {
-        return ['anthropic', 'google', ...Object.keys(this.openRouterAgentProviders)];
+        return ['anthropic', 'google', ...Object.keys(this.nativeAgentProviders), ...Object.keys(this.openRouterAgentProviders)];
     },
     "agentAnthropicEffort": "medium",
     "agentAnthropicThinking": { type: "adaptive" }, // Opus 4.7+/Sonnet 4.6 use adaptive thinking; depth is controlled by agentAnthropicEffort (budget_tokens is removed and 400s)

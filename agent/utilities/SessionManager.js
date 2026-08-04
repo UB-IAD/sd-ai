@@ -12,6 +12,8 @@ let _GoogleGenai;
 const loadGoogleGenai = async () => _GoogleGenai ??= (await import('@google/genai')).GoogleGenAI;
 let _OpenRouterSdk;
 const loadOpenRouterSdk = async () => _OpenRouterSdk ??= (await import('@openrouter/sdk')).OpenRouter;
+let _OpenAiSdk;
+const loadOpenAiSdk = async () => _OpenAiSdk ??= (await import('openai')).OpenAI;
 import { countTokens } from '@anthropic-ai/tokenizer';
 import logger from '../../utilities/logger.js';
 import TokenUsageReporter, { Provider } from '../../utilities/TokenUsageReporter.js';
@@ -21,6 +23,10 @@ import config from '../../config.js';
 // config registry (config.openRouterAgentProviders) so adding/removing a brand is a
 // single config.js edit. The same registry carries each brand's summaryModel slug.
 const OPENROUTER_PROVIDERS = new Set(Object.keys(config.openRouterAgentProviders));
+
+// Native-API provider ids (config.nativeAgentProviders) — reached via the vendor's
+// own OpenAI-compatible API rather than OpenRouter.
+const NATIVE_PROVIDERS = new Set(Object.keys(config.nativeAgentProviders));
 
 /**
  * Can this message legally be the FIRST message of a conversation? The
@@ -563,13 +569,16 @@ export class SessionManager {
    * Private — only called by #summarizeContextIfNeeded and cleanupContext.
    *
    * `provider` selects the summarization API: 'google' → Gemini (Gemini-format
-   * output), an OpenRouter brand (config.openRouterAgentProviders) → OpenRouter chat
-   * completions, anything else → Anthropic. OpenRouter and Anthropic share the
-   * same `{role, content}` output shape; only Gemini emits `{role, parts}`.
+   * output), a native-API provider (config.nativeAgentProviders) → the vendor's
+   * OpenAI-compatible API, an OpenRouter brand (config.openRouterAgentProviders) →
+   * OpenRouter chat completions, anything else → Anthropic. OpenRouter, native
+   * and Anthropic share the same `{role, content}` output shape; only Gemini
+   * emits `{role, parts}`.
    */
   async #summarizeMessages(messages, sessionId, provider) {
     const isGeminiFormat = provider === 'google';
     const isOpenRouter = OPENROUTER_PROVIDERS.has(provider);
+    const isNative = NATIVE_PROVIDERS.has(provider);
     try {
       const conversationText = messages.map((msg) => {
         if (Array.isArray(msg.parts)) {
@@ -618,6 +627,25 @@ ${conversationText}`;
         });
         reporter.report({ provider: Provider.GOOGLE, model: config.agentGeminiSummaryModel, usage: response.usageMetadata, clientKey: false }).catch(() => {});
         summaryText = response.text || response.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      } else if (isNative) {
+        if (!this.deepSeek) {
+          if (!process.env.DEEPSEEK_API_KEY) {
+            throw new Error('DeepSeek provider selected but DEEPSEEK_API_KEY is not set');
+          }
+          const OpenAI = await loadOpenAiSdk();
+          this.deepSeek = new OpenAI({
+            apiKey: process.env.DEEPSEEK_API_KEY,
+            baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+          });
+        }
+        const model = config.nativeAgentProviders[provider].summaryModel;
+        const completion = await this.deepSeek.chat.completions.create({
+          model,
+          messages: [{ role: 'user', content: summaryPrompt }],
+          max_tokens: 1024,
+        });
+        reporter.report({ provider: Provider.DEEPSEEK, model, usage: completion.usage, clientKey: false }).catch(() => {});
+        summaryText = completion.choices?.[0]?.message?.content ?? '';
       } else if (isOpenRouter) {
         if (!this.openRouter) {
           const OpenRouter = await loadOpenRouterSdk();

@@ -398,7 +398,7 @@ The Python subprocess spawned for visualizations inherits the same bwrap namespa
 
 ### What bwrap does NOT restrict
 
-- **Network access** — the agent worker must reach the upstream LLM APIs (Anthropic, Google, and/or OpenRouter depending on the configured providers). The agent can make arbitrary outbound HTTP requests if prompted to do so. Restrict this at the network/firewall level if needed.
+- **Network access** — the agent worker must reach the upstream LLM APIs (Anthropic, Google, DeepSeek, and/or OpenRouter depending on the configured providers). The agent can make arbitrary outbound HTTP requests if prompted to do so. Restrict this at the network/firewall level if needed.
 
 ## Metrics Reporting
 SD-AI includes optional metrics reporting via the `GenerateMetricsReporter` class. When enabled, it automatically tracks and reports usage data for every engine generation request.
@@ -483,6 +483,7 @@ The `tokens` shape varies by provider:
 | `anthropic` | `inputTokens`, `outputTokens`, `cacheCreation5mInputTokens`, `cacheCreation1hInputTokens`, `cacheReadInputTokens` |
 | `gemini` | `inputTokens`, `outputTokens`, `cachedTokens`, `thoughtsTokens` |
 | `openai` | `inputTokens`, `outputTokens`, `cachedTokens`, `reasoningTokens` |
+| `deepseek` | `inputTokens`, `outputTokens`, `cachedTokens`, `reasoningTokens` |
 | `openrouter` | `inputTokens`, `outputTokens`, `cachedTokens`, `cacheWriteTokens`, `providerCost` |
 
 `cost` is the total dollar cost of the call, or `null` if pricing data is unavailable for the model. For `openrouter`, `cost` is taken directly from the provider's authoritative `usage.cost` (no local pricing table is consulted), and `providerCost` in the token block carries that same value for transparency.

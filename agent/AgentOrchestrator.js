@@ -19,6 +19,8 @@ let _openRouterSdk;
 const loadOpenRouterSdk = async () => _openRouterSdk ??= await import('@openrouter/sdk');
 let _openRouterAgent;
 const loadOpenRouterAgent = async () => _openRouterAgent ??= await import('@openrouter/agent');
+let _openAiSdk;
+const loadOpenAiSdk = async () => _openAiSdk ??= (await import('openai')).OpenAI;
 
 import { AgentConfigurationManager } from './utilities/AgentConfigurationManager.js';
 import { MediaStore } from './utilities/MediaStore.js';
@@ -54,6 +56,11 @@ import { join } from 'path';
 // Derived from the shared config registry so adding/removing a brand is a single
 // config.js edit (see config.openRouterAgentProviders).
 const OPENROUTER_PROVIDERS = new Set(Object.keys(config.openRouterAgentProviders));
+
+// Provider ids that reach their vendor's API directly (see config.nativeAgentProviders).
+// They run the manual (chat-completions) loop — no agent SDK exists for them — so the
+// 'sdk' agent_mode also falls back to the manual loop for these providers.
+const NATIVE_PROVIDERS = new Set(Object.keys(config.nativeAgentProviders));
 
 // The Agent SDK's write half, withheld from any agent that has not opted in via
 // can_write_to_local_sandbox.
@@ -143,6 +150,7 @@ export class AgentOrchestrator {
   // we see is the authoritative total. Reported once when the loop completes
   // (or aborts) — never per-event, which would double-count.
   #openRouterManualPendingUsage = null;
+  #deepSeekManualPendingUsage = null;
   // Per-assistant usage accumulator for the anthropic SDK route. The SDKResultMessage
   // carries the authoritative aggregate and supersedes this on normal completion;
   // we only flush the accumulator as a fallback when a query aborts before its
@@ -224,6 +232,8 @@ export class AgentOrchestrator {
     } else if (OPENROUTER_PROVIDERS.has(this.provider)) {
       await loadOpenRouterSdk();
       if (loop === 'sdk') await loadOpenRouterAgent();
+    } else if (NATIVE_PROVIDERS.has(this.provider)) {
+      await loadOpenAiSdk();
     }
   }
 
@@ -246,6 +256,26 @@ export class AgentOrchestrator {
     const { OpenRouter } = await loadOpenRouterSdk();
     this.openRouterClient = new OpenRouter({ apiKey: process.env.OPEN_ROUTER_API_KEY });
     return this.openRouterClient;
+  }
+
+  /**
+   * Lazy OpenAI-compatible client for the native-API providers (config.nativeAgentProviders).
+   * DeepSeek's API is OpenAI-compatible; DEEPSEEK_BASE_URL lets deployments point it at
+   * any OpenAI-compatible gateway (the official API is the default).
+   */
+  async #getDeepSeek() {
+    if (this.deepSeekClient) return this.deepSeekClient;
+    const apiKey = process.env.DEEPSEEK_API_KEY;
+    if (!apiKey) {
+      throw new Error('DeepSeek provider selected but DEEPSEEK_API_KEY is not set');
+    }
+    const OpenAI = await loadOpenAiSdk();
+    this.deepSeekClient = new OpenAI({
+      apiKey,
+      baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+      timeout: 5 * 60 * 1000,
+    });
+    return this.deepSeekClient;
   }
 
   /**
@@ -293,6 +323,12 @@ export class AgentOrchestrator {
       // the shared OpenRouter-SDK/manual methods — the brand selects the model slug, the
       // gateway is the same. Brand-specific cases keep the dispatch table explicit.
       const isOpenRouterBrand = OPENROUTER_PROVIDERS.has(this.provider);
+      // Native-API providers (config.nativeAgentProviders) have no agent SDK, so they
+      // always run the manual (chat-completions) loop regardless of the 'sdk' default.
+      if (NATIVE_PROVIDERS.has(this.provider)) {
+        await this.startConversationDeepSeekManual(userMessage);
+        return;
+      }
       switch (`${this.provider}-${loopStyle}`) {
         case 'anthropic-sdk':
           await this.startConversationWithAnthropicSdk(userMessage, previousAgentContext);
@@ -1333,6 +1369,9 @@ ${lines.join('\n')}`;
       logger.log(`Prior agent context (${history.length} messages, ~${tokenCount} tokens) under limit — injecting verbatim`);
       return conversationText;
     }
+    if (NATIVE_PROVIDERS.has(this.provider)) {
+      return this.#summarizePriorContextWithDeepSeek(conversationText, history.length);
+    }
     if (OPENROUTER_PROVIDERS.has(this.provider)) {
       return this.#summarizePriorContextWithOpenRouter(conversationText, history.length);
     }
@@ -1394,6 +1433,30 @@ ${lines.join('\n')}`;
       return response.text || response.candidates?.[0]?.content?.parts?.[0]?.text || '';
     } catch (error) {
       logger.error('Gemini: Error summarizing prior context:', error);
+      return '[Prior conversation condensed due to size]';
+    }
+  }
+
+  async #summarizePriorContextWithDeepSeek(conversationText, messageCount) {
+    // Pick the per-provider summary model from the native registry. Falls back to
+    // the agent's primary model for any unforeseen provider so summarization proceeds.
+    const model = config.nativeAgentProviders[this.provider]?.summaryModel || this.#resolveNativeModel();
+    try {
+      logger.log(`DeepSeek (${this.provider}): Summarizing prior agent context (${messageCount} messages) before injection`);
+      const deepSeekClient = await this.#getDeepSeek();
+      const completion = await deepSeekClient.chat.completions.create({
+        model,
+        messages: [
+          { role: 'user', content: `Summarize this conversation history concisely (2-4 paragraphs):\n\n${conversationText}` }
+        ],
+        max_tokens: 1024,
+      });
+      if (completion.usage) {
+        this.#logApiUsage(Provider.DEEPSEEK, completion.usage, model);
+      }
+      return completion.choices?.[0]?.message?.content ?? '';
+    } catch (error) {
+      logger.error(`DeepSeek (${this.provider}): Error summarizing prior context: ${this.#describeOpenRouterError(error)}`);
       return '[Prior conversation condensed due to size]';
     }
   }
@@ -2210,6 +2273,16 @@ ${lines.join('\n')}`;
   }
 
   /**
+   * Resolve the model id for a native-API provider from the shared registry
+   * config.nativeAgentProviders.
+   */
+  #resolveNativeModel() {
+    const model = config.nativeAgentProviders[this.provider]?.model;
+    if (!model) throw new Error(`No nativeAgentProviders entry configured for provider "${this.provider}"`);
+    return model;
+  }
+
+  /**
    * Start conversation using @openrouter/agent (the OpenRouter Agent SDK).
    * Used for any provider in OPENROUTER_PROVIDERS (config.openRouterAgentProviders).
    * The brand selects the model slug; the gateway is shared.
@@ -2600,6 +2673,134 @@ ${lines.join('\n')}`;
     } finally {
       if (this.#openRouterManualPendingUsage && llmUsed)
         this.#logApiUsage(Provider.OPENROUTER, this.#openRouterManualPendingUsage, llmUsed);
+    }
+  }
+
+  /**
+   * Start conversation for a native-API provider (config.nativeAgentProviders) using
+   * the OpenAI-compatible chat-completions API. DeepSeek's API is OpenAI-compatible,
+   * so this loop is a near mirror of startConversationOpenRouterManual: the request
+   * goes to the vendor's own API (DEEPSEEK_API_KEY / DEEPSEEK_BASE_URL), while the
+   * response processing and tool conversion are shared with the OpenRouter loop
+   * (both speak OpenAI's function-calling shape).
+   */
+  async startConversationDeepSeekManual(userMessage) {
+    let llmUsed = null;
+    try {
+      const session = this.sessionManager.getSession(this.sessionId);
+      const model = this.#resolveNativeModel();
+      const deepSeekClient = await this.#getDeepSeek();
+      llmUsed = model;
+
+      this.sessionManager.addToConversationHistory(this.sessionId, {
+        role: 'user',
+        content: userMessage
+      });
+
+      const mode = session.mode;
+      const systemPrompt = this.#buildSystemPromptWithRag(mode);
+      const builtInTools = this.builtInToolProvider.getTools();
+      const dynamicTools = this.dynamicToolProvider.getTools();
+
+      await this.sessionManager.cleanupContext(this.sessionId, config.agentMaxContextTokens, this.provider);
+
+      const messages = this.sessionManager.getConversationContext(this.sessionId);
+      // Normalize Anthropic/Gemini formats to plain {role, content} for the chat API.
+      for (let i = 0; i < messages.length; i++) {
+        const m = toAnthropicMessage(messages[i]);
+        const role = m.role === 'assistant' ? 'assistant' : m.role === 'system' ? 'system' : 'user';
+        const content = typeof m.content === 'string'
+          ? m.content
+          : Array.isArray(m.content)
+            ? m.content.filter(b => b.type === 'text').map(b => b.text || '').join('\n')
+            : '';
+        messages[i] = { role, content };
+      }
+      for (let i = messages.length - 1; i >= 0; i--) {
+        if (!messages[i].content || (typeof messages[i].content === 'string' && messages[i].content.trim() === '')) messages.splice(i, 1);
+      }
+
+      const currentModel = session?.clientModel;
+      let modelTokenCount = 0;
+      if (currentModel) {
+        const modelJson = JSON.stringify(currentModel, null, 2);
+        modelTokenCount = countTokens(modelJson);
+        this.sessionManager.updateModelTokenCount(this.sessionId, modelTokenCount);
+      }
+
+      const chatTools = this.#openRouterManualConvertTools(builtInTools, dynamicTools, modelTokenCount, mode);
+      const maxIterations = this.configManager.getMaxIterations();
+
+      while (true) {
+        let continueLoop = true;
+        let completedNaturally = false;
+        let iteration = 0;
+
+        while (continueLoop && iteration < maxIterations && !this.stopRequested) {
+          iteration++;
+          await this.sessionManager.cleanupContext(this.sessionId, config.agentMaxContextTokens, this.provider);
+
+          try {
+            const completion = await deepSeekClient.chat.completions.create({
+              model,
+              // Transient copy — see the anthropic-manual call for why history
+              // must never hold the bytes.
+              messages: [
+                { role: 'system', content: systemPrompt },
+                ...hydrateMessagesForOpenAi(messages, this.mediaStore)
+              ],
+              tools: chatTools.length > 0 ? chatTools : undefined,
+            });
+
+            if (completion?.usage)
+              this.#deepSeekManualPendingUsage = completion.usage;
+
+            if (this.stopRequested) break;
+
+            continueLoop = await this.processOpenRouterManualResponse(completion, messages, builtInTools, dynamicTools);
+            if (!continueLoop && !this.stopRequested) completedNaturally = true;
+
+            if (this.stopRequested) break;
+          } catch (error) {
+            const detail = this.#describeOpenRouterError(error);
+            logger.error(`DeepSeek Manual: error in agent conversation loop: ${detail}`);
+            await this.sendToClient(createErrorMessage(this.sessionId, `Agent error: ${detail}`, 'AGENT_ERROR'));
+            await this.sendToClient(createAgentCompleteMessage(this.sessionId, 'awaiting_user', 'Agent stopped due to error'));
+            continueLoop = false;
+            completedNaturally = true;
+          }
+        }
+
+        if (this.stopRequested) {
+          logger.log(`DeepSeek Manual: agent stopped by user request for session ${this.sessionId}`);
+          this.stopRequested = false;
+          await this.sendToClient(createAgentCompleteMessage(this.sessionId, 'awaiting_user', 'Agent stopped by user request'));
+          break;
+        }
+        const reachedMax = !completedNaturally && iteration >= maxIterations;
+        if (this.#pendingMessages.length === 0) {
+          if (reachedMax) {
+            logger.log(`DeepSeek Manual: agent conversation reached max iterations (${maxIterations})`);
+            await this.sendToClient(createAgentCompleteMessage(this.sessionId, 'awaiting_user', `Reached maximum iterations (${maxIterations})`));
+          }
+          break;
+        }
+        if (reachedMax) logger.log(`DeepSeek Manual: max iterations (${maxIterations}) hit; draining queued message with fresh budget`);
+        const next = this.#pendingMessages.shift();
+        logger.log(`DeepSeek Manual: processing queued message (remaining: ${this.#pendingMessages.length})`);
+        // `messages` IS the live session context — one append, not two.
+        this.sessionManager.addToConversationHistory(this.sessionId, { role: 'user', content: next });
+      }
+    } catch (error) {
+      // Catches setup-time failures (resolveModel, cleanupContext, tool conversion,
+      // etc.) and anything else outside the per-iteration try.
+      const detail = this.#describeOpenRouterError(error);
+      logger.error(`DeepSeek Manual: in conversation setup: ${detail}`);
+      await this.sendToClient(createErrorMessage(this.sessionId, `Agent error: ${detail}`, 'AGENT_ERROR'));
+      await this.sendToClient(createAgentCompleteMessage(this.sessionId, 'awaiting_user', `Agent error: ${detail}`));
+    } finally {
+      if (this.#deepSeekManualPendingUsage && llmUsed)
+        this.#logApiUsage(Provider.DEEPSEEK, this.#deepSeekManualPendingUsage, llmUsed);
     }
   }
 
