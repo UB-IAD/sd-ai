@@ -37,6 +37,14 @@ export class ModelCapabilities {
       const isOpenRouter = OPEN_ROUTER_SLUG_REGEX.test(lowerModelName);
 
       this.hasStructuredOutput = lowerModelName !== 'o1-mini';
+      // Native DeepSeek models (bare ids like 'deepseek-v4-pro', as opposed to the
+      // namespaced OpenRouter slug 'deepseek/deepseek-v4-pro') support only the
+      // json_object response_format, not json_schema — so they fall back to
+      // prompt-level JSON enforcement (#injectJsonFallback). The OpenRouter-routed
+      // slug keeps json_schema because OpenRouter translates it for the upstream.
+      if (!isOpenRouter && lowerModelName.includes('deepseek')) {
+          this.hasStructuredOutput = false;
+      }
       this.hasSystemMode = lowerModelName !== 'o1-mini';
       this.hasTemperature = !lowerModelName.startsWith('o') && !lowerModelName.startsWith('gpt-5');
       if (isOpenRouter || lowerModelName.includes('gemini') || lowerModelName.includes('llama') || lowerModelName.includes('claude') || lowerModelName.includes('deepseek')) {
@@ -98,6 +106,7 @@ export class LLMWrapper {
   #googleKey;
   #anthropicKey;
   #openRouterKey;
+  #deepseekKey;
   #clientKey = false;
   #temperatureOverride;
   #topP;
@@ -111,6 +120,7 @@ export class LLMWrapper {
   #geminiAPI = null;
   #anthropicAPI = null;
   #openRouterAPI = null;
+  #deepseekAPI = null;
   #tokenReporter = null;
   // Per-model cache of the Anthropic model's maximum output tokens, resolved
   // lazily from the Models API so we never impose an arbitrary cap that could
@@ -152,6 +162,15 @@ export class LLMWrapper {
     } else {
       this.#openRouterKey = parameters.openRouterKey;
       if (parameters.openRouterKey !== process.env.OPEN_ROUTER_API_KEY) {
+        this.#clientKey = true;
+      }
+    }
+
+    if (!parameters.deepseekKey) {
+        this.#deepseekKey = process.env.DEEPSEEK_API_KEY
+    } else {
+      this.#deepseekKey = parameters.deepseekKey;
+      if (parameters.deepseekKey !== process.env.DEEPSEEK_API_KEY) {
         this.#clientKey = true;
       }
     }
@@ -211,7 +230,21 @@ export class LLMWrapper {
             });
             break;
         case ModelType.DEEPSEEK:
+            if (!this.#deepseekKey) {
+              throw new Error("To access this service you need to send a DeepSeek key");
+            }
+
+            // DeepSeek exposes an OpenAI-compatible API. DEEPSEEK_BASE_URL lets
+            // deployments point it at any OpenAI-compatible gateway (proxy, cloud
+            // vendor endpoint); the default is the official API.
+            this.#deepseekAPI = new OpenAI({
+                apiKey: this.#deepseekKey,
+                baseURL: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
+                timeout: (parameters.timeoutMinutes ?? 30) * 60 * 1000,
+            });
+            break;
         case ModelType.LLAMA:
+            // Local LM Studio server
             this.#openAIAPI = new OpenAI({
                 apiKey: 'junk', // required but unused
                 baseURL: this.#localBaseURL,
@@ -241,6 +274,9 @@ export class LLMWrapper {
       {label: "Qwen3.7 Plus", value: 'qwen/qwen3.7-plus'},
       {label: "Deepseek v4 Pro", value: 'deepseek/deepseek-v4-pro'},
       {label: "Deepseek v4 Flash", value: 'deepseek/deepseek-v4-flash'},
+      // Native DeepSeek API models (routed directly to DEEPSEEK_API_KEY, not OpenRouter)
+      {label: "Deepseek v4 Pro (API)", value: 'deepseek-v4-pro'},
+      {label: "Deepseek v4 Flash (API)", value: 'deepseek-v4-flash'},
       {label: "Kimi K3", value: 'moonshotai/kimi-k3'},
       {label: "GLM 5.2", value: 'z-ai/glm-5.2'},
   ];
@@ -655,6 +691,8 @@ export class LLMWrapper {
       return await this.#createClaudeChatCompletion(normalizedMessages, model, effectiveSchema, temperature, reasoningEffort);
     } else if (this.model.kind === ModelType.OPEN_ROUTER) {
       return await this.#createOpenRouterChatCompletion(normalizedMessages, model, effectiveSchema, temperature);
+    } else if (this.model.kind === ModelType.DEEPSEEK) {
+      return await this.#createDeepSeekChatCompletion(normalizedMessages, model, effectiveSchema, temperature);
     }
 
     return await this.#createOpenAIChatCompletion(normalizedMessages, model, effectiveSchema, temperature, reasoningEffort);
@@ -722,6 +760,70 @@ export class LLMWrapper {
       : Array.isArray(message.content)
         ? message.content.filter(b => b && (b.type === 'text' || typeof b.text === 'string')).map(b => b.text ?? '').join('')
         : '';
+    return { ...message, content };
+  }
+
+  async #createDeepSeekChatCompletion(messages, model, zodSchema = null, temperature = null) {
+    const chatRequest = {
+      model,
+      messages: messages.map((m) => ({
+        role: m.role === 'developer' ? 'system' : m.role,
+        content: m.content ?? ''
+      }))
+    };
+
+    // DeepSeek's API supports only the json_object response_format (no
+    // json_schema), so structured outputs degrade to json_object. JSON mode also
+    // requires the word 'json' to appear in some message, otherwise the model
+    // can emit blank whitespace until it hits the token limit — so append a
+    // minimal note when nothing mentions it (same guard as the OpenRouter path).
+    if (zodSchema || this.#jsonObjectMode) {
+      chatRequest.responseFormat = { type: 'json_object' };
+      const mentionsJson = chatRequest.messages.some(m =>
+        typeof m.content === 'string' && /json/i.test(m.content)
+      );
+      if (!mentionsJson) {
+        const sys = chatRequest.messages.find(m => m.role === 'system');
+        const note = '\n\nRespond with valid JSON.';
+        if (sys) {
+          sys.content = (sys.content ?? '') + note;
+        } else {
+          chatRequest.messages.unshift({ role: 'system', content: note.trim() });
+        }
+      }
+    }
+
+    if (temperature !== null && temperature !== undefined) {
+      chatRequest.temperature = temperature;
+    }
+    if (this.#topP !== null && this.#topP !== undefined) {
+      chatRequest.topP = this.#topP;
+    }
+    if (this.#maxTokens !== null && this.#maxTokens !== undefined) {
+      chatRequest.maxTokens = this.#maxTokens;
+    }
+
+    // Thinking mode is on by default at the API; only send a thinking config when
+    // the caller explicitly asked for one. DeepSeek accepts no seed/top_k — those
+    // stay on the local LM Studio (LLAMA) path.
+    if (this.#thinking !== null && this.#thinking !== undefined) {
+      chatRequest.thinking = {
+        type: (this.#thinking === true || this.#thinking?.type === 'enabled') ? 'enabled' : 'disabled'
+      };
+    }
+
+    const completion = await this.#deepseekAPI.chat.completions.create(chatRequest);
+    this.#tokenReporter.report({ provider: Provider.DEEPSEEK, model, usage: completion.usage, clientKey: this.#clientKey });
+
+    const message = completion.choices?.[0]?.message ?? {};
+    let content = typeof message.content === 'string' ? message.content : '';
+    // Reasoning models emit chain-of-thought in reasoning_content and may leave
+    // content null (e.g. json_object mode with thinking on); try to extract a
+    // valid JSON block from the reasoning text so callers get parseable content.
+    if (!content && message.reasoning_content) {
+      const extracted = extractJsonFromContent(message.reasoning_content);
+      content = extracted ? JSON.stringify(extracted) : message.reasoning_content;
+    }
     return { ...message, content };
   }
 
@@ -1235,6 +1337,14 @@ export class LLMWrapper {
             saveForUser: "global",
             label: "OpenRouter API Key",
             description: "Leave blank for the default, or your OpenRouter API key - sk-or-XXXXXX"
+        },{
+            name: "deepseekKey",
+            type: "string",
+            required: false,
+            uiElement: "password",
+            saveForUser: "global",
+            label: "DeepSeek API Key",
+            description: "Leave blank for the default, or your DeepSeek API key - sk-XXXXXX (base URL from DEEPSEEK_BASE_URL, default https://api.deepseek.com)"
         },{
             name: "underlyingModel",
             type: "string",

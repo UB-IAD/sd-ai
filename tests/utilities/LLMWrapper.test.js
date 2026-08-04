@@ -644,4 +644,69 @@ describe('LLMWrapper', () => {
       });
     });
   });
+
+  describe('Native DeepSeek models', () => {
+    beforeEach(() => {
+      delete process.env.DEEPSEEK_API_KEY;
+      delete process.env.DEEPSEEK_BASE_URL;
+    });
+
+    it('should classify a bare deepseek model id as ModelType.DEEPSEEK', () => {
+      const wrapper = new LLMWrapper({
+        deepseekKey: 'test-deepseek-key',
+        underlyingModel: 'deepseek-v4-pro'
+      });
+
+      expect(wrapper.model.kind).toBe(ModelType.DEEPSEEK);
+    });
+
+    it('should classify an OpenRouter deepseek slug as ModelType.OPEN_ROUTER', () => {
+      const wrapper = new LLMWrapper({
+        openRouterKey: 'test-openrouter-key',
+        underlyingModel: 'deepseek/deepseek-v4-pro'
+      });
+
+      expect(wrapper.model.kind).toBe(ModelType.OPEN_ROUTER);
+    });
+
+    it('should disable structured output for native DeepSeek but not for the OpenRouter slug', () => {
+      const native = new LLMWrapper({
+        deepseekKey: 'test-deepseek-key',
+        underlyingModel: 'deepseek-v4-pro'
+      });
+      const slug = new LLMWrapper({
+        openRouterKey: 'test-openrouter-key',
+        underlyingModel: 'deepseek/deepseek-v4-pro'
+      });
+
+      expect(native.model.hasStructuredOutput).toBe(false);
+      expect(slug.model.hasStructuredOutput).toBe(true);
+    });
+
+    it('should throw when no DeepSeek key is available for a native DeepSeek model', () => {
+      expect(() => new LLMWrapper({
+        underlyingModel: 'deepseek-v4-pro'
+      })).toThrow('DeepSeek key');
+    });
+
+    it('should accept a DeepSeek key passed as a parameter', () => {
+      const wrapper = new LLMWrapper({
+        deepseekKey: 'test-deepseek-key',
+        underlyingModel: 'deepseek-v4-flash'
+      });
+
+      expect(wrapper.model.name).toBe('deepseek-v4-flash');
+      expect(wrapper.model.systemModeUser).toBe('system');
+    });
+
+    it('should use the system role for DeepSeek messages', () => {
+      const wrapper = new LLMWrapper({
+        deepseekKey: 'test-deepseek-key',
+        underlyingModel: 'deepseek-v4-pro'
+      });
+
+      const params = wrapper.getLLMParameters();
+      expect(params.systemRole).toBe('system');
+    });
+  });
 });

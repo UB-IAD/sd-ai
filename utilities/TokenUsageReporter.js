@@ -7,6 +7,7 @@ export const Provider = Object.freeze({
   OPENAI: 'openai',
   GOOGLE: 'google',
   OPENROUTER: 'openrouter',
+  DEEPSEEK: 'deepseek',
 });
 
 // Maps both internal usage-reporter Provider enum values (anthropic/openai/google/openrouter)
@@ -19,6 +20,7 @@ export const ProviderDisplayNames = Object.freeze({
   [Provider.GOOGLE]: 'Gemini',
   [Provider.OPENAI]: 'OpenAI',
   [Provider.OPENROUTER]: 'OpenRouter',
+  [Provider.DEEPSEEK]: 'DeepSeek',
   ...Object.fromEntries(
     Object.entries(config.openRouterAgentProviders).map(([id, { displayName }]) => [id, displayName])
   ),
@@ -49,6 +51,7 @@ class TokenUsageReporter {
     const isOpenAI = provider === Provider.OPENAI;
     const isGemini = provider === Provider.GOOGLE;
     const isOpenRouter = provider === Provider.OPENROUTER;
+    const isDeepSeek = provider === Provider.DEEPSEEK;
 
     let tokens;
     if (isAnthropic) {
@@ -67,6 +70,16 @@ class TokenUsageReporter {
         // GPT-5.6+ report tokens written to cache and bill them separately (1.25x input);
         // older models omit this field, so it defaults to 0 and costs nothing.
         cacheWriteTokens: usage.prompt_tokens_details?.cache_write_tokens ?? 0,
+        reasoningTokens: usage.completion_tokens_details?.reasoning_tokens ?? 0,
+      };
+    } else if (isDeepSeek) {
+      // DeepSeek's OpenAI-compatible API reports cache hits at the TOP level
+      // (prompt_cache_hit_tokens), unlike OpenAI's nested prompt_tokens_details.
+      tokens = {
+        inputTokens: usage.prompt_tokens ?? 0,
+        outputTokens: usage.completion_tokens ?? 0,
+        cachedTokens: usage.prompt_cache_hit_tokens ?? 0,
+        cacheWriteTokens: 0,
         reasoningTokens: usage.completion_tokens_details?.reasoning_tokens ?? 0,
       };
     } else if (isGemini) {
@@ -124,7 +137,9 @@ class TokenUsageReporter {
         ` cache_read=${fmt(tokens.cacheReadInputTokens, costs?.cacheReadInputTokens)}` +
         (costs ? ` total=$${costs.total.toFixed(6)}` : '')
       );
-    } else if (isOpenAI) {
+    } else if (isOpenAI || isDeepSeek) {
+      // DeepSeek's usage shape maps onto the OpenAI log line (input/output/
+      // cached/reasoning), so both providers share it.
       logger.log(
         `[usage:${provider}]` +
         clientTag +
