@@ -832,9 +832,9 @@ Please generate stock-and-flow models (SFDs) from user-provided queries to the b
         const program = originalResponse.program.split(/\r?\n|\r|\\r?\\n|\\r/).map(s => s.trim());
         const explanation = await marked.parse(originalResponse.explanation);
 
-        console.log("===  OUTPUT MODEL ===");
+        logger.debug("===  OUTPUT MODEL ===");
         for (const line of program) {
-            console.log(line);
+            logger.debug(line);
         }
 
         const simSpecs = {
@@ -1119,9 +1119,9 @@ Please generate stock-and-flow models (SFDs) from user-provided queries to the b
         const orderedIndices = this.#orderStatementsByDependency(dependencies);
         const program = [setupLine, ...orderedIndices.map((i) => statements[i])];
 
-        console.log("=== USER-PROVIDED MODEL (CONVERTED TO SDCODE) ===");
+        logger.debug("=== USER-PROVIDED MODEL (CONVERTED TO SDCODE) ===");
         for (const line of program) {
-            console.log(line);
+            logger.debug(line);
         }
         return "```\n" + program.join("\n") + "```"; 
     }
@@ -1189,8 +1189,8 @@ Please generate stock-and-flow models (SFDs) from user-provided queries to the b
             lastModel.relationships = lastModel.relationships || [];
         }
 
-        console.log("=== USER PROMPT ===");
-        console.log(userPrompt);
+        logger.debug("=== USER PROMPT ===");
+        logger.debug(userPrompt);
 
         const llmParams = this.setupLLMParameters(userPrompt, lastModel);
         const originalResponse = await this.#llmWrapper.createChatCompletion(

@@ -136,9 +136,15 @@ const tests = Object.fromEntries(
 // A provider 503/429/timeout is a fact about the provider, not about the engine under
 // test, so an errored generation is retried rather than scored as a failure.
 //
-// If it still fails after every retry, that ENGINE CONFIG stops. It does not drop the
-// test and carry on: a leaderboard missing a test scores that engine over a smaller set
-// than the others, which is a silently wrong number rather than an obviously absent one.
+// What happens once the retries are exhausted depends on what kind of error it was, and
+// TEST_LEVEL_ERROR_PREFIXES below draws the line. An error that belongs to this one
+// generation — a safety refusal, a model emitting output its own engine rejects — scores
+// the test as a failure and the config carries on: the model did fail the test, and every
+// other prompt would have run fine.
+//
+// Anything else stops that ENGINE CONFIG. It does not drop the test and carry on: a
+// leaderboard missing a test scores that engine over a smaller set than the others, which
+// is a silently wrong number rather than an obviously absent one.
 //
 // The stop is scoped to the engine config that failed, not the whole run. One provider
 // being down says nothing about the others, and halting them too used to throw away every
@@ -155,6 +161,31 @@ const RETRY_BASE_DELAY_MS = 2000;
 // config that is already stopping — while tests of every other config carry on.
 const stoppedEngineConfigs = new Set();
 
+// Errors that are a property of THIS test's generation rather than of the provider's
+// health. Exhausting the retries on one of these scores the test as a failure and lets
+// the config carry on; anything else still stops the config, which is what keeps a dead
+// provider or a bad key from buying 93 tests' worth of tokens to fail 93 times.
+//
+// The distinction is which of the two would have run fine: a refusal or a model emitting
+// invalid output says nothing about the next prompt, so stopping over it throws away a
+// whole config's rows to record one failure. That is not hypothetical — stopping on a
+// refusal once cost quantitative-claude-sonnet-5 28 of its 93 rows, and stopping on
+// SDCodeError cost quantitative-sdcode-claude-opus-5 23 of its 93 over two tests where
+// the model referenced a component it never declared. Both are real results: the model
+// failed the test. Recording them as failures is more honest than a hole in the board.
+//
+// Matched on the error text because that is all an engine returns — engines flatten to
+// `{ err: String(e) }`, so there is no error class left to check by the time it lands here.
+const TEST_LEVEL_ERROR_PREFIXES = [
+    // A safety classifier declined this one prompt.
+    ANTHROPIC_REFUSAL_PREFIX,
+    // quantitative-sdcode's validator rejecting the model's own SDCode output.
+    'SDCodeError',
+];
+
+const isTestLevelError = (err) =>
+    TEST_LEVEL_ERROR_PREFIXES.some((prefix) => err.includes(prefix));
+
 // Retry backoff, held per engine config rather than per test — see createEngineBackoff.
 const engineBackoff = createEngineBackoff();
 
@@ -167,7 +198,7 @@ if (isContinuing) {
 }
 console.log("Sequential: " + (experiment.sequential || "false"));
 console.log("Verbose: " + experiment.verbose);
-console.log(`On error: retry up to ${MAX_GENERATION_RETRIES}x, then stop and keep progress for resume`);
+console.log(`On error: retry up to ${MAX_GENERATION_RETRIES}x, then score the test as a failure (refusals, invalid model output) or stop the config and keep progress for resume (anything else)`);
 console.log();
 
 console.log(chalk.blue("Engine Configurations:"));
@@ -539,26 +570,64 @@ const runSingleTest = async (
       // Tests already in flight are deliberately not cancelled — they have been paid for,
       // and letting them finish means the resume has less to redo.
       //
-      // A safety-classifier refusal is the exception: it says this one prompt was declined,
-      // not that the provider is unhealthy, and every other test of the config would have
-      // run fine. Stopping on it cost quantitative-claude-sonnet-5 28 of its 93 rows in one
-      // leaderboard run over a single benign prompt, so record the failure and carry on.
-      if (!generateResponse.err.includes(ANTHROPIC_REFUSAL_PREFIX)) {
+      // A test-level error is the exception — see TEST_LEVEL_ERROR_PREFIXES. It says this
+      // one generation failed, not that the provider is unhealthy, so it scores as a
+      // failed test and the config carries on to its remaining rows.
+      if (!isTestLevelError(generateResponse.err)) {
         stoppedEngineConfigs.add(test.engineConfigName);
+        failedTests.push({
+          engineConfigName: test.engineConfigName,
+          engine: test.engineConfig.engine,
+          category: test.category,
+          group: test.group,
+          name,
+          attempts: attemptErrors,
+          cost: spend,
+        });
+
+        inProgress.delete(name);
+        engineBar.increment(1, { inProgress: printProgress(inProgress) });
+        return null;
       }
-      failedTests.push({
-        engineConfigName: test.engineConfigName,
-        engine: test.engineConfig.engine,
-        category: test.category,
-        group: test.group,
-        name,
-        attempts: attemptErrors,
-        cost: spend,
-      });
+
+      // Scored as a failure rather than dropped, so the config still reports 93 of 93
+      // and the row carries why it failed. There is no `evaluate` call to make here:
+      // the engine returned no model, so every expectation is unmet by definition and
+      // there is nothing for a category to grade.
+      testWithResult = structuredClone(test);
+      testWithResult["duration"] = generationMs;
+      testWithResult["generatedResponse"] = { err: generateResponse.err };
+      testWithResult["cost"] = {
+        total: spend.totalCost,
+        calls: spend.calls,
+        unpricedCalls: spend.unpricedCalls,
+        byModel: spend.byModel,
+        reusedGeneration,
+        ...(attemptErrors.length > 0 ? { failedAttempts: attemptErrors.length } : {}),
+      };
+      testWithResult["failures"] = [{
+        type: "Generation failed",
+        details:
+          `The engine returned no model after ${attemptErrors.length} attempt(s). ` +
+          `Last error: ${generateResponse.err}`,
+      }];
+      testWithResult["failureSummary"] = { "Generation failed": 1 };
+      testWithResult["pass"] = false;
+      testWithResult["name"] = name;
+
+      if (experiment.verbose > 0) {
+        console.log(chalk.bold(chalk.red(`Failed (no model generated): ${name}`)));
+        console.log(generateResponse.err);
+        console.log();
+      }
+
+      fs.appendFileSync(`${experimentResultsName}${inProgressFileSuffix}`, JSON.stringify(testWithResult) + "\n");
 
       inProgress.delete(name);
+      earlyResults[false] += 1;
       engineBar.increment(1, { inProgress: printProgress(inProgress) });
-      return null;
+      engineBar.update({ earlyResults: printEarlyResults(earlyResults) });
+      return testWithResult;
     }
 
     testWithResult = structuredClone(test);
