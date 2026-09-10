@@ -255,6 +255,11 @@ export class WebSocketHandler {
         return;
       }
 
+      // A message from the client is activity. Without this the session's `lastActivity` stayed at
+      // whatever it was set to on creation, so the "inactivity" sweep in SessionManager reaped
+      // live conversations at 30-35 minutes of age — see SessionManager.touch.
+      this.#sessionManager.touch(this.#sessionId);
+
       await this.#dispatch(message);
     } catch (error) {
       logger.error(`Error handling message for session ${this.#sessionId}:`, error);
@@ -619,6 +624,10 @@ export class WebSocketHandler {
   // Forward to worker which owns all pending promise maps
   async #handleToolCallResponse(message) {
     try {
+      // The client is done with the tool, so the hold it had on the inactivity sweep ends here —
+      // before every early return below, because each of them is still an answer.
+      this.#sessionManager.finishClientToolCall(this.#sessionId, message.callId);
+
       if (!this.#worker) {
         logger.warn(`Received tool_call_response for ${message.callId} but no worker is running`);
         return;
@@ -869,6 +878,12 @@ export class WebSocketHandler {
    */
   #setupWorkerRelay(w) {
     w.on('message', async (msg) => {
+      // Anything from the worker is activity too, and this is the half that matters for a long
+      // agent turn: the client sends one message and then waits, sometimes for minutes, while the
+      // worker streams tool calls and usage back. Touching only on inbound client messages would
+      // still let a single slow turn age past the inactivity limit and be reaped mid-flight.
+      this.#sessionManager.touch(this.#sessionId);
+
       if (msg.type === 'to_client') {
         // Only forward if this is still the active worker; drop stale messages
         // from a worker that has been replaced or is in its shutdown grace period.
@@ -905,6 +920,14 @@ export class WebSocketHandler {
           }
 
           this.#ws.send(JSON.stringify(out));
+
+          // From here until the client answers, a session running a tool is indistinguishable from
+          // an abandoned one: the request has gone out, the worker is blocked on the reply, and
+          // neither side sends anything. Registered after the send, and only on the branch that
+          // actually sent, because a request the client never received is not a tool it is running.
+          if (out.type === 'tool_call_request') {
+            this.#sessionManager.startClientToolCall(this.#sessionId, out.callId, out.timeout);
+          }
         }
       } else if (msg.type === 'worker_error') {
         logger.error(`[worker:${this.#sessionId}] ${msg.error}`);

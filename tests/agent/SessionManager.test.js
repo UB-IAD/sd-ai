@@ -478,6 +478,205 @@ describe('SessionManager', () => {
       expect(fs.existsSync(tempDir)).toBe(false);
     });
 
+    it('keeps a session that is being used, however long it stays quiet-free', async () => {
+      // This is an INACTIVITY timeout, but nothing on the chat path refreshed lastActivity:
+      // WebSocket's #onMessage and #dispatch never touched it, and the orchestrator's own
+      // getSession calls run inside the worker, against the worker's SessionManager instance
+      // (constructed with disableCleanup: true), so they never reached the instance that reaps.
+      // The field stayed at its creation value and the timeout behaved as a hard cap on total
+      // session lifetime. On 2026-09-09 that killed four live Stella conversations at 32 to 35
+      // minutes of age, each with its socket open and its worker still running, leaving the
+      // client waiting for a reply that would never arrive.
+      // Its own manager: the shared one in this block sets maxSessionAge to 50ms as well, and
+      // that limit reaps on age no matter how active a session is - which is a different rule and
+      // the correct behaviour. What is under test here is the inactivity timer alone, so age is
+      // given plenty of room and only the timeout is tight.
+      const base = path.join(os.tmpdir(), `sm-active-${randomBytes(8).toString('hex')}`);
+      const active = new SessionManager({
+        maxSessionAge: 60_000,
+        sessionTimeout: 50,
+        disableCleanup: true,
+        tempBasePath: base,
+      });
+      try {
+        const sessionId = active.createSession(null);
+        active.initializeSession(sessionId, 'cld', {}, [], {}, '');
+
+        // Several times older than the inactivity timeout, but in use throughout.
+        for (let i = 0; i < 4; i++) {
+          await new Promise((r) => setTimeout(r, 40));
+          expect(active.touch(sessionId)).toBe(true);
+          await active.cleanupStaleSessions();
+          expect(active.sessions.has(sessionId)).toBe(true);
+        }
+
+        // And once it really does fall quiet, it is still reaped.
+        await new Promise((r) => setTimeout(r, 80));
+        await active.cleanupStaleSessions();
+        expect(active.sessions.has(sessionId)).toBe(false);
+      } finally {
+        active.shutdown();
+        try { fs.rmSync(base, { recursive: true, force: true }); } catch { /* already gone */ }
+      }
+    });
+
+    it('still reaps a session that never falls quiet, once it passes maxSessionAge', async () => {
+      // The other half of the rule, and the one that stops `touch` from being a way to make a
+      // session immortal. A client that keeps talking - or a worker that keeps streaming a single
+      // runaway turn - holds the inactivity timer off indefinitely, so `maxSessionAge` is the only
+      // thing left bounding the session. It is measured from `createdAt`, which `touch` must never
+      // move.
+      //
+      // Nothing else in this file would notice if that stopped holding: make `touch` refresh
+      // `createdAt` too, or make the sweep skip sessions with recent activity, and every other
+      // test here still passes while a stuck session lives forever.
+      //
+      // The mirror image of the test above. There, age had all the room and only the inactivity
+      // timer was tight; here the inactivity timer has all the room, so a kill can only have come
+      // from age.
+      const base = path.join(os.tmpdir(), `sm-maxage-${randomBytes(8).toString('hex')}`);
+      const busy = new SessionManager({
+        maxSessionAge: 80,
+        sessionTimeout: 60_000,
+        disableCleanup: true,
+        tempBasePath: base,
+      });
+      try {
+        const sessionId = busy.createSession(null);
+        busy.initializeSession(sessionId, 'cld', {}, [], {}, '');
+        const createdAt = busy.sessions.get(sessionId).createdAt;
+
+        let reaped = false;
+        for (let i = 0; i < 20; i++) {
+          await new Promise((r) => setTimeout(r, 20));
+
+          // Busy right up to the moment of the sweep, every time.
+          expect(busy.touch(sessionId)).toBe(true);
+          expect(busy.sessions.get(sessionId).createdAt).toBe(createdAt);
+
+          await busy.cleanupStaleSessions();
+          if (!busy.sessions.has(sessionId)) { reaped = true; break; }
+        }
+
+        expect(reaped).toBe(true);
+      } finally {
+        busy.shutdown();
+        try { fs.rmSync(base, { recursive: true, force: true }); } catch { /* already gone */ }
+      }
+    });
+
+    it('keeps a session whose client is still running a tool', async () => {
+      // The gap `touch` alone leaves. A long agent turn is covered because the worker streams
+      // while it thinks, but a long *client* turn is silent in both directions: the request goes
+      // out, the client works, and nothing is sent until it answers. A tool slower than
+      // sessionTimeout was therefore reaped mid-call, and the client's answer arrived for a
+      // session that no longer existed.
+      const base = path.join(os.tmpdir(), `sm-tool-${randomBytes(8).toString('hex')}`);
+      const busy = new SessionManager({
+        maxSessionAge: 60_000,
+        sessionTimeout: 50,
+        disableCleanup: true,
+        tempBasePath: base,
+      });
+      try {
+        const sessionId = busy.createSession(null);
+        busy.initializeSession(sessionId, 'cld', {}, [], {}, '');
+
+        // A tool that has asked for far longer than the inactivity timeout allows.
+        expect(busy.startClientToolCall(sessionId, 'call_1', 30_000)).toBe(true);
+
+        // Silence from both sides throughout — which is exactly what running a tool looks like.
+        for (let i = 0; i < 4; i++) {
+          await new Promise((r) => setTimeout(r, 40));
+          await busy.cleanupStaleSessions();
+          expect(busy.sessions.has(sessionId)).toBe(true);
+        }
+
+        // The answer ends the hold, and from then on the session is only as alive as its traffic.
+        expect(busy.finishClientToolCall(sessionId, 'call_1')).toBe(true);
+        await new Promise((r) => setTimeout(r, 80));
+        await busy.cleanupStaleSessions();
+        expect(busy.sessions.has(sessionId)).toBe(false);
+      } finally {
+        busy.shutdown();
+        try { fs.rmSync(base, { recursive: true, force: true }); } catch { /* already gone */ }
+      }
+    });
+
+    it('stops protecting a client tool call that blew through its own timeout', async () => {
+      // The hold is the tool's declared timeout plus a grace, not an open-ended "a call is
+      // outstanding" flag. A client that never answers must not pin the session: past the
+      // deadline the worker has already given up and moved on, so the sweep gets its say back.
+      const base = path.join(os.tmpdir(), `sm-toolexp-${randomBytes(8).toString('hex')}`);
+      const busy = new SessionManager({
+        maxSessionAge: 60_000,
+        sessionTimeout: 50,
+        disableCleanup: true,
+        tempBasePath: base,
+      });
+      try {
+        const sessionId = busy.createSession(null);
+        busy.initializeSession(sessionId, 'cld', {}, [], {}, '');
+
+        // Already past its deadline, grace included — the client is never going to answer.
+        busy.startClientToolCall(sessionId, 'call_1', 10);
+        busy.sessions.get(sessionId).clientToolDeadlines.set('call_1', Date.now() - 1);
+
+        await new Promise((r) => setTimeout(r, 80));
+        await busy.cleanupStaleSessions();
+
+        expect(busy.sessions.has(sessionId)).toBe(false);
+      } finally {
+        busy.shutdown();
+        try { fs.rmSync(base, { recursive: true, force: true }); } catch { /* already gone */ }
+      }
+    });
+
+    it('reaps a session at maxSessionAge even mid-tool-call', async () => {
+      // The backstop is unconditional: a client tool holds off the inactivity rule and nothing
+      // else. Otherwise a tool declaring a long enough timeout would outrank the only limit that
+      // is not refreshable.
+      const base = path.join(os.tmpdir(), `sm-toolage-${randomBytes(8).toString('hex')}`);
+      const busy = new SessionManager({
+        maxSessionAge: 60,
+        sessionTimeout: 60_000,
+        disableCleanup: true,
+        tempBasePath: base,
+      });
+      try {
+        const sessionId = busy.createSession(null);
+        busy.initializeSession(sessionId, 'cld', {}, [], {}, '');
+        busy.startClientToolCall(sessionId, 'call_1', 60_000);
+
+        await new Promise((r) => setTimeout(r, 90));
+        await busy.cleanupStaleSessions();
+
+        expect(busy.sessions.has(sessionId)).toBe(false);
+      } finally {
+        busy.shutdown();
+        try { fs.rmSync(base, { recursive: true, force: true }); } catch { /* already gone */ }
+      }
+    });
+
+    it('refuses to hold a session open for a tool call with no usable timeout', () => {
+      const sessionId = sm.createSession(null);
+      expect(sm.startClientToolCall(sessionId, 'call_1', undefined)).toBe(false);
+      expect(sm.startClientToolCall(sessionId, 'call_2', 0)).toBe(false);
+      expect(sm.startClientToolCall(sessionId, 'call_3', -1)).toBe(false);
+      expect(sm.sessions.get(sessionId).clientToolDeadlines.size).toBe(0);
+    });
+
+    it('client tool bookkeeping is a no-op for an unknown session', () => {
+      expect(sm.startClientToolCall('sess_does_not_exist', 'call_1', 30_000)).toBe(false);
+      expect(sm.finishClientToolCall('sess_does_not_exist', 'call_1')).toBe(false);
+    });
+
+    it('touch reports whether the session exists', () => {
+      const sessionId = sm.createSession(null);
+      expect(sm.touch(sessionId)).toBe(true);
+      expect(sm.touch('sess_does_not_exist')).toBe(false);
+    });
+
     it('awaits workerTeardown before deleting the session or its temp dir', async () => {
       // This is the bug-fix invariant: when a worker is running, the host must
       // keep the bind-mount source alive until the worker has actually exited.

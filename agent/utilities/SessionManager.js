@@ -70,6 +70,13 @@ const isSafeConversationStart = (message) => {
 export class SessionManager {
   static MAX_COMPRESSION_TOKENS_PER_PASS = 200_000;
 
+  // How long past a client tool's own declared timeout the session stays protected from the
+  // inactivity sweep. The worker rejects the call at the deadline and its agent loop resumes,
+  // which produces IPC traffic and refreshes `lastActivity` on its own — this only has to cover
+  // the gap between those two moments, so that a sweep landing inside it cannot reap a session
+  // that is about to be busy again.
+  static CLIENT_TOOL_GRACE_MS = 60_000;
+
   constructor(options = {}) {
     this.sessions = new Map();
 
@@ -259,6 +266,12 @@ export class SessionManager {
       // Active tool calls awaiting client response
       pendingToolCalls: new Map(),
 
+      // callId -> the moment this session stops counting as busy on account of that call. Written
+      // in the main process only (see WebSocketHandler), because the map above is the worker's:
+      // DynamicToolProvider runs there and fills in the worker's own SessionManager instance,
+      // which is not the instance that sweeps. See #liveClientToolDeadline.
+      clientToolDeadlines: new Map(),
+
       // Agent conversation context (for Claude Agent SDK)
       conversationContext: [],
 
@@ -312,6 +325,7 @@ export class SessionManager {
       agentName: null,
       modelTokenCount: 0,
       pendingToolCalls: new Map(),
+      clientToolDeadlines: new Map(),
       conversationContext: [],
       attachedFiles: new Map(),
       workerTeardown: null,
@@ -362,6 +376,108 @@ export class SessionManager {
       session.lastActivity = Date.now();
     }
     return session;
+  }
+
+  /**
+   * Mark a session as still in use, so the inactivity sweep leaves it alone.
+   *
+   * `sessionTimeout` is documented as an *inactivity* timeout, but nothing on the chat path was
+   * updating `lastActivity`. `#onMessage` and `#dispatch` in WebSocket.js never touched it, and
+   * the orchestrator's own `getSession` calls run inside the worker, against the worker's own
+   * SessionManager instance (constructed with `disableCleanup: true`), so they never reached the
+   * instance that does the reaping. The field stayed at its creation value and the timeout behaved
+   * as a hard cap on total session lifetime, active or not — with the sweep running every five
+   * minutes, a kill somewhere between 30 and 35 minutes of age no matter what the session was
+   * doing.
+   *
+   * Not a theoretical concern. Measured on 2026-09-09, four of five failed Stella conversations
+   * were reaped this way, at ages of 32, 33, 33 and 35 minutes, each logged with `wsReadyState=1`
+   * and its worker still alive — killed mid-conversation, leaving the client waiting on a reply
+   * that would never arrive. Conversations shorter than about half an hour survived and longer
+   * ones did not, which is why the failures looked random.
+   *
+   * Called on traffic in both directions (see WebSocket.js), so a long single agent turn keeps a
+   * session alive just as a new user message does.
+   *
+   * @param {string} sessionId The session to mark as active
+   * @returns {boolean} True when a session with that id exists
+   */
+  touch(sessionId) {
+    const session = this.sessions.get(sessionId);
+    if (!session) return false;
+    session.lastActivity = Date.now();
+    return true;
+  }
+
+  /**
+   * Record that the client has been asked to run a tool, and is expected to be busy with it until
+   * `timeoutMs` has elapsed.
+   *
+   * This is the one kind of activity that produces no traffic. `touch` covers a long *agent* turn,
+   * because the worker streams while it thinks; it cannot cover a long *client* turn, because
+   * between the request going out and the answer coming back neither side sends anything. A tool
+   * that takes longer than `sessionTimeout` would therefore be reaped mid-call — the client
+   * finishes its work and answers a session that no longer exists.
+   *
+   * The hold is bounded by the tool's own declared timeout (`toolDef.timeout`, which the request
+   * carries), not by an open-ended "a call is outstanding" flag: an answer that never comes must
+   * not pin the session, and a tool that asks for eight hours is making a claim the sweep can
+   * honour and expire on its own. `maxSessionAge` still applies regardless.
+   *
+   * @param {string} sessionId The session whose client is running the tool
+   * @param {string} callId The call the client was asked to run
+   * @param {number} timeoutMs The tool's declared timeout, from the request sent to the client
+   * @returns {boolean} True when the hold was recorded
+   */
+  startClientToolCall(sessionId, callId, timeoutMs) {
+    const session = this.sessions.get(sessionId);
+    if (!session) return false;
+
+    // A tool call with no sane deadline gets no hold: an unbounded one would be indistinguishable
+    // from a leak, and the sweep is the only thing standing between an abandoned session and
+    // `maxSessionAge`. Worth saying out loud, because the symptom would otherwise be a session
+    // reaped mid-tool with nothing to explain it.
+    if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+      logger.warn(`[session:${sessionId}] Client tool call ${callId} has no usable timeout (${timeoutMs}) — it will not hold off the inactivity sweep`);
+      return false;
+    }
+
+    session.lastActivity = Date.now();
+    session.clientToolDeadlines.set(callId, Date.now() + timeoutMs + SessionManager.CLIENT_TOOL_GRACE_MS);
+    return true;
+  }
+
+  /**
+   * Release the hold `startClientToolCall` took, because the client has answered.
+   *
+   * Called on the answer rather than left to expire: a tool that declares a long timeout and
+   * returns in a second would otherwise keep the session alive for the whole of it.
+   *
+   * @param {string} sessionId The session that asked for the call
+   * @param {string} callId The call the client has answered
+   * @returns {boolean} True when there was a hold to release
+   */
+  finishClientToolCall(sessionId, callId) {
+    const session = this.sessions.get(sessionId);
+    if (!session) return false;
+    return session.clientToolDeadlines.delete(callId);
+  }
+
+  /**
+   * The furthest-out deadline among this session's outstanding client tool calls, or 0 when none
+   * of them is still running. Expired entries are dropped as they are passed: the worker has
+   * already given up on those calls, so they no longer say anything about the session being busy.
+   */
+  #liveClientToolDeadline(session, now) {
+    let furthest = 0;
+    for (const [callId, deadline] of session.clientToolDeadlines) {
+      if (deadline <= now) {
+        session.clientToolDeadlines.delete(callId);
+        continue;
+      }
+      if (deadline > furthest) furthest = deadline;
+    }
+    return furthest;
   }
 
   /**
@@ -1032,24 +1148,42 @@ ${conversationText}`;
     for (const [sessionId, session] of this.sessions.entries()) {
       const age = now - session.createdAt;
       const inactivity = now - session.lastActivity;
-      if (age > this.maxSessionAge || inactivity > this.sessionTimeout) {
-        candidates.push({ sessionId, session, age, inactivity });
+      // A client tool the agent is waiting on is work in progress even though it is silent in both
+      // directions, so it holds off the inactivity rule until its own declared timeout has passed
+      // (see startClientToolCall). It does not hold off `maxSessionAge`, which is the backstop and
+      // is deliberately unconditional.
+      const toolDeadline = this.#liveClientToolDeadline(session, now);
+      if (age > this.maxSessionAge || (inactivity > this.sessionTimeout && toolDeadline === 0)) {
+        candidates.push({ sessionId, session, age, inactivity, toolDeadline });
       }
     }
 
     let cleanedCount = 0;
-    for (const { sessionId, session, age, inactivity } of candidates) {
+    for (const { sessionId, session, age, inactivity, toolDeadline } of candidates) {
       // A concurrent WS close may have already removed it while we were
       // awaiting a previous teardown.
       if (!this.sessions.has(sessionId)) continue;
 
       const trigger = age > this.maxSessionAge ? 'max-age' : 'inactivity';
       const hasWorker = typeof session.workerTeardown === 'function';
-      logger.log(
-        `Cleaning up stale session: ${sessionId} (trigger=${trigger}, age=${Math.round(age/1000/60)}m, ` +
+      // Only reachable on the max-age branch, since a live tool call suppresses the other one —
+      // and worth naming, because it is the case where a client is about to answer a call that has
+      // nowhere to land.
+      const awaitingTool = toolDeadline > now ? `, awaitingClientToolFor=${Math.round((toolDeadline - now)/1000/60)}m` : '';
+      const detail =
+        `${sessionId} (trigger=${trigger}, age=${Math.round(age/1000/60)}m, ` +
         `inactive=${Math.round(inactivity/1000/60)}m, hasWorker=${hasWorker}, ` +
-        `wsReadyState=${session.ws?.readyState ?? 'none'})`
-      );
+        `wsReadyState=${session.ws?.readyState ?? 'none'}${awaitingTool})`;
+      // An open socket with a live worker is a session being killed out from under a client that
+      // is still connected and, as far as it knows, still waiting for an answer. That is a
+      // different event from reaping an abandoned session and it reads differently in the log,
+      // because the last time it happened it cost four conversations and was only identified
+      // afterwards by matching model-file timestamps against log lines that all said "log".
+      if (hasWorker && session.ws?.readyState === 1) {
+        logger.warn(`Cleaning up stale session WITH A LIVE CLIENT AND WORKER — the client is waiting and will get no reply: ${detail}`);
+      } else {
+        logger.log(`Cleaning up stale session: ${detail}`);
+      }
 
       // Close WebSocket if still open. This will also fire #onClose on the
       // handler side, which is idempotent with the teardown we're about to do.
