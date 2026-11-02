@@ -9,7 +9,7 @@ import { join } from 'path';
 import { tmpdir } from 'os';
 import { randomBytes } from 'crypto';
 import * as XLSX from 'xlsx';
-import { RagStore, isValidFileId, FILE_ID_RE } from '../../agent/utilities/RagStore.js';
+import { RagStore, isValidFileId, FILE_ID_RE, embedWithRetry, isTransientEmbedError } from '../../agent/utilities/RagStore.js';
 import { SessionManager } from '../../agent/utilities/SessionManager.js';
 import config from '../../config.js';
 
@@ -355,4 +355,39 @@ trailer<</Root 1 0 R>>
     });
   });
 
+});
+
+describe('embedWithRetry', () => {
+  const socketDrop = () => Object.assign(new TypeError('fetch failed'), { cause: { code: 'UND_ERR_SOCKET' } });
+
+  test('retries a dropped socket and returns the eventual result', async () => {
+    let calls = 0;
+    const result = await embedWithRetry(async () => {
+      calls++;
+      if (calls < 3) throw socketDrop();
+      return 'ok';
+    }, [0, 0, 0]);
+    expect(result).toBe('ok');
+    expect(calls).toBe(3);
+  });
+
+  test('gives up after the last delay and rethrows the transient error', async () => {
+    let calls = 0;
+    await expect(embedWithRetry(async () => { calls++; throw socketDrop(); }, [0, 0])).rejects.toThrow('fetch failed');
+    expect(calls).toBe(3);
+  });
+
+  test('does not retry a non-transient error', async () => {
+    let calls = 0;
+    const badRequest = Object.assign(new Error('bad request'), { status: 400 });
+    await expect(embedWithRetry(async () => { calls++; throw badRequest; }, [0, 0, 0])).rejects.toThrow('bad request');
+    expect(calls).toBe(1);
+  });
+
+  test('classifies rate limits and 5xx as transient, 4xx as not', () => {
+    expect(isTransientEmbedError({ status: 429 })).toBe(true);
+    expect(isTransientEmbedError({ status: 503 })).toBe(true);
+    expect(isTransientEmbedError({ status: 403 })).toBe(false);
+    expect(isTransientEmbedError({ code: 'ECONNRESET' })).toBe(true);
+  });
 });

@@ -277,7 +277,7 @@ class AgentWorker {
               isError ? pending.reject(new Error(typeof result === 'string' ? result : JSON.stringify(result))) : pending.resolve(result);
               session.pendingModelRequests.delete(callId);
             } else {
-              logger.warn(`[worker:${SESSION_ID}] Unknown callId in tool_response: ${callId}`);
+              logger.warn(`[worker:${SESSION_ID}] Unknown callId in tool_response: ${callId} (usually a response arriving after its timeout — see the matching timeout warning)`);
             }
           }
           break;

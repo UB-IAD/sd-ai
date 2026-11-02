@@ -199,6 +199,9 @@ export class DynamicToolProvider {
     let timer;
     const timeoutPromise = new Promise((_, reject) => {
       timer = setTimeout(() => {
+        // Named here because a client that answers late only produces an
+        // "Unknown callId" warning in the worker, which can't say which tool it was.
+        logger.warn(`[DynamicToolProvider] ${toolName} (${callId}) timed out after ${timeout}ms; a late client response will be dropped`);
         reject(new Error(`Tool call timeout: ${toolName} did not respond within ${timeout}ms`));
       }, timeout);
     });

@@ -2006,7 +2006,8 @@ ${lines.join('\n')}`);
 
         } catch (error) {
           const isQuota = error?.status === 429;
-          const isNetworkError = error?.code === 'UND_ERR_SOCKET' || error?.code === 'ECONNRESET' ||
+          const isNetworkError = error?.cause?.code === 'UND_ERR_SOCKET' || error?.code === 'UND_ERR_SOCKET' ||
+            error?.code === 'ECONNRESET' || error?.cause?.code === 'ECONNRESET' ||
             (error instanceof TypeError && error.message === 'terminated');
           const isStaleCacheError = error?.status === 403 &&
             typeof error?.message === 'string' && error.message.includes('CachedContent not found');

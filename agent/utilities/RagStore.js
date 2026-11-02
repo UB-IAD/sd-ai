@@ -48,6 +48,35 @@ const loadGoogleGenai = async () => _GoogleGenAI ??= (await import('@google/gena
 // calls and cap how many run concurrently to stay friendly to rate limits.
 const EMBED_CONCURRENCY = 8;
 
+// Backoff before each retry of a single chunk's embedContent call. A file is
+// dozens of calls and the whole file fails if any one does, so a lone dropped
+// socket (Google closing a reused keep-alive connection: "fetch failed" with
+// cause UND_ERR_SOCKET, nothing read back) must not sink the attachment.
+const EMBED_RETRY_DELAYS_MS = [1000, 3000, 8000];
+
+// Network drops, rate limiting and server-side 5xx are worth retrying; a 400
+// (bad request, bad key) will fail the same way every time.
+export function isTransientEmbedError(err) {
+  const codes = [err?.code, err?.cause?.code];
+  if (codes.some(c => c === 'UND_ERR_SOCKET' || c === 'ECONNRESET' || c === 'ETIMEDOUT' || c === 'UND_ERR_CONNECT_TIMEOUT')) return true;
+  if (err instanceof TypeError && (err.message === 'fetch failed' || err.message === 'terminated')) return true;
+  const status = err?.status;
+  return status === 429 || (typeof status === 'number' && status >= 500 && status < 600);
+}
+
+// Run one embed call, retrying transient failures after each delay in delaysMs.
+export async function embedWithRetry(call, delaysMs) {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await call();
+    } catch (err) {
+      if (attempt >= delaysMs.length || !isTransientEmbedError(err)) throw err;
+      logger.warn(`RAG embed: transient error (${err?.cause?.code ?? err?.code ?? err?.status ?? err?.message}), retry ${attempt + 1}/${delaysMs.length}`);
+      await new Promise(resolve => setTimeout(resolve, delaysMs[attempt]));
+    }
+  }
+}
+
 function l2normalize(vector) {
   let sum = 0;
   for (const v of vector) sum += v * v;
@@ -89,11 +118,11 @@ export function createGeminiEmbedder(sessionManager, sessionId, clientId) {
       for (let i = 0; i < texts.length; i += EMBED_CONCURRENCY) {
         const slice = texts.slice(i, i + EMBED_CONCURRENCY);
         await Promise.all(slice.map(async (text, j) => {
-          const response = await client.models.embedContent({
+          const response = await embedWithRetry(() => client.models.embedContent({
             model: config.ragEmbeddingModel,
             contents: text,
             config: { outputDimensionality: config.ragEmbeddingDimensions }
-          });
+          }), EMBED_RETRY_DELAYS_MS);
           if (response.usageMetadata) {
             reporter.report({ provider: Provider.GOOGLE, model: config.ragEmbeddingModel, usage: response.usageMetadata, clientKey: false, source }).catch(() => {});
           }
