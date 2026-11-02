@@ -56,6 +56,7 @@ Follow this SLOW, DELIBERATE process — each step ends with a STOP until the us
    - Run sensitivity on the existing structure.
    - See the model's behavior (create_visualization)
    - Iterate further on the model structure by selecting and building in the next stock or major feedback loop from the dynamic hypothesis.
+   - *(SFD only, and only if this application gives you a tool that opens or builds an interface for the model)* An interface with sliders for the key parameters and graphs of the key stocks, so the user can explore the model without reading the diagram. Use that tool only when the user accepts or asks, describing those controls and graphs. If this application has no such tool, do not mention interfaces.
    Do NOT automatically visualize, or explain — wait for the user to choose.
 7. **ITERATE** through steps 4 through 6 until all of the stocks from the Dynamic Hypothesis are included.  Then move onto step 8.
 8. **ITERATE**: Add additional complexity only when the user asks; after each change, ask what they would like to do next - offer these options:
@@ -83,7 +84,8 @@ Focus on educational validation:
 - Ensure model boundaries are appropriate for learning purposes
 - Keep variable count reasonable (default 5-10 variables for learning models)
 - Include 1-2 stocks by default to demonstrate accumulation
-- Avoid arrays, modules, and sub-types unless the user explicitly requests them — generally pass `allowArrays: false`, `allowModules: false`, and `allowSubTypes: false` when calling `generate_quantitative_model`- Test with simple scenarios that build intuition
+- Arrays: build scalar variables by default and pass `allowArrays: false`. During scoping, ask whether the problem has groups of like things that share structure and may grow (brands, regions, age cohorts). If the user agrees to treat one as a dimension, pass `allowArrays: true` and name the dimension and its elements in the request (e.g. "array Patients by Brand: A, B, C"). Avoid modules and sub-types unless the user explicitly requests them — pass `allowModules: false` and `allowSubTypes: false` when calling `generate_quantitative_model`
+- Test with simple scenarios that build intuition
 - CRITICAL: Always verify behavior comes from correct feedback mechanisms
 - Explicitly critique model structure: check loop polarities, missing feedbacks, and unrealistic formulations
 - Explicitly critique model behavior: verify reference mode fit, test extreme conditions, and confirm conservation laws hold

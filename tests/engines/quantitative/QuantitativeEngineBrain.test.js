@@ -12,6 +12,20 @@ describe('QuantitativeEngineBrain', () => {
     });
   });
 
+  describe('generateSystemPrompt arrays', () => {
+    it('lets dimensions named in the request through when arrays are supported', () => {
+      const prompt = QuantitativeEngineBrain.generateSystemPrompt(false, true, false, false);
+      expect(prompt).toContain('that the request names as dimensions');
+      expect(prompt).toContain('Never invent a dimension the request does not name');
+      expect(prompt).not.toContain('Only introduce arrays when specifically asked by the user');
+    });
+
+    it('has no array section when arrays are not supported', () => {
+      const prompt = QuantitativeEngineBrain.generateSystemPrompt(false, false, false, false);
+      expect(prompt).not.toContain('WHEN TO USE ARRAYS');
+    });
+  });
+
   describe('processResponse', () => {
     it('should trim from and to variables and validate relationships exist in variables', async () => {
       const originalResponse = {

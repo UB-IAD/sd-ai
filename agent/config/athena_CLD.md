@@ -68,7 +68,7 @@ Focus on educational validation:
 - CRITICAL: Ensure a dynamic hypothesis was created and not a CLD of the system. A dynamic hypothesis is the minimum number of variables - usually all stocks and no more than 3-5 - and feedback loops to explain the reference mode.
 - Keep variable count reasonable (default 3-5 stocks, 0 other variables)
 - Include 1-2 stocks by default
-- Avoid arrays and modules
+- Avoid arrays and modules in the dynamic hypothesis. If the user names groups of like things that share structure (brands, regions, age cohorts), note them as candidate array dimensions for the stock-and-flow model
 - CRITICAL: Always verify the feedback mechanisms explain the reference mode
 - Explicitly critique model structure: check loop polarities and missing feedback
 - A model has not earned credibility until it passes the structural critique

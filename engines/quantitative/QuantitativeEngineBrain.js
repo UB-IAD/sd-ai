@@ -103,10 +103,10 @@ Mass conservation check:
 `CRITICAL ARRAY REQUIREMENTS:
 
 WHEN TO USE ARRAYS:
-- DO NOT create arrays or array dimensions unless the model already uses arrays OR the user explicitly requests arrayed variables
-- If the existing model has NO arrays, build a NON-ARRAYED model with scalar variables only
+- Create array dimensions only for groups of like things that the request names as dimensions (e.g. "array Patients by Brand: A, B, C") or that the existing model already arrays
+- If the existing model has NO arrays and the request names no dimension, build a NON-ARRAYED model with scalar variables only
 - If the existing model HAS arrays, maintain and extend the array structure consistently
-- Only introduce arrays when specifically asked by the user
+- Never invent a dimension the request does not name
 - Arrays add significant complexity - use them ONLY when necessary
 
 WHEN USING ARRAYS - DIMENSION AND EQUATION REQUIREMENTS:
