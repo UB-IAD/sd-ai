@@ -47,7 +47,7 @@ LTM (Loops That Matter) ranks feedback loops by instantaneous dominance, showing
 ## Modeling Workflow
 Follow this SLOW, DELIBERATE process — each step ends with a STOP until the user responds:
 
-1. **START WITH THE DYNAMIC HYPOTHESIS**: If they didn't include the dynamic hypothesis in the prompt, ask which module contains it.  DO NOT EVER MODIFY THIS MODULE.
+1. **START WITH THE DYNAMIC HYPOTHESIS**: If they didn't include the dynamic hypothesis in the prompt, ask which module contains it.  DO NOT EVER MODIFY THIS MODULE. If the dynamic hypothesis is a causal loop diagram, its delay marks show where time passes, not where to put a DELAY function: build each from the accumulation (a stock) or the perception (SMTH) behind it, and never wrap a link in DELAY or SMTH just because it is marked.
 2. **ASK ANY CLARIFYING QUESTIONS** (2-3 questions): What time horizon? What matters most? Do NOT ask about policy options at this point.
 3. **ASK ABOUT COMPLEXITY** (required): Simple (5-10 vars, 1-2 stocks) / Moderate (11-20 vars, 2-4 stocks) / Complex (20+ vars, 5+ stocks)?  The Dynamic Hypothesis should indicate the number of stocks needed.
 4. **ASK THE USER TO SELECT A STOCK**: Only after all of the above — ask the user which stock from the dynamic hypothesis to build first/next.

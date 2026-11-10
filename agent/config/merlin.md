@@ -96,7 +96,7 @@ Enforce strict validation:
 5. STOP — ask the user what they want to do next, offering feedback analysis, visualization, and, when this application gives you a tool that opens or builds an interface for the model, an interface for exploring it (use that tool only when the user accepts; never mention interfaces when there is no such tool). Do NOT auto-visualize or auto-analyze feedback.
 
 ### On Build From a Causal Loop Diagram
-The causal loop diagram lives in its own file and is context you work from. Build the stock-and-flow model as a separate model; never convert the diagram's file in place or edit it while building.
+The causal loop diagram lives in its own file and is context you work from. Build the stock-and-flow model as a separate model; never convert the diagram's file in place or edit it while building. Its delay marks show where time passes, not where to put a DELAY function: build each from the accumulation (a stock) or the perception (SMTH) behind it, and never wrap a link in DELAY or SMTH just because it is marked.
 1. Before building, ask once whether the user wants the whole model built in one pass (the default) or in smaller steps, one feedback loop at a time
 2. In one pass: build the whole model, then VALIDATE. In smaller steps: list the diagram's loops in build order, starting with the loop that matters most to the behavior, and build, VALIDATE and run one loop at a time, letting the user explore each before the next
 3. After the build (or each loop), STOP and offer: the next loop (when going in steps), feedback analysis, visualization, and (when this application gives you an interface tool) an interface for exploring it

@@ -293,7 +293,7 @@ export class LLMWrapper {
     "reasoning": "This is an explanation for why this relationship exists",
     "polarity": "There are two possible kinds of relationships.  The first are relationships with positive polarity that are represented with a + symbol.  In relationships with positive polarity (+) a change in the from variable causes a change in the same direction in the to variable.  For example, in a relationship with positive polarity (+), a decrease in the from variable, would lead to a decrease in the to variable.  The second kind of relationship are those with negative polarity that are represented with a - symbol.  In relationships with negative polarity (-) a change in the from variable causes a change in the opposite direction in the to variable.  For example, in a relationship with negative polarity (-) an increase in the from variable, would lead to a decrease in the to variable.",
     "polarityReasoning": "This is the reason for why the polarity for this relationship was chosen",
-    "delay": "True if the effect of from on to takes significant time to appear compared with the other links in the diagram, so the arrow carries a delay mark (||). False removes the mark. Leave it out to keep the arrow's current mark.",
+    "delay": "True if the arrow carries a delay mark (||): the effect of from on to takes significant time to appear compared with the other links. A drawing mark only; it changes no equation. False removes the mark. Leave it out to keep the arrow's current mark.",
     "relationship": "This is a relationship between two variables, from and to (from is the cause, to is the effect).  The relationship also contains a polarity which describes how a change in the from variable impacts the to variable",
 
     "relationships": "The list of relationships you think are appropriate to satisfy my request based on all of the information I have given you",
@@ -397,6 +397,7 @@ export class LLMWrapper {
     "to": "The effect.",
     "polarity": "'+' if a change in from moves to in the same direction, '-' if in the opposite direction.",
     "relationship": "A causal link from a cause (from) to an effect (to).",
+    "delay": "Whether the arrow carries a delay mark (||). A drawing mark only; it changes no equation. Copy the mark each existing link already has. For a new link use false, unless the user asked for a delay mark on it. Never add a DELAY or SMTH function because of a mark.",
     "name": "The name of the variable.",
     "type": "stock, flow, or variable (an auxiliary).",
     "equation": "The XMILE equation. For a stock, its initial value.",
@@ -559,7 +560,8 @@ export class LLMWrapper {
         to: base.to,
         reasoning: base.reasoning,
         polarityReasoning: base.polarityReasoning,
-        polarity: base.polarity
+        polarity: base.polarity,
+        delay: base.delay
       }).describe(strings.relationship);
 
       const variableObj = {

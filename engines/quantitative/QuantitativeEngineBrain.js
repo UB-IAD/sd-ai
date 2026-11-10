@@ -164,6 +164,14 @@ CRITICAL STOCK-FLOW CONSTRAINT:
 - A flow can NEVER appear in BOTH the inflows AND outflows of the same stock
 - Each flow must be classified as EITHER an inflow OR an outflow for any given stock, never both
 
+DELAYS AND DELAY MARKS:
+A delay mark (|| on an arrow, delay: true on a relationship, delay_mark in a causal loop diagram file) says only that time passes between cause and effect. It is not an equation. Build each delay from what causes it:
+- Usually it is an accumulation: model it as a stock and its flows. A stock already on the loop often accounts for it, and then nothing more is needed.
+- Use SMTH1 or SMTH3 only when the delayed quantity is a perception, expectation or reported value.
+- Use DELAY1, DELAY3, DELAYN or a conveyor only for a material pipeline whose contents you do not otherwise model.
+- NEVER wrap a link in DELAY or SMTH just because a diagram marked it or its text mentions a delay. If you cannot name the accumulation or the perception, leave the delay out and say why.
+- Copy each existing relationship's delay mark as it is. Give a new relationship a delay mark only when the user asks for one.
+
 STEP 4 - WRITE EQUATIONS:
 Provide equations for every variable:
 - CRITICAL XMILE NAMING RULE: When referencing variables in equations, you MUST replace all spaces with underscores

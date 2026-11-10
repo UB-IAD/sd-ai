@@ -27,7 +27,7 @@ Available sections:
   * type="numeric": elements auto-generated as ['1','2','3'...]
   * type="labels": elements are user-defined meaningful names like ['North','South','East','West']
 - variables: array of variables with schema: {name, type (stock|flow|variable), equation, documentation, units, uniflow, inflows, outflows, dimensions, arrayEquations, crossLevelGhostOf, graphicalFunction, subType?, additionalProperties?}
-- relationships: array of relationships with schema: {from, to, polarity (+|-|""), reasoning, polarityReasoning, delay?}. delay: true means the arrow carries a delay mark.
+- relationships: array of relationships with schema: {from, to, polarity (+|-|""), reasoning, polarityReasoning, delay?}. delay: true means the arrow carries a delay mark, a drawing mark only; it changes no equation.
 - modules: module hierarchy with schema: {name, parentModule}. IMPORTANT: The modules array only defines the hierarchical structure (which modules exist and their parent-child relationships). It does NOT tell you which variables belong to a module - variable membership is determined by the variable name prefix (e.g., "Finance.revenue" belongs to the Finance module).
 
 Module handling:
@@ -539,7 +539,7 @@ export function createEditRelationshipsTool(sessionManager, sessionId, sendToCli
 - update: 'from' and 'to' locate the existing relationship; other fields you include replace those values
 - remove: only 'from' and 'to' are read; other fields are ignored
 
-Delay marks: set delay: true on a relationship whose effect takes significant time to appear compared with the other links (the arrow gets a delay mark, ||); delay: false removes the mark. Mark the delays that matter to the diagram's dynamics, not every link.
+Delay marks: delay: true draws a delay mark (||) on the arrow; delay: false removes it. It changes no equation. Marks belong mainly in causal loop diagrams, where you mark only the delays that shape the behavior. In a stock-and-flow model, set or remove one only when the user asks, and never add a DELAY or SMTH function because a link is marked.
 
 CRITICAL: Every variable referenced inside an additionalProperties equation on a discrete-entity element (e.g. processTime, capacity, leakFraction, purgeEq, queueOutflowPriority) REQUIRES a relationship arrow FROM that referenced variable TO the element.`,
     supportedModes: ['sfd', 'cld'],

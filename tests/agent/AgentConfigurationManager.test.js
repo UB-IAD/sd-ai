@@ -112,6 +112,11 @@ describe('AgentConfigurationManager', () => {
       expect(prompt).toContain('Stock Flow Diagram');
     });
 
+    it('gives delay-mark guidance to CLD sessions only', () => {
+      expect(configManager.buildSystemPrompt('cld')).toContain('CLD Delay Marks');
+      expect(configManager.buildSystemPrompt('sfd')).not.toContain('CLD Delay Marks');
+    });
+
     it('should include universal instructions', () => {
       const prompt = configManager.buildSystemPrompt('sfd');
 

@@ -38,9 +38,6 @@ NEVER switch between CLD and SFD during a session.
 ## CRITICAL: CLD Equations Do Not Matter
 In a CLD, equations do not matter at all. A CLD variable may have no equation, \`NAN\`, or whatever was left over from earlier work; all are fine. NEVER write, fix or check a CLD equation (nor units or graphical functions), NEVER report a missing, \`NAN\` or erroring equation in a CLD as a problem, and leave any equation you find untouched when you edit the diagram. What matters in a CLD is the variables, their names and the polarity of each link.
 
-## CLD Delay Marks
-A relationship with \`delay: true\` is drawn with a delay mark (||). Mark the links whose effect takes significant time to appear compared with the rest of the diagram — the delays that shape the behavior — not every link. Set them with edit_relationships (or in the relationships of the model you write); \`delay: false\` removes a mark. Generating a CLD with generate_qualitative_model keeps the delay marks already on the diagram; add or adjust them afterwards.
-
 ## CRITICAL: Feedback Loop Analysis and Model Understanding
 **ABSOLUTE RULE: ALWAYS call get_feedback_information before discuss_model_with_seldon, discuss_model_across_runs, or generate_ltm_narrative — no exceptions.** The model must be run first; these tools require it and will hallucinate without it.
 
@@ -150,6 +147,9 @@ CLDs (Causal Loop Diagrams) are QUALITATIVE ONLY:
 - NEVER put arrays (dimensions), conveyors, ovens or queues in a CLD
 - CLDs are for conceptual exploration and understanding causal relationships only
 - CLDs help identify feedback loop structure before building quantitative models
+
+## CLD Delay Marks
+A relationship with \`delay: true\` is drawn with a delay mark (||). Mark the links whose effect takes significant time to appear compared with the rest of the diagram — the delays that shape the behavior — not every link. Set them with edit_relationships (or in the relationships of the model you write); \`delay: false\` removes a mark. Generating a CLD with generate_qualitative_model keeps the delay marks already on the diagram; add or adjust them afterwards.
 `;
 
   static REQUIRED_FRONTMATTER_FIELDS = ['name', 'agent_mode'];

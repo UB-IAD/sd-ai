@@ -1,5 +1,5 @@
 import {
-  buildManifest, buildAgents, parsePersona, loadPersonas, loadRegistrySnapshot, loadClientConfig, serializeManifest,
+  loadEngineBriefs, buildManifest, buildAgents, parsePersona, loadPersonas, loadRegistrySnapshot, loadClientConfig, serializeManifest,
   validCommand, validArgs, buildCompatibility, protocolFor, PROTOCOL, BUILDERS, displayName, stripVersion, binFromPackageJson,
   binaryCommand, launchByPlatform, installFor, runtimeStep, validPinnedPackage, archiveStep, npmStep, checkInstall, validTemplate, hashMissingArchives, hashArchive, forgetArchiveHashes, learnedArchiveHash, resolveExtraPackages, versionForRange, resolveNodeRuntime, resolveInstalls,
 } from '../../acp/buildManifest.js';
@@ -13,6 +13,18 @@ describe('ACP manifest', () => {
     expect(socrates.name).toBe('Socrates');
     expect(socrates.role).toBe('Coach');
     expect(socrates.instructions).not.toMatch(/^---/);   // frontmatter is metadata, not prompt
+  });
+
+  test('personas that build from a causal loop diagram say delay marks are not DELAY functions', () => {
+    const personas = loadPersonas();
+    for (const id of ['merlin', 'socrates', 'athena_sfd', 'themis']) {
+      expect(personas.find(p => p.id === id).instructions).toContain('never wrap a link in DELAY or SMTH just because it is marked');
+    }
+  });
+
+  test('the quantitative brief carries the delay-mark translation rule', async () => {
+    const briefs = await loadEngineBriefs();
+    expect(briefs.quantitative).toContain('DELAYS AND DELAY MARKS');
   });
 
   test('parsePersona reads frontmatter and single-mode agents', () => {

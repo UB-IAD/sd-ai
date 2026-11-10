@@ -767,6 +767,13 @@ describe('relationship delay marks', () => {
     expect(rel.polarity).toBe('-');
   });
 
+  it('describes a delay mark as drawing only, set in a stock-and-flow model only when asked', () => {
+    const { tool } = makeTool();
+    expect(tool.description).toContain('It changes no equation');
+    expect(tool.description).toContain('set or remove one only when the user asks');
+    expect(tool.description).toContain('never add a DELAY or SMTH function because a link is marked');
+  });
+
   it('rejects a delay that is not a boolean', async () => {
     const { tool, sent } = makeTool();
     const result = await tool.handler({ operation: 'update', data: [{ from: 'b', to: 'a', delay: 'yes' }] });

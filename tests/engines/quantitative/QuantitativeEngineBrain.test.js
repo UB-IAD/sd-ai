@@ -26,6 +26,45 @@ describe('QuantitativeEngineBrain', () => {
     });
   });
 
+  describe('delay marks', () => {
+    it('tells the model a delay mark is structure, not a DELAY function', () => {
+      const prompt = QuantitativeEngineBrain.generateSystemPrompt(false, false, false, false);
+      expect(prompt).toContain('DELAYS AND DELAY MARKS');
+      expect(prompt).toContain('NEVER wrap a link in DELAY or SMTH just because a diagram marked it');
+      expect(QuantitativeEngineBrain.DEFAULT_SYSTEM_PROMPT).toContain('DELAYS AND DELAY MARKS');
+    });
+
+    it('asks for a required delay mark on every relationship', () => {
+      const schema = quantitativeEngine.setupLLMParameters('Test prompt').responseFormat;
+      const relationship = schema.shape.relationships.element;
+      expect(relationship.shape.delay).toBeDefined();
+      expect(relationship.safeParse({ from: 'a', to: 'b', reasoning: '', polarityReasoning: '', polarity: '+' }).success).toBe(false);
+      expect(relationship.safeParse({ from: 'a', to: 'b', reasoning: '', polarityReasoning: '', polarity: '+', delay: false }).success).toBe(true);
+      expect(relationship.shape.delay.description).toContain('changes no equation');
+    });
+
+    it('shows existing delay marks in the prior model so they can be copied', () => {
+      const lastModel = {
+        variables: [{ name: 'A', type: 'variable', equation: '1' }, { name: 'B', type: 'variable', equation: 'A' }],
+        relationships: [{ from: 'A', to: 'B', polarity: '+', delay: true }]
+      };
+      const result = quantitativeEngine.setupLLMParameters('Test prompt', lastModel);
+      const prior = JSON.parse(result.messages.find(m => m.role === 'assistant').content);
+      expect(prior.relationships[0].delay).toBe(true);
+    });
+
+    it('keeps the delay mark the model returns', async () => {
+      const result = await quantitativeEngine.processResponse({
+        variables: [
+          { name: 'A', type: 'variable', equation: '1', inflows: [], outflows: [] },
+          { name: 'B', type: 'variable', equation: 'A', inflows: [], outflows: [] }
+        ],
+        relationships: [{ from: 'A', to: 'B', polarity: '+', reasoning: '', polarityReasoning: '', delay: true }]
+      });
+      expect(result.relationships[0].delay).toBe(true);
+    });
+  });
+
   describe('processResponse', () => {
     it('should trim from and to variables and validate relationships exist in variables', async () => {
       const originalResponse = {
