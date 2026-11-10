@@ -16,6 +16,14 @@ export const anthropic = {
     cacheReadInputTokens: 1.0,
     outputTokens: 50.00,
   },
+  'claude-fable-5-2': {
+    inputTokens: 8.00,
+    cacheCreation5mInputTokens: 10.00,
+    cacheCreation1hInputTokens: 16.00,
+    // 0.025x of input, the same Fable cache-hit multiplier explained on 5.1 below.
+    cacheReadInputTokens: 0.20,
+    outputTokens: 40.00,
+  },
   'claude-fable-5-1': {
     inputTokens: 10.00,
     cacheCreation5mInputTokens: 12.50,
