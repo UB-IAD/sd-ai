@@ -6,7 +6,7 @@ import { createServer } from 'http'
 import { WebSocketServer } from 'ws'
 
 import v1Initialize from './routes/v1/initialize.js'
-import v1Engines from './routes/v1/engines.js'
+import v1Engines, { warmEngineCache } from './routes/v1/engines.js'
 import v1EngineParameters from './routes/v1/engineParameters.js'
 import v1EngineGenerate from './routes/v1/engineGenerate.js'
 import v1EvalsList from './routes/v1/evalsList.js'
@@ -96,6 +96,11 @@ function shutdown(signal) {
 
 process.on('SIGTERM', () => shutdown('SIGTERM'));
 process.on('SIGINT',  () => shutdown('SIGINT'));
+
+// Probe each engine's supportedModes() (some spawn python/docker) before taking traffic
+const warmStart = Date.now();
+await warmEngineCache();
+logger.log(`engine list warmed in ${Date.now() - warmStart} ms`);
 
 // Start HTTP server
 server.listen(config.port, () => {

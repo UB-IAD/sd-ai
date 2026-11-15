@@ -5,17 +5,42 @@ import config from '../../config.js'
 const router = express.Router()
 const quantitativeEngines = ['quantitative'];
 
-router.get("/", async (req, res) => {
+// supportedModes() depends only on what is installed on the host (python packages, docker images),
+// which cannot change while this process runs. Some engines answer it with a blocking spawnSync
+// (causal-decoder imports torch: ~4 s of CPU), so compute it once per engine per process.
+const supportedModesCache = new Map();
+
+function listEngineDirs() {
     const path = "engines"
     let dirs = fs.readdirSync(path).filter(f => fs.lstatSync(`${path}/${f}`).isDirectory());
     if (!config.includeTestEngines) {
         dirs = dirs.filter(f => !f.startsWith('test-'));
     }
+    return dirs;
+}
+
+function cachedSupportedModes(dir, engine) {
+    if (!supportedModesCache.has(dir)) {
+        supportedModesCache.set(dir, engine.default.supportedModes());
+    }
+    return supportedModesCache.get(dir);
+}
+
+// Called once at server startup, before listen, so the first client request doesn't pay the cost.
+export async function warmEngineCache() {
+    for (const dir of listEngineDirs()) {
+        const engine = await import(`./../../engines/${dir}/engine.js`);
+        cachedSupportedModes(dir, engine);
+    }
+}
+
+router.get("/", async (req, res) => {
+    const dirs = listEngineDirs();
 
     const engines = [];
     for (const dir of dirs) {
         const engine = await import(`./../../engines/${dir}/engine.js`);
-        const supportedModes = engine.default.supportedModes();
+        const supportedModes = cachedSupportedModes(dir, engine);
         if (supportedModes && supportedModes.length > 0) {
             let description = null;
             try {
