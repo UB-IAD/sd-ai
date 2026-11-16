@@ -686,7 +686,16 @@ export class AgentOrchestrator {
               `I wasn't able to answer that — the safety system for the model I'm using declined the request${category ? ` (${category})` : ''}. Rephrasing it, or switching to a lower intelligence level, will usually get past it.`,
               false
             ));
+            // The turn is over, so the client is told so, as on every other exit. Without
+            // this nothing below sends agent_complete (the loop did not reach its maximum),
+            // and a client waiting for the turn to finish waits forever.
+            await this.sendToClient(createAgentCompleteMessage(
+              this.sessionId,
+              'awaiting_user',
+              'Agent stopped: the model declined the request'
+            ));
             continueLoop = false;
+            completedNaturally = true;
             break;
           }
 
