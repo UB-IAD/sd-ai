@@ -1,0 +1,42 @@
+{
+ "mushroomGrowers": {
+  "threshold": 300000,
+  "earlier": {
+   "building response": "0.4",
+   "construction time": "6",
+   "start up time": "3",
+   "closing response": "0.225",
+   "room lifetime": "36",
+   "reopening response": "0.1",
+   "time to scrap": "4"
+  },
+  "earlierValue": 322000
+ },
+ "foodBank": {
+  "threshold": 137,
+  "earlier": {
+   "manageable load": "7.5",
+   "recruitment fairs": "0.65"
+  },
+  "earlierValue": 135
+ },
+ "electricianTraining": {
+  "threshold": 2,
+  "earlier": {
+   "minimum intake": "2",
+   "intake adjustment time": "18",
+   "apprentices per master": "0.8"
+  },
+  "earlierValue": 6.69
+ },
+ "valleyWater": {
+  "threshold": 9.6,
+  "earlier": {
+   "basin pumping cap": "25450",
+   "recharge scheme": "3000",
+   "water use per person": "0.2",
+   "town well depth": "200"
+  },
+  "earlierValue": 12.5
+ }
+}

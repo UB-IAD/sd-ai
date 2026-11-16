@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>gibberishSmall</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="stock of reflupper">
+			</aux>
+			<aux name="supply of loopnova">
+			</aux>
+			<aux name="quality of crypteral">
+			</aux>
+			<aux name="oclate">
+			</aux>
+			<aux name="perfecton">
+			</aux>
+			<aux name="rate of succupserva">
+			</aux>
+			<aux name="rate of aferraron">
+			</aux>
+			<aux name="quality of reveforly">
+			</aux>
+			<aux name="level of phildiscals">
+			</aux>
+			<aux name="hashtockle">
+			</aux>
+			<aux name="rate of gissorm">
+			</aux>
+			<aux name="memostorer">
+			</aux>
+			<aux name="relity">
+			</aux>
+			<aux name="ku">
+			</aux>
+			<aux name="pablanksill">
+			</aux>
+			<aux name="hoza">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="980" y="520" name="stock of reflupper"/>
+				<aux x="945" y="696" name="supply of loopnova"/>
+				<aux x="845" y="845" name="quality of crypteral"/>
+				<aux x="696" y="945" name="oclate"/>
+				<aux x="520" y="980" name="perfecton"/>
+				<aux x="344" y="945" name="rate of succupserva"/>
+				<aux x="195" y="845" name="rate of aferraron"/>
+				<aux x="95" y="696" name="quality of reveforly"/>
+				<aux x="60" y="520" name="level of phildiscals"/>
+				<aux x="95" y="344" name="hashtockle"/>
+				<aux x="195" y="195" name="rate of gissorm"/>
+				<aux x="344" y="95" name="memostorer"/>
+				<aux x="520" y="60" name="relity"/>
+				<aux x="696" y="95" name="ku"/>
+				<aux x="845" y="195" name="pablanksill"/>
+				<aux x="945" y="344" name="hoza"/>
+				<connector uid="1" angle="258.75" polarity="+">
+					<from>stock_of_reflupper</from>
+					<to>supply_of_loopnova</to>
+				</connector>
+				<connector uid="2" angle="236.13" polarity="+">
+					<from>supply_of_loopnova</from>
+					<to>quality_of_crypteral</to>
+				</connector>
+				<connector uid="3" angle="213.87" polarity="-">
+					<from>quality_of_crypteral</from>
+					<to>oclate</to>
+				</connector>
+				<connector uid="4" angle="191.25" polarity="+">
+					<from>oclate</from>
+					<to>perfecton</to>
+				</connector>
+				<connector uid="5" angle="168.75" polarity="+">
+					<from>perfecton</from>
+					<to>rate_of_succupserva</to>
+				</connector>
+				<connector uid="6" angle="33.75" polarity="+">
+					<from>rate_of_succupserva</from>
+					<to>stock_of_reflupper</to>
+				</connector>
+				<connector uid="7" angle="202.49" polarity="+">
+					<from>stock_of_reflupper</from>
+					<to>rate_of_aferraron</to>
+				</connector>
+				<connector uid="8" angle="123.87" polarity="+">
+					<from>rate_of_aferraron</from>
+					<to>quality_of_reveforly</to>
+				</connector>
+				<connector uid="9" angle="101.25" polarity="+">
+					<from>quality_of_reveforly</from>
+					<to>level_of_phildiscals</to>
+				</connector>
+				<connector uid="10" angle="78.75" polarity="+">
+					<from>level_of_phildiscals</from>
+					<to>hashtockle</to>
+				</connector>
+				<connector uid="11" angle="56.13" polarity="+">
+					<from>hashtockle</from>
+					<to>rate_of_gissorm</to>
+				</connector>
+				<connector uid="12" angle="33.87" polarity="+">
+					<from>rate_of_gissorm</from>
+					<to>memostorer</to>
+				</connector>
+				<connector uid="13" angle="326.25" polarity="-">
+					<from>memostorer</from>
+					<to>stock_of_reflupper</to>
+				</connector>
+				<connector uid="14" angle="247.51" polarity="-">
+					<from>relity</from>
+					<to>rate_of_aferraron</to>
+				</connector>
+				<connector uid="15" angle="191.29" polarity="-">
+					<from>ku</from>
+					<to>rate_of_gissorm</to>
+				</connector>
+				<connector uid="16" angle="33.74" polarity="+">
+					<from>quality_of_reveforly</from>
+					<to>pablanksill</to>
+				</connector>
+				<connector uid="17" angle="337.50" polarity="+">
+					<from>memostorer</from>
+					<to>hoza</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

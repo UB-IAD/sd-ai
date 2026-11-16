@@ -1,10 +1,12 @@
-import { readFileSync } from 'fs';
-import { join, dirname } from 'path';
+import { readFileSync, mkdirSync, writeFileSync } from 'fs';
+import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 import { AgentOrchestrator } from '../AgentOrchestrator.js';
 import { SessionManager } from './SessionManager.js';
+import { RagStore, createGeminiEmbedder } from './RagStore.js';
 import SDJsonToXMILE from '../../utilities/SDJsonToXMILE.js';
 import PySDSimulator from '../../evals/utilities/simulator/PySDSimulator.js';
+import { checkUnits, INCONSISTENCY_KINDS } from '../../evals/utilities/units/unitChecker.js';
 import logger from '../../utilities/logger.js';
 import utils from '../../utilities/utils.js';
 
@@ -25,6 +27,18 @@ This is a rule about waiting, not about rhetoric. When the task itself calls for
 questions to a learner \u2014 guiding questions, Socratic prompts, questions meant to make the
 reader reason \u2014 write them, and leave them genuinely open instead of answering each one
 yourself in the following sentence.
+`;
+
+/**
+ * The eval-mode instruction for a conversation: a user is present and will answer, one message
+ * at a time. Used instead of EVAL_MODE_INSTRUCTION when a test scripts follow-up turns, because
+ * an agent told that nobody can answer it will never ask the questions the test is measuring.
+ */
+const CONVERSATION_MODE_INSTRUCTION = `
+## EVAL MODE: Conversation
+A user is present and will reply to each of your messages. When you need information from them,
+ask, and end your turn so they can answer. Do not invent answers to your own questions. Do not
+wait for confirmation of things you can decide yourself.
 `;
 
 /**
@@ -203,9 +217,10 @@ export function findFeedbackLoops(relationships) {
 
 /**
  * Patch a markdown string's frontmatter.
- * Replaces max_iterations and optionally agent_mode, then appends eval instructions.
+ * Replaces max_iterations and optionally agent_mode, then appends eval instructions: the
+ * no-user-present instruction, or, when `userPresent`, the conversation instruction.
  */
-export function patchAgentConfig(markdownContent, agentMode) {
+export function patchAgentConfig(markdownContent, agentMode, userPresent) {
   // Patch max_iterations to effectively unlimited
   let patched = markdownContent.replace(
     /^max_iterations:\s*\d+/m,
@@ -224,9 +239,9 @@ export function patchAgentConfig(markdownContent, agentMode) {
   const frontmatterEnd = patched.indexOf('\n---\n');
   if (frontmatterEnd !== -1) {
     const insertAt = frontmatterEnd + 5; // after '\n---\n'
-    patched = patched.slice(0, insertAt) + EVAL_MODE_INSTRUCTION + patched.slice(insertAt);
+    patched = patched.slice(0, insertAt) + (userPresent ? CONVERSATION_MODE_INSTRUCTION : EVAL_MODE_INSTRUCTION) + patched.slice(insertAt);
   } else {
-    patched += EVAL_MODE_INSTRUCTION;
+    patched += userPresent ? CONVERSATION_MODE_INSTRUCTION : EVAL_MODE_INSTRUCTION;
   }
 
   return patched;
@@ -255,6 +270,61 @@ function rejectPending(map, requestId, error) {
 }
 
 /**
+ * The MIME type an attachment is uploaded with, from its extension. XMILE and sd-json are text;
+ * anything unknown goes up as plain text, which RagStore reads as UTF-8.
+ * @param {string} fileName The attachment's file name
+ * @returns {string} A MIME type
+ */
+export function attachmentMimeType(fileName) {
+  const ext = (fileName.split('.').pop() || '').toLowerCase();
+  switch (ext) {
+    case 'pdf': return 'application/pdf';
+    case 'docx': return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    case 'xlsx': return 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    case 'json': return 'application/json';
+    case 'stmx':
+    case 'xmile':
+    case 'itmx':
+    case 'xml': return 'application/xml';
+    case 'csv': return 'text/csv';
+    default: return 'text/plain';
+  }
+}
+
+/**
+ * Attach files to an eval session the way an upload does: the bytes are written to
+ * <tempDir>/rag/<fileId>/original.bin (the main process's half of an upload) and RagStore
+ * processes them (the worker's half), so search_documents, the "Attached Files" section of the
+ * system prompt and read_file behave exactly as they do for a user's upload.
+ *
+ * @param {SessionManager} sessionManager The eval session's manager
+ * @param {string} sessionId The eval session
+ * @param {Array<{path: string, name?: string}>} attachments Files to attach, by absolute path
+ * @param {Object} embedder The embedder RagStore uses for large files
+ * @returns {Promise<Array<Object>>} The processed files' metadata
+ */
+export async function attachFiles(sessionManager, sessionId, attachments, embedder) {
+  const ragStore = new RagStore(embedder);
+  sessionManager.ragStore = ragStore;
+  const tempDir = sessionManager.getSessionTempDir(sessionId);
+  const processed = [];
+  for (const [index, attachment] of attachments.entries()) {
+    const name = attachment.name || basename(attachment.path);
+    const fileId = `eval-file-${index + 1}`;
+    const dir = join(tempDir, 'rag', fileId);
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'original.bin'), readFileSync(attachment.path));
+    processed.push(await ragStore.processFile(sessionManager, sessionId, {
+      fileId,
+      name,
+      mimeType: attachmentMimeType(name),
+      addedAt: new Date().toISOString()
+    }));
+  }
+  return processed;
+}
+
+/**
  * Run the agent to completion for eval purposes.
  *
  * @param {string} prompt - The user prompt
@@ -262,7 +332,8 @@ function rejectPending(map, requestId, error) {
  * @param {Object} parameters - Engine parameters including agentName, agentMode, provider,
  *                              intelligence, toolModels, mode, problemStatement,
  *                              backgroundKnowledge, feedbackContent
- * @returns {{ lastModel: Object|null, explanation: string }}
+ * @returns {{ lastModel: Object|null, explanation: string, toolLog: Array<Object>, transcript?: Array<Object>, snapshots?: Array<Object> }}
+ *   `transcript` and `snapshots` are returned for conversations (`turns` or `userScript`).
  */
 export async function runAgent(prompt, currentModel, parameters) {
   const {
@@ -274,8 +345,26 @@ export async function runAgent(prompt, currentModel, parameters) {
     mode = 'sfd',
     problemStatement,
     backgroundKnowledge,
-    feedbackContent
+    feedbackContent,
+    attachments,
+    unitChecking,
+    turns,
+    userScript,
+    analysisTools,
+    calibrationData
   } = parameters;
+
+  // A conversation: fixed follow-up messages, or a scripted user who answers the agent's questions
+  // from a fact bank. Either way the agent is told a user is present.
+  const isConversation = (Array.isArray(turns) && turns.length > 0) || Boolean(userScript);
+  // A bad script is rejected before any agent turn is paid for.
+  if (userScript) {
+    for (const field of ['maxQuestionTurns', 'maxFactsPerTurn']) {
+      if (!Number.isInteger(userScript[field]) || userScript[field] < 1) {
+        throw new Error(`userScript.${field} must be a positive integer; got ${userScript[field]}`);
+      }
+    }
+  }
 
   // Derive base session mode (strip -discuss suffix)
   const baseMode = mode.replace(/-discuss$/, '');
@@ -288,16 +377,19 @@ export async function runAgent(prompt, currentModel, parameters) {
   } catch (err) {
     throw new Error(`Agent config not found: ${configPath}`);
   }
-  markdownContent = patchAgentConfig(markdownContent, agentMode);
+  markdownContent = patchAgentConfig(markdownContent, agentMode, isConversation);
 
   // 2. Set up session
   const sessionManager = new SessionManager({ disableCleanup: true });
   const sessionId = sessionManager.createSession({ readyState: 1, send: () => {} });
+  // With `analysisTools`, the agent also gets the evals' scenario, sensitivity, calibration and
+  // optimization tools as client tools (evals/utilities/analysisTools.js).
+  const { ANALYSIS_TOOL_DEFINITIONS, runAnalysisTool } = analysisTools ? await import('../../evals/utilities/analysisTools.js') : {};
   sessionManager.initializeSession(
     sessionId,
     baseMode,
     currentModel || { variables: [], relationships: [] },
-    [],
+    analysisTools ? ANALYSIS_TOOL_DEFINITIONS : [],
     {
       supportsArrays: true,
       supportsModules: true,
@@ -306,12 +398,22 @@ export async function runAgent(prompt, currentModel, parameters) {
     'eval-client'
   );
 
+  if (Array.isArray(attachments) && attachments.length > 0) {
+    await attachFiles(sessionManager, sessionId, attachments, createGeminiEmbedder(sessionManager, sessionId, 'eval-client'));
+  }
+
   // 3. In-memory run storage
   const storedRuns = new Map();
   const failedRuns = new Map();
   let runCounter = 0;
 
   const textParts = [];
+
+  // Every tool the agent called, in order, with its arguments and whether it errored. Graders
+  // that check process (did it read the uploaded file, did it run the model after a warning)
+  // read this rather than the prose, which can claim a step that never happened.
+  const toolLog = [];
+  const toolLogByCallId = new Map();
 
   // A run can take more than one turn (see MODEL_NOT_WRITTEN_CORRECTION), so completion is
   // armed per turn rather than once. turnInFlight gates the resolver: some orchestrator
@@ -321,6 +423,7 @@ export async function runAgent(prompt, currentModel, parameters) {
   let rejectComplete;
   let completionPromise;
   let turnInFlight = false;
+  let turnNumber = 0;
   const armCompletion = function() {
     turnInFlight = true;
     completionPromise = new Promise((res, rej) => {
@@ -332,11 +435,26 @@ export async function runAgent(prompt, currentModel, parameters) {
   // A model echoed back to the agent carries the client's verdict on it, the same way a
   // real client's does. Recomputed on every echo so a stale `errors` array read back off
   // the session model file is replaced rather than repeated.
+  //
+  // With `unitChecking` on, the echo also carries the unit checker's verdict as `unitWarnings`,
+  // the field Stella fills from its own unit checker and the session presents to the agent as
+  // authoritative. Off by default, so categories that predate it run in the environment their
+  // results were measured in.
   const withClientErrors = function(model) {
     if (!model) return model;
     const errors = validateModelLikeClient(model);
     const { errors: _discarded, ...rest } = model;
-    return errors.length ? { ...rest, errors } : rest;
+    const echoed = errors.length ? { ...rest, errors } : rest;
+    if (unitChecking) {
+      // Only real inconsistencies: "could not read this equation" is a limit of the checker, and
+      // presented as an authoritative unit warning it would send the agent chasing a ghost.
+      try {
+        echoed.unitWarnings = checkUnits(model).filter((w) => INCONSISTENCY_KINDS.has(w.kind)).map((w) => w.message);
+      } catch (err) {
+        logger.warn(`[AgentEvalRunner] Unit check failed: ${err.message}`);
+      }
+    }
+    return echoed;
   };
 
   // 4. Mock sendToClient
@@ -482,6 +600,38 @@ export async function runAgent(prompt, currentModel, parameters) {
         break;
       }
 
+      case 'tool_call_request': {
+        // Only the analysis tools are client tools in eval runs; anything else is answered with an
+        // error rather than left to time out.
+        const requestCallId = message.callId;
+        let result;
+        let isError = false;
+        try {
+          result = runAnalysisTool
+            ? await runAnalysisTool(message.toolName, message.arguments || {}, sessionManager.getClientModel(sessionId), calibrationData || null)
+            : { error: `No client tool ${message.toolName} in this eval run.` };
+          if (result?.error) isError = true;
+        } catch (err) {
+          result = { error: err.message };
+          isError = true;
+        }
+        setImmediate(() => sessionManager.resolvePendingToolCall(sessionId, requestCallId, isError ? result.error : result, isError));
+        break;
+      }
+
+      case 'tool_call_notification': {
+        const entry = { toolName: message.toolName, arguments: message.arguments ?? null, isBuiltIn: message.isBuiltIn ?? null, isError: null, turn: turnNumber };
+        toolLog.push(entry);
+        if (message.callId) toolLogByCallId.set(message.callId, entry);
+        break;
+      }
+
+      case 'tool_call_completed': {
+        const entry = toolLogByCallId.get(message.callId);
+        if (entry) entry.isError = Boolean(message.isError);
+        break;
+      }
+
       case 'agent_complete': {
         resolveComplete(message.status);
         break;
@@ -530,12 +680,46 @@ NAMING RULE — the term goes in the NAME, not only the units. When the backgrou
   );
 
   const runTurn = async function(message) {
+    turnNumber++;
     armCompletion();
     const finished = completionPromise;
     await Promise.all([orchestrator.startConversation(message), finished]);
   };
 
-  await runTurn(userMessage);
+  // The whole exchange, turn by turn, with the model as it stood after each agent turn.
+  const transcript = [];
+  const snapshots = [];
+  const converse = async function(message, synthetic) {
+    transcript.push({ role: 'user', turn: turnNumber + 1, text: message, ...(synthetic ? { synthetic } : {}) });
+    const before = textParts.length;
+    await runTurn(message);
+    const reply = textParts.slice(before).join('\n\n');
+    transcript.push({ role: 'agent', turn: turnNumber, text: reply });
+    snapshots.push({ turn: turnNumber, model: structuredClone(sessionManager.getClientModel(sessionId) || { variables: [], relationships: [] }) });
+    return reply;
+  };
+
+  let reply = await converse(userMessage, null);
+
+  if (Array.isArray(turns)) {
+    for (const turn of turns) reply = await converse(turn, null);
+  }
+
+  // A scripted user: after each agent turn, the user answers whatever the agent asked about from
+  // its fact bank, and nothing else. The router decides which facts were asked for; the replies
+  // are fixed sentences, so the same question always gets the same answer.
+  if (userScript) {
+    const { answerFromScript } = await import('../../evals/utilities/scriptedUser.js');
+    const released = new Set();
+    for (let i = 0; i < userScript.maxQuestionTurns; i++) {
+      const answer = await answerFromScript(userScript, reply, released);
+      if (answer.done) break;
+      answer.factIds.forEach((id) => released.add(id));
+      transcript[transcript.length - 1].factsReleasedAfter = answer.factIds;
+      reply = await converse(answer.text, null);
+    }
+    if (userScript.closingMessage) reply = await converse(userScript.closingMessage, null);
+  }
 
   // A build run that produced no model has not been measured, it has been forfeited. Say so
   // once and let the agent write what it already worked out; a second forfeit is a real
@@ -543,11 +727,14 @@ NAMING RULE — the term goes in the NAME, not only the units. When the backgrou
   const buildsAModel = !mode.endsWith('-discuss');
   if (buildsAModel && modelIsEmpty(sessionManager.getClientModel(sessionId))) {
     logger.warn(`[AgentEvalRunner] Agent finished without writing a model; sending one correction.`);
-    await runTurn(MODEL_NOT_WRITTEN_CORRECTION);
+    // Tagged, so a grader counting the user's turns does not count the harness's own nudge.
+    await converse(MODEL_NOT_WRITTEN_CORRECTION, 'modelNotWritten');
   }
 
   return {
     lastModel: sessionManager.getClientModel(sessionId),
-    explanation: textParts.join('\n\n')
+    explanation: textParts.join('\n\n'),
+    toolLog,
+    ...(isConversation ? { transcript, snapshots } : {})
   };
 }

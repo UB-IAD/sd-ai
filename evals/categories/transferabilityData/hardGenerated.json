@@ -1,0 +1,380 @@
+{
+ "Rural dialysis network: three and three": {
+  "scenario": "dialysisClinic",
+  "policy": "get new chairs built and installed in 3 months instead of 9",
+  "context": "What is realistic for us: we could have started with up to 30 chairs instead of 20; new chairs cannot be built and installed in less than 3 months; we could review chair orders as often as monthly; we could order chairs for a target wait as short as three weeks instead of two months; and longer opening hours could get each chair to start at most 1.5 patients a month instead of 1.2.",
+  "generated": true,
+  "policyChanges": {
+   "build delay": "3"
+  },
+  "assumptions": [
+   {
+    "id": "chairs pushed",
+    "variable": "chairs",
+    "value": "37.5",
+    "realistic": false,
+    "note": "Assumed \"chairs\" can be brought to 37.5.",
+    "revert": "20"
+   },
+   {
+    "id": "order adjustment time pushed",
+    "variable": "order adjustment time",
+    "value": "0.8",
+    "realistic": false,
+    "note": "From a consultant's report: \"order adjustment time\" can be 0.8.",
+    "revert": "3"
+   },
+   {
+    "id": "target wait pushed",
+    "variable": "target wait",
+    "value": "0.6",
+    "realistic": false,
+    "note": "From an industry benchmark study: \"target wait\" of 0.6 is achievable.",
+    "revert": "2"
+   },
+   {
+    "id": "base referrals as it is",
+    "variable": "base referrals",
+    "realistic": true,
+    "note": "Assumed \"base referrals\" stays at 36, as it has been."
+   },
+   {
+    "id": "minimum wait as it is",
+    "variable": "minimum wait",
+    "realistic": true,
+    "note": "From our records: \"minimum wait\" is about 1."
+   },
+   {
+    "id": "waiting list as it is",
+    "variable": "waiting list",
+    "realistic": true,
+    "note": "From our records: \"waiting list\" started at about 40."
+   },
+   {
+    "id": "build delay within its limit",
+    "variable": "build delay",
+    "realistic": true,
+    "note": "Assumed \"build delay\" can be brought to 3."
+   },
+   {
+    "id": "patients per chair within its limit",
+    "variable": "patients per chair",
+    "realistic": true,
+    "note": "From a consultant's report: \"patients per chair\" can be 1.2."
+   }
+  ]
+ },
+ "Coffee-growing cooperative: three and three": {
+  "scenario": "coffeeCoop",
+  "policy": "put 70% of the harvest income into new planting instead of half",
+  "context": "What is realistic for us: cover crops, composting and resting plots could bring worn soil back in as little as 5 years instead of 15; we could put anywhere from a quarter to 70% of the harvest income into new planting (half now); paying for extra pickers could at most double the hectares a family can look after well, from 10 to 20; and shade trees and wider spacing could cut how fast cropping wears the soil by at most a third.",
+  "generated": true,
+  "policyChanges": {
+   "reinvestment share": "0.7"
+  },
+  "assumptions": [
+   {
+    "id": "soil recovery time pushed",
+    "variable": "soil recovery time",
+    "value": "4",
+    "realistic": false,
+    "note": "Assumed \"soil recovery time\" can be brought to 4.",
+    "revert": "15"
+   },
+   {
+    "id": "hectares a family can tend pushed",
+    "variable": "hectares a family can tend",
+    "value": "25",
+    "realistic": false,
+    "note": "From a consultant's report: \"hectares a family can tend\" can be 25.",
+    "revert": "10"
+   },
+   {
+    "id": "depletion per hectare pushed",
+    "variable": "depletion per hectare",
+    "value": "0.0000536",
+    "realistic": false,
+    "note": "From an industry benchmark study: \"depletion per hectare\" of 0.0000536 is achievable.",
+    "revert": "0.0001"
+   },
+   {
+    "id": "coffee price as it is",
+    "variable": "coffee price",
+    "realistic": true,
+    "note": "Assumed \"coffee price\" stays at 3000, as it has been."
+   },
+   {
+    "id": "best yield as it is",
+    "variable": "best yield",
+    "realistic": true,
+    "note": "From our records: \"best yield\" is about 1.2."
+   },
+   {
+    "id": "planted area as it is",
+    "variable": "planted area",
+    "realistic": true,
+    "note": "From our records: \"planted area\" started at about 300."
+   },
+   {
+    "id": "reinvestment share within its limit",
+    "variable": "reinvestment share",
+    "realistic": true,
+    "note": "Assumed \"reinvestment share\" can be brought to 0.7."
+   }
+  ]
+ },
+ "Kitchen fitting backlog: three and three": {
+  "scenario": "kitchenFitters",
+  "policy": "push the crews harder when the backlog is high, so they can fit up to 1.7 times their normal pace instead of 1.4",
+  "context": "What is realistic for us: we can let the crews rush to at most 1.7 times their normal pace, or not let them rush at all; a final check before sign-off could at best halve the snags on a normal job (about 1 in 10 now); we cannot find and train a fitter in under 20 weeks (about 30 now); we could have started with at most 13 crews instead of 11; and we cannot promise a fit sooner than 4 weeks after the order, because the units take that long to arrive, nor quote more than 8.",
+  "generated": true,
+  "policyChanges": {
+   "maximum rush": "1.7"
+  },
+  "assumptions": [
+   {
+    "id": "normal error fraction pushed",
+    "variable": "normal error fraction",
+    "value": "0.04",
+    "realistic": false,
+    "note": "Assumed \"normal error fraction\" can be brought to 0.04.",
+    "revert": "0.1"
+   },
+   {
+    "id": "hiring time pushed",
+    "variable": "hiring time",
+    "value": "16",
+    "realistic": false,
+    "note": "From a consultant's report: \"hiring time\" can be 16.",
+    "revert": "30"
+   },
+   {
+    "id": "fitting crews pushed",
+    "variable": "fitting crews",
+    "value": "16.3",
+    "realistic": false,
+    "note": "From an industry benchmark study: \"fitting crews\" of 16.3 is achievable.",
+    "revert": "11.02"
+   },
+   {
+    "id": "base orders as it is",
+    "variable": "base orders",
+    "realistic": true,
+    "note": "Assumed \"base orders\" stays at 10, as it has been."
+   },
+   {
+    "id": "jobs per crew as it is",
+    "variable": "jobs per crew",
+    "realistic": true,
+    "note": "From our records: \"jobs per crew\" is about 1."
+   },
+   {
+    "id": "job backlog as it is",
+    "variable": "job backlog",
+    "realistic": true,
+    "note": "From our records: \"job backlog\" started at about 44."
+   },
+   {
+    "id": "maximum rush within its limit",
+    "variable": "maximum rush",
+    "realistic": true,
+    "note": "Assumed \"maximum rush\" can be brought to 1.7."
+   },
+   {
+    "id": "target lead time within its limit",
+    "variable": "target lead time",
+    "realistic": true,
+    "note": "From a consultant's report: \"target lead time\" can be 4."
+   }
+  ]
+ },
+ "Regional specialty mushroom growers: three and three": {
+  "scenario": "mushroomGrowers",
+  "policy": "get new rooms built in 3 months instead of 6",
+  "context": "What is realistic for us: members might agree to start new rooms at no less than half the pace they do now; a room cannot be built in less than 3 months or get its first crop going in less than 2; growers could close loss-making rooms at most half again as fast as they do; and refurbishing could make a room last at most five years instead of three; refitting idle rooms could go at most half again as fast as it does; and an idle room is stripped out after no less than 2 months and no more than 8 (about 4 now).",
+  "generated": true,
+  "policyChanges": {
+   "construction time": "3"
+  },
+  "assumptions": [
+   {
+    "id": "building response pushed",
+    "variable": "building response",
+    "value": "0.32",
+    "realistic": false,
+    "note": "Assumed \"building response\" can be brought to 0.32.",
+    "revert": "0.8"
+   },
+   {
+    "id": "start up time pushed",
+    "variable": "start up time",
+    "value": "1.6",
+    "realistic": false,
+    "note": "From a consultant's report: \"start up time\" can be 1.6.",
+    "revert": "3"
+   },
+   {
+    "id": "closing response pushed",
+    "variable": "closing response",
+    "value": "0.281",
+    "realistic": false,
+    "note": "From an industry benchmark study: \"closing response\" of 0.281 is achievable.",
+    "revert": "0.15"
+   },
+   {
+    "id": "reference demand as it is",
+    "variable": "reference demand",
+    "realistic": true,
+    "note": "Assumed \"reference demand\" stays at 240000, as it has been."
+   },
+   {
+    "id": "yield per room as it is",
+    "variable": "yield per room",
+    "realistic": true,
+    "note": "From our records: \"yield per room\" is about 2000."
+   },
+   {
+    "id": "growing rooms as it is",
+    "variable": "growing rooms",
+    "realistic": true,
+    "note": "From our records: \"growing rooms\" started at about 100."
+   },
+   {
+    "id": "construction time within its limit",
+    "variable": "construction time",
+    "realistic": true,
+    "note": "Assumed \"construction time\" can be brought to 3."
+   },
+   {
+    "id": "room lifetime within its limit",
+    "variable": "room lifetime",
+    "realistic": true,
+    "note": "From a consultant's report: \"room lifetime\" can be 36."
+   },
+   {
+    "id": "reopening response within its limit",
+    "variable": "reopening response",
+    "realistic": true,
+    "note": "From an industry benchmark study: \"reopening response\" of 0.1 is achievable."
+   },
+   {
+    "id": "time to scrap within its limit",
+    "variable": "time to scrap",
+    "realistic": true,
+    "note": "Assumed \"time to scrap\" can be brought to 4."
+   }
+  ]
+ },
+ "Regional electricians' guild: three and three": {
+  "scenario": "electricianTraining",
+  "policy": "when work outgrows the guild, take on enough extra apprentices to close the gap within eighteen months instead of two years",
+  "context": "What is realistic for us: we could promise to keep taking on up to three apprentices a month however slow work gets (we have never set a minimum); we could close a gap between the electricians the work needs and those we have within as little as a year instead of two; and with encouragement up to four masters in five could supervise an apprentice instead of three in five.",
+  "generated": true,
+  "policyChanges": {
+   "intake adjustment time": "18"
+  },
+  "assumptions": [
+   {
+    "id": "intake adjustment time pushed",
+    "variable": "intake adjustment time",
+    "value": "9.6",
+    "realistic": false,
+    "note": "Assumed \"intake adjustment time\" can be brought to 9.6.",
+    "revert": "24"
+   },
+   {
+    "id": "minimum intake pushed",
+    "variable": "minimum intake",
+    "value": "3.75",
+    "realistic": false,
+    "note": "From a consultant's report: \"minimum intake\" can be 3.75.",
+    "revert": "0"
+   },
+   {
+    "id": "apprentices per master pushed",
+    "variable": "apprentices per master",
+    "value": "1",
+    "realistic": false,
+    "note": "From an industry benchmark study: \"apprentices per master\" of 1 is achievable.",
+    "revert": "0.6"
+   },
+   {
+    "id": "work growth rate as it is",
+    "variable": "work growth rate",
+    "realistic": true,
+    "note": "Assumed \"work growth rate\" stays at 0.002, as it has been."
+   },
+   {
+    "id": "Normal Work as it is",
+    "variable": "Normal Work",
+    "realistic": true,
+    "note": "From our records: \"Normal Work\" started at about 3300."
+   },
+   {
+    "id": "slump depth as it is",
+    "variable": "slump depth",
+    "realistic": true,
+    "note": "From our records: \"slump depth\" has been about 0.2."
+   }
+  ]
+ },
+ "Hospital contract cleaning standard: three and three": {
+  "scenario": "cleaningStandards",
+  "policy": "pay the cleaners for 10% overtime, so each works about 176 hours a month instead of 160",
+  "context": "What is realistic for us: we could pay for overtime of up to 20%, so a cleaner works at most 192 hours a month instead of 160; recruiting and vetting could be sped up so a new cleaner starts in as little as 2 months instead of 4; the contractor could review how many cleaners it needs as often as every month instead of every three months; and the standard is the committee's to keep: it can stop lowering it, or lower it more slowly than now (it closes a miss over about a year), but there is no sense in lowering it faster.",
+  "generated": true,
+  "policyChanges": {
+   "hours per cleaner": "176"
+  },
+  "assumptions": [
+   {
+    "id": "hours per cleaner pushed",
+    "variable": "hours per cleaner",
+    "value": "576",
+    "realistic": false,
+    "note": "Assumed \"hours per cleaner\" can be brought to 576.",
+    "revert": "160"
+   },
+   {
+    "id": "hiring time pushed",
+    "variable": "hiring time",
+    "value": "0.667",
+    "realistic": false,
+    "note": "From a consultant's report: \"hiring time\" can be 0.667.",
+    "revert": "4"
+   },
+   {
+    "id": "review time pushed",
+    "variable": "review time",
+    "value": "0.333",
+    "realistic": false,
+    "note": "From an industry benchmark study: \"review time\" of 0.333 is achievable.",
+    "revert": "3"
+   },
+   {
+    "id": "original rooms as it is",
+    "variable": "original rooms",
+    "realistic": true,
+    "note": "Assumed \"original rooms\" stays at 400, as it has been."
+   },
+   {
+    "id": "cleaning staff as it is",
+    "variable": "cleaning staff",
+    "realistic": true,
+    "note": "From our records: \"cleaning staff\" started at about 49."
+   },
+   {
+    "id": "new wing rooms as it is",
+    "variable": "new wing rooms",
+    "realistic": true,
+    "note": "From our records: \"new wing rooms\" has been about 200."
+   },
+   {
+    "id": "revision time within its limit",
+    "variable": "revision time",
+    "realistic": true,
+    "note": "Assumed \"revision time\" can be brought to 12."
+   }
+  ]
+ }
+}

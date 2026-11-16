@@ -1,0 +1,212 @@
+{
+ "Rural dialysis network": {
+  "name": "Rural dialysis network",
+  "scenario": "dialysisClinic",
+  "description": "the rural dialysis network",
+  "errors": [
+   {
+    "id": "returning multiplies by time to return",
+    "variable": "returning",
+    "change": {
+     "equation": "discouraged_patients * time_to_return"
+    }
+   },
+   {
+    "id": "referrals declared without per month",
+    "variable": "referrals",
+    "change": {
+     "units": "patients"
+    }
+   }
+  ]
+ },
+ "Regional distributor inventory": {
+  "name": "Regional distributor inventory",
+  "scenario": "distributor",
+  "description": "the regional distributor inventory",
+  "errors": [
+   {
+    "id": "deliveries multiplies by delivery delay",
+    "variable": "deliveries",
+    "change": {
+     "equation": "supply_line * delivery_delay"
+    }
+   },
+   {
+    "id": "shipments declared without per week",
+    "variable": "shipments",
+    "change": {
+     "units": "cases"
+    }
+   }
+  ]
+ },
+ "Coffee-growing cooperative": {
+  "name": "Coffee-growing cooperative",
+  "scenario": "coffeeCoop",
+  "description": "the coffee-growing cooperative",
+  "errors": [
+   {
+    "id": "soil recovery multiplies by soil recovery time",
+    "variable": "soil recovery",
+    "change": {
+     "equation": "(healthy_soil_score - soil_fertility) * soil_recovery_time"
+    }
+   },
+   {
+    "id": "planting declared without per year",
+    "variable": "planting",
+    "change": {
+     "units": "hectares"
+    }
+   }
+  ]
+ },
+ "Kitchen fitting backlog": {
+  "name": "Kitchen fitting backlog",
+  "scenario": "kitchenFitters",
+  "description": "the kitchen fitting backlog",
+  "errors": [
+   {
+    "id": "callbacks multiplies by discovery time",
+    "variable": "callbacks",
+    "change": {
+     "equation": "hidden_faults * discovery_time"
+    }
+   },
+   {
+    "id": "new orders declared without per week",
+    "variable": "new orders",
+    "change": {
+     "units": "jobs"
+    }
+   }
+  ]
+ },
+ "Regional specialty mushroom growers": {
+  "name": "Regional specialty mushroom growers",
+  "scenario": "mushroomGrowers",
+  "description": "the regional specialty mushroom growers",
+  "errors": [
+   {
+    "id": "rooms built multiplies by construction time",
+    "variable": "rooms built",
+    "change": {
+     "equation": "rooms_under_construction * construction_time"
+    }
+   },
+   {
+    "id": "new rooms started declared without per month",
+    "variable": "new rooms started",
+    "change": {
+     "units": "rooms"
+    }
+   }
+  ]
+ },
+ "Regional ambulance service": {
+  "name": "Regional ambulance service",
+  "scenario": "ambulanceService",
+  "description": "the regional ambulance service",
+  "errors": [
+   {
+    "id": "crews requested multiplies by review time",
+    "variable": "crews requested",
+    "change": {
+     "equation": "MAX(0, crews_needed - crews - crews_awaiting_budget) * review_time"
+    }
+   },
+   {
+    "id": "population growth declared without per month",
+    "variable": "population growth",
+    "change": {
+     "units": "people"
+    }
+   }
+  ]
+ },
+ "Parcel delivery van fleet": {
+  "name": "Parcel delivery van fleet",
+  "scenario": "deliveryVans",
+  "description": "the parcel delivery van fleet",
+  "errors": [
+   {
+    "id": "vans due for retirement multiplies by van life",
+    "variable": "vans due for retirement",
+    "change": {
+     "equation": "vans * van_life"
+    }
+   },
+   {
+    "id": "buying vans declared without per year",
+    "variable": "buying vans",
+    "change": {
+     "units": "vans"
+    }
+   }
+  ]
+ },
+ "Community food bank volunteers": {
+  "name": "Community food bank volunteers",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "errors": [
+   {
+    "id": "tiring multiplies by fatigue time",
+    "variable": "tiring",
+    "change": {
+     "equation": "(stress - fatigue) * fatigue_time"
+    }
+   },
+   {
+    "id": "recruiting declared without per month",
+    "variable": "recruiting",
+    "change": {
+     "units": "volunteers"
+    }
+   }
+  ]
+ },
+ "Regional electricians' guild": {
+  "name": "Regional electricians' guild",
+  "scenario": "electricianTraining",
+  "description": "the regional electricians' guild",
+  "errors": [
+   {
+    "id": "intake wanted multiplies by intake adjustment time",
+    "variable": "intake wanted",
+    "change": {
+     "equation": "MAX(minimum_intake, retiring + workforce_gap * intake_adjustment_time)"
+    }
+   },
+   {
+    "id": "work growth declared without per month",
+    "variable": "work growth",
+    "change": {
+     "units": "jobs"
+    }
+   }
+  ]
+ },
+ "Hospital contract cleaning standard": {
+  "name": "Hospital contract cleaning standard",
+  "scenario": "cleaningStandards",
+  "description": "the hospital contract cleaning standard",
+  "errors": [
+   {
+    "id": "cleaners requested multiplies by review time",
+    "variable": "cleaners requested",
+    "change": {
+     "equation": "MAX(0, cleaners_leaving + (cleaners_needed + cleaners_leaving * hiring_time - cleaning_staff - open_positions) * review_time)"
+    }
+   },
+   {
+    "id": "cleaners starting declared without per month",
+    "variable": "cleaners starting",
+    "change": {
+     "units": "cleaners"
+    }
+   }
+  ]
+ }
+}

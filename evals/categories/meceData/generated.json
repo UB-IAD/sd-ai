@@ -1,0 +1,138 @@
+{
+ "City bike-share membership: total population (gap)": {
+  "name": "City bike-share membership: total population (gap)",
+  "scenario": "bikeShare",
+  "description": "the city bike-share membership",
+  "plant": {
+   "variable": "total population",
+   "change": {
+    "equation": "members"
+   }
+  },
+  "kind": "gap",
+  "text": "\"total population\" adds up \"members\" and leaves out \"potential members\", so it is not the whole of total population.",
+  "distractors": [
+   "\"potential members\" should not be a stock.",
+   "\"signing up\" should be split into separate rates for every kind of total population."
+  ]
+ },
+ "City bike-share membership: total population (overlap)": {
+  "name": "City bike-share membership: total population (overlap)",
+  "scenario": "bikeShare",
+  "description": "the city bike-share membership",
+  "plant": {
+   "variable": "total population",
+   "change": {
+    "equation": "potential_members + members + potential_members"
+   }
+  },
+  "kind": "overlap",
+  "text": "\"total population\" counts \"potential members\" twice, so the people or things in \"potential members\" are counted as if they were a separate group.",
+  "distractors": [
+   "\"potential members\" should not be a stock.",
+   "\"signing up\" should be split into separate rates for every kind of total population."
+  ]
+ },
+ "Community food bank volunteers: willing people (gap)": {
+  "name": "Community food bank volunteers: willing people (gap)",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "plant": {
+   "variable": "willing people",
+   "change": {
+    "equation": "volunteers"
+   }
+  },
+  "kind": "gap",
+  "text": "\"willing people\" adds up \"volunteers\" and leaves out \"Potential Volunteers\", so it is not the whole of willing people.",
+  "distractors": [
+   "\"families served\" and \"Families Not Yet Reached\" overlap and one should be removed.",
+   "\"recruiting\" should be split into separate rates for every kind of willing people."
+  ]
+ },
+ "Community food bank volunteers: willing people (overlap)": {
+  "name": "Community food bank volunteers: willing people (overlap)",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "plant": {
+   "variable": "willing people",
+   "change": {
+    "equation": "Potential_Volunteers + volunteers + Potential_Volunteers"
+   }
+  },
+  "kind": "overlap",
+  "text": "\"willing people\" counts \"Potential Volunteers\" twice, so the people or things in \"Potential Volunteers\" are counted as if they were a separate group.",
+  "distractors": [
+   "\"families served\" and \"Families Not Yet Reached\" overlap and one should be removed.",
+   "\"recruiting\" should be split into separate rates for every kind of willing people."
+  ]
+ },
+ "Community food bank volunteers: families in need (gap)": {
+  "name": "Community food bank volunteers: families in need (gap)",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "plant": {
+   "variable": "families in need",
+   "change": {
+    "equation": "families_served"
+   }
+  },
+  "kind": "gap",
+  "text": "\"families in need\" adds up \"families served\" and leaves out \"Families Not Yet Reached\", so it is not the whole of families in need.",
+  "distractors": [
+   "\"volunteers\" and \"Potential Volunteers\" overlap and one should be removed.",
+   "\"new families\" should be split into separate rates for every kind of families in need."
+  ]
+ },
+ "Community food bank volunteers: families in need (overlap)": {
+  "name": "Community food bank volunteers: families in need (overlap)",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "plant": {
+   "variable": "families in need",
+   "change": {
+    "equation": "Families_Not_Yet_Reached + families_served + Families_Not_Yet_Reached"
+   }
+  },
+  "kind": "overlap",
+  "text": "\"families in need\" counts \"Families Not Yet Reached\" twice, so the people or things in \"Families Not Yet Reached\" are counted as if they were a separate group.",
+  "distractors": [
+   "\"volunteers\" and \"Potential Volunteers\" overlap and one should be removed.",
+   "\"new families\" should be split into separate rates for every kind of families in need."
+  ]
+ },
+ "Regional electricians' guild: qualified electricians (gap)": {
+  "name": "Regional electricians' guild: qualified electricians (gap)",
+  "scenario": "electricianTraining",
+  "description": "the regional electricians' guild",
+  "plant": {
+   "variable": "qualified electricians",
+   "change": {
+    "equation": "masters"
+   }
+  },
+  "kind": "gap",
+  "text": "\"qualified electricians\" adds up \"masters\" and leaves out \"journeymen\", so it is not the whole of qualified electricians.",
+  "distractors": [
+   "\"journeymen\" should not be a stock.",
+   "\"qualifying\" should be split into separate rates for every kind of qualified electricians."
+  ]
+ },
+ "Regional electricians' guild: qualified electricians (overlap)": {
+  "name": "Regional electricians' guild: qualified electricians (overlap)",
+  "scenario": "electricianTraining",
+  "description": "the regional electricians' guild",
+  "plant": {
+   "variable": "qualified electricians",
+   "change": {
+    "equation": "journeymen + masters + journeymen"
+   }
+  },
+  "kind": "overlap",
+  "text": "\"qualified electricians\" counts \"journeymen\" twice, so the people or things in \"journeymen\" are counted as if they were a separate group.",
+  "distractors": [
+   "\"journeymen\" should not be a stock.",
+   "\"qualifying\" should be split into separate rates for every kind of qualified electricians."
+  ]
+ }
+}

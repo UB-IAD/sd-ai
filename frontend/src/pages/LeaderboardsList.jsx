@@ -3,7 +3,7 @@ import leaderboards from '../generated/leaderboards.json';
 import { leaderboardConfig, LEADERBOARD_ORDER } from './leaderboardMeta';
 
 /**
- * The index for the three boards.
+ * The index for the boards.
  *
  * Leaderboards used to be reachable only from inside the Engines section, which buried
  * the thing most people arrive looking for. This is the section's own landing page, and
@@ -28,7 +28,7 @@ function LeaderboardsList() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:gap-5 md:grid-cols-3">
+      <div className="grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-4">
         {boards.map(({ mode, meta, data }) => {
           // Current generation only, throughout. Scores from different generations are
           // measured over different test sets, so a "leader" picked across all of them is

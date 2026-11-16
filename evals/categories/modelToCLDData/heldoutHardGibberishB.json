@@ -1,0 +1,459 @@
+{
+  "title": "heldoutHardGibberishB",
+  "model": {
+    "variables": [
+      {
+        "name": "estintant",
+        "type": "variable"
+      },
+      {
+        "name": "bellignorance",
+        "type": "variable"
+      },
+      {
+        "name": "priary",
+        "type": "variable"
+      },
+      {
+        "name": "oc",
+        "type": "variable"
+      },
+      {
+        "name": "supply of geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "copyring",
+        "type": "variable"
+      },
+      {
+        "name": "flow of houtal",
+        "type": "variable"
+      },
+      {
+        "name": "stock of loopnova",
+        "type": "variable"
+      },
+      {
+        "name": "stock of ih",
+        "type": "variable"
+      },
+      {
+        "name": "quality of funkado",
+        "type": "variable"
+      },
+      {
+        "name": "maxabizer",
+        "type": "variable"
+      },
+      {
+        "name": "gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "relity",
+        "type": "variable"
+      },
+      {
+        "name": "pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "flow of hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "stock of pershipfulty",
+        "type": "variable"
+      },
+      {
+        "name": "younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "quality of hoza",
+        "type": "variable"
+      },
+      {
+        "name": "hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "demand for posistorather",
+        "type": "variable"
+      },
+      {
+        "name": "rate of balack",
+        "type": "variable"
+      },
+      {
+        "name": "obvia",
+        "type": "variable"
+      },
+      {
+        "name": "supply of buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "phildiscals",
+        "type": "variable"
+      },
+      {
+        "name": "flow of burgination",
+        "type": "variable"
+      },
+      {
+        "name": "marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "demand for paffling",
+        "type": "variable"
+      },
+      {
+        "name": "auspong",
+        "type": "variable"
+      },
+      {
+        "name": "unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "ku",
+        "type": "variable"
+      },
+      {
+        "name": "supply of dickstonyx",
+        "type": "variable"
+      },
+      {
+        "name": "arinterpord",
+        "type": "variable"
+      },
+      {
+        "name": "yoffa",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "estintant",
+        "to": "bellignorance",
+        "polarity": "-"
+      },
+      {
+        "from": "bellignorance",
+        "to": "priary",
+        "polarity": "+"
+      },
+      {
+        "from": "priary",
+        "to": "oc",
+        "polarity": "+"
+      },
+      {
+        "from": "oc",
+        "to": "supply of geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of geyflorrin",
+        "to": "copyring",
+        "polarity": "+"
+      },
+      {
+        "from": "copyring",
+        "to": "flow of houtal",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of houtal",
+        "to": "stock of loopnova",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of loopnova",
+        "to": "estintant",
+        "polarity": "-"
+      },
+      {
+        "from": "estintant",
+        "to": "stock of ih",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of ih",
+        "to": "quality of funkado",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of funkado",
+        "to": "maxabizer",
+        "polarity": "-"
+      },
+      {
+        "from": "maxabizer",
+        "to": "estintant",
+        "polarity": "+"
+      },
+      {
+        "from": "estintant",
+        "to": "gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "gissorm",
+        "to": "relity",
+        "polarity": "+"
+      },
+      {
+        "from": "relity",
+        "to": "pablanksill",
+        "polarity": "-"
+      },
+      {
+        "from": "pablanksill",
+        "to": "flow of hensologic",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of hensologic",
+        "to": "stock of pershipfulty",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of pershipfulty",
+        "to": "estintant",
+        "polarity": "-"
+      },
+      {
+        "from": "younjuring",
+        "to": "quality of hoza",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of hoza",
+        "to": "hashtockle",
+        "polarity": "+"
+      },
+      {
+        "from": "hashtockle",
+        "to": "aferraron",
+        "polarity": "+"
+      },
+      {
+        "from": "aferraron",
+        "to": "younjuring",
+        "polarity": "+"
+      },
+      {
+        "from": "younjuring",
+        "to": "demand for posistorather",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for posistorather",
+        "to": "rate of balack",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of balack",
+        "to": "obvia",
+        "polarity": "+"
+      },
+      {
+        "from": "obvia",
+        "to": "supply of buwheal",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of buwheal",
+        "to": "phildiscals",
+        "polarity": "-"
+      },
+      {
+        "from": "phildiscals",
+        "to": "younjuring",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of burgination",
+        "to": "marticatene",
+        "polarity": "-"
+      },
+      {
+        "from": "marticatene",
+        "to": "demand for paffling",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for paffling",
+        "to": "auspong",
+        "polarity": "+"
+      },
+      {
+        "from": "auspong",
+        "to": "unliescatice",
+        "polarity": "-"
+      },
+      {
+        "from": "unliescatice",
+        "to": "pressure on perstablintome",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on perstablintome",
+        "to": "flow of burgination",
+        "polarity": "+"
+      },
+      {
+        "from": "estintant",
+        "to": "reveforly",
+        "polarity": "+"
+      },
+      {
+        "from": "reveforly",
+        "to": "younjuring",
+        "polarity": "-"
+      },
+      {
+        "from": "younjuring",
+        "to": "whatajig",
+        "polarity": "+"
+      },
+      {
+        "from": "whatajig",
+        "to": "flow of burgination",
+        "polarity": "+"
+      },
+      {
+        "from": "ku",
+        "to": "pablanksill",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of dickstonyx",
+        "to": "copyring",
+        "polarity": "-"
+      },
+      {
+        "from": "pablanksill",
+        "to": "arinterpord",
+        "polarity": "+"
+      },
+      {
+        "from": "copyring",
+        "to": "yoffa",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "estintant",
+        "oc",
+        "flow of houtal"
+      ],
+      "nodes": [
+        "estintant",
+        "bellignorance",
+        "priary",
+        "oc",
+        "supply of geyflorrin",
+        "copyring",
+        "flow of houtal",
+        "stock of loopnova"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "estintant",
+        "quality of funkado"
+      ],
+      "nodes": [
+        "estintant",
+        "stock of ih",
+        "quality of funkado",
+        "maxabizer"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "estintant",
+        "pablanksill"
+      ],
+      "nodes": [
+        "estintant",
+        "gissorm",
+        "relity",
+        "pablanksill",
+        "flow of hensologic",
+        "stock of pershipfulty"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "younjuring",
+        "hashtockle"
+      ],
+      "nodes": [
+        "younjuring",
+        "quality of hoza",
+        "hashtockle",
+        "aferraron"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "younjuring",
+        "rate of balack",
+        "supply of buwheal"
+      ],
+      "nodes": [
+        "younjuring",
+        "demand for posistorather",
+        "rate of balack",
+        "obvia",
+        "supply of buwheal",
+        "phildiscals"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "flow of burgination",
+        "auspong"
+      ],
+      "nodes": [
+        "flow of burgination",
+        "marticatene",
+        "demand for paffling",
+        "auspong",
+        "unliescatice",
+        "pressure on perstablintome"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

@@ -1,0 +1,166 @@
+{
+ "mushroomGrowers": {
+  "scenario": "mushroomGrowers",
+  "input": "reference demand",
+  "amounts": [
+   "reference demand",
+   "Growing Rooms"
+  ],
+  "context": "The regional specialty mushroom growers is really two separate parts, North and South, that do not affect each other: each has its own growing rooms, rooms under construction, rooms starting up, idle rooms. We are not sure how unevenly the reference demand divides between North and South: it could be as lopsided as 90/10, or close to even, 55/45. The growing rooms divides evenly, and everything else is the same in both.",
+  "questions": [
+   {
+    "id": "mushroomGrowers:monthly losses:peak:90/10",
+    "stock": "monthly losses",
+    "kind": "peak",
+    "shares": [
+     0.9,
+     0.1
+    ],
+    "text": "how high the monthly losses (both parts together) will peak, if the reference demand divides 90/10",
+    "verdict": "split",
+    "direction": "low",
+    "change": 1.3655
+   },
+   {
+    "id": "mushroomGrowers:Rooms Under Construction:end:90/10",
+    "stock": "Rooms Under Construction",
+    "kind": "end",
+    "shares": [
+     0.9,
+     0.1
+    ],
+    "text": "the level the rooms under construction (both parts together) ends up at by the end of the run, if the reference demand divides 90/10",
+    "verdict": "split",
+    "direction": "high",
+    "change": 0.7601
+   },
+   {
+    "id": "mushroomGrowers:monthly losses:peak:55/45",
+    "stock": "monthly losses",
+    "kind": "peak",
+    "shares": [
+     0.55,
+     0.45
+    ],
+    "text": "how high the monthly losses (both parts together) will peak, if the reference demand divides 55/45",
+    "verdict": "aggregate",
+    "direction": null,
+    "change": 0.0108
+   },
+   {
+    "id": "mushroomGrowers:Growing Rooms:peak:55/45",
+    "stock": "Growing Rooms",
+    "kind": "peak",
+    "shares": [
+     0.55,
+     0.45
+    ],
+    "text": "how high the growing rooms (both parts together) will peak, if the reference demand divides 55/45",
+    "verdict": "aggregate",
+    "direction": null,
+    "change": 0.0052
+   }
+  ]
+ },
+ "deliveryVans": {
+  "scenario": "deliveryVans",
+  "context": "Our fleet is really two depots of 100 vans each, Town and Country, each with half the parcels and half the money for vans and repairs, and each buying and retiring its own vans by the same rules. Town vans do short rounds of about 10,000 miles a year; Country vans cover about 20,000 — 15,000 on average, as in the model. Ten years ago the vans at both depots had about 90,000 miles on them on average.",
+  "questions": [
+   {
+    "id": "Delivery depots, breakdown peak",
+    "text": "how high breakdowns a year (both depots together) will climb over the ten years",
+    "verdict": "split",
+    "direction": "low"
+   },
+   {
+    "id": "Delivery depots, fleet size",
+    "text": "how many vans we will be running (both depots together) at the end of the ten years",
+    "verdict": "aggregate",
+    "direction": null
+   }
+  ]
+ },
+ "foodBank": {
+  "scenario": "foodBank",
+  "context": "We actually run two branches, Riverside and Hilltop. Each started with about 20 of the volunteers and 100 of the families, gets half of the agency referrals and half of the fair stalls, and draws on its own half of the town for new volunteers and new families. At Riverside families collect pre-packed boxes from the hall, so a volunteer can comfortably look after about 8 families; Hilltop delivers to people who cannot leave home, so a volunteer there can only manage about 2 — 5 on average, as in the model. Volunteers stay with their own branch.",
+  "questions": [
+   {
+    "id": "Food bank branches, volunteers at the end",
+    "text": "how many volunteers we will have (both branches together) at the end of the third year",
+    "verdict": "split",
+    "direction": "low"
+   },
+   {
+    "id": "Food bank branches, volunteer peak",
+    "text": "how high the volunteer team (both branches together) will peak over the three years",
+    "verdict": "aggregate",
+    "direction": null
+   }
+  ]
+ },
+ "electricianTraining": {
+  "scenario": "electricianTraining",
+  "input": "Normal Work",
+  "amounts": [
+   "Normal Work",
+   "Apprentices",
+   "Masters",
+   "Journeymen"
+  ],
+  "context": "The regional electricians' guild is really two separate parts, North and South, that do not affect each other: each has its own normal work, apprentices, journeymen, masters. We are not sure how unevenly the normal work divides between North and South: it could be as lopsided as 90/10, or close to even, 55/45. The apprentices, masters, journeymen divide evenly, and everything else is the same in both.",
+  "questions": [
+   {
+    "id": "electricianTraining:jobs turned away:peak:90/10",
+    "stock": "jobs turned away",
+    "kind": "peak",
+    "shares": [
+     0.9,
+     0.1
+    ],
+    "text": "how high the jobs turned away (both parts together) will peak, if the normal work divides 90/10",
+    "verdict": "split",
+    "direction": "low",
+    "change": 4.7314
+   },
+   {
+    "id": "electricianTraining:Apprentices:peak:90/10",
+    "stock": "Apprentices",
+    "kind": "peak",
+    "shares": [
+     0.9,
+     0.1
+    ],
+    "text": "how high the apprentices (both parts together) will peak, if the normal work divides 90/10",
+    "verdict": "split",
+    "direction": "high",
+    "change": 0.3942
+   },
+   {
+    "id": "electricianTraining:Masters:peak:90/10",
+    "stock": "Masters",
+    "kind": "peak",
+    "shares": [
+     0.9,
+     0.1
+    ],
+    "text": "how high the masters (both parts together) will peak, if the normal work divides 90/10",
+    "verdict": "aggregate",
+    "direction": null,
+    "change": 0.0312
+   },
+   {
+    "id": "electricianTraining:Masters:end:90/10",
+    "stock": "Masters",
+    "kind": "end",
+    "shares": [
+     0.9,
+     0.1
+    ],
+    "text": "the level the masters (both parts together) ends up at by the end of the run, if the normal work divides 90/10",
+    "verdict": "aggregate",
+    "direction": null,
+    "change": 0.0312
+   }
+  ]
+ }
+}

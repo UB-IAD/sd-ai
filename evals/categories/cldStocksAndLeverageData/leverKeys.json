@@ -1,0 +1,389 @@
+{
+ "coffeeCoop": {
+  "levers": [
+   {
+    "lever": "soil recovery time",
+    "current": 15,
+    "min": 5,
+    "max": 15,
+    "verdict": "lowered",
+    "best": {
+     "min": 1.2101
+    }
+   },
+   {
+    "lever": "reinvestment share",
+    "current": 0.5,
+    "min": 0.25,
+    "max": 0.7,
+    "verdict": "lowered",
+    "best": {
+     "max": -0.1866,
+     "min": 0.1361
+    }
+   },
+   {
+    "lever": "hectares a family can tend",
+    "current": 10,
+    "min": 10,
+    "max": 20,
+    "verdict": "no",
+    "best": {
+     "max": -0.1431
+    }
+   },
+   {
+    "lever": "depletion per hectare",
+    "current": 0.0001,
+    "min": 0.000067,
+    "max": 0.0001,
+    "verdict": "lowered",
+    "best": {
+     "min": 0.4841
+    }
+   }
+  ],
+  "taken": true
+ },
+ "kitchenFitters": {
+  "levers": [
+   {
+    "lever": "maximum rush",
+    "current": 1.4,
+    "min": 1,
+    "max": 1.7,
+    "verdict": "lowered",
+    "best": {
+     "max": -0.2325,
+     "min": 0.1315
+    }
+   },
+   {
+    "lever": "normal error fraction",
+    "current": 0.1,
+    "min": 0.05,
+    "verdict": "lowered",
+    "best": {
+     "min": 0.1236
+    }
+   },
+   {
+    "lever": "hiring time",
+    "current": 30,
+    "min": 20,
+    "verdict": "no",
+    "best": {
+     "min": -0.1008
+    }
+   },
+   {
+    "lever": "fitting crews",
+    "current": 11.02,
+    "max": 13,
+    "verdict": "no",
+    "best": {
+     "max": -0.0912
+    }
+   },
+   {
+    "lever": "target lead time",
+    "current": 4,
+    "min": 4,
+    "max": 8,
+    "verdict": "no",
+    "best": {
+     "max": -0.3316
+    }
+   }
+  ],
+  "taken": true
+ },
+ "mushroomGrowers": {
+  "levers": [
+   {
+    "lever": "building response",
+    "current": 0.8,
+    "min": 0.4,
+    "verdict": "lowered",
+    "best": {
+     "min": 0.1817
+    }
+   },
+   {
+    "lever": "construction time",
+    "current": 6,
+    "min": 3,
+    "verdict": "no",
+    "best": {
+     "min": -0.4408
+    }
+   },
+   {
+    "lever": "start up time",
+    "current": 3,
+    "min": 2,
+    "verdict": "no",
+    "best": {
+     "min": -0.3391
+    }
+   },
+   {
+    "lever": "closing response",
+    "current": 0.15,
+    "max": 0.225,
+    "verdict": "no",
+    "best": {
+     "max": -0.1398
+    }
+   },
+   {
+    "lever": "room lifetime",
+    "current": 36,
+    "max": 60,
+    "verdict": "no",
+    "best": {
+     "max": -0.4587
+    }
+   },
+   {
+    "lever": "reopening response",
+    "current": 0.1,
+    "max": 0.15,
+    "verdict": "no",
+    "best": {
+     "max": -0.4569
+    }
+   },
+   {
+    "lever": "time to scrap",
+    "current": 4,
+    "min": 2,
+    "max": 8,
+    "verdict": "no",
+    "best": {
+     "max": -0.4569,
+     "min": -0.4569
+    }
+   }
+  ],
+  "taken": true
+ },
+ "ambulanceService": {
+  "levers": [
+   {
+    "lever": "budget delay",
+    "current": 12,
+    "min": 6,
+    "verdict": "no",
+    "best": {
+     "min": -0.1127
+    }
+   },
+   {
+    "lever": "review time",
+    "current": 3,
+    "min": 1,
+    "verdict": "no",
+    "best": {
+     "min": -0.186
+    }
+   },
+   {
+    "lever": "target adjustment time",
+    "current": 12,
+    "min": 12,
+    "verdict": null,
+    "best": {},
+    "why": "its current value is its only realistic limit"
+   }
+  ],
+  "taken": false,
+  "why": "no lever with a realistic limit meets the goal on its own"
+ },
+ "deliveryVans": {
+  "levers": [
+   {
+    "lever": "repair share",
+    "current": 1,
+    "min": 0.5,
+    "max": 1,
+    "verdict": "lowered",
+    "best": {
+     "min": 0.2
+    }
+   },
+   {
+    "lever": "van price",
+    "current": 40000,
+    "min": 34000,
+    "verdict": "lowered",
+    "best": {
+     "min": 0.2
+    }
+   },
+   {
+    "lever": "van life",
+    "current": 6,
+    "min": 4,
+    "max": 10,
+    "verdict": "lowered",
+    "best": {
+     "max": -0.373,
+     "min": 0.1296
+    }
+   },
+   {
+    "lever": "fleet adjustment time",
+    "current": 1,
+    "min": 0.5,
+    "verdict": "no",
+    "best": {
+     "min": -0.2138
+    }
+   }
+  ],
+  "taken": true
+ },
+ "foodBank": {
+  "levers": [
+   {
+    "lever": "recruitment fairs",
+    "current": 0.25,
+    "max": 0.75,
+    "verdict": "no",
+    "best": {
+     "max": -0.2217
+    }
+   },
+   {
+    "lever": "manageable load",
+    "current": 5,
+    "max": 7.5,
+    "verdict": "raised",
+    "best": {
+     "max": 0.4568
+    }
+   }
+  ],
+  "taken": false,
+  "why": "every graded lever's verdict is what its listed changes already say"
+ },
+ "electricianTraining": {
+  "levers": [
+   {
+    "lever": "minimum intake",
+    "current": 0,
+    "min": 0,
+    "max": 3,
+    "verdict": "raised",
+    "best": {
+     "max": 1
+    }
+   },
+   {
+    "lever": "intake adjustment time",
+    "current": 24,
+    "min": 12,
+    "verdict": "no",
+    "best": {
+     "min": -0.8038
+    }
+   },
+   {
+    "lever": "apprentices per master",
+    "current": 0.6,
+    "max": 0.8,
+    "verdict": "no",
+    "best": {
+     "max": -0.9031
+    }
+   }
+  ],
+  "taken": false,
+  "why": "every graded lever's verdict is what its listed changes already say"
+ },
+ "cleaningStandards": {
+  "levers": [
+   {
+    "lever": "hours per cleaner",
+    "current": 160,
+    "max": 192,
+    "verdict": "no",
+    "best": {
+     "max": -0.2013
+    }
+   },
+   {
+    "lever": "hiring time",
+    "current": 4,
+    "min": 2,
+    "verdict": "no",
+    "best": {
+     "min": -0.2468
+    }
+   },
+   {
+    "lever": "review time",
+    "current": 3,
+    "min": 1,
+    "verdict": "no",
+    "best": {
+     "min": -0.243
+    }
+   },
+   {
+    "lever": "revision time",
+    "current": 12,
+    "min": 12,
+    "verdict": null,
+    "best": {},
+    "why": "its current value is its only realistic limit"
+   }
+  ],
+  "taken": false,
+  "why": "no lever with a realistic limit meets the goal on its own"
+ },
+ "valleyWater": {
+  "levers": [
+   {
+    "lever": "basin pumping cap",
+    "current": 1000000000,
+    "min": 25000,
+    "verdict": "lowered",
+    "best": {
+     "min": 0.525
+    }
+   },
+   {
+    "lever": "recharge scheme",
+    "current": 0,
+    "min": 0,
+    "max": 3000,
+    "verdict": "no",
+    "best": {
+     "max": -0.2171
+    }
+   },
+   {
+    "lever": "water use per person",
+    "current": 0.2,
+    "min": 0.15,
+    "verdict": "no",
+    "best": {
+     "min": -0.2195
+    }
+   },
+   {
+    "lever": "town well depth",
+    "current": 200,
+    "max": 300,
+    "verdict": "no",
+    "best": {
+     "max": -0.2298
+    }
+   }
+  ],
+  "taken": false,
+  "why": "every graded lever's verdict is what its listed changes already say"
+ }
+}

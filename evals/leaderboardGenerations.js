@@ -13,8 +13,14 @@
  * Ordered oldest first; the last one with rows present is treated as current.
  */
 
-/** The three leaderboards, matching the `leaderboard_<mode>_full_results.json.gz` files. */
-export const LEADERBOARD_MODES = ['cld', 'sfd', 'discussion'];
+/**
+ * The leaderboards, matching the `leaderboard_<mode>_full_results.json.gz` files.
+ *
+ * `agent` holds the persona-driven agent evaluations: categories graded on what an agent does
+ * across a working session — the model it builds, the files it reads, the tools it runs and, for
+ * conversations, every turn — rather than on one engine call.
+ */
+export const LEADERBOARD_MODES = ['cld', 'sfd', 'discussion', 'agent'];
 
 /**
  * What a row with no `generation` belongs to. Every result predating generations was

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishA</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="frimbulator">
+			</aux>
+			<aux name="demand for bellignorance">
+			</aux>
+			<aux name="yoffa">
+			</aux>
+			<aux name="hensologic">
+			</aux>
+			<aux name="flow of oclate">
+			</aux>
+			<aux name="younjuring">
+			</aux>
+			<aux name="level of ih">
+			</aux>
+			<aux name="exeminte">
+			</aux>
+			<aux name="quality of loopnova">
+			</aux>
+			<aux name="stock of burgination">
+			</aux>
+			<aux name="aferraron">
+			</aux>
+			<aux name="marticatene">
+			</aux>
+			<aux name="geyflorrin">
+			</aux>
+			<aux name="level of whatajig">
+			</aux>
+			<aux name="hashtockle">
+			</aux>
+			<aux name="baxtoy">
+			</aux>
+			<aux name="level of illigent">
+			</aux>
+			<aux name="flow of poval">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1080" y="570" name="frimbulator"/>
+				<aux x="1049" y="744" name="demand for bellignorance"/>
+				<aux x="961" y="898" name="yoffa"/>
+				<aux x="825" y="1012" name="hensologic"/>
+				<aux x="659" y="1072" name="flow of oclate"/>
+				<aux x="481" y="1072" name="younjuring"/>
+				<aux x="315" y="1012" name="level of ih"/>
+				<aux x="179" y="898" name="exeminte"/>
+				<aux x="91" y="744" name="quality of loopnova"/>
+				<aux x="60" y="570" name="stock of burgination"/>
+				<aux x="91" y="396" name="aferraron"/>
+				<aux x="179" y="242" name="marticatene"/>
+				<aux x="315" y="128" name="geyflorrin"/>
+				<aux x="481" y="68" name="level of whatajig"/>
+				<aux x="659" y="68" name="hashtockle"/>
+				<aux x="825" y="128" name="baxtoy"/>
+				<aux x="961" y="242" name="level of illigent"/>
+				<aux x="1049" y="396" name="flow of poval"/>
+				<connector uid="1" angle="259.90" polarity="+">
+					<from>frimbulator</from>
+					<to>demand_for_bellignorance</to>
+				</connector>
+				<connector uid="2" angle="240.26" polarity="-">
+					<from>demand_for_bellignorance</from>
+					<to>yoffa</to>
+				</connector>
+				<connector uid="3" angle="219.97" polarity="+">
+					<from>yoffa</from>
+					<to>hensologic</to>
+				</connector>
+				<connector uid="4" angle="199.87" polarity="-">
+					<from>hensologic</from>
+					<to>flow_of_oclate</to>
+				</connector>
+				<connector uid="5" angle="50.02" polarity="+">
+					<from>flow_of_oclate</from>
+					<to>frimbulator</to>
+				</connector>
+				<connector uid="6" angle="219.97" polarity="+">
+					<from>frimbulator</from>
+					<to>younjuring</to>
+				</connector>
+				<connector uid="7" angle="160.13" polarity="+">
+					<from>younjuring</from>
+					<to>level_of_ih</to>
+				</connector>
+				<connector uid="8" angle="140.03" polarity="-">
+					<from>level_of_ih</from>
+					<to>exeminte</to>
+				</connector>
+				<connector uid="9" angle="119.74" polarity="+">
+					<from>exeminte</from>
+					<to>quality_of_loopnova</to>
+				</connector>
+				<connector uid="10" angle="9.98" polarity="+">
+					<from>quality_of_loopnova</from>
+					<to>frimbulator</to>
+				</connector>
+				<connector uid="11" angle="180.00" polarity="-">
+					<from>frimbulator</from>
+					<to>stock_of_burgination</to>
+				</connector>
+				<connector uid="12" angle="79.90" polarity="-">
+					<from>stock_of_burgination</from>
+					<to>aferraron</to>
+				</connector>
+				<connector uid="13" angle="60.26" polarity="-">
+					<from>aferraron</from>
+					<to>marticatene</to>
+				</connector>
+				<connector uid="14" angle="39.97" polarity="+">
+					<from>marticatene</from>
+					<to>geyflorrin</to>
+				</connector>
+				<connector uid="15" angle="19.87" polarity="+">
+					<from>geyflorrin</from>
+					<to>level_of_whatajig</to>
+				</connector>
+				<connector uid="16" angle="320.03" polarity="+">
+					<from>level_of_whatajig</from>
+					<to>frimbulator</to>
+				</connector>
+				<connector uid="17" angle="180.00" polarity="-">
+					<from>hashtockle</from>
+					<to>level_of_whatajig</to>
+				</connector>
+				<connector uid="18" angle="180.00" polarity="+">
+					<from>baxtoy</from>
+					<to>geyflorrin</to>
+				</connector>
+				<connector uid="19" angle="109.94" polarity="+">
+					<from>frimbulator</from>
+					<to>level_of_illigent</to>
+				</connector>
+				<connector uid="20" angle="29.99" polarity="-">
+					<from>exeminte</from>
+					<to>flow_of_poval</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

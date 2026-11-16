@@ -1,0 +1,226 @@
+{
+  "title": "heldoutGibberishA",
+  "model": {
+    "variables": [
+      {
+        "name": "frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "demand for bellignorance",
+        "type": "variable"
+      },
+      {
+        "name": "yoffa",
+        "type": "variable"
+      },
+      {
+        "name": "hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "flow of oclate",
+        "type": "variable"
+      },
+      {
+        "name": "younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "level of ih",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "quality of loopnova",
+        "type": "variable"
+      },
+      {
+        "name": "stock of burgination",
+        "type": "variable"
+      },
+      {
+        "name": "aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "level of whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "baxtoy",
+        "type": "variable"
+      },
+      {
+        "name": "level of illigent",
+        "type": "variable"
+      },
+      {
+        "name": "flow of poval",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "frimbulator",
+        "to": "demand for bellignorance",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for bellignorance",
+        "to": "yoffa",
+        "polarity": "-"
+      },
+      {
+        "from": "yoffa",
+        "to": "hensologic",
+        "polarity": "+"
+      },
+      {
+        "from": "hensologic",
+        "to": "flow of oclate",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of oclate",
+        "to": "frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "frimbulator",
+        "to": "younjuring",
+        "polarity": "+"
+      },
+      {
+        "from": "younjuring",
+        "to": "level of ih",
+        "polarity": "+"
+      },
+      {
+        "from": "level of ih",
+        "to": "exeminte",
+        "polarity": "-"
+      },
+      {
+        "from": "exeminte",
+        "to": "quality of loopnova",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of loopnova",
+        "to": "frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "frimbulator",
+        "to": "stock of burgination",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of burgination",
+        "to": "aferraron",
+        "polarity": "-"
+      },
+      {
+        "from": "aferraron",
+        "to": "marticatene",
+        "polarity": "-"
+      },
+      {
+        "from": "marticatene",
+        "to": "geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "geyflorrin",
+        "to": "level of whatajig",
+        "polarity": "+"
+      },
+      {
+        "from": "level of whatajig",
+        "to": "frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "hashtockle",
+        "to": "level of whatajig",
+        "polarity": "-"
+      },
+      {
+        "from": "baxtoy",
+        "to": "geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "frimbulator",
+        "to": "level of illigent",
+        "polarity": "+"
+      },
+      {
+        "from": "exeminte",
+        "to": "flow of poval",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "frimbulator",
+        "yoffa"
+      ],
+      "nodes": [
+        "frimbulator",
+        "demand for bellignorance",
+        "yoffa",
+        "hensologic",
+        "flow of oclate"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "frimbulator",
+        "exeminte"
+      ],
+      "nodes": [
+        "frimbulator",
+        "younjuring",
+        "level of ih",
+        "exeminte",
+        "quality of loopnova"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "frimbulator",
+        "marticatene"
+      ],
+      "nodes": [
+        "frimbulator",
+        "stock of burgination",
+        "aferraron",
+        "marticatene",
+        "geyflorrin",
+        "level of whatajig"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

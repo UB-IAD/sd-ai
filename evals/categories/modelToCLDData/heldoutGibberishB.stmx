@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishB</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="maxabizer">
+			</aux>
+			<aux name="oclate">
+			</aux>
+			<aux name="phildiscals">
+			</aux>
+			<aux name="pablanksill">
+			</aux>
+			<aux name="pressure on perstablintome">
+			</aux>
+			<aux name="pressure on baxtoy">
+			</aux>
+			<aux name="hensologic">
+			</aux>
+			<aux name="rate of gissorm">
+			</aux>
+			<aux name="copyring">
+			</aux>
+			<aux name="memostorer">
+			</aux>
+			<aux name="stock of buwheal">
+			</aux>
+			<aux name="marticatene">
+			</aux>
+			<aux name="quality of proptimatire">
+			</aux>
+			<aux name="perfecton">
+			</aux>
+			<aux name="rate of younjuring">
+			</aux>
+			<aux name="ku">
+			</aux>
+			<aux name="yelb">
+			</aux>
+			<aux name="pressure on outrance">
+			</aux>
+			<aux name="pressure on relity">
+			</aux>
+			<aux name="illigent">
+			</aux>
+			<aux name="arinterpord">
+			</aux>
+			<aux name="exeminte">
+			</aux>
+			<aux name="supply of loopnova">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1330" y="695" name="maxabizer"/>
+				<aux x="1306" y="866" name="oclate"/>
+				<aux x="1238" y="1025" name="phildiscals"/>
+				<aux x="1128" y="1159" name="pablanksill"/>
+				<aux x="987" y="1259" name="pressure on perstablintome"/>
+				<aux x="824" y="1317" name="pressure on baxtoy"/>
+				<aux x="652" y="1329" name="hensologic"/>
+				<aux x="482" y="1293" name="rate of gissorm"/>
+				<aux x="329" y="1214" name="copyring"/>
+				<aux x="202" y="1096" name="memostorer"/>
+				<aux x="113" y="948" name="stock of buwheal"/>
+				<aux x="66" y="781" name="marticatene"/>
+				<aux x="66" y="609" name="quality of proptimatire"/>
+				<aux x="113" y="442" name="perfecton"/>
+				<aux x="202" y="294" name="rate of younjuring"/>
+				<aux x="329" y="176" name="ku"/>
+				<aux x="482" y="97" name="yelb"/>
+				<aux x="652" y="61" name="pressure on outrance"/>
+				<aux x="824" y="73" name="pressure on relity"/>
+				<aux x="987" y="131" name="illigent"/>
+				<aux x="1128" y="231" name="arinterpord"/>
+				<aux x="1238" y="365" name="exeminte"/>
+				<aux x="1306" y="524" name="supply of loopnova"/>
+				<connector uid="1" angle="262.01" polarity="+">
+					<from>maxabizer</from>
+					<to>oclate</to>
+				</connector>
+				<connector uid="2" angle="246.84" polarity="-">
+					<from>oclate</from>
+					<to>phildiscals</to>
+				</connector>
+				<connector uid="3" angle="230.62" polarity="-">
+					<from>phildiscals</from>
+					<to>pablanksill</to>
+				</connector>
+				<connector uid="4" angle="215.35" polarity="+">
+					<from>pablanksill</from>
+					<to>pressure_on_perstablintome</to>
+				</connector>
+				<connector uid="5" angle="58.69" polarity="-">
+					<from>pressure_on_perstablintome</from>
+					<to>maxabizer</to>
+				</connector>
+				<connector uid="6" angle="183.99" polarity="+">
+					<from>pressure_on_baxtoy</from>
+					<to>hensologic</to>
+				</connector>
+				<connector uid="7" angle="168.04" polarity="+">
+					<from>hensologic</from>
+					<to>rate_of_gissorm</to>
+				</connector>
+				<connector uid="8" angle="152.69" polarity="-">
+					<from>rate_of_gissorm</from>
+					<to>copyring</to>
+				</connector>
+				<connector uid="9" angle="137.10" polarity="-">
+					<from>copyring</from>
+					<to>memostorer</to>
+				</connector>
+				<connector uid="10" angle="121.02" polarity="-">
+					<from>memostorer</from>
+					<to>stock_of_buwheal</to>
+				</connector>
+				<connector uid="11" angle="105.72" polarity="+">
+					<from>stock_of_buwheal</from>
+					<to>marticatene</to>
+				</connector>
+				<connector uid="12" angle="90.00" polarity="+">
+					<from>marticatene</from>
+					<to>quality_of_proptimatire</to>
+				</connector>
+				<connector uid="13" angle="316.95" polarity="+">
+					<from>quality_of_proptimatire</from>
+					<to>pressure_on_baxtoy</to>
+				</connector>
+				<connector uid="14" angle="129.10" polarity="+">
+					<from>pressure_on_baxtoy</from>
+					<to>perfecton</to>
+				</connector>
+				<connector uid="15" angle="58.98" polarity="-">
+					<from>perfecton</from>
+					<to>rate_of_younjuring</to>
+				</connector>
+				<connector uid="16" angle="42.90" polarity="+">
+					<from>rate_of_younjuring</from>
+					<to>ku</to>
+				</connector>
+				<connector uid="17" angle="27.31" polarity="+">
+					<from>ku</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="18" angle="11.96" polarity="-">
+					<from>yelb</from>
+					<to>pressure_on_outrance</to>
+				</connector>
+				<connector uid="19" angle="277.80" polarity="+">
+					<from>pressure_on_outrance</from>
+					<to>pressure_on_baxtoy</to>
+				</connector>
+				<connector uid="20" angle="129.13" polarity="+">
+					<from>maxabizer</from>
+					<to>pressure_on_relity</to>
+				</connector>
+				<connector uid="21" angle="270.00" polarity="+">
+					<from>pressure_on_relity</from>
+					<to>pressure_on_baxtoy</to>
+				</connector>
+				<connector uid="22" angle="254.38" polarity="-">
+					<from>illigent</from>
+					<to>hensologic</to>
+				</connector>
+				<connector uid="23" angle="285.66" polarity="-">
+					<from>arinterpord</from>
+					<to>oclate</to>
+				</connector>
+				<connector uid="24" angle="11.76" polarity="+">
+					<from>quality_of_proptimatire</from>
+					<to>exeminte</to>
+				</connector>
+				<connector uid="25" angle="35.23" polarity="+">
+					<from>copyring</from>
+					<to>supply_of_loopnova</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

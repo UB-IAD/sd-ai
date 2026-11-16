@@ -1,0 +1,406 @@
+{
+  "title": "heldoutGibberishP",
+  "model": {
+    "variables": [
+      {
+        "name": "flow of perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "flow of poval",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on succupserva",
+        "type": "variable"
+      },
+      {
+        "name": "stock of posistorather",
+        "type": "variable"
+      },
+      {
+        "name": "level of illigent",
+        "type": "variable"
+      },
+      {
+        "name": "supply of buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "relity",
+        "type": "variable"
+      },
+      {
+        "name": "flow of ku",
+        "type": "variable"
+      },
+      {
+        "name": "phildiscals",
+        "type": "variable"
+      },
+      {
+        "name": "level of outrance",
+        "type": "variable"
+      },
+      {
+        "name": "level of aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "yoffa",
+        "type": "variable"
+      },
+      {
+        "name": "supply of whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "stock of obvia",
+        "type": "variable"
+      },
+      {
+        "name": "houtal",
+        "type": "variable"
+      },
+      {
+        "name": "loopnova",
+        "type": "variable"
+      },
+      {
+        "name": "reflupper",
+        "type": "variable"
+      },
+      {
+        "name": "demand for funkado",
+        "type": "variable"
+      },
+      {
+        "name": "rate of copyring",
+        "type": "variable"
+      },
+      {
+        "name": "rate of reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "rate of hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "level of auspong",
+        "type": "variable"
+      },
+      {
+        "name": "yelb",
+        "type": "variable"
+      },
+      {
+        "name": "rate of frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on estintant",
+        "type": "variable"
+      },
+      {
+        "name": "younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "bellignorance",
+        "type": "variable"
+      },
+      {
+        "name": "perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "oc",
+        "type": "variable"
+      },
+      {
+        "name": "flow of hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "traze",
+        "type": "variable"
+      },
+      {
+        "name": "hoza",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "flow of perstablintome",
+        "to": "flow of poval",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of poval",
+        "to": "pressure on succupserva",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on succupserva",
+        "to": "stock of posistorather",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of posistorather",
+        "to": "flow of perstablintome",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of perstablintome",
+        "to": "level of illigent",
+        "polarity": "+"
+      },
+      {
+        "from": "level of illigent",
+        "to": "supply of buwheal",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of buwheal",
+        "to": "relity",
+        "polarity": "+"
+      },
+      {
+        "from": "relity",
+        "to": "flow of ku",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of ku",
+        "to": "flow of perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of perstablintome",
+        "to": "phildiscals",
+        "polarity": "-"
+      },
+      {
+        "from": "phildiscals",
+        "to": "level of outrance",
+        "polarity": "+"
+      },
+      {
+        "from": "level of outrance",
+        "to": "level of aferraron",
+        "polarity": "+"
+      },
+      {
+        "from": "level of aferraron",
+        "to": "yoffa",
+        "polarity": "-"
+      },
+      {
+        "from": "yoffa",
+        "to": "supply of whatajig",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of whatajig",
+        "to": "flow of perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of obvia",
+        "to": "houtal",
+        "polarity": "-"
+      },
+      {
+        "from": "houtal",
+        "to": "loopnova",
+        "polarity": "-"
+      },
+      {
+        "from": "loopnova",
+        "to": "reflupper",
+        "polarity": "-"
+      },
+      {
+        "from": "reflupper",
+        "to": "demand for funkado",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for funkado",
+        "to": "rate of copyring",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of copyring",
+        "to": "rate of reveforly",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of reveforly",
+        "to": "rate of hashtockle",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of hashtockle",
+        "to": "stock of obvia",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of obvia",
+        "to": "level of auspong",
+        "polarity": "+"
+      },
+      {
+        "from": "level of auspong",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "yelb",
+        "to": "rate of frimbulator",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of frimbulator",
+        "to": "pressure on estintant",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on estintant",
+        "to": "younjuring",
+        "polarity": "+"
+      },
+      {
+        "from": "younjuring",
+        "to": "bellignorance",
+        "polarity": "+"
+      },
+      {
+        "from": "bellignorance",
+        "to": "perfecton",
+        "polarity": "+"
+      },
+      {
+        "from": "perfecton",
+        "to": "stock of obvia",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of perstablintome",
+        "to": "exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "exeminte",
+        "to": "stock of obvia",
+        "polarity": "-"
+      },
+      {
+        "from": "oc",
+        "to": "younjuring",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of hensologic",
+        "to": "rate of frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of obvia",
+        "to": "traze",
+        "polarity": "+"
+      },
+      {
+        "from": "houtal",
+        "to": "hoza",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "flow of perstablintome",
+        "pressure on succupserva"
+      ],
+      "nodes": [
+        "flow of perstablintome",
+        "flow of poval",
+        "pressure on succupserva",
+        "stock of posistorather"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "flow of perstablintome",
+        "supply of buwheal"
+      ],
+      "nodes": [
+        "flow of perstablintome",
+        "level of illigent",
+        "supply of buwheal",
+        "relity",
+        "flow of ku"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "flow of perstablintome",
+        "level of aferraron"
+      ],
+      "nodes": [
+        "flow of perstablintome",
+        "phildiscals",
+        "level of outrance",
+        "level of aferraron",
+        "yoffa",
+        "supply of whatajig"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "stock of obvia",
+        "reflupper",
+        "rate of copyring"
+      ],
+      "nodes": [
+        "stock of obvia",
+        "houtal",
+        "loopnova",
+        "reflupper",
+        "demand for funkado",
+        "rate of copyring",
+        "rate of reveforly",
+        "rate of hashtockle"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "stock of obvia",
+        "rate of frimbulator",
+        "bellignorance"
+      ],
+      "nodes": [
+        "stock of obvia",
+        "level of auspong",
+        "yelb",
+        "rate of frimbulator",
+        "pressure on estintant",
+        "younjuring",
+        "bellignorance",
+        "perfecton"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

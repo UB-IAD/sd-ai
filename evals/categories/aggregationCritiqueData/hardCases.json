@@ -1,0 +1,35 @@
+{
+ "mushroomGrowers": {
+  "scenario": "mushroomGrowers",
+  "input": "reference demand",
+  "amounts": [
+   "reference demand",
+   "Growing Rooms"
+  ],
+  "context": "The regional specialty mushroom growers is really two separate parts, North and South, that do not affect each other: each has its own growing rooms, rooms under construction, rooms starting up, idle rooms. We are not sure how unevenly the reference demand divides between North and South: it could be as lopsided as 90/10, or close to even, 55/45. The growing rooms divides evenly, and everything else is the same in both.",
+  "questions": [
+   {
+    "id": "mushroomGrowers:goal:90/10",
+    "kind": "goal",
+    "shares": [
+     0.9,
+     0.1
+    ],
+    "text": "how high the monthly losses (both parts together) will peak, if the reference demand divides 90/10",
+    "verdict": "split",
+    "change": 1.3655
+   },
+   {
+    "id": "mushroomGrowers:goal:55/45",
+    "kind": "goal",
+    "shares": [
+     0.55,
+     0.45
+    ],
+    "text": "how high the monthly losses (both parts together) will peak, if the reference demand divides 55/45",
+    "verdict": "aggregate",
+    "change": 0.0108
+   }
+  ]
+ }
+}

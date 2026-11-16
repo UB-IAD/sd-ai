@@ -1,0 +1,146 @@
+{
+ "Kitchen fitting backlog (hard 2)": {
+  "name": "Kitchen fitting backlog (hard 2)",
+  "scenario": "kitchenFitters",
+  "description": "the kitchen fitting backlog",
+  "errors": [
+   {
+    "variable": "desired fitting",
+    "change": {
+     "equation": "job_backlog * target_lead_time"
+    }
+   }
+  ],
+  "items": [
+   {
+    "kind": "expectation",
+    "constant": "maximum rush",
+    "stock": "hidden faults",
+    "report": "When I double \"maximum rush\", \"hidden faults\" ends the run only about 38% higher than before. I expected doubling \"maximum rush\" to roughly double \"hidden faults\".",
+    "correctRatio": 1.2914
+   },
+   {
+    "kind": "bug",
+    "constant": "normal error fraction",
+    "stock": "fitting crews",
+    "variable": "desired fitting",
+    "fields": [
+     "equation"
+    ],
+    "report": "When I double \"normal error fraction\", \"fitting crews\" ends the run only about 14% higher than before. I expected doubling \"normal error fraction\" to roughly double \"fitting crews\".",
+    "band": {
+     "min": 1.7,
+     "max": 2.3
+    }
+   }
+  ]
+ },
+ "Regional specialty mushroom growers (hard 2)": {
+  "name": "Regional specialty mushroom growers (hard 2)",
+  "scenario": "mushroomGrowers",
+  "description": "the regional specialty mushroom growers",
+  "errors": [
+   {
+    "variable": "rooms coming into production",
+    "change": {
+     "equation": "rooms_starting_up * start_up_time"
+    }
+   }
+  ],
+  "items": [
+   {
+    "kind": "expectation",
+    "constant": "reference price",
+    "stock": "growing rooms",
+    "report": "When I double \"reference price\", \"growing rooms\" ends the run only about 41% higher than before. I expected doubling \"reference price\" to roughly double \"growing rooms\".",
+    "correctRatio": 1.4624
+   },
+   {
+    "kind": "bug",
+    "constant": "start up time",
+    "stock": "idle rooms",
+    "variable": "rooms coming into production",
+    "fields": [
+     "equation"
+    ],
+    "report": "When I double \"start up time\", \"idle rooms\" ends the run only about 36% lower than before. I expected doubling \"start up time\" to roughly halve \"idle rooms\".",
+    "band": {
+     "min": 0.425,
+     "max": 0.575
+    }
+   }
+  ]
+ },
+ "Community food bank volunteers (hard 2)": {
+  "name": "Community food bank volunteers (hard 2)",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "errors": [
+   {
+    "variable": "volunteers",
+    "change": {
+     "inflows": []
+    }
+   }
+  ],
+  "items": [
+   {
+    "kind": "expectation",
+    "constant": "fatigue time",
+    "stock": "fatigue",
+    "report": "When I double \"fatigue time\", \"fatigue\" ends the run only about 21% lower than before. I expected doubling \"fatigue time\" to roughly halve \"fatigue\".",
+    "correctRatio": 0.6016
+   },
+   {
+    "kind": "bug",
+    "constant": "manageable load",
+    "stock": "Potential Volunteers",
+    "variable": "volunteers",
+    "fields": [
+     "inflows"
+    ],
+    "report": "When I double \"manageable load\", \"Potential Volunteers\" ends the run only about 6% lower than before. I expected doubling \"manageable load\" to roughly halve \"Potential Volunteers\".",
+    "band": {
+     "min": 0.425,
+     "max": 0.575
+    }
+   }
+  ]
+ },
+ "Regional electricians' guild (hard 2)": {
+  "name": "Regional electricians' guild (hard 2)",
+  "scenario": "electricianTraining",
+  "description": "the regional electricians' guild",
+  "errors": [
+   {
+    "variable": "places opening up",
+    "change": {
+     "equation": "apprentice_places * apprenticeship_time"
+    }
+   }
+  ],
+  "items": [
+   {
+    "kind": "bug",
+    "constant": "apprenticeship time",
+    "stock": "journeymen",
+    "variable": "places opening up",
+    "fields": [
+     "equation"
+    ],
+    "report": "When I double \"apprenticeship time\", \"journeymen\" ends the run only about 7% lower than before. I expected doubling \"apprenticeship time\" to roughly halve \"journeymen\".",
+    "band": {
+     "min": 0.425,
+     "max": 0.575
+    }
+   },
+   {
+    "kind": "expectation",
+    "constant": "work growth rate",
+    "stock": "Normal Work",
+    "report": "When I double \"work growth rate\", \"Normal Work\" ends the run only about 33% higher than before. I expected doubling \"work growth rate\" to roughly double \"Normal Work\".",
+    "correctRatio": 1.3336
+   }
+  ]
+ }
+}

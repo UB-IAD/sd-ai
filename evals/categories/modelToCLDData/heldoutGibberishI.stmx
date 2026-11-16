@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishI</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="oc">
+			</aux>
+			<aux name="houtal">
+			</aux>
+			<aux name="quality of perfecton">
+			</aux>
+			<aux name="stock of aferraron">
+			</aux>
+			<aux name="pershipfulty">
+			</aux>
+			<aux name="buwheal">
+			</aux>
+			<aux name="paffling">
+			</aux>
+			<aux name="level of unliescatice">
+			</aux>
+			<aux name="ih">
+			</aux>
+			<aux name="copyring">
+			</aux>
+			<aux name="yelb">
+			</aux>
+			<aux name="crypteral">
+			</aux>
+			<aux name="relity">
+			</aux>
+			<aux name="hoza">
+			</aux>
+			<aux name="traze">
+			</aux>
+			<aux name="pressure on obvia">
+			</aux>
+			<aux name="gissorm">
+			</aux>
+			<aux name="demand for memostorer">
+			</aux>
+			<aux name="exeminte">
+			</aux>
+			<aux name="pablanksill">
+			</aux>
+			<aux name="younjuring">
+			</aux>
+			<aux name="reflupper">
+			</aux>
+			<aux name="flow of hensologic">
+			</aux>
+			<aux name="funkado">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1380" y="720" name="oc"/>
+				<aux x="1358" y="891" name="houtal"/>
+				<aux x="1292" y="1050" name="quality of perfecton"/>
+				<aux x="1187" y="1187" name="stock of aferraron"/>
+				<aux x="1050" y="1292" name="pershipfulty"/>
+				<aux x="891" y="1358" name="buwheal"/>
+				<aux x="720" y="1380" name="paffling"/>
+				<aux x="549" y="1358" name="level of unliescatice"/>
+				<aux x="390" y="1292" name="ih"/>
+				<aux x="253" y="1187" name="copyring"/>
+				<aux x="148" y="1050" name="yelb"/>
+				<aux x="82" y="891" name="crypteral"/>
+				<aux x="60" y="720" name="relity"/>
+				<aux x="82" y="549" name="hoza"/>
+				<aux x="148" y="390" name="traze"/>
+				<aux x="253" y="253" name="pressure on obvia"/>
+				<aux x="390" y="148" name="gissorm"/>
+				<aux x="549" y="82" name="demand for memostorer"/>
+				<aux x="720" y="60" name="exeminte"/>
+				<aux x="891" y="82" name="pablanksill"/>
+				<aux x="1050" y="148" name="younjuring"/>
+				<aux x="1187" y="253" name="reflupper"/>
+				<aux x="1292" y="390" name="flow of hensologic"/>
+				<aux x="1358" y="549" name="funkado"/>
+				<connector uid="1" angle="262.67" polarity="-">
+					<from>oc</from>
+					<to>houtal</to>
+				</connector>
+				<connector uid="2" angle="247.46" polarity="-">
+					<from>houtal</from>
+					<to>quality_of_perfecton</to>
+				</connector>
+				<connector uid="3" angle="232.53" polarity="+">
+					<from>quality_of_perfecton</from>
+					<to>stock_of_aferraron</to>
+				</connector>
+				<connector uid="4" angle="217.47" polarity="+">
+					<from>stock_of_aferraron</from>
+					<to>pershipfulty</to>
+				</connector>
+				<connector uid="5" angle="202.54" polarity="-">
+					<from>pershipfulty</from>
+					<to>buwheal</to>
+				</connector>
+				<connector uid="6" angle="187.33" polarity="-">
+					<from>buwheal</from>
+					<to>paffling</to>
+				</connector>
+				<connector uid="7" angle="172.67" polarity="+">
+					<from>paffling</from>
+					<to>level_of_unliescatice</to>
+				</connector>
+				<connector uid="8" angle="37.52" polarity="+">
+					<from>level_of_unliescatice</from>
+					<to>oc</to>
+				</connector>
+				<connector uid="9" angle="210.02" polarity="+">
+					<from>oc</from>
+					<to>ih</to>
+				</connector>
+				<connector uid="10" angle="142.53" polarity="-">
+					<from>ih</from>
+					<to>copyring</to>
+				</connector>
+				<connector uid="11" angle="127.47" polarity="+">
+					<from>copyring</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="12" angle="112.54" polarity="+">
+					<from>yelb</from>
+					<to>crypteral</to>
+				</connector>
+				<connector uid="13" angle="97.33" polarity="+">
+					<from>crypteral</from>
+					<to>relity</to>
+				</connector>
+				<connector uid="14" angle="82.67" polarity="+">
+					<from>relity</from>
+					<to>hoza</to>
+				</connector>
+				<connector uid="15" angle="352.50" polarity="+">
+					<from>hoza</from>
+					<to>oc</to>
+				</connector>
+				<connector uid="16" angle="52.53" polarity="+">
+					<from>traze</from>
+					<to>pressure_on_obvia</to>
+				</connector>
+				<connector uid="17" angle="37.47" polarity="-">
+					<from>pressure_on_obvia</from>
+					<to>gissorm</to>
+				</connector>
+				<connector uid="18" angle="22.54" polarity="-">
+					<from>gissorm</from>
+					<to>demand_for_memostorer</to>
+				</connector>
+				<connector uid="19" angle="7.33" polarity="+">
+					<from>demand_for_memostorer</from>
+					<to>exeminte</to>
+				</connector>
+				<connector uid="20" angle="209.98" polarity="-">
+					<from>exeminte</from>
+					<to>traze</to>
+				</connector>
+				<connector uid="21" angle="127.47" polarity="-">
+					<from>oc</from>
+					<to>pablanksill</to>
+				</connector>
+				<connector uid="22" angle="202.52" polarity="-">
+					<from>pablanksill</from>
+					<to>traze</to>
+				</connector>
+				<connector uid="23" angle="172.50" polarity="+">
+					<from>younjuring</from>
+					<to>demand_for_memostorer</to>
+				</connector>
+				<connector uid="24" angle="172.49" polarity="+">
+					<from>reflupper</from>
+					<to>gissorm</to>
+				</connector>
+				<connector uid="25" angle="337.48" polarity="+">
+					<from>demand_for_memostorer</from>
+					<to>flow_of_hensologic</to>
+				</connector>
+				<connector uid="26" angle="97.33" polarity="+">
+					<from>oc</from>
+					<to>funkado</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

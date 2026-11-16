@@ -1,0 +1,92 @@
+{
+ "Regional distributor inventory (hard)": {
+  "name": "Regional distributor inventory (hard)",
+  "scenario": "distributor",
+  "description": "the regional distributor inventory",
+  "errors": [
+   {
+    "variable": "orders",
+    "change": {
+     "equation": "MAX(0, expected_demand + (inventory - desired_inventory) / adjustment_time + supply_line_weight * (desired_supply_line - supply_line) / adjustment_time)"
+    }
+   }
+  ],
+  "items": [
+   {
+    "kind": "bug",
+    "constant": "coverage",
+    "stock": "inventory",
+    "variable": "orders",
+    "fields": [
+     "equation"
+    ],
+    "report": "When I double \"coverage\", \"inventory\" ends the run only about 13% higher than before. I expected doubling \"coverage\" to roughly double \"inventory\".",
+    "band": {
+     "min": 1.7,
+     "max": 2.3
+    }
+   },
+   {
+    "kind": "expectation",
+    "constant": "delivery delay",
+    "stock": "inventory",
+    "report": "When I double \"delivery delay\", \"inventory\" ends the run only about 9% higher than before. I expected doubling \"delivery delay\" to roughly double \"inventory\".",
+    "correctRatio": 1.0616,
+    "cleanReport": "When I double \"delivery delay\", \"inventory\" ends the run only about 6% higher than before. I expected doubling \"delivery delay\" to roughly double \"inventory\"."
+   },
+   {
+    "kind": "expectation",
+    "constant": "demand increase",
+    "stock": "inventory",
+    "report": "When I double \"demand increase\", \"inventory\" ends the run only about 23% higher than before. I expected doubling \"demand increase\" to roughly double \"inventory\".",
+    "correctRatio": 1.1659,
+    "cleanReport": "When I double \"demand increase\", \"inventory\" ends the run only about 17% higher than before. I expected doubling \"demand increase\" to roughly double \"inventory\"."
+   }
+  ]
+ },
+ "Regional specialty mushroom growers (hard)": {
+  "name": "Regional specialty mushroom growers (hard)",
+  "scenario": "mushroomGrowers",
+  "description": "the regional specialty mushroom growers",
+  "errors": [
+   {
+    "variable": "rooms coming into production",
+    "change": {
+     "equation": "rooms_starting_up * start_up_time"
+    }
+   }
+  ],
+  "items": [
+   {
+    "kind": "expectation",
+    "constant": "growing cost",
+    "stock": "growing rooms",
+    "report": "When I double \"growing cost\", \"growing rooms\" ends the run only about 29% lower than before. I expected doubling \"growing cost\" to roughly halve \"growing rooms\".",
+    "correctRatio": 0.7098,
+    "cleanReport": "When I double \"growing cost\", \"growing rooms\" ends the run only about 29% lower than before. I expected doubling \"growing cost\" to roughly halve \"growing rooms\"."
+   },
+   {
+    "kind": "expectation",
+    "constant": "reference price",
+    "stock": "growing rooms",
+    "report": "When I double \"reference price\", \"growing rooms\" ends the run only about 41% higher than before. I expected doubling \"reference price\" to roughly double \"growing rooms\".",
+    "correctRatio": 1.4624,
+    "cleanReport": "When I double \"reference price\", \"growing rooms\" ends the run only about 46% higher than before. I expected doubling \"reference price\" to roughly double \"growing rooms\"."
+   },
+   {
+    "kind": "bug",
+    "constant": "start up time",
+    "stock": "idle rooms",
+    "variable": "rooms coming into production",
+    "fields": [
+     "equation"
+    ],
+    "report": "When I double \"start up time\", \"idle rooms\" ends the run only about 36% lower than before. I expected doubling \"start up time\" to roughly halve \"idle rooms\".",
+    "band": {
+     "min": 0.425,
+     "max": 0.575
+    }
+   }
+  ]
+ }
+}

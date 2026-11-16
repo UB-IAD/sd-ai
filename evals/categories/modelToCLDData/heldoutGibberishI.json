@@ -1,0 +1,286 @@
+{
+  "title": "heldoutGibberishI",
+  "model": {
+    "variables": [
+      {
+        "name": "oc",
+        "type": "variable"
+      },
+      {
+        "name": "houtal",
+        "type": "variable"
+      },
+      {
+        "name": "quality of perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "stock of aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "pershipfulty",
+        "type": "variable"
+      },
+      {
+        "name": "buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "paffling",
+        "type": "variable"
+      },
+      {
+        "name": "level of unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "ih",
+        "type": "variable"
+      },
+      {
+        "name": "copyring",
+        "type": "variable"
+      },
+      {
+        "name": "yelb",
+        "type": "variable"
+      },
+      {
+        "name": "crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "relity",
+        "type": "variable"
+      },
+      {
+        "name": "hoza",
+        "type": "variable"
+      },
+      {
+        "name": "traze",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on obvia",
+        "type": "variable"
+      },
+      {
+        "name": "gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "demand for memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "reflupper",
+        "type": "variable"
+      },
+      {
+        "name": "flow of hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "funkado",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "oc",
+        "to": "houtal",
+        "polarity": "-"
+      },
+      {
+        "from": "houtal",
+        "to": "quality of perfecton",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of perfecton",
+        "to": "stock of aferraron",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of aferraron",
+        "to": "pershipfulty",
+        "polarity": "+"
+      },
+      {
+        "from": "pershipfulty",
+        "to": "buwheal",
+        "polarity": "-"
+      },
+      {
+        "from": "buwheal",
+        "to": "paffling",
+        "polarity": "-"
+      },
+      {
+        "from": "paffling",
+        "to": "level of unliescatice",
+        "polarity": "+"
+      },
+      {
+        "from": "level of unliescatice",
+        "to": "oc",
+        "polarity": "+"
+      },
+      {
+        "from": "oc",
+        "to": "ih",
+        "polarity": "+"
+      },
+      {
+        "from": "ih",
+        "to": "copyring",
+        "polarity": "-"
+      },
+      {
+        "from": "copyring",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "yelb",
+        "to": "crypteral",
+        "polarity": "+"
+      },
+      {
+        "from": "crypteral",
+        "to": "relity",
+        "polarity": "+"
+      },
+      {
+        "from": "relity",
+        "to": "hoza",
+        "polarity": "+"
+      },
+      {
+        "from": "hoza",
+        "to": "oc",
+        "polarity": "+"
+      },
+      {
+        "from": "traze",
+        "to": "pressure on obvia",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on obvia",
+        "to": "gissorm",
+        "polarity": "-"
+      },
+      {
+        "from": "gissorm",
+        "to": "demand for memostorer",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for memostorer",
+        "to": "exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "exeminte",
+        "to": "traze",
+        "polarity": "-"
+      },
+      {
+        "from": "oc",
+        "to": "pablanksill",
+        "polarity": "-"
+      },
+      {
+        "from": "pablanksill",
+        "to": "traze",
+        "polarity": "-"
+      },
+      {
+        "from": "younjuring",
+        "to": "demand for memostorer",
+        "polarity": "+"
+      },
+      {
+        "from": "reflupper",
+        "to": "gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for memostorer",
+        "to": "flow of hensologic",
+        "polarity": "+"
+      },
+      {
+        "from": "oc",
+        "to": "funkado",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "oc",
+        "stock of aferraron",
+        "buwheal"
+      ],
+      "nodes": [
+        "oc",
+        "houtal",
+        "quality of perfecton",
+        "stock of aferraron",
+        "pershipfulty",
+        "buwheal",
+        "paffling",
+        "level of unliescatice"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "oc",
+        "copyring",
+        "crypteral"
+      ],
+      "nodes": [
+        "oc",
+        "ih",
+        "copyring",
+        "yelb",
+        "crypteral",
+        "relity",
+        "hoza"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "traze",
+        "gissorm"
+      ],
+      "nodes": [
+        "traze",
+        "pressure on obvia",
+        "gissorm",
+        "demand for memostorer",
+        "exeminte"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

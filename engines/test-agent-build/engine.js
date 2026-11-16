@@ -80,13 +80,45 @@ class Engine {
         label: 'Background Knowledge',
         description: 'Background information you want the LLM model to consider when generating a diagram for you',
         minHeight: 100
+      },
+      {
+        name: 'analysisTools',
+        type: 'boolean',
+        required: false,
+        uiElement: 'hidden',
+        label: 'Analysis Tools',
+        description: 'Eval-only: give the agent the evals\' scenario, sensitivity, calibration and optimization tools as client tools.'
+      },
+      {
+        name: 'calibrationData',
+        type: 'json',
+        required: false,
+        uiElement: 'hidden',
+        label: 'Calibration Data',
+        description: 'Eval-only: the historical data load_calibration_data returns, as { series: { name: [{ time, value }] } }.'
+      },
+      {
+        name: 'unitChecking',
+        type: 'boolean',
+        required: false,
+        uiElement: 'hidden',
+        label: 'Unit Checking',
+        description: 'Eval-only: report the evals unit checker\'s warnings to the agent as unitWarnings on every model echo, the way Stella reports its unit check.'
+      },
+      {
+        name: 'attachments',
+        type: 'json',
+        required: false,
+        uiElement: 'hidden',
+        label: 'Attachments',
+        description: 'Eval-only: files to attach to the session as if the user had uploaded them, as [{ path, name? }]. They go through RagStore, so the agent finds them with search_documents and read_file.'
       }
     ];
   }
 
   async generate(prompt, currentModel, parameters) {
     try {
-      const { lastModel, explanation } = await runAgent(prompt, currentModel, parameters);
+      const { lastModel, explanation, toolLog } = await runAgent(prompt, currentModel, parameters);
       if (!lastModel) {
         return { err: 'Agent did not produce a model' };
       }
@@ -100,7 +132,9 @@ class Engine {
           variables: lastModel.variables || [],
           ...(lastModel.specs   && { specs: lastModel.specs }),
           ...(lastModel.modules && { modules: lastModel.modules })
-        }
+        },
+        // What the agent did, not only what it produced: process-graded categories read this.
+        toolLog
       };
     } catch (err) {
       logger.error('[test-agent-build] generate error:', err);

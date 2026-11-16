@@ -1,0 +1,314 @@
+{
+ "Coffee-growing cooperative": {
+  "scenario": "coffeeCoop",
+  "policy": "put 70% of the harvest income into new planting instead of half",
+  "context": "What is realistic for us: cover crops, composting and resting plots could bring worn soil back in as little as 5 years instead of 15; we could put anywhere from a quarter to 70% of the harvest income into new planting (half now); paying for extra pickers could at most double the hectares a family can look after well, from 10 to 20; and shade trees and wider spacing could cut how fast cropping wears the soil by at most a third.",
+  "generated": true,
+  "policyChanges": {
+   "reinvestment share": "0.7"
+  },
+  "assumptions": [
+   {
+    "id": "soil recovery time pushed",
+    "variable": "soil recovery time",
+    "value": "3.33",
+    "realistic": false,
+    "note": "Assumed \"soil recovery time\" can be brought to 3.33.",
+    "revert": "15"
+   },
+   {
+    "id": "hectares a family can tend pushed",
+    "variable": "hectares a family can tend",
+    "value": "30",
+    "realistic": false,
+    "note": "From a consultant's report: \"hectares a family can tend\" can be 30.",
+    "revert": "10"
+   },
+   {
+    "id": "coffee price as it is",
+    "variable": "coffee price",
+    "realistic": true,
+    "note": "Assumed \"coffee price\" stays at 3000, as it has been."
+   },
+   {
+    "id": "best yield from records",
+    "variable": "best yield",
+    "realistic": true,
+    "note": "From our records: \"best yield\" is about 1.2."
+   }
+  ]
+ },
+ "Kitchen fitting backlog": {
+  "scenario": "kitchenFitters",
+  "policy": "push the crews harder when the backlog is high, so they can fit up to 1.7 times their normal pace instead of 1.4",
+  "context": "What is realistic for us: we can let the crews rush to at most 1.7 times their normal pace, or not let them rush at all; a final check before sign-off could at best halve the snags on a normal job (about 1 in 10 now); we cannot find and train a fitter in under 20 weeks (about 30 now); we could have started with at most 13 crews instead of 11; and we cannot promise a fit sooner than 4 weeks after the order, because the units take that long to arrive, nor quote more than 8.",
+  "generated": true,
+  "policyChanges": {
+   "maximum rush": "1.7"
+  },
+  "assumptions": [
+   {
+    "id": "normal error fraction pushed",
+    "variable": "normal error fraction",
+    "value": "0.0333",
+    "realistic": false,
+    "note": "Assumed \"normal error fraction\" can be brought to 0.0333.",
+    "revert": "0.1"
+   },
+   {
+    "id": "hiring time pushed",
+    "variable": "hiring time",
+    "value": "13.3",
+    "realistic": false,
+    "note": "From a consultant's report: \"hiring time\" can be 13.3.",
+    "revert": "30"
+   },
+   {
+    "id": "base orders as it is",
+    "variable": "base orders",
+    "realistic": true,
+    "note": "Assumed \"base orders\" stays at 10, as it has been."
+   },
+   {
+    "id": "jobs per crew from records",
+    "variable": "jobs per crew",
+    "realistic": true,
+    "note": "From our records: \"jobs per crew\" is about 1."
+   }
+  ]
+ },
+ "Regional specialty mushroom growers": {
+  "scenario": "mushroomGrowers",
+  "policy": "get new rooms built in 3 months instead of 6",
+  "context": "What is realistic for us: members might agree to start new rooms at no less than half the pace they do now; a room cannot be built in less than 3 months or get its first crop going in less than 2; growers could close loss-making rooms at most half again as fast as they do; and refurbishing could make a room last at most five years instead of three; refitting idle rooms could go at most half again as fast as it does; and an idle room is stripped out after no less than 2 months and no more than 8 (about 4 now).",
+  "generated": true,
+  "policyChanges": {
+   "construction time": "3"
+  },
+  "assumptions": [
+   {
+    "id": "building response pushed",
+    "variable": "building response",
+    "value": "0.267",
+    "realistic": false,
+    "note": "Assumed \"building response\" can be brought to 0.267.",
+    "revert": "0.8"
+   },
+   {
+    "id": "start up time pushed",
+    "variable": "start up time",
+    "value": "1.33",
+    "realistic": false,
+    "note": "From a consultant's report: \"start up time\" can be 1.33.",
+    "revert": "3"
+   },
+   {
+    "id": "reference demand as it is",
+    "variable": "reference demand",
+    "realistic": true,
+    "note": "Assumed \"reference demand\" stays at 240000, as it has been."
+   },
+   {
+    "id": "yield per room from records",
+    "variable": "yield per room",
+    "realistic": true,
+    "note": "From our records: \"yield per room\" is about 2000."
+   }
+  ]
+ },
+ "Regional ambulance service": {
+  "scenario": "ambulanceService",
+  "policy": "shorten the budget process so a new crew is on the road in 9 months instead of 12",
+  "context": "What is realistic for us: the budget process could be fast-tracked so a new crew is on the road in as little as 6 months instead of 12; we could review how many crews we need as often as every month instead of every three months; and the response-time target is ours to keep: we can stop moving it, or move it more slowly than now (we close a miss over about a year), but there is no sense in moving it faster.",
+  "generated": true,
+  "policyChanges": {
+   "budget delay": "9"
+  },
+  "assumptions": [
+   {
+    "id": "budget delay pushed",
+    "variable": "budget delay",
+    "value": "1.2",
+    "realistic": false,
+    "note": "Assumed \"budget delay\" can be brought to 1.2.",
+    "revert": "12"
+   },
+   {
+    "id": "review time pushed",
+    "variable": "review time",
+    "value": "0.2",
+    "realistic": false,
+    "note": "From a consultant's report: \"review time\" can be 0.2.",
+    "revert": "3"
+   },
+   {
+    "id": "growth rate as it is",
+    "variable": "growth rate",
+    "realistic": true,
+    "note": "Assumed \"growth rate\" stays at 0.006, as it has been."
+   },
+   {
+    "id": "population from records",
+    "variable": "population",
+    "realistic": true,
+    "note": "From our records: \"population\" started at about 400000."
+   }
+  ]
+ },
+ "Community food bank volunteers": {
+  "scenario": "foodBank",
+  "policy": "run twice as many recruitment stalls at community fairs",
+  "context": "What is realistic for us: we could run at most three times as many recruitment stalls at fairs as we do now, and better ways of working (pre-packing, appointment slots) could at most get each volunteer comfortably looking after 7.5 families instead of 5.",
+  "generated": true,
+  "policyChanges": {
+   "recruitment fairs": "0.5"
+  },
+  "assumptions": [
+   {
+    "id": "recruitment fairs pushed",
+    "variable": "recruitment fairs",
+    "value": "1.13",
+    "realistic": false,
+    "note": "Assumed \"recruitment fairs\" can be brought to 1.13.",
+    "revert": "0.25"
+   },
+   {
+    "id": "manageable load pushed",
+    "variable": "manageable load",
+    "value": "11.3",
+    "realistic": false,
+    "note": "From a consultant's report: \"manageable load\" can be 11.3.",
+    "revert": "5"
+   },
+   {
+    "id": "agency referrals as it is",
+    "variable": "agency referrals",
+    "realistic": true,
+    "note": "Assumed \"agency referrals\" stays at 4, as it has been."
+   },
+   {
+    "id": "volunteers from records",
+    "variable": "volunteers",
+    "realistic": true,
+    "note": "From our records: \"volunteers\" started at about 40."
+   }
+  ]
+ },
+ "Regional electricians' guild": {
+  "scenario": "electricianTraining",
+  "policy": "when work outgrows the guild, take on enough extra apprentices to close the gap within eighteen months instead of two years",
+  "context": "What is realistic for us: we could promise to keep taking on up to three apprentices a month however slow work gets (we have never set a minimum); we could close a gap between the electricians the work needs and those we have within as little as a year instead of two; and with encouragement up to four masters in five could supervise an apprentice instead of three in five.",
+  "generated": true,
+  "policyChanges": {
+   "intake adjustment time": "18"
+  },
+  "assumptions": [
+   {
+    "id": "intake adjustment time pushed",
+    "variable": "intake adjustment time",
+    "value": "8",
+    "realistic": false,
+    "note": "Assumed \"intake adjustment time\" can be brought to 8.",
+    "revert": "24"
+   },
+   {
+    "id": "minimum intake pushed",
+    "variable": "minimum intake",
+    "value": "4.5",
+    "realistic": false,
+    "note": "From a consultant's report: \"minimum intake\" can be 4.5.",
+    "revert": "0"
+   },
+   {
+    "id": "Normal Work as it is",
+    "variable": "Normal Work",
+    "realistic": true,
+    "note": "Assumed \"Normal Work\" stays at 3300, as it has been."
+   },
+   {
+    "id": "apprentices from records",
+    "variable": "apprentices",
+    "realistic": true,
+    "note": "From our records: \"apprentices\" started at about 96."
+   }
+  ]
+ },
+ "Hospital contract cleaning standard": {
+  "scenario": "cleaningStandards",
+  "policy": "pay the cleaners for 10% overtime, so each works about 176 hours a month instead of 160",
+  "context": "What is realistic for us: we could pay for overtime of up to 20%, so a cleaner works at most 192 hours a month instead of 160; recruiting and vetting could be sped up so a new cleaner starts in as little as 2 months instead of 4; the contractor could review how many cleaners it needs as often as every month instead of every three months; and the standard is the committee's to keep: it can stop lowering it, or lower it more slowly than now (it closes a miss over about a year), but there is no sense in lowering it faster.",
+  "generated": true,
+  "policyChanges": {
+   "hours per cleaner": "176"
+  },
+  "assumptions": [
+   {
+    "id": "hours per cleaner pushed",
+    "variable": "hours per cleaner",
+    "value": "384",
+    "realistic": false,
+    "note": "Assumed \"hours per cleaner\" can be brought to 384.",
+    "revert": "160"
+   },
+   {
+    "id": "hiring time pushed",
+    "variable": "hiring time",
+    "value": "1",
+    "realistic": false,
+    "note": "From a consultant's report: \"hiring time\" can be 1.",
+    "revert": "4"
+   },
+   {
+    "id": "original rooms as it is",
+    "variable": "original rooms",
+    "realistic": true,
+    "note": "Assumed \"original rooms\" stays at 400, as it has been."
+   },
+   {
+    "id": "cleaning staff from records",
+    "variable": "cleaning staff",
+    "realistic": true,
+    "note": "From our records: \"cleaning staff\" started at about 49."
+   }
+  ]
+ },
+ "Valley groundwater board": {
+  "scenario": "valleyWater",
+  "policy": "put the town on permanent summer restrictions that cut what each household uses by a quarter",
+  "context": "What is realistic for us: the board could cap the combined pumping from the town's and the orchards' wells at no less than 25,000 acre-feet a year (today nothing is capped and every well pumps what it can; the golf course well would stay outside the cap); recharge ponds could put at most 3,000 acre-feet a year extra into the ground; summer restrictions could cut what each town household uses by at most a quarter; and the town could drill its wells at most 300 feet deep instead of 200.",
+  "generated": true,
+  "policyChanges": {
+   "water use per person": "0.15"
+  },
+  "assumptions": [
+   {
+    "id": "basin pumping cap pushed",
+    "variable": "basin pumping cap",
+    "value": "16700",
+    "realistic": false,
+    "note": "Assumed \"basin pumping cap\" can be brought to 16700.",
+    "revert": "1000000000"
+   },
+   {
+    "id": "recharge scheme pushed",
+    "variable": "recharge scheme",
+    "value": "4500",
+    "realistic": false,
+    "note": "From a consultant's report: \"recharge scheme\" can be 4500.",
+    "revert": "0"
+   },
+   {
+    "id": "rain recharge as it is",
+    "variable": "rain recharge",
+    "realistic": true,
+    "note": "Assumed \"rain recharge\" stays at 26500, as it has been."
+   },
+   {
+    "id": "groundwater from records",
+    "variable": "groundwater",
+    "realistic": true,
+    "note": "From our records: \"groundwater\" started at about 700000."
+   }
+  ]
+ }
+}

@@ -1,0 +1,369 @@
+{
+  "title": "heldoutGibberishE",
+  "model": {
+    "variables": [
+      {
+        "name": "flow of unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "level of whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "hoza",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on burgination",
+        "type": "variable"
+      },
+      {
+        "name": "houtal",
+        "type": "variable"
+      },
+      {
+        "name": "traze",
+        "type": "variable"
+      },
+      {
+        "name": "buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "bellignorance",
+        "type": "variable"
+      },
+      {
+        "name": "level of paffling",
+        "type": "variable"
+      },
+      {
+        "name": "supply of reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "yelb",
+        "type": "variable"
+      },
+      {
+        "name": "reflupper",
+        "type": "variable"
+      },
+      {
+        "name": "level of oc",
+        "type": "variable"
+      },
+      {
+        "name": "demand for gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "demand for succupserva",
+        "type": "variable"
+      },
+      {
+        "name": "outrance",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on arinterpord",
+        "type": "variable"
+      },
+      {
+        "name": "maxabizer",
+        "type": "variable"
+      },
+      {
+        "name": "rate of pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "ih",
+        "type": "variable"
+      },
+      {
+        "name": "illigent",
+        "type": "variable"
+      },
+      {
+        "name": "rate of estintant",
+        "type": "variable"
+      },
+      {
+        "name": "quality of perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "stock of baxtoy",
+        "type": "variable"
+      },
+      {
+        "name": "rate of copyring",
+        "type": "variable"
+      },
+      {
+        "name": "yoffa",
+        "type": "variable"
+      },
+      {
+        "name": "flow of relity",
+        "type": "variable"
+      },
+      {
+        "name": "obvia",
+        "type": "variable"
+      },
+      {
+        "name": "perfecton",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "flow of unliescatice",
+        "to": "level of whatajig",
+        "polarity": "-"
+      },
+      {
+        "from": "level of whatajig",
+        "to": "frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "frimbulator",
+        "to": "hoza",
+        "polarity": "+"
+      },
+      {
+        "from": "hoza",
+        "to": "pressure on burgination",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on burgination",
+        "to": "houtal",
+        "polarity": "+"
+      },
+      {
+        "from": "houtal",
+        "to": "traze",
+        "polarity": "+"
+      },
+      {
+        "from": "traze",
+        "to": "buwheal",
+        "polarity": "+"
+      },
+      {
+        "from": "buwheal",
+        "to": "flow of unliescatice",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on crypteral",
+        "to": "bellignorance",
+        "polarity": "+"
+      },
+      {
+        "from": "bellignorance",
+        "to": "level of paffling",
+        "polarity": "+"
+      },
+      {
+        "from": "level of paffling",
+        "to": "supply of reveforly",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of reveforly",
+        "to": "pressure on crypteral",
+        "polarity": "+"
+      },
+      {
+        "from": "yelb",
+        "to": "reflupper",
+        "polarity": "+"
+      },
+      {
+        "from": "reflupper",
+        "to": "level of oc",
+        "polarity": "+"
+      },
+      {
+        "from": "level of oc",
+        "to": "demand for gissorm",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for gissorm",
+        "to": "demand for succupserva",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for succupserva",
+        "to": "outrance",
+        "polarity": "-"
+      },
+      {
+        "from": "outrance",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "yelb",
+        "to": "pressure on arinterpord",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on arinterpord",
+        "to": "maxabizer",
+        "polarity": "+"
+      },
+      {
+        "from": "maxabizer",
+        "to": "rate of pablanksill",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of pablanksill",
+        "to": "ih",
+        "polarity": "+"
+      },
+      {
+        "from": "ih",
+        "to": "illigent",
+        "polarity": "-"
+      },
+      {
+        "from": "illigent",
+        "to": "rate of estintant",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of estintant",
+        "to": "quality of perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of perstablintome",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of unliescatice",
+        "to": "stock of baxtoy",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of baxtoy",
+        "to": "pressure on crypteral",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on crypteral",
+        "to": "rate of copyring",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of copyring",
+        "to": "yelb",
+        "polarity": "-"
+      },
+      {
+        "from": "yoffa",
+        "to": "buwheal",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of relity",
+        "to": "outrance",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on crypteral",
+        "to": "obvia",
+        "polarity": "-"
+      },
+      {
+        "from": "level of oc",
+        "to": "perfecton",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "flow of unliescatice",
+        "hoza",
+        "traze"
+      ],
+      "nodes": [
+        "flow of unliescatice",
+        "level of whatajig",
+        "frimbulator",
+        "hoza",
+        "pressure on burgination",
+        "houtal",
+        "traze",
+        "buwheal"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "pressure on crypteral",
+        "level of paffling"
+      ],
+      "nodes": [
+        "pressure on crypteral",
+        "bellignorance",
+        "level of paffling",
+        "supply of reveforly"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "yelb",
+        "demand for gissorm"
+      ],
+      "nodes": [
+        "yelb",
+        "reflupper",
+        "level of oc",
+        "demand for gissorm",
+        "demand for succupserva",
+        "outrance"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "yelb",
+        "rate of pablanksill",
+        "rate of estintant"
+      ],
+      "nodes": [
+        "yelb",
+        "pressure on arinterpord",
+        "maxabizer",
+        "rate of pablanksill",
+        "ih",
+        "illigent",
+        "rate of estintant",
+        "quality of perstablintome"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

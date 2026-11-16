@@ -1,0 +1,349 @@
+{
+  "title": "heldoutGibberishM",
+  "model": {
+    "variables": [
+      {
+        "name": "obvia",
+        "type": "variable"
+      },
+      {
+        "name": "ku",
+        "type": "variable"
+      },
+      {
+        "name": "memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "poval",
+        "type": "variable"
+      },
+      {
+        "name": "ih",
+        "type": "variable"
+      },
+      {
+        "name": "yelb",
+        "type": "variable"
+      },
+      {
+        "name": "flow of proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "rate of exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "arinterpord",
+        "type": "variable"
+      },
+      {
+        "name": "rate of unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "quality of posistorather",
+        "type": "variable"
+      },
+      {
+        "name": "rate of oclate",
+        "type": "variable"
+      },
+      {
+        "name": "level of reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "level of yoffa",
+        "type": "variable"
+      },
+      {
+        "name": "auspong",
+        "type": "variable"
+      },
+      {
+        "name": "phildiscals",
+        "type": "variable"
+      },
+      {
+        "name": "raez",
+        "type": "variable"
+      },
+      {
+        "name": "perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "illigent",
+        "type": "variable"
+      },
+      {
+        "name": "quality of reflupper",
+        "type": "variable"
+      },
+      {
+        "name": "outrance",
+        "type": "variable"
+      },
+      {
+        "name": "supply of burgination",
+        "type": "variable"
+      },
+      {
+        "name": "marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "flow of younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "level of funkado",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "obvia",
+        "to": "ku",
+        "polarity": "-"
+      },
+      {
+        "from": "ku",
+        "to": "memostorer",
+        "polarity": "+"
+      },
+      {
+        "from": "memostorer",
+        "to": "poval",
+        "polarity": "+"
+      },
+      {
+        "from": "poval",
+        "to": "ih",
+        "polarity": "+"
+      },
+      {
+        "from": "ih",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "yelb",
+        "to": "obvia",
+        "polarity": "-"
+      },
+      {
+        "from": "obvia",
+        "to": "flow of proptimatire",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of proptimatire",
+        "to": "whatajig",
+        "polarity": "-"
+      },
+      {
+        "from": "whatajig",
+        "to": "rate of exeminte",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of exeminte",
+        "to": "arinterpord",
+        "polarity": "+"
+      },
+      {
+        "from": "arinterpord",
+        "to": "obvia",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of unliescatice",
+        "to": "quality of posistorather",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of posistorather",
+        "to": "rate of oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of oclate",
+        "to": "level of reveforly",
+        "polarity": "+"
+      },
+      {
+        "from": "level of reveforly",
+        "to": "level of yoffa",
+        "polarity": "-"
+      },
+      {
+        "from": "level of yoffa",
+        "to": "rate of unliescatice",
+        "polarity": "+"
+      },
+      {
+        "from": "auspong",
+        "to": "phildiscals",
+        "polarity": "-"
+      },
+      {
+        "from": "phildiscals",
+        "to": "raez",
+        "polarity": "-"
+      },
+      {
+        "from": "raez",
+        "to": "perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "perstablintome",
+        "to": "illigent",
+        "polarity": "-"
+      },
+      {
+        "from": "illigent",
+        "to": "quality of reflupper",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of reflupper",
+        "to": "outrance",
+        "polarity": "-"
+      },
+      {
+        "from": "outrance",
+        "to": "supply of burgination",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of burgination",
+        "to": "auspong",
+        "polarity": "+"
+      },
+      {
+        "from": "obvia",
+        "to": "marticatene",
+        "polarity": "+"
+      },
+      {
+        "from": "marticatene",
+        "to": "rate of unliescatice",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of unliescatice",
+        "to": "pressure on gissorm",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on gissorm",
+        "to": "auspong",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of younjuring",
+        "to": "whatajig",
+        "polarity": "-"
+      },
+      {
+        "from": "crypteral",
+        "to": "ih",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of unliescatice",
+        "to": "pressure on frimbulator",
+        "polarity": "-"
+      },
+      {
+        "from": "yelb",
+        "to": "level of funkado",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "obvia",
+        "memostorer",
+        "ih"
+      ],
+      "nodes": [
+        "obvia",
+        "ku",
+        "memostorer",
+        "poval",
+        "ih",
+        "yelb"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "obvia",
+        "rate of exeminte"
+      ],
+      "nodes": [
+        "obvia",
+        "flow of proptimatire",
+        "whatajig",
+        "rate of exeminte",
+        "arinterpord"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "rate of unliescatice",
+        "level of reveforly"
+      ],
+      "nodes": [
+        "rate of unliescatice",
+        "quality of posistorather",
+        "rate of oclate",
+        "level of reveforly",
+        "level of yoffa"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "auspong",
+        "perstablintome",
+        "outrance"
+      ],
+      "nodes": [
+        "auspong",
+        "phildiscals",
+        "raez",
+        "perstablintome",
+        "illigent",
+        "quality of reflupper",
+        "outrance",
+        "supply of burgination"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

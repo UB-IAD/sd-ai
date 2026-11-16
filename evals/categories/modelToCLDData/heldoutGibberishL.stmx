@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishL</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="supply of reveforly">
+			</aux>
+			<aux name="poval">
+			</aux>
+			<aux name="hoza">
+			</aux>
+			<aux name="level of priary">
+			</aux>
+			<aux name="frimbulator">
+			</aux>
+			<aux name="illigent">
+			</aux>
+			<aux name="oc">
+			</aux>
+			<aux name="houtal">
+			</aux>
+			<aux name="supply of pershipfulty">
+			</aux>
+			<aux name="pressure on buwheal">
+			</aux>
+			<aux name="flow of baxtoy">
+			</aux>
+			<aux name="quality of marticatene">
+			</aux>
+			<aux name="estintant">
+			</aux>
+			<aux name="younjuring">
+			</aux>
+			<aux name="quality of maxabizer">
+			</aux>
+			<aux name="burgination">
+			</aux>
+			<aux name="unliescatice">
+			</aux>
+			<aux name="pressure on oclate">
+			</aux>
+			<aux name="quality of yelb">
+			</aux>
+			<aux name="yoffa">
+			</aux>
+			<aux name="flow of ih">
+			</aux>
+			<aux name="stock of perfecton">
+			</aux>
+			<aux name="hashtockle">
+			</aux>
+			<aux name="loopnova">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1380" y="720" name="supply of reveforly"/>
+				<aux x="1358" y="891" name="poval"/>
+				<aux x="1292" y="1050" name="hoza"/>
+				<aux x="1187" y="1187" name="level of priary"/>
+				<aux x="1050" y="1292" name="frimbulator"/>
+				<aux x="891" y="1358" name="illigent"/>
+				<aux x="720" y="1380" name="oc"/>
+				<aux x="549" y="1358" name="houtal"/>
+				<aux x="390" y="1292" name="supply of pershipfulty"/>
+				<aux x="253" y="1187" name="pressure on buwheal"/>
+				<aux x="148" y="1050" name="flow of baxtoy"/>
+				<aux x="82" y="891" name="quality of marticatene"/>
+				<aux x="60" y="720" name="estintant"/>
+				<aux x="82" y="549" name="younjuring"/>
+				<aux x="148" y="390" name="quality of maxabizer"/>
+				<aux x="253" y="253" name="burgination"/>
+				<aux x="390" y="148" name="unliescatice"/>
+				<aux x="549" y="82" name="pressure on oclate"/>
+				<aux x="720" y="60" name="quality of yelb"/>
+				<aux x="891" y="82" name="yoffa"/>
+				<aux x="1050" y="148" name="flow of ih"/>
+				<aux x="1187" y="253" name="stock of perfecton"/>
+				<aux x="1292" y="390" name="hashtockle"/>
+				<aux x="1358" y="549" name="loopnova"/>
+				<connector uid="1" angle="262.67" polarity="-">
+					<from>supply_of_reveforly</from>
+					<to>poval</to>
+				</connector>
+				<connector uid="2" angle="247.46" polarity="+">
+					<from>poval</from>
+					<to>hoza</to>
+				</connector>
+				<connector uid="3" angle="232.53" polarity="-">
+					<from>hoza</from>
+					<to>level_of_priary</to>
+				</connector>
+				<connector uid="4" angle="67.55" polarity="+">
+					<from>level_of_priary</from>
+					<to>supply_of_reveforly</to>
+				</connector>
+				<connector uid="5" angle="202.54" polarity="+">
+					<from>frimbulator</from>
+					<to>illigent</to>
+				</connector>
+				<connector uid="6" angle="187.33" polarity="-">
+					<from>illigent</from>
+					<to>oc</to>
+				</connector>
+				<connector uid="7" angle="172.67" polarity="+">
+					<from>oc</from>
+					<to>houtal</to>
+				</connector>
+				<connector uid="8" angle="157.46" polarity="-">
+					<from>houtal</from>
+					<to>supply_of_pershipfulty</to>
+				</connector>
+				<connector uid="9" angle="142.53" polarity="+">
+					<from>supply_of_pershipfulty</from>
+					<to>pressure_on_buwheal</to>
+				</connector>
+				<connector uid="10" angle="352.49" polarity="+">
+					<from>pressure_on_buwheal</from>
+					<to>frimbulator</to>
+				</connector>
+				<connector uid="11" angle="164.98" polarity="-">
+					<from>frimbulator</from>
+					<to>flow_of_baxtoy</to>
+				</connector>
+				<connector uid="12" angle="112.54" polarity="-">
+					<from>flow_of_baxtoy</from>
+					<to>quality_of_marticatene</to>
+				</connector>
+				<connector uid="13" angle="97.33" polarity="+">
+					<from>quality_of_marticatene</from>
+					<to>estintant</to>
+				</connector>
+				<connector uid="14" angle="82.67" polarity="+">
+					<from>estintant</from>
+					<to>younjuring</to>
+				</connector>
+				<connector uid="15" angle="67.46" polarity="-">
+					<from>younjuring</from>
+					<to>quality_of_maxabizer</to>
+				</connector>
+				<connector uid="16" angle="315.00" polarity="+">
+					<from>quality_of_maxabizer</from>
+					<to>frimbulator</to>
+				</connector>
+				<connector uid="17" angle="127.49" polarity="-">
+					<from>frimbulator</from>
+					<to>burgination</to>
+				</connector>
+				<connector uid="18" angle="37.47" polarity="-">
+					<from>burgination</from>
+					<to>unliescatice</to>
+				</connector>
+				<connector uid="19" angle="22.54" polarity="+">
+					<from>unliescatice</from>
+					<to>pressure_on_oclate</to>
+				</connector>
+				<connector uid="20" angle="7.33" polarity="+">
+					<from>pressure_on_oclate</from>
+					<to>quality_of_yelb</to>
+				</connector>
+				<connector uid="21" angle="285.00" polarity="-">
+					<from>quality_of_yelb</from>
+					<to>frimbulator</to>
+				</connector>
+				<connector uid="22" angle="127.47" polarity="-">
+					<from>supply_of_reveforly</from>
+					<to>yoffa</to>
+				</connector>
+				<connector uid="23" angle="277.49" polarity="+">
+					<from>yoffa</from>
+					<to>frimbulator</to>
+				</connector>
+				<connector uid="24" angle="247.51" polarity="+">
+					<from>flow_of_ih</from>
+					<to>houtal</to>
+				</connector>
+				<connector uid="25" angle="247.49" polarity="-">
+					<from>stock_of_perfecton</from>
+					<to>oc</to>
+				</connector>
+				<connector uid="26" angle="37.49" polarity="-">
+					<from>pressure_on_buwheal</from>
+					<to>hashtockle</to>
+				</connector>
+				<connector uid="27" angle="97.33" polarity="-">
+					<from>supply_of_reveforly</from>
+					<to>loopnova</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

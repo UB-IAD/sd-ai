@@ -250,6 +250,8 @@ async function generateEvals() {
       description,
       link,
       methodology,
+      // Regression guard or discriminating, with its reason (evals/utilities/categoryRoles.js).
+      role: methodology?.role ?? null,
       source: `${GH_BASE}/evals/categories/${name}.js`,
       firstTestUrl,
     });

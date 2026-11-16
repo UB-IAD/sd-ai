@@ -1,0 +1,299 @@
+{
+  "title": "heldoutGibberishL",
+  "model": {
+    "variables": [
+      {
+        "name": "supply of reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "poval",
+        "type": "variable"
+      },
+      {
+        "name": "hoza",
+        "type": "variable"
+      },
+      {
+        "name": "level of priary",
+        "type": "variable"
+      },
+      {
+        "name": "frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "illigent",
+        "type": "variable"
+      },
+      {
+        "name": "oc",
+        "type": "variable"
+      },
+      {
+        "name": "houtal",
+        "type": "variable"
+      },
+      {
+        "name": "supply of pershipfulty",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "flow of baxtoy",
+        "type": "variable"
+      },
+      {
+        "name": "quality of marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "estintant",
+        "type": "variable"
+      },
+      {
+        "name": "younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "quality of maxabizer",
+        "type": "variable"
+      },
+      {
+        "name": "burgination",
+        "type": "variable"
+      },
+      {
+        "name": "unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on oclate",
+        "type": "variable"
+      },
+      {
+        "name": "quality of yelb",
+        "type": "variable"
+      },
+      {
+        "name": "yoffa",
+        "type": "variable"
+      },
+      {
+        "name": "flow of ih",
+        "type": "variable"
+      },
+      {
+        "name": "stock of perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "loopnova",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "supply of reveforly",
+        "to": "poval",
+        "polarity": "-"
+      },
+      {
+        "from": "poval",
+        "to": "hoza",
+        "polarity": "+"
+      },
+      {
+        "from": "hoza",
+        "to": "level of priary",
+        "polarity": "-"
+      },
+      {
+        "from": "level of priary",
+        "to": "supply of reveforly",
+        "polarity": "+"
+      },
+      {
+        "from": "frimbulator",
+        "to": "illigent",
+        "polarity": "+"
+      },
+      {
+        "from": "illigent",
+        "to": "oc",
+        "polarity": "-"
+      },
+      {
+        "from": "oc",
+        "to": "houtal",
+        "polarity": "+"
+      },
+      {
+        "from": "houtal",
+        "to": "supply of pershipfulty",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of pershipfulty",
+        "to": "pressure on buwheal",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on buwheal",
+        "to": "frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "frimbulator",
+        "to": "flow of baxtoy",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of baxtoy",
+        "to": "quality of marticatene",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of marticatene",
+        "to": "estintant",
+        "polarity": "+"
+      },
+      {
+        "from": "estintant",
+        "to": "younjuring",
+        "polarity": "+"
+      },
+      {
+        "from": "younjuring",
+        "to": "quality of maxabizer",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of maxabizer",
+        "to": "frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "frimbulator",
+        "to": "burgination",
+        "polarity": "-"
+      },
+      {
+        "from": "burgination",
+        "to": "unliescatice",
+        "polarity": "-"
+      },
+      {
+        "from": "unliescatice",
+        "to": "pressure on oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on oclate",
+        "to": "quality of yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of yelb",
+        "to": "frimbulator",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of reveforly",
+        "to": "yoffa",
+        "polarity": "-"
+      },
+      {
+        "from": "yoffa",
+        "to": "frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of ih",
+        "to": "houtal",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of perfecton",
+        "to": "oc",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on buwheal",
+        "to": "hashtockle",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of reveforly",
+        "to": "loopnova",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "supply of reveforly",
+        "hoza"
+      ],
+      "nodes": [
+        "supply of reveforly",
+        "poval",
+        "hoza",
+        "level of priary"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "frimbulator",
+        "houtal"
+      ],
+      "nodes": [
+        "frimbulator",
+        "illigent",
+        "oc",
+        "houtal",
+        "supply of pershipfulty",
+        "pressure on buwheal"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "frimbulator",
+        "estintant"
+      ],
+      "nodes": [
+        "frimbulator",
+        "flow of baxtoy",
+        "quality of marticatene",
+        "estintant",
+        "younjuring",
+        "quality of maxabizer"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "frimbulator",
+        "unliescatice"
+      ],
+      "nodes": [
+        "frimbulator",
+        "burgination",
+        "unliescatice",
+        "pressure on oclate",
+        "quality of yelb"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

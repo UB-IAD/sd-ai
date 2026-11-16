@@ -1,0 +1,299 @@
+{
+  "title": "heldoutGibberishG",
+  "model": {
+    "variables": [
+      {
+        "name": "yelb",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "demand for estintant",
+        "type": "variable"
+      },
+      {
+        "name": "hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "obvia",
+        "type": "variable"
+      },
+      {
+        "name": "memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "raez",
+        "type": "variable"
+      },
+      {
+        "name": "stock of younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "hazmick",
+        "type": "variable"
+      },
+      {
+        "name": "supply of oc",
+        "type": "variable"
+      },
+      {
+        "name": "balack",
+        "type": "variable"
+      },
+      {
+        "name": "posistorather",
+        "type": "variable"
+      },
+      {
+        "name": "hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "poval",
+        "type": "variable"
+      },
+      {
+        "name": "demand for proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "level of geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "level of priary",
+        "type": "variable"
+      },
+      {
+        "name": "burgination",
+        "type": "variable"
+      },
+      {
+        "name": "flow of baxtoy",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "copyring",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "yelb",
+        "to": "pressure on buwheal",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on buwheal",
+        "to": "demand for estintant",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for estintant",
+        "to": "hensologic",
+        "polarity": "+"
+      },
+      {
+        "from": "hensologic",
+        "to": "obvia",
+        "polarity": "-"
+      },
+      {
+        "from": "obvia",
+        "to": "memostorer",
+        "polarity": "-"
+      },
+      {
+        "from": "memostorer",
+        "to": "exeminte",
+        "polarity": "-"
+      },
+      {
+        "from": "exeminte",
+        "to": "raez",
+        "polarity": "-"
+      },
+      {
+        "from": "raez",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "yelb",
+        "to": "stock of younjuring",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of younjuring",
+        "to": "gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "gissorm",
+        "to": "perfecton",
+        "polarity": "+"
+      },
+      {
+        "from": "perfecton",
+        "to": "crypteral",
+        "polarity": "+"
+      },
+      {
+        "from": "crypteral",
+        "to": "hazmick",
+        "polarity": "+"
+      },
+      {
+        "from": "hazmick",
+        "to": "supply of oc",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of oc",
+        "to": "balack",
+        "polarity": "+"
+      },
+      {
+        "from": "balack",
+        "to": "yelb",
+        "polarity": "-"
+      },
+      {
+        "from": "yelb",
+        "to": "posistorather",
+        "polarity": "-"
+      },
+      {
+        "from": "posistorather",
+        "to": "hashtockle",
+        "polarity": "-"
+      },
+      {
+        "from": "hashtockle",
+        "to": "poval",
+        "polarity": "+"
+      },
+      {
+        "from": "poval",
+        "to": "demand for proptimatire",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for proptimatire",
+        "to": "level of geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "level of geyflorrin",
+        "to": "level of priary",
+        "polarity": "-"
+      },
+      {
+        "from": "level of priary",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "burgination",
+        "to": "exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of baxtoy",
+        "to": "stock of younjuring",
+        "polarity": "+"
+      },
+      {
+        "from": "gissorm",
+        "to": "pressure on perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "exeminte",
+        "to": "copyring",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "yelb",
+        "hensologic",
+        "exeminte"
+      ],
+      "nodes": [
+        "yelb",
+        "pressure on buwheal",
+        "demand for estintant",
+        "hensologic",
+        "obvia",
+        "memostorer",
+        "exeminte",
+        "raez"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "yelb",
+        "perfecton",
+        "supply of oc"
+      ],
+      "nodes": [
+        "yelb",
+        "stock of younjuring",
+        "gissorm",
+        "perfecton",
+        "crypteral",
+        "hazmick",
+        "supply of oc",
+        "balack"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "yelb",
+        "poval",
+        "level of geyflorrin"
+      ],
+      "nodes": [
+        "yelb",
+        "posistorather",
+        "hashtockle",
+        "poval",
+        "demand for proptimatire",
+        "level of geyflorrin",
+        "level of priary"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

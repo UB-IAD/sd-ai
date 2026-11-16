@@ -1,0 +1,81 @@
+{
+ "Kitchen fitting backlog, end level": {
+  "name": "Kitchen fitting backlog, end level",
+  "scenario": "kitchenFitters",
+  "kind": "final",
+  "verdict": "aggregate",
+  "heterogeneity": "The kitchen fitting backlog is really two separate parts, North and South, that do not affect each other: each has its own job backlog, hidden faults, fitting crews. Between North and South, the surge size divides about 90/10; the job backlog, base orders, fitting crews, hidden faults divide evenly; and everything else is the same in both.",
+  "question": "the level the job backlog (both parts together) ends up at by the end of the run",
+  "input": "surge size",
+  "amounts": [
+   "surge size",
+   "Backlog",
+   "base orders",
+   "Crews",
+   "Hidden Faults"
+  ],
+  "shares": [
+   0.9,
+   0.1
+  ],
+  "change": 0.0097
+ },
+ "Regional specialty mushroom growers, goal measure": {
+  "name": "Regional specialty mushroom growers, goal measure",
+  "scenario": "mushroomGrowers",
+  "kind": "goal",
+  "verdict": "split",
+  "heterogeneity": "The regional specialty mushroom growers is really two separate parts, North and South, that do not affect each other: each has its own growing rooms, rooms under construction, rooms starting up, idle rooms. Between North and South, the reference demand divides about 90/10; the growing rooms divides evenly; and everything else is the same in both.",
+  "question": "how high the monthly losses (both parts together) will peak",
+  "input": "reference demand",
+  "amounts": [
+   "reference demand",
+   "Growing Rooms"
+  ],
+  "shares": [
+   0.9,
+   0.1
+  ],
+  "change": 1.3655
+ },
+ "Regional electricians' guild, goal measure": {
+  "name": "Regional electricians' guild, goal measure",
+  "scenario": "electricianTraining",
+  "kind": "goal",
+  "verdict": "split",
+  "heterogeneity": "The regional electricians' guild is really two separate parts, North and South, that do not affect each other: each has its own Normal Work, apprentices, journeymen, masters. Between North and South, the Normal Work divides about 90/10; the apprentices, masters, journeymen divide evenly; and everything else is the same in both.",
+  "question": "how high the jobs turned away (both parts together) will peak",
+  "input": "Normal Work",
+  "amounts": [
+   "Normal Work",
+   "Apprentices",
+   "Masters",
+   "Journeymen"
+  ],
+  "shares": [
+   0.9,
+   0.1
+  ],
+  "change": 4.7314
+ },
+ "Regional electricians' guild, end level": {
+  "name": "Regional electricians' guild, end level",
+  "scenario": "electricianTraining",
+  "kind": "final",
+  "verdict": "split",
+  "heterogeneity": "The regional electricians' guild is really two separate parts, North and South, that do not affect each other: each has its own Normal Work, apprentices, journeymen, masters. Between North and South, the Normal Work divides about 90/10; the apprentices, masters, journeymen divide evenly; and everything else is the same in both.",
+  "question": "the level the jobs turned away (both parts together) ends up at by the end of the run",
+  "input": "Normal Work",
+  "amounts": [
+   "Normal Work",
+   "Apprentices",
+   "Masters",
+   "Journeymen"
+  ],
+  "shares": [
+   0.9,
+   0.1
+  ],
+  "change": 14.888
+ }
+}

@@ -1,0 +1,327 @@
+{
+  "title": "heldoutGibberishH",
+  "model": {
+    "variables": [
+      {
+        "name": "supply of obvia",
+        "type": "variable"
+      },
+      {
+        "name": "ih",
+        "type": "variable"
+      },
+      {
+        "name": "flow of oclate",
+        "type": "variable"
+      },
+      {
+        "name": "stock of pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "demand for phildiscals",
+        "type": "variable"
+      },
+      {
+        "name": "balack",
+        "type": "variable"
+      },
+      {
+        "name": "posistorather",
+        "type": "variable"
+      },
+      {
+        "name": "rate of hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "poval",
+        "type": "variable"
+      },
+      {
+        "name": "level of aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "stock of geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "pershipfulty",
+        "type": "variable"
+      },
+      {
+        "name": "stock of marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "auspong",
+        "type": "variable"
+      },
+      {
+        "name": "quality of unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "flow of maxabizer",
+        "type": "variable"
+      },
+      {
+        "name": "raez",
+        "type": "variable"
+      },
+      {
+        "name": "funkado",
+        "type": "variable"
+      },
+      {
+        "name": "hazmick",
+        "type": "variable"
+      },
+      {
+        "name": "buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "supply of ku",
+        "type": "variable"
+      },
+      {
+        "name": "hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "level of perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "illigent",
+        "type": "variable"
+      },
+      {
+        "name": "houtal",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "supply of obvia",
+        "to": "ih",
+        "polarity": "+"
+      },
+      {
+        "from": "ih",
+        "to": "flow of oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of oclate",
+        "to": "stock of pablanksill",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of pablanksill",
+        "to": "demand for phildiscals",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for phildiscals",
+        "to": "balack",
+        "polarity": "-"
+      },
+      {
+        "from": "balack",
+        "to": "posistorather",
+        "polarity": "-"
+      },
+      {
+        "from": "posistorather",
+        "to": "rate of hensologic",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of hensologic",
+        "to": "supply of obvia",
+        "polarity": "+"
+      },
+      {
+        "from": "poval",
+        "to": "level of aferraron",
+        "polarity": "-"
+      },
+      {
+        "from": "level of aferraron",
+        "to": "stock of geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of geyflorrin",
+        "to": "pershipfulty",
+        "polarity": "+"
+      },
+      {
+        "from": "pershipfulty",
+        "to": "stock of marticatene",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of marticatene",
+        "to": "auspong",
+        "polarity": "+"
+      },
+      {
+        "from": "auspong",
+        "to": "quality of unliescatice",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of unliescatice",
+        "to": "flow of maxabizer",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of maxabizer",
+        "to": "poval",
+        "polarity": "+"
+      },
+      {
+        "from": "poval",
+        "to": "raez",
+        "polarity": "-"
+      },
+      {
+        "from": "raez",
+        "to": "funkado",
+        "polarity": "-"
+      },
+      {
+        "from": "funkado",
+        "to": "hazmick",
+        "polarity": "-"
+      },
+      {
+        "from": "hazmick",
+        "to": "buwheal",
+        "polarity": "+"
+      },
+      {
+        "from": "buwheal",
+        "to": "proptimatire",
+        "polarity": "+"
+      },
+      {
+        "from": "proptimatire",
+        "to": "supply of ku",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of ku",
+        "to": "hashtockle",
+        "polarity": "+"
+      },
+      {
+        "from": "hashtockle",
+        "to": "poval",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of obvia",
+        "to": "gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "gissorm",
+        "to": "poval",
+        "polarity": "+"
+      },
+      {
+        "from": "level of perfecton",
+        "to": "flow of maxabizer",
+        "polarity": "+"
+      },
+      {
+        "from": "illigent",
+        "to": "flow of maxabizer",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of unliescatice",
+        "to": "houtal",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of geyflorrin",
+        "to": "exeminte",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "supply of obvia",
+        "stock of pablanksill",
+        "balack"
+      ],
+      "nodes": [
+        "supply of obvia",
+        "ih",
+        "flow of oclate",
+        "stock of pablanksill",
+        "demand for phildiscals",
+        "balack",
+        "posistorather",
+        "rate of hensologic"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "poval",
+        "pershipfulty",
+        "quality of unliescatice"
+      ],
+      "nodes": [
+        "poval",
+        "level of aferraron",
+        "stock of geyflorrin",
+        "pershipfulty",
+        "stock of marticatene",
+        "auspong",
+        "quality of unliescatice",
+        "flow of maxabizer"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "poval",
+        "hazmick",
+        "proptimatire"
+      ],
+      "nodes": [
+        "poval",
+        "raez",
+        "funkado",
+        "hazmick",
+        "buwheal",
+        "proptimatire",
+        "supply of ku",
+        "hashtockle"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

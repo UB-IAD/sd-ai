@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishG</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="yelb">
+			</aux>
+			<aux name="pressure on buwheal">
+			</aux>
+			<aux name="demand for estintant">
+			</aux>
+			<aux name="hensologic">
+			</aux>
+			<aux name="obvia">
+			</aux>
+			<aux name="memostorer">
+			</aux>
+			<aux name="exeminte">
+			</aux>
+			<aux name="raez">
+			</aux>
+			<aux name="stock of younjuring">
+			</aux>
+			<aux name="gissorm">
+			</aux>
+			<aux name="perfecton">
+			</aux>
+			<aux name="crypteral">
+			</aux>
+			<aux name="hazmick">
+			</aux>
+			<aux name="supply of oc">
+			</aux>
+			<aux name="balack">
+			</aux>
+			<aux name="posistorather">
+			</aux>
+			<aux name="hashtockle">
+			</aux>
+			<aux name="poval">
+			</aux>
+			<aux name="demand for proptimatire">
+			</aux>
+			<aux name="level of geyflorrin">
+			</aux>
+			<aux name="level of priary">
+			</aux>
+			<aux name="burgination">
+			</aux>
+			<aux name="flow of baxtoy">
+			</aux>
+			<aux name="pressure on perstablintome">
+			</aux>
+			<aux name="copyring">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1430" y="745" name="yelb"/>
+				<aux x="1408" y="915" name="pressure on buwheal"/>
+				<aux x="1345" y="1075" name="demand for estintant"/>
+				<aux x="1244" y="1214" name="hensologic"/>
+				<aux x="1112" y="1323" name="obvia"/>
+				<aux x="957" y="1396" name="memostorer"/>
+				<aux x="788" y="1429" name="exeminte"/>
+				<aux x="617" y="1418" name="raez"/>
+				<aux x="453" y="1365" name="stock of younjuring"/>
+				<aux x="308" y="1273" name="gissorm"/>
+				<aux x="191" y="1148" name="perfecton"/>
+				<aux x="108" y="997" name="crypteral"/>
+				<aux x="65" y="831" name="hazmick"/>
+				<aux x="65" y="659" name="supply of oc"/>
+				<aux x="108" y="493" name="balack"/>
+				<aux x="191" y="342" name="posistorather"/>
+				<aux x="308" y="217" name="hashtockle"/>
+				<aux x="453" y="125" name="poval"/>
+				<aux x="617" y="72" name="demand for proptimatire"/>
+				<aux x="788" y="61" name="level of geyflorrin"/>
+				<aux x="957" y="94" name="level of priary"/>
+				<aux x="1112" y="167" name="burgination"/>
+				<aux x="1244" y="276" name="flow of baxtoy"/>
+				<aux x="1345" y="415" name="pressure on perstablintome"/>
+				<aux x="1408" y="575" name="copyring"/>
+				<connector uid="1" angle="262.63" polarity="-">
+					<from>yelb</from>
+					<to>pressure_on_buwheal</to>
+				</connector>
+				<connector uid="2" angle="248.51" polarity="-">
+					<from>pressure_on_buwheal</from>
+					<to>demand_for_estintant</to>
+				</connector>
+				<connector uid="3" angle="234.00" polarity="+">
+					<from>demand_for_estintant</from>
+					<to>hensologic</to>
+				</connector>
+				<connector uid="4" angle="219.55" polarity="-">
+					<from>hensologic</from>
+					<to>obvia</to>
+				</connector>
+				<connector uid="5" angle="205.22" polarity="-">
+					<from>obvia</from>
+					<to>memostorer</to>
+				</connector>
+				<connector uid="6" angle="191.05" polarity="-">
+					<from>memostorer</from>
+					<to>exeminte</to>
+				</connector>
+				<connector uid="7" angle="176.32" polarity="-">
+					<from>exeminte</from>
+					<to>raez</to>
+				</connector>
+				<connector uid="8" angle="39.62" polarity="+">
+					<from>raez</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="9" angle="212.40" polarity="-">
+					<from>yelb</from>
+					<to>stock_of_younjuring</to>
+				</connector>
+				<connector uid="10" angle="147.61" polarity="+">
+					<from>stock_of_younjuring</from>
+					<to>gissorm</to>
+				</connector>
+				<connector uid="11" angle="133.11" polarity="+">
+					<from>gissorm</from>
+					<to>perfecton</to>
+				</connector>
+				<connector uid="12" angle="118.80" polarity="+">
+					<from>perfecton</from>
+					<to>crypteral</to>
+				</connector>
+				<connector uid="13" angle="104.52" polarity="+">
+					<from>crypteral</from>
+					<to>hazmick</to>
+				</connector>
+				<connector uid="14" angle="90.00" polarity="+">
+					<from>hazmick</from>
+					<to>supply_of_oc</to>
+				</connector>
+				<connector uid="15" angle="75.48" polarity="+">
+					<from>supply_of_oc</from>
+					<to>balack</to>
+				</connector>
+				<connector uid="16" angle="349.21" polarity="-">
+					<from>balack</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="17" angle="161.98" polarity="-">
+					<from>yelb</from>
+					<to>posistorather</to>
+				</connector>
+				<connector uid="18" angle="46.89" polarity="-">
+					<from>posistorather</from>
+					<to>hashtockle</to>
+				</connector>
+				<connector uid="19" angle="32.39" polarity="+">
+					<from>hashtockle</from>
+					<to>poval</to>
+				</connector>
+				<connector uid="20" angle="17.91" polarity="-">
+					<from>poval</from>
+					<to>demand_for_proptimatire</to>
+				</connector>
+				<connector uid="21" angle="3.68" polarity="+">
+					<from>demand_for_proptimatire</from>
+					<to>level_of_geyflorrin</to>
+				</connector>
+				<connector uid="22" angle="348.95" polarity="-">
+					<from>level_of_geyflorrin</from>
+					<to>level_of_priary</to>
+				</connector>
+				<connector uid="23" angle="306.00" polarity="+">
+					<from>level_of_priary</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="24" angle="255.60" polarity="+">
+					<from>burgination</from>
+					<to>exeminte</to>
+				</connector>
+				<connector uid="25" angle="234.01" polarity="+">
+					<from>flow_of_baxtoy</from>
+					<to>stock_of_younjuring</to>
+				</connector>
+				<connector uid="26" angle="39.60" polarity="+">
+					<from>gissorm</from>
+					<to>pressure_on_perstablintome</to>
+				</connector>
+				<connector uid="27" angle="54.02" polarity="+">
+					<from>exeminte</from>
+					<to>copyring</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

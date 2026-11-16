@@ -1,0 +1,174 @@
+{
+  "title": "Urban traffic congestion",
+  "model": {
+    "variables": [
+      {
+        "name": "Congestion",
+        "type": "variable"
+      },
+      {
+        "name": "Travel Time",
+        "type": "variable"
+      },
+      {
+        "name": "Political Pressure for Roads",
+        "type": "variable"
+      },
+      {
+        "name": "Road Construction",
+        "type": "variable"
+      },
+      {
+        "name": "Road Capacity",
+        "type": "variable"
+      },
+      {
+        "name": "Attractiveness of Driving",
+        "type": "variable"
+      },
+      {
+        "name": "Traffic Volume",
+        "type": "variable"
+      },
+      {
+        "name": "Attractiveness of Suburbs",
+        "type": "variable"
+      },
+      {
+        "name": "Suburban Housing",
+        "type": "variable"
+      },
+      {
+        "name": "Fuel Price",
+        "type": "variable"
+      },
+      {
+        "name": "Vehicle Emissions",
+        "type": "variable"
+      },
+      {
+        "name": "Transit Investment",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "Congestion",
+        "to": "Travel Time",
+        "polarity": "+"
+      },
+      {
+        "from": "Travel Time",
+        "to": "Political Pressure for Roads",
+        "polarity": "+"
+      },
+      {
+        "from": "Political Pressure for Roads",
+        "to": "Road Construction",
+        "polarity": "+"
+      },
+      {
+        "from": "Road Construction",
+        "to": "Road Capacity",
+        "polarity": "+"
+      },
+      {
+        "from": "Road Capacity",
+        "to": "Congestion",
+        "polarity": "-"
+      },
+      {
+        "from": "Travel Time",
+        "to": "Attractiveness of Driving",
+        "polarity": "-"
+      },
+      {
+        "from": "Attractiveness of Driving",
+        "to": "Traffic Volume",
+        "polarity": "+"
+      },
+      {
+        "from": "Traffic Volume",
+        "to": "Congestion",
+        "polarity": "+"
+      },
+      {
+        "from": "Road Capacity",
+        "to": "Attractiveness of Suburbs",
+        "polarity": "+"
+      },
+      {
+        "from": "Attractiveness of Suburbs",
+        "to": "Suburban Housing",
+        "polarity": "+"
+      },
+      {
+        "from": "Suburban Housing",
+        "to": "Traffic Volume",
+        "polarity": "+"
+      },
+      {
+        "from": "Fuel Price",
+        "to": "Attractiveness of Driving",
+        "polarity": "-"
+      },
+      {
+        "from": "Congestion",
+        "to": "Vehicle Emissions",
+        "polarity": "+"
+      },
+      {
+        "from": "Transit Investment",
+        "to": "Attractiveness of Driving",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "Congestion",
+        "Road Capacity"
+      ],
+      "nodes": [
+        "Congestion",
+        "Travel Time",
+        "Political Pressure for Roads",
+        "Road Construction",
+        "Road Capacity"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "Congestion",
+        "Traffic Volume"
+      ],
+      "nodes": [
+        "Congestion",
+        "Travel Time",
+        "Attractiveness of Driving",
+        "Traffic Volume"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "Road Capacity",
+        "Traffic Volume",
+        "Congestion"
+      ],
+      "nodes": [
+        "Road Capacity",
+        "Attractiveness of Suburbs",
+        "Suburban Housing",
+        "Traffic Volume",
+        "Congestion",
+        "Travel Time",
+        "Political Pressure for Roads",
+        "Road Construction"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

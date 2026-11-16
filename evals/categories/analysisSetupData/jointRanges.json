@@ -1,0 +1,186 @@
+{
+ "coffeeCoop": {
+  "low": {
+   "exact": 84.0209,
+   "shown": 84.0209,
+   "corner": 94.735,
+   "cornerShown": 94.735
+  },
+  "high": {
+   "exact": 508.74,
+   "shown": 508.74,
+   "corner": 508.74,
+   "cornerShown": 508.74
+  },
+  "base": 253.708,
+  "oneAtATime": {
+   "low": 212.329,
+   "high": 307.503
+  },
+  "constants": 11
+ },
+ "kitchenFitters": {
+  "low": {
+   "exact": 40.2423,
+   "shown": 39.3451,
+   "corner": 40.2423,
+   "cornerShown": 39.3451
+  },
+  "high": {
+   "exact": 141.583,
+   "shown": 135.454,
+   "corner": 141.583,
+   "cornerShown": 135.454
+  },
+  "base": 66.7863,
+  "oneAtATime": {
+   "low": 58.515,
+   "high": 77.9907
+  },
+  "constants": 12
+ },
+ "mushroomGrowers": {
+  "low": {
+   "exact": 125530,
+   "shown": 122708,
+   "corner": 161125,
+   "cornerShown": 156862
+  },
+  "high": {
+   "exact": 1857040,
+   "shown": 1857040,
+   "corner": 1857040,
+   "cornerShown": 1857040
+  },
+  "base": 728461,
+  "oneAtATime": {
+   "low": 447862,
+   "high": 1025420
+  },
+  "constants": 12
+ },
+ "ambulanceService": {
+  "low": {
+   "exact": 12.7567,
+   "shown": 12.7567,
+   "corner": 12.7567,
+   "cornerShown": 12.7567
+  },
+  "high": {
+   "exact": 18.1454,
+   "shown": 18.1454,
+   "corner": 18.1454,
+   "cornerShown": 18.1454
+  },
+  "base": 15.2484,
+  "oneAtATime": {
+   "low": 13.7236,
+   "high": 16.7732
+  },
+  "constants": 8,
+  "skip": "an end of the joint range is within 20% of the status quo"
+ },
+ "deliveryVans": {
+  "low": {
+   "exact": 297.521,
+   "shown": 297.521,
+   "corner": 312.222,
+   "cornerShown": 311.606
+  },
+  "high": {
+   "exact": 4147.7,
+   "shown": 4147.7,
+   "corner": 4147.7,
+   "cornerShown": 4147.7
+  },
+  "base": 606.88,
+  "oneAtATime": {
+   "low": 330.579,
+   "high": 1940.92
+  },
+  "constants": 13
+ },
+ "foodBank": {
+  "low": {
+   "exact": 0.0205352,
+   "shown": 0.0205352,
+   "corner": 0.0205352,
+   "cornerShown": 0.0205352
+  },
+  "high": {
+   "exact": 139.608,
+   "shown": 139.608,
+   "corner": 139.14,
+   "cornerShown": 139.14
+  },
+  "base": 30.9669,
+  "oneAtATime": {
+   "low": 5.85888,
+   "high": 65.3106
+  },
+  "constants": 8,
+  "skip": "the low end is near zero (under 10% of the status quo)"
+ },
+ "electricianTraining": {
+  "low": {
+   "exact": 0,
+   "shown": 0,
+   "corner": 0,
+   "cornerShown": 0
+  },
+  "high": {
+   "exact": 1469.26,
+   "shown": 1469.26,
+   "corner": 1440.8,
+   "cornerShown": 1440.8
+  },
+  "base": 232.643,
+  "oneAtATime": {
+   "low": 0,
+   "high": 607.526
+  },
+  "constants": 12,
+  "skip": "the low end is near zero (under 10% of the status quo)"
+ },
+ "cleaningStandards": {
+  "low": {
+   "exact": 0.13405,
+   "shown": 0.13405,
+   "corner": 0.136139,
+   "cornerShown": 0.136139
+  },
+  "high": {
+   "exact": 0.247679,
+   "shown": 0.247679,
+   "corner": 0.247679,
+   "cornerShown": 0.247679
+  },
+  "base": 0.171611,
+  "oneAtATime": {
+   "low": 0.162888,
+   "high": 0.19135
+  },
+  "constants": 11
+ },
+ "valleyWater": {
+  "low": {
+   "exact": 1.05619,
+   "shown": 1.05619,
+   "corner": 4.763,
+   "cornerShown": 4.763
+  },
+  "high": {
+   "exact": 162.132,
+   "shown": 162.132,
+   "corner": 162.132,
+   "cornerShown": 162.132
+  },
+  "base": 98.026,
+  "oneAtATime": {
+   "low": 78.5229,
+   "high": 117.073
+  },
+  "constants": 15,
+  "skip": "the low end is near zero (under 10% of the status quo)"
+ }
+}

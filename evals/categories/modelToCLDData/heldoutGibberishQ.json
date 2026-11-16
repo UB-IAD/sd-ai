@@ -1,0 +1,434 @@
+{
+  "title": "heldoutGibberishQ",
+  "model": {
+    "variables": [
+      {
+        "name": "dickstonyx",
+        "type": "variable"
+      },
+      {
+        "name": "yelb",
+        "type": "variable"
+      },
+      {
+        "name": "crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "quality of hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "loopnova",
+        "type": "variable"
+      },
+      {
+        "name": "quality of reflupper",
+        "type": "variable"
+      },
+      {
+        "name": "flow of perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "level of gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "supply of unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "balack",
+        "type": "variable"
+      },
+      {
+        "name": "stock of hazmick",
+        "type": "variable"
+      },
+      {
+        "name": "demand for whoziewhat",
+        "type": "variable"
+      },
+      {
+        "name": "priary",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on burgination",
+        "type": "variable"
+      },
+      {
+        "name": "supply of raez",
+        "type": "variable"
+      },
+      {
+        "name": "proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "level of auspong",
+        "type": "variable"
+      },
+      {
+        "name": "pershipfulty",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "flow of memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on oclate",
+        "type": "variable"
+      },
+      {
+        "name": "demand for buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "stock of yoffa",
+        "type": "variable"
+      },
+      {
+        "name": "stock of traze",
+        "type": "variable"
+      },
+      {
+        "name": "paffling",
+        "type": "variable"
+      },
+      {
+        "name": "posistorather",
+        "type": "variable"
+      },
+      {
+        "name": "hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on hoza",
+        "type": "variable"
+      },
+      {
+        "name": "flow of oc",
+        "type": "variable"
+      },
+      {
+        "name": "ku",
+        "type": "variable"
+      },
+      {
+        "name": "relity",
+        "type": "variable"
+      },
+      {
+        "name": "supply of succupserva",
+        "type": "variable"
+      },
+      {
+        "name": "frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "obvia",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "dickstonyx",
+        "to": "yelb",
+        "polarity": "-"
+      },
+      {
+        "from": "yelb",
+        "to": "crypteral",
+        "polarity": "+"
+      },
+      {
+        "from": "crypteral",
+        "to": "quality of hashtockle",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of hashtockle",
+        "to": "loopnova",
+        "polarity": "+"
+      },
+      {
+        "from": "loopnova",
+        "to": "quality of reflupper",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of reflupper",
+        "to": "flow of perfecton",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of perfecton",
+        "to": "level of gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "level of gissorm",
+        "to": "dickstonyx",
+        "polarity": "+"
+      },
+      {
+        "from": "dickstonyx",
+        "to": "supply of unliescatice",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of unliescatice",
+        "to": "geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "geyflorrin",
+        "to": "balack",
+        "polarity": "-"
+      },
+      {
+        "from": "balack",
+        "to": "stock of hazmick",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of hazmick",
+        "to": "demand for whoziewhat",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for whoziewhat",
+        "to": "priary",
+        "polarity": "+"
+      },
+      {
+        "from": "priary",
+        "to": "pressure on burgination",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on burgination",
+        "to": "supply of raez",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of raez",
+        "to": "dickstonyx",
+        "polarity": "+"
+      },
+      {
+        "from": "proptimatire",
+        "to": "level of auspong",
+        "polarity": "-"
+      },
+      {
+        "from": "level of auspong",
+        "to": "pershipfulty",
+        "polarity": "+"
+      },
+      {
+        "from": "pershipfulty",
+        "to": "exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "exeminte",
+        "to": "proptimatire",
+        "polarity": "+"
+      },
+      {
+        "from": "proptimatire",
+        "to": "flow of memostorer",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of memostorer",
+        "to": "reveforly",
+        "polarity": "+"
+      },
+      {
+        "from": "reveforly",
+        "to": "pressure on oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on oclate",
+        "to": "demand for buwheal",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for buwheal",
+        "to": "stock of yoffa",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of yoffa",
+        "to": "proptimatire",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of traze",
+        "to": "paffling",
+        "polarity": "+"
+      },
+      {
+        "from": "paffling",
+        "to": "posistorather",
+        "polarity": "+"
+      },
+      {
+        "from": "posistorather",
+        "to": "hensologic",
+        "polarity": "+"
+      },
+      {
+        "from": "hensologic",
+        "to": "pressure on hoza",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on hoza",
+        "to": "stock of traze",
+        "polarity": "-"
+      },
+      {
+        "from": "dickstonyx",
+        "to": "flow of oc",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of oc",
+        "to": "proptimatire",
+        "polarity": "+"
+      },
+      {
+        "from": "proptimatire",
+        "to": "ku",
+        "polarity": "+"
+      },
+      {
+        "from": "ku",
+        "to": "stock of traze",
+        "polarity": "-"
+      },
+      {
+        "from": "relity",
+        "to": "pressure on burgination",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of succupserva",
+        "to": "loopnova",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of reflupper",
+        "to": "frimbulator",
+        "polarity": "-"
+      },
+      {
+        "from": "crypteral",
+        "to": "obvia",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "dickstonyx",
+        "crypteral",
+        "quality of reflupper"
+      ],
+      "nodes": [
+        "dickstonyx",
+        "yelb",
+        "crypteral",
+        "quality of hashtockle",
+        "loopnova",
+        "quality of reflupper",
+        "flow of perfecton",
+        "level of gissorm"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "dickstonyx",
+        "balack",
+        "priary"
+      ],
+      "nodes": [
+        "dickstonyx",
+        "supply of unliescatice",
+        "geyflorrin",
+        "balack",
+        "stock of hazmick",
+        "demand for whoziewhat",
+        "priary",
+        "pressure on burgination",
+        "supply of raez"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "proptimatire",
+        "pershipfulty"
+      ],
+      "nodes": [
+        "proptimatire",
+        "level of auspong",
+        "pershipfulty",
+        "exeminte"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "proptimatire",
+        "pressure on oclate"
+      ],
+      "nodes": [
+        "proptimatire",
+        "flow of memostorer",
+        "reveforly",
+        "pressure on oclate",
+        "demand for buwheal",
+        "stock of yoffa"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "stock of traze",
+        "hensologic"
+      ],
+      "nodes": [
+        "stock of traze",
+        "paffling",
+        "posistorather",
+        "hensologic",
+        "pressure on hoza"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

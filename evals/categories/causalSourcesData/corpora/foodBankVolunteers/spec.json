@@ -1,0 +1,61 @@
+{
+ "id": "foodBankVolunteers",
+ "title": "Food bank volunteers",
+ "subject": "our community food bank's volunteers",
+ "question": "why we keep losing volunteers just when we need them most",
+ "problemStatement": "I want to understand why our volunteers are leaving, in a form I can check against our own documents.",
+ "heldOut": true,
+ "glossary": [
+  "volunteers",
+  "hours per volunteer",
+  "volunteer burnout",
+  "volunteers leaving",
+  "households served"
+ ],
+ "files": [
+  "rota_coordinator_notes.md",
+  "trustees_meeting_minutes.md",
+  "volunteer_exit_survey.md",
+  "warehouse_roof_repair.md"
+ ],
+ "unrelated": "warehouse_roof_repair.md",
+ "supported": [
+  {
+   "from": "volunteers",
+   "to": "hours per volunteer",
+   "polarity": "-",
+   "source": "rota_coordinator_notes.md"
+  },
+  {
+   "from": "households served",
+   "to": "hours per volunteer",
+   "polarity": "+",
+   "source": "trustees_meeting_minutes.md"
+  },
+  {
+   "from": "hours per volunteer",
+   "to": "volunteer burnout",
+   "polarity": "+",
+   "source": "volunteer_exit_survey.md"
+  },
+  {
+   "from": "volunteer burnout",
+   "to": "volunteers leaving",
+   "polarity": "+",
+   "source": "volunteer_exit_survey.md"
+  }
+ ],
+ "unsupported": {
+  "from": "volunteers leaving",
+  "to": "volunteers",
+  "polarity": "-"
+ },
+ "words": {
+  "volunteers": "number of volunteers|volunteers on the rota",
+  "hours per volunteer": "hours (per|for each|each) volunteer",
+  "volunteer burnout": "burn(ed|t)?[- ]?out",
+  "volunteers leaving": "volunteers? (who )?(left|leave|leaving|quit|stepped down)|stepped down",
+  "households served": "households"
+ },
+ "notStated": "(leav|left|quit|stepp)[^.]*(fewer|smaller|shrink|shrank|shrunk|down to|drop|fall|fell|lost|thinner)[^.]*(volunteer|rota|team)|(fewer|smaller|shrink|shrank|shrunk|lost|thinner)[^.]*(volunteer|rota|team)[^.]*(leav|left|quit|stepp)|each (one|person|volunteer) who (leaves|quits)|(team|rota) (shrinks|shrank|has shrunk)|(lose|lost|losing) (a |one )?volunteers?"
+}

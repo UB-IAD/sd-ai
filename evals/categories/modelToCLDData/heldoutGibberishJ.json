@@ -1,0 +1,330 @@
+{
+  "title": "heldoutGibberishJ",
+  "model": {
+    "variables": [
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "stock of buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "demand for memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "illigent",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on yelb",
+        "type": "variable"
+      },
+      {
+        "name": "level of dickstonyx",
+        "type": "variable"
+      },
+      {
+        "name": "flow of relity",
+        "type": "variable"
+      },
+      {
+        "name": "copyring",
+        "type": "variable"
+      },
+      {
+        "name": "geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "quality of funkado",
+        "type": "variable"
+      },
+      {
+        "name": "quality of crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "flow of ih",
+        "type": "variable"
+      },
+      {
+        "name": "demand for paffling",
+        "type": "variable"
+      },
+      {
+        "name": "stock of obvia",
+        "type": "variable"
+      },
+      {
+        "name": "priary",
+        "type": "variable"
+      },
+      {
+        "name": "proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "auspong",
+        "type": "variable"
+      },
+      {
+        "name": "stock of frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "supply of gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "quality of estintant",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "hazmick",
+        "type": "variable"
+      },
+      {
+        "name": "rate of hoza",
+        "type": "variable"
+      },
+      {
+        "name": "stock of marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "demand for bellignorance",
+        "type": "variable"
+      },
+      {
+        "name": "ku",
+        "type": "variable"
+      },
+      {
+        "name": "houtal",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "exeminte",
+        "to": "stock of buwheal",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of buwheal",
+        "to": "demand for memostorer",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for memostorer",
+        "to": "illigent",
+        "polarity": "+"
+      },
+      {
+        "from": "illigent",
+        "to": "pressure on yelb",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on yelb",
+        "to": "exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "exeminte",
+        "to": "level of dickstonyx",
+        "polarity": "+"
+      },
+      {
+        "from": "level of dickstonyx",
+        "to": "flow of relity",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of relity",
+        "to": "copyring",
+        "polarity": "-"
+      },
+      {
+        "from": "copyring",
+        "to": "exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "geyflorrin",
+        "to": "quality of funkado",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of funkado",
+        "to": "quality of crypteral",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of crypteral",
+        "to": "flow of ih",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of ih",
+        "to": "demand for paffling",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for paffling",
+        "to": "stock of obvia",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of obvia",
+        "to": "geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "geyflorrin",
+        "to": "priary",
+        "polarity": "-"
+      },
+      {
+        "from": "priary",
+        "to": "proptimatire",
+        "polarity": "+"
+      },
+      {
+        "from": "proptimatire",
+        "to": "auspong",
+        "polarity": "-"
+      },
+      {
+        "from": "auspong",
+        "to": "stock of frimbulator",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of frimbulator",
+        "to": "supply of gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of gissorm",
+        "to": "quality of estintant",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of estintant",
+        "to": "pressure on reveforly",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on reveforly",
+        "to": "hazmick",
+        "polarity": "-"
+      },
+      {
+        "from": "hazmick",
+        "to": "geyflorrin",
+        "polarity": "-"
+      },
+      {
+        "from": "exeminte",
+        "to": "rate of hoza",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of hoza",
+        "to": "geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of marticatene",
+        "to": "pressure on yelb",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for bellignorance",
+        "to": "level of dickstonyx",
+        "polarity": "-"
+      },
+      {
+        "from": "priary",
+        "to": "ku",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of crypteral",
+        "to": "houtal",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "exeminte",
+        "illigent"
+      ],
+      "nodes": [
+        "exeminte",
+        "stock of buwheal",
+        "demand for memostorer",
+        "illigent",
+        "pressure on yelb"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "exeminte",
+        "flow of relity"
+      ],
+      "nodes": [
+        "exeminte",
+        "level of dickstonyx",
+        "flow of relity",
+        "copyring"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "geyflorrin",
+        "flow of ih"
+      ],
+      "nodes": [
+        "geyflorrin",
+        "quality of funkado",
+        "quality of crypteral",
+        "flow of ih",
+        "demand for paffling",
+        "stock of obvia"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "geyflorrin",
+        "auspong",
+        "quality of estintant"
+      ],
+      "nodes": [
+        "geyflorrin",
+        "priary",
+        "proptimatire",
+        "auspong",
+        "stock of frimbulator",
+        "supply of gissorm",
+        "quality of estintant",
+        "pressure on reveforly",
+        "hazmick"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

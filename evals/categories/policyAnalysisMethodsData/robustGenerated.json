@@ -1,0 +1,83 @@
+{
+ "cases": {
+  "Coffee-growing cooperative: how far, and how far to be sure": {
+   "name": "Coffee-growing cooperative: how far, and how far to be sure",
+   "scenario": "coffeeCoop",
+   "kind": "robust",
+   "lever": "soil recovery time",
+   "current": 15,
+   "limit": 5,
+   "uncertain": "coffee price",
+   "uncertainValue": 3000,
+   "adverseFactor": 1.2,
+   "prompt": "Here is my model of the coffee-growing cooperative. Our goal is to be harvesting at least 300 tonnes a year in year 15, and as things stand we miss it. One thing we control is \"soil recovery time\", now 15; realistically we could take it as far as 5. How far would we have to take it, to what value, to just meet the goal? And \"coffee price\", now 3000, is not known well: it could easily be 20% off either way. How far would we have to take \"soil recovery time\" to be sure of meeting the goal however \"coffee price\" turns out, within that 20%? Please work these out with the model and give me the answers; don't change the model itself.",
+   "crossing": 12.3037,
+   "crossingShare": 0.269626647233963,
+   "robustCrossing": 10.1818,
+   "robustShare": 0.4818185269832611,
+   "otherCrossing": 15,
+   "otherShare": 0
+  },
+  "Kitchen fitting backlog: how far, and how far to be sure": {
+   "name": "Kitchen fitting backlog: how far, and how far to be sure",
+   "scenario": "kitchenFitters",
+   "kind": "robust",
+   "lever": "maximum rush",
+   "current": 1.4,
+   "limit": 1,
+   "uncertain": "surge end",
+   "uncertainValue": 24,
+   "adverseFactor": 1.2,
+   "prompt": "Here is my model of the kitchen fitting backlog. Our goal is to get the backlog back under 56 jobs (within a dozen of the usual 44) by week 40, sixteen weeks after the promotion ends, and as things stand we miss it. One thing we control is \"maximum rush\", now 1.4; realistically we could take it as far as 1. How far would we have to take it, to what value, to just meet the goal? And \"surge end\", now 24, is not known well: it could easily be 20% off either way. How far would we have to take \"maximum rush\" to be sure of meeting the goal however \"surge end\" turns out, within that 20%? Please work these out with the model and give me the answers; don't change the model itself.",
+   "crossing": 1.20462,
+   "crossingShare": 0.4884449541568756,
+   "robustCrossing": 1.084,
+   "robustShare": 0.7899955809116364,
+   "otherCrossing": 1.31908,
+   "otherShare": 0.20229747891426086
+  },
+  "Parcel delivery van fleet: how far, and how far to be sure": {
+   "name": "Parcel delivery van fleet: how far, and how far to be sure",
+   "scenario": "deliveryVans",
+   "kind": "robust",
+   "lever": "van price",
+   "current": 40000,
+   "limit": 34000,
+   "uncertain": "budget cut",
+   "uncertainValue": 0.15,
+   "adverseFactor": 1.2,
+   "prompt": "Here is my model of the parcel delivery van fleet. Our goal is to keep breakdowns from ever going above 500 a year over the ten years, and as things stand we miss it. One thing we control is \"van price\", now 40000; realistically we could take it as far as 34000. How far would we have to take it, to what value, to just meet the goal? And \"budget cut\", now 0.15, is not known well: it could easily be 20% off either way. How far would we have to take \"van price\" to be sure of meeting the goal however \"budget cut\" turns out, within that 20%? Please work these out with the model and give me the answers; don't change the model itself.",
+   "crossing": 38248.2,
+   "crossingShare": 0.29196324944496155,
+   "robustCrossing": 35616.5,
+   "robustShare": 0.7305842936038971,
+   "otherCrossing": 40000,
+   "otherShare": 0
+  },
+  "Regional electricians' guild: how far, and how far to be sure": {
+   "name": "Regional electricians' guild: how far, and how far to be sure",
+   "scenario": "electricianTraining",
+   "kind": "robust",
+   "lever": "minimum intake",
+   "current": 0,
+   "limit": 3,
+   "uncertain": "slump end",
+   "uncertainValue": 48,
+   "adverseFactor": 1.2,
+   "prompt": "Here is my model of the regional electricians' guild. Our goal is to never turn away more than 100 jobs a month over the twelve years, and as things stand we miss it. One thing we control is \"minimum intake\", now 0; realistically we could take it as far as 3. How far would we have to take it, to what value, to just meet the goal? And \"slump end\", now 48, is not known well: it could easily be 20% off either way. How far would we have to take \"minimum intake\" to be sure of meeting the goal however \"slump end\" turns out, within that 20%? Please work these out with the model and give me the answers; don't change the model itself.",
+   "crossing": 1.35382,
+   "crossingShare": 0.45127490162849426,
+   "robustCrossing": 2.05734,
+   "robustShare": 0.685780256986618,
+   "otherCrossing": 0,
+   "otherShare": 0
+  }
+ },
+ "skipped": [
+  "mushroomGrowers",
+  "ambulanceService",
+  "foodBank",
+  "cleaningStandards",
+  "valleyWater"
+ ]
+}

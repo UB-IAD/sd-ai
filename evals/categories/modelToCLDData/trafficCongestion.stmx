@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>Urban traffic congestion</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="Congestion">
+			</aux>
+			<aux name="Travel Time">
+			</aux>
+			<aux name="Political Pressure for Roads">
+			</aux>
+			<aux name="Road Construction">
+			</aux>
+			<aux name="Road Capacity">
+			</aux>
+			<aux name="Attractiveness of Driving">
+			</aux>
+			<aux name="Traffic Volume">
+			</aux>
+			<aux name="Attractiveness of Suburbs">
+			</aux>
+			<aux name="Suburban Housing">
+			</aux>
+			<aux name="Fuel Price">
+			</aux>
+			<aux name="Vehicle Emissions">
+			</aux>
+			<aux name="Transit Investment">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="780" y="420" name="Congestion"/>
+				<aux x="732" y="600" name="Travel Time"/>
+				<aux x="600" y="732" name="Political Pressure for Roads"/>
+				<aux x="420" y="780" name="Road Construction"/>
+				<aux x="240" y="732" name="Road Capacity"/>
+				<aux x="108" y="600" name="Attractiveness of Driving"/>
+				<aux x="60" y="420" name="Traffic Volume"/>
+				<aux x="108" y="240" name="Attractiveness of Suburbs"/>
+				<aux x="240" y="108" name="Suburban Housing"/>
+				<aux x="420" y="60" name="Fuel Price"/>
+				<aux x="600" y="108" name="Vehicle Emissions"/>
+				<aux x="732" y="240" name="Transit Investment"/>
+				<connector uid="1" angle="255.07" polarity="+">
+					<from>Congestion</from>
+					<to>Travel_Time</to>
+				</connector>
+				<connector uid="2" angle="225.00" polarity="+">
+					<from>Travel_Time</from>
+					<to>Political_Pressure_for_Roads</to>
+				</connector>
+				<connector uid="3" angle="194.93" polarity="+">
+					<from>Political_Pressure_for_Roads</from>
+					<to>Road_Construction</to>
+				</connector>
+				<connector uid="4" angle="165.07" polarity="+">
+					<from>Road_Construction</from>
+					<to>Road_Capacity</to>
+				</connector>
+				<connector uid="5" angle="30.02" polarity="-">
+					<from>Road_Capacity</from>
+					<to>Congestion</to>
+				</connector>
+				<connector uid="6" angle="180.00" polarity="-">
+					<from>Travel_Time</from>
+					<to>Attractiveness_of_Driving</to>
+				</connector>
+				<connector uid="7" angle="104.93" polarity="+">
+					<from>Attractiveness_of_Driving</from>
+					<to>Traffic_Volume</to>
+				</connector>
+				<connector uid="8" angle="0.00" polarity="+">
+					<from>Traffic_Volume</from>
+					<to>Congestion</to>
+				</connector>
+				<connector uid="9" angle="105.02" polarity="+">
+					<from>Road_Capacity</from>
+					<to>Attractiveness_of_Suburbs</to>
+				</connector>
+				<connector uid="10" angle="45.00" polarity="+">
+					<from>Attractiveness_of_Suburbs</from>
+					<to>Suburban_Housing</to>
+				</connector>
+				<connector uid="11" angle="240.02" polarity="+">
+					<from>Suburban_Housing</from>
+					<to>Traffic_Volume</to>
+				</connector>
+				<connector uid="12" angle="239.98" polarity="-">
+					<from>Fuel_Price</from>
+					<to>Attractiveness_of_Driving</to>
+				</connector>
+				<connector uid="13" angle="119.98" polarity="+">
+					<from>Congestion</from>
+					<to>Vehicle_Emissions</to>
+				</connector>
+				<connector uid="14" angle="209.98" polarity="-">
+					<from>Transit_Investment</from>
+					<to>Attractiveness_of_Driving</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

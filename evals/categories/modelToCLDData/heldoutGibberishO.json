@@ -1,0 +1,242 @@
+{
+  "title": "heldoutGibberishO",
+  "model": {
+    "variables": [
+      {
+        "name": "level of priary",
+        "type": "variable"
+      },
+      {
+        "name": "rate of obvia",
+        "type": "variable"
+      },
+      {
+        "name": "burgination",
+        "type": "variable"
+      },
+      {
+        "name": "level of hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "reflupper",
+        "type": "variable"
+      },
+      {
+        "name": "phildiscals",
+        "type": "variable"
+      },
+      {
+        "name": "balack",
+        "type": "variable"
+      },
+      {
+        "name": "rate of gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "oclate",
+        "type": "variable"
+      },
+      {
+        "name": "ku",
+        "type": "variable"
+      },
+      {
+        "name": "flow of posistorather",
+        "type": "variable"
+      },
+      {
+        "name": "stock of memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "demand for pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "level of oc",
+        "type": "variable"
+      },
+      {
+        "name": "frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "demand for hoza",
+        "type": "variable"
+      },
+      {
+        "name": "aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "flow of poval",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on copyring",
+        "type": "variable"
+      },
+      {
+        "name": "traze",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "level of priary",
+        "to": "rate of obvia",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of obvia",
+        "to": "burgination",
+        "polarity": "+"
+      },
+      {
+        "from": "burgination",
+        "to": "level of hashtockle",
+        "polarity": "+"
+      },
+      {
+        "from": "level of hashtockle",
+        "to": "level of priary",
+        "polarity": "+"
+      },
+      {
+        "from": "reflupper",
+        "to": "phildiscals",
+        "polarity": "+"
+      },
+      {
+        "from": "phildiscals",
+        "to": "balack",
+        "polarity": "-"
+      },
+      {
+        "from": "balack",
+        "to": "rate of gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of gissorm",
+        "to": "oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "oclate",
+        "to": "reflupper",
+        "polarity": "+"
+      },
+      {
+        "from": "ku",
+        "to": "flow of posistorather",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of posistorather",
+        "to": "stock of memostorer",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of memostorer",
+        "to": "demand for pablanksill",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for pablanksill",
+        "to": "level of oc",
+        "polarity": "+"
+      },
+      {
+        "from": "level of oc",
+        "to": "ku",
+        "polarity": "-"
+      },
+      {
+        "from": "level of priary",
+        "to": "frimbulator",
+        "polarity": "-"
+      },
+      {
+        "from": "frimbulator",
+        "to": "reflupper",
+        "polarity": "-"
+      },
+      {
+        "from": "reflupper",
+        "to": "demand for hoza",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for hoza",
+        "to": "ku",
+        "polarity": "-"
+      },
+      {
+        "from": "aferraron",
+        "to": "burgination",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of poval",
+        "to": "level of priary",
+        "polarity": "+"
+      },
+      {
+        "from": "phildiscals",
+        "to": "pressure on copyring",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of memostorer",
+        "to": "traze",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "level of priary",
+        "burgination"
+      ],
+      "nodes": [
+        "level of priary",
+        "rate of obvia",
+        "burgination",
+        "level of hashtockle"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "reflupper",
+        "rate of gissorm"
+      ],
+      "nodes": [
+        "reflupper",
+        "phildiscals",
+        "balack",
+        "rate of gissorm",
+        "oclate"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "ku",
+        "stock of memostorer"
+      ],
+      "nodes": [
+        "ku",
+        "flow of posistorather",
+        "stock of memostorer",
+        "demand for pablanksill",
+        "level of oc"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

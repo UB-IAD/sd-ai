@@ -1,0 +1,121 @@
+{
+ "dialysisClinic": {
+  "output": "waiting list",
+  "label": "the peak of the waiting list (the highest it gets over the run)",
+  "influential": [
+   "base referrals",
+   "patients per chair",
+   "target wait"
+  ],
+  "negligible": [
+   "minimum wait",
+   "time to return"
+  ],
+  "ungraded": []
+ },
+ "bikeShare": {
+  "output": "members",
+  "label": "the members at month 18",
+  "influential": [
+   "persuasion",
+   "contact rate"
+  ],
+  "negligible": [],
+  "ungraded": []
+ },
+ "distributor": {
+  "output": "inventory",
+  "label": "how far the inventory overshoots the level it finally settles at (its peak minus its final value)",
+  "influential": [
+   "demand increase",
+   "expectation time"
+  ],
+  "negligible": [
+   "step time"
+  ],
+  "ungraded": [
+   "base demand",
+   "delivery delay",
+   "coverage"
+  ]
+ },
+ "mushroomGrowers": {
+  "output": "monthly losses",
+  "label": "the peak of the monthly losses (the highest it gets over the run)",
+  "influential": [
+   "reference demand",
+   "yield per room",
+   "reference price"
+  ],
+  "negligible": [
+   "construction time",
+   "room lifetime",
+   "reopening response",
+   "time to scrap"
+  ],
+  "ungraded": []
+ },
+ "ambulanceService": {
+  "output": "response time",
+  "label": "the peak of the response time (the highest it gets over the run)",
+  "influential": [
+   "normal response time",
+   "growth rate"
+  ],
+  "negligible": [
+   "calls per resident",
+   "neighbor share",
+   "calls per crew",
+   "review time"
+  ],
+  "ungraded": []
+ },
+ "deliveryVans": {
+  "output": "breakdowns",
+  "label": "the peak of the breakdowns (the highest it gets over the run)",
+  "influential": [
+   "normal mileage"
+  ],
+  "negligible": [
+   "fleet adjustment time"
+  ],
+  "ungraded": [
+   "miles per van",
+   "van life",
+   "parcel demand",
+   "parcels per van"
+  ]
+ },
+ "electricianTraining": {
+  "output": "jobs turned away",
+  "label": "the peak of the jobs turned away (the highest it gets over the run)",
+  "influential": [
+   "most jobs per electrician",
+   "normal jobs per electrician"
+  ],
+  "negligible": [
+   "college places"
+  ],
+  "ungraded": []
+ },
+ "cleaningStandards": {
+  "output": "share of rooms failing",
+  "label": "the share of rooms failing at month 96",
+  "influential": [
+   "new wing rooms"
+  ],
+  "negligible": [
+   "wing opening",
+   "average stay",
+   "hiring time",
+   "review time"
+  ],
+  "ungraded": [
+   "original rooms",
+   "hours per cleaner",
+   "porter hours",
+   "reference failing share",
+   "reference hours per room"
+  ]
+ }
+}

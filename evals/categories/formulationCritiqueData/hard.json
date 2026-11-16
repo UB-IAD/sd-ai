@@ -1,0 +1,434 @@
+{
+ "Rural dialysis network (hard)": {
+  "name": "Rural dialysis network (hard)",
+  "scenario": "dialysisClinic",
+  "description": "the rural dialysis network",
+  "plants": [
+   {
+    "id": "desired chairs inlined into ordering chairs",
+    "variable": "ordering chairs",
+    "rule": "too many inputs",
+    "equation": "MAX(0, ((waiting_list / target_wait / patients_per_chair) - chairs - chairs_on_order) / order_adjustment_time)",
+    "text": "\"ordering chairs\" packs 6 inputs into one equation by writing out the formula for \"desired chairs\" in place instead of using \"desired chairs\"."
+   },
+   {
+    "id": "patients per chair embedded in treatments started",
+    "variable": "treatments started",
+    "rule": "embedded constant",
+    "equation": "MIN(waiting_list / minimum_wait, chairs * 1.2)",
+    "text": "\"treatments started\" has the value of \"patients per chair\" (1.2) written into its equation as a number instead of using the named constant \"patients per chair\"."
+   },
+   {
+    "id": "give up fraction embedded in patients giving up",
+    "variable": "patients giving up",
+    "rule": "embedded constant",
+    "equation": "waiting_list * 0.05",
+    "text": "\"patients giving up\" has the value of \"give up fraction\" (0.05) written into its equation as a number instead of using the named constant \"give up fraction\"."
+   },
+   {
+    "id": "time to return embedded in returning",
+    "variable": "returning",
+    "rule": "embedded constant",
+    "equation": "discouraged_patients / 14",
+    "text": "\"returning\" has the value of \"time to return\" (14) written into its equation as a number instead of using the named constant \"time to return\"."
+   },
+   {
+    "id": "build delay embedded in chairs arriving",
+    "variable": "chairs arriving",
+    "rule": "embedded constant",
+    "equation": "chairs_on_order / 9",
+    "text": "\"chairs arriving\" has the value of \"build delay\" (9) written into its equation as a number instead of using the named constant \"build delay\"."
+   },
+   {
+    "id": "target wait embedded in desired chairs",
+    "variable": "desired chairs",
+    "rule": "embedded constant",
+    "equation": "waiting_list / 2 / patients_per_chair",
+    "text": "\"desired chairs\" has the value of \"target wait\" (2) written into its equation as a number instead of using the named constant \"target wait\"."
+   }
+  ],
+  "distractors": [
+   "\"referrals\" should not depend on \"base referrals\".",
+   "\"waiting list\" should start at zero."
+  ]
+ },
+ "Coffee-growing cooperative (hard)": {
+  "name": "Coffee-growing cooperative (hard)",
+  "scenario": "coffeeCoop",
+  "description": "the coffee-growing cooperative",
+  "plants": [
+   {
+    "id": "harvest inlined into planting",
+    "variable": "planting",
+    "rule": "too many inputs",
+    "equation": "(planted_area * yield_per_hectare) * coffee_price * reinvestment_share / cost_per_new_hectare",
+    "text": "\"planting\" packs 5 inputs into one equation by writing out the formula for \"harvest\" in place instead of using \"harvest\"."
+   },
+   {
+    "id": "depletion per hectare embedded in soil depletion",
+    "variable": "soil depletion",
+    "rule": "embedded constant",
+    "equation": "planted_area * soil_fertility * 0.0001",
+    "text": "\"soil depletion\" has the value of \"depletion per hectare\" (0.0001) written into its equation as a number instead of using the named constant \"depletion per hectare\"."
+   },
+   {
+    "id": "healthy soil score embedded in soil recovery",
+    "variable": "soil recovery",
+    "rule": "embedded constant",
+    "equation": "(100 - soil_fertility) / soil_recovery_time",
+    "text": "\"soil recovery\" has the value of \"healthy soil score\" (100) written into its equation as a number instead of using the named constant \"healthy soil score\"."
+   },
+   {
+    "id": "fertility effect inlined into yield per hectare",
+    "variable": "yield per hectare",
+    "rule": "too many inputs",
+    "equation": "best_yield * ((soil_fertility / healthy_soil_score) ^ fertility_sensitivity) * labor_effect",
+    "text": "\"yield per hectare\" packs 5 inputs into one equation by writing out the formula for \"fertility effect\" in place instead of using \"fertility effect\"."
+   },
+   {
+    "id": "healthy soil score embedded in fertility effect",
+    "variable": "fertility effect",
+    "rule": "embedded constant",
+    "equation": "(soil_fertility / 100) ^ fertility_sensitivity",
+    "text": "\"fertility effect\" has the value of \"healthy soil score\" (100) written into its equation as a number instead of using the named constant \"healthy soil score\"."
+   },
+   {
+    "id": "member families embedded in hectares per family",
+    "variable": "hectares per family",
+    "rule": "embedded constant",
+    "equation": "planted_area / 600",
+    "text": "\"hectares per family\" has the value of \"member families\" (600) written into its equation as a number instead of using the named constant \"member families\"."
+   }
+  ],
+  "distractors": [
+   "\"harvest\" should not depend on \"planted area\".",
+   "\"planted area\" should start at zero."
+  ]
+ },
+ "Kitchen fitting backlog (hard)": {
+  "name": "Kitchen fitting backlog (hard)",
+  "scenario": "kitchenFitters",
+  "description": "the kitchen fitting backlog",
+  "plants": [
+   {
+    "id": "hard-coded switch in new orders",
+    "variable": "new orders",
+    "rule": "hard-coded time switch",
+    "rules": [
+     "hard-coded time switch",
+     "embedded constant"
+    ],
+    "equation": "base_orders + (IF TIME >= 4 THEN 7 ELSE 0) - (IF TIME >= 24 THEN 7 ELSE 0)",
+    "text": "\"new orders\" switches at hard-coded times with hard-coded sizes (IF TIME >= ...) instead of using STEP with the named constants \"surge size\", \"surge start\", \"surge end\"."
+   },
+   {
+    "id": "cancel fraction embedded in cancellations",
+    "variable": "cancellations",
+    "rule": "embedded constant",
+    "equation": "job_backlog * 0.002",
+    "text": "\"cancellations\" has the value of \"cancel fraction\" (0.002) written into its equation as a number instead of using the named constant \"cancel fraction\"."
+   },
+   {
+    "id": "discovery time embedded in callbacks",
+    "variable": "callbacks",
+    "rule": "embedded constant",
+    "equation": "hidden_faults / 12",
+    "text": "\"callbacks\" has the value of \"discovery time\" (12) written into its equation as a number instead of using the named constant \"discovery time\"."
+   },
+   {
+    "id": "hiring time embedded in hiring",
+    "variable": "hiring",
+    "rule": "embedded constant",
+    "equation": "MAX(0, (desired_crews - fitting_crews) / 30)",
+    "text": "\"hiring\" has the value of \"hiring time\" (30) written into its equation as a number instead of using the named constant \"hiring time\"."
+   },
+   {
+    "id": "target lead time embedded in desired fitting",
+    "variable": "desired fitting",
+    "rule": "embedded constant",
+    "equation": "job_backlog / 4",
+    "text": "\"desired fitting\" has the value of \"target lead time\" (4) written into its equation as a number instead of using the named constant \"target lead time\"."
+   },
+   {
+    "id": "maximum rush embedded in work intensity",
+    "variable": "work intensity",
+    "rule": "embedded constant",
+    "equation": "MIN(1.4, MAX(1, schedule_pressure))",
+    "text": "\"work intensity\" has the value of \"maximum rush\" (1.4) written into its equation as a number instead of using the named constant \"maximum rush\"."
+   }
+  ],
+  "distractors": [
+   "\"jobs fitted\" should not depend on \"desired fitting\".",
+   "\"job backlog\" should start at zero."
+  ]
+ },
+ "Regional specialty mushroom growers (hard)": {
+  "name": "Regional specialty mushroom growers (hard)",
+  "scenario": "mushroomGrowers",
+  "description": "the regional specialty mushroom growers",
+  "plants": [
+   {
+    "id": "production inlined into price",
+    "variable": "price",
+    "rule": "too many inputs",
+    "equation": "reference_price * (reference_demand / (growing_rooms * yield_per_room)) ^ price_sensitivity",
+    "text": "\"price\" packs 5 inputs into one equation by writing out the formula for \"production\" in place instead of using \"production\"."
+   },
+   {
+    "id": "building response embedded in new rooms started",
+    "variable": "new rooms started",
+    "rule": "embedded constant",
+    "equation": "growing_rooms * 0.8 * profit_per_kilo / growing_cost",
+    "text": "\"new rooms started\" has the value of \"building response\" (0.8) written into its equation as a number instead of using the named constant \"building response\"."
+   },
+   {
+    "id": "construction time embedded in rooms built",
+    "variable": "rooms built",
+    "rule": "embedded constant",
+    "equation": "rooms_under_construction / 6",
+    "text": "\"rooms built\" has the value of \"construction time\" (6) written into its equation as a number instead of using the named constant \"construction time\"."
+   },
+   {
+    "id": "price inlined into profit per kilo",
+    "variable": "profit per kilo",
+    "rule": "too many inputs",
+    "equation": "MAX(0, (reference_price * (reference_demand / production) ^ price_sensitivity) - growing_cost)",
+    "text": "\"profit per kilo\" packs 5 inputs into one equation by writing out the formula for \"price\" in place instead of using \"price\"."
+   },
+   {
+    "id": "price inlined into loss per kilo",
+    "variable": "loss per kilo",
+    "rule": "too many inputs",
+    "equation": "MAX(0, growing_cost - (reference_price * (reference_demand / production) ^ price_sensitivity))",
+    "text": "\"loss per kilo\" packs 5 inputs into one equation by writing out the formula for \"price\" in place instead of using \"price\"."
+   },
+   {
+    "id": "start up time embedded in rooms coming into production",
+    "variable": "rooms coming into production",
+    "rule": "embedded constant",
+    "equation": "rooms_starting_up / 3",
+    "text": "\"rooms coming into production\" has the value of \"start up time\" (3) written into its equation as a number instead of using the named constant \"start up time\"."
+   }
+  ],
+  "distractors": [
+   "\"rooms closed\" should not depend on \"growing rooms\".",
+   "\"growing rooms\" should start at zero."
+  ]
+ },
+ "Regional ambulance service (hard)": {
+  "name": "Regional ambulance service (hard)",
+  "scenario": "ambulanceService",
+  "description": "the regional ambulance service",
+  "plants": [
+   {
+    "id": "crews needed inlined into crews requested",
+    "variable": "crews requested",
+    "rule": "too many inputs",
+    "equation": "MAX(0, (IF response_time_target > 0 THEN crews * (1 + performance_gap / response_time_target) ELSE crews) - crews - crews_awaiting_budget) / review_time",
+    "text": "\"crews requested\" packs 5 inputs into one equation by writing out the formula for \"crews needed\" in place instead of using \"crews needed\"."
+   },
+   {
+    "id": "growth rate embedded in population growth",
+    "variable": "population growth",
+    "rule": "embedded constant",
+    "equation": "population * 0.006",
+    "text": "\"population growth\" has the value of \"growth rate\" (0.006) written into its equation as a number instead of using the named constant \"growth rate\"."
+   },
+   {
+    "id": "budget delay embedded in crews starting",
+    "variable": "crews starting",
+    "rule": "embedded constant",
+    "equation": "crews_awaiting_budget / 12",
+    "text": "\"crews starting\" has the value of \"budget delay\" (12) written into its equation as a number instead of using the named constant \"budget delay\"."
+   },
+   {
+    "id": "target adjustment time embedded in relaxing the target",
+    "variable": "relaxing the target",
+    "rule": "embedded constant",
+    "equation": "MAX(0, performance_gap) / 12",
+    "text": "\"relaxing the target\" has the value of \"target adjustment time\" (12) written into its equation as a number instead of using the named constant \"target adjustment time\"."
+   },
+   {
+    "id": "calls per resident embedded in calls",
+    "variable": "calls",
+    "rule": "embedded constant",
+    "equation": "population * 0.005",
+    "text": "\"calls\" has the value of \"calls per resident\" (0.005) written into its equation as a number instead of using the named constant \"calls per resident\"."
+   },
+   {
+    "id": "neighbor share embedded in calls handled",
+    "variable": "calls handled",
+    "rule": "embedded constant",
+    "equation": "calls * (1 - 0.05)",
+    "text": "\"calls handled\" has the value of \"neighbor share\" (0.05) written into its equation as a number instead of using the named constant \"neighbor share\"."
+   }
+  ],
+  "distractors": [
+   "\"crew capacity\" should not depend on \"crews\".",
+   "\"population\" should start at zero."
+  ]
+ },
+ "Community food bank volunteers (hard)": {
+  "name": "Community food bank volunteers (hard)",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "plants": [
+   {
+    "id": "willing people written out unguarded in untapped share",
+    "variable": "untapped share",
+    "rule": "unguarded division",
+    "equation": "Potential_Volunteers / (Potential_Volunteers + volunteers)",
+    "text": "\"untapped share\" divides by the sum \"Potential Volunteers\" + \"volunteers\" written out in place, with no guard against it reaching zero (and repeats the total \"willing people\" the model already names)."
+   },
+   {
+    "id": "recruitment fairs embedded in recruiting",
+    "variable": "recruiting",
+    "rule": "embedded constant",
+    "equation": "friends_joining + 0.25",
+    "text": "\"recruiting\" has the value of \"recruitment fairs\" (0.25) written into its equation as a number instead of using the named constant \"recruitment fairs\"."
+   },
+   {
+    "id": "normal quit fraction embedded in quitting",
+    "variable": "quitting",
+    "rule": "embedded constant",
+    "equation": "volunteers * 0.06 * fatigue",
+    "text": "\"quitting\" has the value of \"normal quit fraction\" (0.06) written into its equation as a number instead of using the named constant \"normal quit fraction\"."
+   },
+   {
+    "id": "guard on volunteers dropped in workload",
+    "variable": "workload",
+    "rule": "unguarded division",
+    "equation": "families_served / volunteers",
+    "text": "\"workload\" divides by \"volunteers\" with no guard against it reaching zero."
+   },
+   {
+    "id": "families in need written out unguarded in unreached share",
+    "variable": "unreached share",
+    "rule": "unguarded division",
+    "equation": "Families_Not_Yet_Reached / (Families_Not_Yet_Reached + families_served)",
+    "text": "\"unreached share\" divides by the sum \"Families Not Yet Reached\" + \"families served\" written out in place, with no guard against it reaching zero (and repeats the total \"families in need\" the model already names)."
+   },
+   {
+    "id": "fatigue time embedded in tiring",
+    "variable": "tiring",
+    "rule": "embedded constant",
+    "equation": "(stress - fatigue) / 6",
+    "text": "\"tiring\" has the value of \"fatigue time\" (6) written into its equation as a number instead of using the named constant \"fatigue time\"."
+   }
+  ],
+  "distractors": [
+   "\"new families\" should not depend on \"agency referrals\".",
+   "\"volunteers\" should start at zero."
+  ]
+ },
+ "Regional electricians' guild (hard)": {
+  "name": "Regional electricians' guild (hard)",
+  "scenario": "electricianTraining",
+  "description": "the regional electricians' guild",
+  "plants": [
+   {
+    "id": "hard-coded switch in slow spell",
+    "variable": "slow spell",
+    "rule": "hard-coded time switch",
+    "rules": [
+     "hard-coded time switch",
+     "embedded constant"
+    ],
+    "equation": "(IF TIME >= 24 THEN 0.2 ELSE 0) - (IF TIME >= 48 THEN 0.2 ELSE 0)",
+    "text": "\"slow spell\" switches at hard-coded times with hard-coded sizes (IF TIME >= ...) instead of using STEP with the named constants \"slump depth\", \"slump start\", \"slump end\"."
+   },
+   {
+    "id": "intake wanted inlined into taking on apprentices",
+    "variable": "taking on apprentices",
+    "rule": "too many inputs",
+    "equation": "MIN((MAX(minimum_intake, retiring + workforce_gap / intake_adjustment_time)), MIN(places_opening_up, college_places))",
+    "text": "\"taking on apprentices\" packs 6 inputs into one equation by writing out the formula for \"intake wanted\" in place instead of using \"intake wanted\"."
+   },
+   {
+    "id": "work growth rate embedded in work growth",
+    "variable": "work growth",
+    "rule": "embedded constant",
+    "equation": "Normal_Work * 0.002",
+    "text": "\"work growth\" has the value of \"work growth rate\" (0.002) written into its equation as a number instead of using the named constant \"work growth rate\"."
+   },
+   {
+    "id": "retiring inlined into intake wanted",
+    "variable": "intake wanted",
+    "rule": "too many inputs",
+    "equation": "MAX(minimum_intake, (masters / time_as_master) + workforce_gap / intake_adjustment_time)",
+    "text": "\"intake wanted\" packs 5 inputs into one equation by writing out the formula for \"retiring\" in place instead of using \"retiring\"."
+   },
+   {
+    "id": "apprenticeship time embedded in qualifying",
+    "variable": "qualifying",
+    "rule": "embedded constant",
+    "equation": "apprentices / 48",
+    "text": "\"qualifying\" has the value of \"apprenticeship time\" (48) written into its equation as a number instead of using the named constant \"apprenticeship time\"."
+   },
+   {
+    "id": "time as journeyman embedded in becoming masters",
+    "variable": "becoming masters",
+    "rule": "embedded constant",
+    "equation": "journeymen / 96",
+    "text": "\"becoming masters\" has the value of \"time as journeyman\" (96) written into its equation as a number instead of using the named constant \"time as journeyman\"."
+   }
+  ],
+  "distractors": [
+   "\"retiring\" should not depend on \"masters\".",
+   "\"Normal Work\" should start at zero."
+  ]
+ },
+ "Valley groundwater board (hard)": {
+  "name": "Valley groundwater board (hard)",
+  "scenario": "valleyWater",
+  "description": "the valley groundwater board",
+  "plants": [
+   {
+    "id": "town demand inlined into pumping wanted",
+    "variable": "pumping wanted",
+    "rule": "too many inputs",
+    "equation": "(town_population * water_use_per_person) * town_well_yield + farm_demand * farm_well_yield",
+    "text": "\"pumping wanted\" packs 5 inputs into one equation by writing out the formula for \"town demand\" in place instead of using \"town demand\"."
+   },
+   {
+    "id": "rain recharge embedded in recharge",
+    "variable": "recharge",
+    "rule": "embedded constant",
+    "equation": "26500 + recharge_scheme",
+    "text": "\"recharge\" has the value of \"rain recharge\" (26500) written into its equation as a number instead of using the named constant \"rain recharge\"."
+   },
+   {
+    "id": "town growth rate embedded in population growth",
+    "variable": "population growth",
+    "rule": "embedded constant",
+    "equation": "town_population * 0.03",
+    "text": "\"population growth\" has the value of \"town growth rate\" (0.03) written into its equation as a number instead of using the named constant \"town growth rate\"."
+   },
+   {
+    "id": "pumping wanted inlined into pumping allowed share",
+    "variable": "pumping allowed share",
+    "rule": "too many inputs",
+    "equation": "MIN(1, basin_pumping_cap / MAX((town_demand * town_well_yield + farm_demand * farm_well_yield), 1))",
+    "text": "\"pumping allowed share\" packs 5 inputs into one equation by writing out the formula for \"pumping wanted\" in place instead of using \"pumping wanted\"."
+   },
+   {
+    "id": "depth to water inlined into pumping cost",
+    "variable": "pumping cost",
+    "rule": "too many inputs",
+    "equation": "lift_cost * (aquifer_base_depth - groundwater / storage_per_foot) * water_per_acre * irrigation_met",
+    "text": "\"pumping cost\" packs 6 inputs into one equation by writing out the formula for \"depth to water\" in place instead of using \"depth to water\"."
+   },
+   {
+    "id": "pumping cost inlined into orchard profit",
+    "variable": "orchard profit",
+    "rule": "too many inputs",
+    "equation": "crop_value_per_acre - growing_cost - (lift_cost * depth_to_water * water_per_acre * irrigation_met)",
+    "text": "\"orchard profit\" packs 6 inputs into one equation by writing out the formula for \"pumping cost\" in place instead of using \"pumping cost\"."
+   }
+  ],
+  "distractors": [
+   "\"town pumping\" should not depend on \"town demand\".",
+   "\"groundwater\" should start at zero."
+  ]
+ }
+}

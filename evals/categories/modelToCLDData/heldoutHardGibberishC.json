@@ -1,0 +1,531 @@
+{
+  "title": "heldoutHardGibberishC",
+  "model": {
+    "variables": [
+      {
+        "name": "rate of outrance",
+        "type": "variable"
+      },
+      {
+        "name": "pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "demand for paffling",
+        "type": "variable"
+      },
+      {
+        "name": "traze",
+        "type": "variable"
+      },
+      {
+        "name": "arinterpord",
+        "type": "variable"
+      },
+      {
+        "name": "bellignorance",
+        "type": "variable"
+      },
+      {
+        "name": "hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "quality of perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "whoziewhat",
+        "type": "variable"
+      },
+      {
+        "name": "copyring",
+        "type": "variable"
+      },
+      {
+        "name": "proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "level of phildiscals",
+        "type": "variable"
+      },
+      {
+        "name": "rate of ku",
+        "type": "variable"
+      },
+      {
+        "name": "maxabizer",
+        "type": "variable"
+      },
+      {
+        "name": "balack",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on yelb",
+        "type": "variable"
+      },
+      {
+        "name": "stock of memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "priary",
+        "type": "variable"
+      },
+      {
+        "name": "quality of hazmick",
+        "type": "variable"
+      },
+      {
+        "name": "auspong",
+        "type": "variable"
+      },
+      {
+        "name": "baxtoy",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on pershipfulty",
+        "type": "variable"
+      },
+      {
+        "name": "crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "posistorather",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on obvia",
+        "type": "variable"
+      },
+      {
+        "name": "aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "poval",
+        "type": "variable"
+      },
+      {
+        "name": "perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "level of houtal",
+        "type": "variable"
+      },
+      {
+        "name": "geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "demand for succupserva",
+        "type": "variable"
+      },
+      {
+        "name": "funkado",
+        "type": "variable"
+      },
+      {
+        "name": "quality of reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "rate of hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "supply of raez",
+        "type": "variable"
+      },
+      {
+        "name": "frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "ih",
+        "type": "variable"
+      },
+      {
+        "name": "marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "quality of buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "stock of reflupper",
+        "type": "variable"
+      },
+      {
+        "name": "whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "level of oc",
+        "type": "variable"
+      },
+      {
+        "name": "level of younjuring",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "rate of outrance",
+        "to": "pablanksill",
+        "polarity": "+"
+      },
+      {
+        "from": "pablanksill",
+        "to": "demand for paffling",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for paffling",
+        "to": "traze",
+        "polarity": "+"
+      },
+      {
+        "from": "traze",
+        "to": "arinterpord",
+        "polarity": "-"
+      },
+      {
+        "from": "arinterpord",
+        "to": "bellignorance",
+        "polarity": "-"
+      },
+      {
+        "from": "bellignorance",
+        "to": "hashtockle",
+        "polarity": "+"
+      },
+      {
+        "from": "hashtockle",
+        "to": "rate of outrance",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of outrance",
+        "to": "quality of perfecton",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of perfecton",
+        "to": "whoziewhat",
+        "polarity": "+"
+      },
+      {
+        "from": "whoziewhat",
+        "to": "copyring",
+        "polarity": "+"
+      },
+      {
+        "from": "copyring",
+        "to": "proptimatire",
+        "polarity": "-"
+      },
+      {
+        "from": "proptimatire",
+        "to": "level of phildiscals",
+        "polarity": "+"
+      },
+      {
+        "from": "level of phildiscals",
+        "to": "rate of ku",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of ku",
+        "to": "maxabizer",
+        "polarity": "+"
+      },
+      {
+        "from": "maxabizer",
+        "to": "rate of outrance",
+        "polarity": "+"
+      },
+      {
+        "from": "balack",
+        "to": "pressure on yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on yelb",
+        "to": "stock of memostorer",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of memostorer",
+        "to": "priary",
+        "polarity": "+"
+      },
+      {
+        "from": "priary",
+        "to": "quality of hazmick",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of hazmick",
+        "to": "auspong",
+        "polarity": "+"
+      },
+      {
+        "from": "auspong",
+        "to": "balack",
+        "polarity": "+"
+      },
+      {
+        "from": "balack",
+        "to": "baxtoy",
+        "polarity": "+"
+      },
+      {
+        "from": "baxtoy",
+        "to": "pressure on pershipfulty",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on pershipfulty",
+        "to": "crypteral",
+        "polarity": "+"
+      },
+      {
+        "from": "crypteral",
+        "to": "posistorather",
+        "polarity": "-"
+      },
+      {
+        "from": "posistorather",
+        "to": "pressure on obvia",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on obvia",
+        "to": "aferraron",
+        "polarity": "-"
+      },
+      {
+        "from": "aferraron",
+        "to": "poval",
+        "polarity": "-"
+      },
+      {
+        "from": "poval",
+        "to": "balack",
+        "polarity": "-"
+      },
+      {
+        "from": "perstablintome",
+        "to": "exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "exeminte",
+        "to": "level of houtal",
+        "polarity": "-"
+      },
+      {
+        "from": "level of houtal",
+        "to": "geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "geyflorrin",
+        "to": "demand for succupserva",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for succupserva",
+        "to": "perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "perstablintome",
+        "to": "funkado",
+        "polarity": "+"
+      },
+      {
+        "from": "funkado",
+        "to": "quality of reveforly",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of reveforly",
+        "to": "rate of hensologic",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of hensologic",
+        "to": "supply of raez",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of raez",
+        "to": "frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "frimbulator",
+        "to": "ih",
+        "polarity": "+"
+      },
+      {
+        "from": "ih",
+        "to": "perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of outrance",
+        "to": "marticatene",
+        "polarity": "+"
+      },
+      {
+        "from": "marticatene",
+        "to": "balack",
+        "polarity": "+"
+      },
+      {
+        "from": "balack",
+        "to": "quality of buwheal",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of buwheal",
+        "to": "perstablintome",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of reflupper",
+        "to": "bellignorance",
+        "polarity": "+"
+      },
+      {
+        "from": "whatajig",
+        "to": "pressure on yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "ih",
+        "to": "level of oc",
+        "polarity": "+"
+      },
+      {
+        "from": "bellignorance",
+        "to": "level of younjuring",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "rate of outrance",
+        "demand for paffling",
+        "bellignorance"
+      ],
+      "nodes": [
+        "rate of outrance",
+        "pablanksill",
+        "demand for paffling",
+        "traze",
+        "arinterpord",
+        "bellignorance",
+        "hashtockle"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "rate of outrance",
+        "whoziewhat",
+        "level of phildiscals"
+      ],
+      "nodes": [
+        "rate of outrance",
+        "quality of perfecton",
+        "whoziewhat",
+        "copyring",
+        "proptimatire",
+        "level of phildiscals",
+        "rate of ku",
+        "maxabizer"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "balack",
+        "priary"
+      ],
+      "nodes": [
+        "balack",
+        "pressure on yelb",
+        "stock of memostorer",
+        "priary",
+        "quality of hazmick",
+        "auspong"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "balack",
+        "crypteral",
+        "aferraron"
+      ],
+      "nodes": [
+        "balack",
+        "baxtoy",
+        "pressure on pershipfulty",
+        "crypteral",
+        "posistorather",
+        "pressure on obvia",
+        "aferraron",
+        "poval"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "perstablintome",
+        "level of houtal"
+      ],
+      "nodes": [
+        "perstablintome",
+        "exeminte",
+        "level of houtal",
+        "geyflorrin",
+        "demand for succupserva"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "perstablintome",
+        "quality of reveforly",
+        "supply of raez"
+      ],
+      "nodes": [
+        "perstablintome",
+        "funkado",
+        "quality of reveforly",
+        "rate of hensologic",
+        "supply of raez",
+        "frimbulator",
+        "ih"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

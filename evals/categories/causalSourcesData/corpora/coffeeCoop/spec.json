@@ -1,0 +1,69 @@
+{
+ "id": "coffeeCoop",
+ "title": "Coffee cooperative",
+ "subject": "our coffee-growing cooperative",
+ "question": "why the cooperative grew quickly and is now growing more slowly",
+ "problemStatement": "I want a diagram of how our cooperative grows that I can trace back to our own documents.",
+ "heldOut": true,
+ "glossary": [
+  "member farms",
+  "farms signing on",
+  "coffee volume",
+  "forward contracts",
+  "price to growers",
+  "outside farms"
+ ],
+ "files": [
+  "harvest_summary_2025.md",
+  "buyer_meeting_minutes.md",
+  "valley_grower_survey.md",
+  "office_generator_fuel.md"
+ ],
+ "unrelated": "office_generator_fuel.md",
+ "supported": [
+  {
+   "from": "member farms",
+   "to": "coffee volume",
+   "polarity": "+",
+   "source": "harvest_summary_2025.md"
+  },
+  {
+   "from": "coffee volume",
+   "to": "forward contracts",
+   "polarity": "+",
+   "source": "buyer_meeting_minutes.md"
+  },
+  {
+   "from": "forward contracts",
+   "to": "price to growers",
+   "polarity": "+",
+   "source": "buyer_meeting_minutes.md"
+  },
+  {
+   "from": "price to growers",
+   "to": "farms signing on",
+   "polarity": "+",
+   "source": "valley_grower_survey.md"
+  },
+  {
+   "from": "outside farms",
+   "to": "farms signing on",
+   "polarity": "+",
+   "source": "valley_grower_survey.md"
+  }
+ ],
+ "unsupported": {
+  "from": "farms signing on",
+  "to": "member farms",
+  "polarity": "+"
+ },
+ "words": {
+  "member farms": "(?<!non-)member farm",
+  "farms signing on": "sign(ed|ing)? on",
+  "coffee volume": "volume of coffee|coffee volume|bags of coffee",
+  "forward contracts": "forward contract",
+  "price to growers": "price (we pay|paid to) growers",
+  "outside farms": "outside the cooperative|non-member farm|outside farms"
+ },
+ "notStated": "\\bjoin|become (a )?members?|sign(ed|ing)?[- ]ons? (add|adds|raise|raises|increase|increases|grow|grows)|(added|adds?) to the (roll|register|membership)|onto the (roll|register)|membership (grows|rises|increases) (with|as|when)"
+}

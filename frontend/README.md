@@ -16,13 +16,20 @@ A static documentation site for the SD-AI project, running at
     engines. Each engine page shows its description, supported modes, reference
     link, source, and full parameter schema.
   - **Agents** — the conversational modeling assistants whose configs are
-    checked into `agent/config/` (Socrates, Merlin, Athena today; the two
-    Athena phase files are merged into one entry). Each shows its metadata and
-    full system prompt.
-  - **Evaluations** — every eval category in `evals/categories/`, down to each
-    individual test's prompt and expectations.
+    checked into `agent/config/` (Merlin, Athena, Socrates and Themis today;
+    the two Athena phase files are merged into one entry). Each shows its
+    metadata and full system prompt.
+  - **Evaluations** — every eval category in `evals/categories/`, grouped by
+    the leaderboard it is scored on (Stock & Flow, Causal Loop Diagrams,
+    Discussion, Agents), down to each individual test's prompt, inputs and
+    expectations. Agent categories also show their role (regression guard or
+    discriminating) and what each group holds (dev, held out, hard), and a
+    separate page, `#/evals/agents`, explains how the agent evals are run and
+    graded.
   - **Leaderboards** — per-mode benchmark results, pre-aggregated at build time
-    from the gzipped board files in `evals/results/`.
+    from the gzipped board files in `evals/results/`. A board with no results
+    file yet (the `agent` board until its first run is collected) still shows
+    its columns, with a "not published yet" notice.
 
 ## How the data is generated
 
@@ -46,6 +53,13 @@ frontend dependencies.
 
 Agents are discovered from **git-tracked** files in `agent/config/` only, so
 untracked/experimental configs never appear in the docs.
+
+What each leaderboard column means, and which board a category is listed under
+on the Evaluations page, both come from `src/pages/leaderboardMeta.js`: a new
+category needs a line in its board's `categoryNotes` there. Text that applies to
+the agent evals as a whole lives in `src/pages/AgentEvalsGuide.jsx`; the
+per-category text comes from each category's own `description()` and
+`methodology()`.
 
 ## Development
 

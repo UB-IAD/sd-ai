@@ -52,6 +52,94 @@ function resolveBuiltinConstants(xmileContent) {
     });
 }
 
+// The most points a resampled lookup may have. A lookup whose breakpoints all fall on an even grid
+// of at most this many points is resampled exactly; one that needs more is resampled at this many,
+// which approximates it closely but not exactly.
+export const MAX_LOOKUP_POINTS = 1001;
+
+// Decimal places considered when looking for an even grid through every breakpoint.
+const LOOKUP_DECIMALS = 6;
+
+const parsePoints = (text) => text.split(/[\s,]+/).filter((s) => s !== '').map(Number);
+const formatNumber = (value) => String(Number(value.toPrecision(15)));
+const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+
+/**
+ * The step of the coarsest even grid that passes through every breakpoint, or null when there is
+ * none with at most MAX_LOOKUP_POINTS points.
+ * @param {number[]} xs The breakpoints, ascending
+ * @returns {number|null} The step
+ */
+function exactGridStep(xs) {
+    const scale = 10 ** LOOKUP_DECIMALS;
+    const offsets = xs.map((x) => Math.round((x - xs[0]) * scale));
+    if (offsets.some((o, i) => Math.abs(o / scale - (xs[i] - xs[0])) > 1e-9 * Math.max(1, Math.abs(xs[i])))) return null;
+    const divisor = offsets.slice(1).reduce((g, o) => gcd(g, o), 0);
+    if (divisor === 0) return null;
+    const points = offsets[offsets.length - 1] / divisor + 1;
+    return points <= MAX_LOOKUP_POINTS ? divisor / scale : null;
+}
+
+/**
+ * Linear interpolation of a lookup between its breakpoints.
+ * @param {number[]} xs The breakpoints, ascending
+ * @param {number[]} ys The values at them
+ * @param {number} x Where to read it, between the first and last breakpoint
+ * @returns {number} The value
+ */
+function interpolate(xs, ys, x) {
+    let i = 1;
+    while (i < xs.length - 1 && xs[i] < x) i++;
+    const span = xs[i] - xs[i - 1];
+    if (span === 0) return ys[i];
+    return ys[i - 1] + ((ys[i] - ys[i - 1]) * (x - xs[i - 1])) / span;
+}
+
+/**
+ * Rewrite lookups whose x points are unevenly spaced onto an even grid.
+ *
+ * PySD's XMILE reader ignores a graphical function's <xpts> and spaces its <ypts> evenly across
+ * the <xscale> range. A lookup with breakpoints at 0, 1 and 10 is therefore read as if they were
+ * at 0, 5 and 10, and the model simulates wrongly with no error. Stella and the XMILE spec honour
+ * <xpts>, and SDJsonToXMILE writes them, so the lookup is resampled here, before PySD sees it:
+ * on the coarsest even grid that passes through every breakpoint, which reproduces the
+ * piecewise-linear curve exactly. If no such grid has at most MAX_LOOKUP_POINTS points,
+ * MAX_LOOKUP_POINTS evenly spaced samples are used, which is close but not exact. A discrete
+ * lookup (a step function) is left as it is, and so is one whose <xpts> are already evenly spaced.
+ * Outside its range a lookup is held at its end values, as before: PySD also ignores
+ * type="extrapolate" (SDJsonToXMILE never writes it), and that is not addressed here.
+ * @param {string} xmileContent The XMILE model
+ * @returns {string} The XMILE model with every uneven continuous lookup resampled evenly
+ */
+export function evenLookups(xmileContent) {
+    return xmileContent.replace(/<gf\b([^>]*)>([\s\S]*?)<\/gf>/g, (whole, attributes, body) => {
+        if (/\btype\s*=\s*"discrete"/i.test(attributes)) return whole;
+        const xMatch = body.match(/<xpts\b[^>]*>([\s\S]*?)<\/xpts>/);
+        const yMatch = body.match(/<ypts\b[^>]*>([\s\S]*?)<\/ypts>/);
+        if (!xMatch || !yMatch) return whole;
+        const xs = parsePoints(xMatch[1]);
+        const ys = parsePoints(yMatch[1]);
+        if (xs.length < 2 || xs.length !== ys.length || ![...xs, ...ys].every(Number.isFinite)) return whole;
+        if (xs.some((x, i) => i > 0 && x < xs[i - 1])) return whole;
+        const first = xs[0];
+        const last = xs[xs.length - 1];
+        if (last <= first) return whole;
+        const even = (last - first) / (xs.length - 1);
+        if (xs.every((x, i) => Math.abs(x - (first + i * even)) <= 1e-9 * Math.max(1, Math.abs(last - first)))) return whole;
+
+        const step = exactGridStep(xs);
+        const count = step === null ? MAX_LOOKUP_POINTS : Math.round((last - first) / step) + 1;
+        const grid = Array.from({ length: count }, (_, i) => (i === count - 1 ? last : first + (i * (last - first)) / (count - 1)));
+        const resampled = grid.map((x) => interpolate(xs, ys, x));
+        const rewritten = body
+            .replace(/<xscale\b[^>]*\/>|<xscale\b[^>]*>[\s\S]*?<\/xscale>/, `<xscale min="${formatNumber(first)}" max="${formatNumber(last)}"/>`)
+            .replace(/\s*<xpts\b[^>]*>[\s\S]*?<\/xpts>/, '')
+            .replace(/<ypts\b([^>]*)>[\s\S]*?<\/ypts>/, (_, yAttributes) => `<ypts${yAttributes}>${resampled.map(formatNumber).join(',')}</ypts>`);
+        const withScale = /<xscale\b/.test(rewritten) ? rewritten : `<xscale min="${formatNumber(first)}" max="${formatNumber(last)}"/>${rewritten}`;
+        return `<gf${attributes}>${withScale}</gf>`;
+    });
+}
+
 // PySD only integrates with Euler: its XMILE reader never reads sim_specs' method, so a model
 // written for RK4 is silently run with Euler at the RK4 step, and an oscillator's amplitude grows
 // without bound (a 30 degree pendulum swung to 74 degrees). Euler's error shrinks only in proportion
@@ -160,7 +248,7 @@ class PySDSimulator {
         }
 
         const flat = flattenXmileModules(xmileContent);
-        const resolved = resolveBuiltinConstants(flat.xmile);
+        const resolved = evenLookups(resolveBuiltinConstants(flat.xmile));
         this.specs = readSimSpecs(resolved);
         this.refinement = rkRefinement(this.specs);
         this.xmileContent = this.refinement > 1 ? withTimeStep(resolved, this.specs.dt / this.refinement) : resolved;

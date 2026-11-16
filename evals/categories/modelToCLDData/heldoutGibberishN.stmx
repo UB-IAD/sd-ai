@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishN</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="flow of estintant">
+			</aux>
+			<aux name="quality of poval">
+			</aux>
+			<aux name="flow of funkado">
+			</aux>
+			<aux name="supply of reveforly">
+			</aux>
+			<aux name="flow of perstablintome">
+			</aux>
+			<aux name="gissorm">
+			</aux>
+			<aux name="baxtoy">
+			</aux>
+			<aux name="flow of pablanksill">
+			</aux>
+			<aux name="succupserva">
+			</aux>
+			<aux name="quality of buwheal">
+			</aux>
+			<aux name="flow of whoziewhat">
+			</aux>
+			<aux name="yelb">
+			</aux>
+			<aux name="oclate">
+			</aux>
+			<aux name="proptimatire">
+			</aux>
+			<aux name="demand for obvia">
+			</aux>
+			<aux name="pressure on reflupper">
+			</aux>
+			<aux name="relity">
+			</aux>
+			<aux name="level of hoza">
+			</aux>
+			<aux name="rate of ku">
+			</aux>
+			<aux name="aferraron">
+			</aux>
+			<aux name="level of illigent">
+			</aux>
+			<aux name="younjuring">
+			</aux>
+			<aux name="quality of perfecton">
+			</aux>
+			<aux name="loopnova">
+			</aux>
+			<aux name="stock of exeminte">
+			</aux>
+			<aux name="supply of raez">
+			</aux>
+			<aux name="quality of burgination">
+			</aux>
+			<aux name="oc">
+			</aux>
+			<aux name="bellignorance">
+			</aux>
+			<aux name="geyflorrin">
+			</aux>
+			<aux name="posistorather">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1730" y="895" name="flow of estintant"/>
+				<aux x="1713" y="1063" name="quality of poval"/>
+				<aux x="1662" y="1224" name="flow of funkado"/>
+				<aux x="1580" y="1372" name="supply of reveforly"/>
+				<aux x="1470" y="1500" name="flow of perstablintome"/>
+				<aux x="1337" y="1604" name="gissorm"/>
+				<aux x="1185" y="1678" name="baxtoy"/>
+				<aux x="1021" y="1720" name="flow of pablanksill"/>
+				<aux x="853" y="1729" name="succupserva"/>
+				<aux x="686" y="1703" name="quality of buwheal"/>
+				<aux x="527" y="1645" name="flow of whoziewhat"/>
+				<aux x="384" y="1555" name="yelb"/>
+				<aux x="261" y="1439" name="oclate"/>
+				<aux x="165" y="1300" name="proptimatire"/>
+				<aux x="98" y="1145" name="demand for obvia"/>
+				<aux x="64" y="979" name="pressure on reflupper"/>
+				<aux x="64" y="811" name="relity"/>
+				<aux x="98" y="645" name="level of hoza"/>
+				<aux x="165" y="490" name="rate of ku"/>
+				<aux x="261" y="351" name="aferraron"/>
+				<aux x="384" y="235" name="level of illigent"/>
+				<aux x="527" y="145" name="younjuring"/>
+				<aux x="686" y="87" name="quality of perfecton"/>
+				<aux x="853" y="61" name="loopnova"/>
+				<aux x="1021" y="70" name="stock of exeminte"/>
+				<aux x="1185" y="112" name="supply of raez"/>
+				<aux x="1337" y="186" name="quality of burgination"/>
+				<aux x="1470" y="290" name="oc"/>
+				<aux x="1580" y="418" name="bellignorance"/>
+				<aux x="1662" y="566" name="geyflorrin"/>
+				<aux x="1713" y="727" name="posistorather"/>
+				<connector uid="1" angle="264.22" polarity="-">
+					<from>flow_of_estintant</from>
+					<to>quality_of_poval</to>
+				</connector>
+				<connector uid="2" angle="252.42" polarity="-">
+					<from>quality_of_poval</from>
+					<to>flow_of_funkado</to>
+				</connector>
+				<connector uid="3" angle="241.01" polarity="-">
+					<from>flow_of_funkado</from>
+					<to>supply_of_reveforly</to>
+				</connector>
+				<connector uid="4" angle="229.33" polarity="+">
+					<from>supply_of_reveforly</from>
+					<to>flow_of_perstablintome</to>
+				</connector>
+				<connector uid="5" angle="218.02" polarity="-">
+					<from>flow_of_perstablintome</from>
+					<to>gissorm</to>
+				</connector>
+				<connector uid="6" angle="205.96" polarity="+">
+					<from>gissorm</from>
+					<to>baxtoy</to>
+				</connector>
+				<connector uid="7" angle="194.36" polarity="-">
+					<from>baxtoy</from>
+					<to>flow_of_pablanksill</to>
+				</connector>
+				<connector uid="8" angle="49.32" polarity="-">
+					<from>flow_of_pablanksill</from>
+					<to>flow_of_estintant</to>
+				</connector>
+				<connector uid="9" angle="171.15" polarity="+">
+					<from>succupserva</from>
+					<to>quality_of_buwheal</to>
+				</connector>
+				<connector uid="10" angle="159.96" polarity="-">
+					<from>quality_of_buwheal</from>
+					<to>flow_of_whoziewhat</to>
+				</connector>
+				<connector uid="11" angle="147.81" polarity="+">
+					<from>flow_of_whoziewhat</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="12" angle="136.68" polarity="+">
+					<from>yelb</from>
+					<to>oclate</to>
+				</connector>
+				<connector uid="13" angle="124.63" polarity="+">
+					<from>oclate</from>
+					<to>proptimatire</to>
+				</connector>
+				<connector uid="14" angle="328.05" polarity="+">
+					<from>proptimatire</from>
+					<to>succupserva</to>
+				</connector>
+				<connector uid="15" angle="142.28" polarity="-">
+					<from>succupserva</from>
+					<to>demand_for_obvia</to>
+				</connector>
+				<connector uid="16" angle="101.58" polarity="-">
+					<from>demand_for_obvia</from>
+					<to>pressure_on_reflupper</to>
+				</connector>
+				<connector uid="17" angle="90.00" polarity="+">
+					<from>pressure_on_reflupper</from>
+					<to>relity</to>
+				</connector>
+				<connector uid="18" angle="78.42" polarity="+">
+					<from>relity</from>
+					<to>level_of_hoza</to>
+				</connector>
+				<connector uid="19" angle="66.62" polarity="-">
+					<from>level_of_hoza</from>
+					<to>rate_of_ku</to>
+				</connector>
+				<connector uid="20" angle="55.37" polarity="-">
+					<from>rate_of_ku</from>
+					<to>aferraron</to>
+				</connector>
+				<connector uid="21" angle="293.25" polarity="+">
+					<from>aferraron</from>
+					<to>succupserva</to>
+				</connector>
+				<connector uid="22" angle="32.19" polarity="+">
+					<from>level_of_illigent</from>
+					<to>younjuring</to>
+				</connector>
+				<connector uid="23" angle="20.04" polarity="+">
+					<from>younjuring</from>
+					<to>quality_of_perfecton</to>
+				</connector>
+				<connector uid="24" angle="8.85" polarity="-">
+					<from>quality_of_perfecton</from>
+					<to>loopnova</to>
+				</connector>
+				<connector uid="25" angle="356.93" polarity="+">
+					<from>loopnova</from>
+					<to>stock_of_exeminte</to>
+				</connector>
+				<connector uid="26" angle="194.52" polarity="-">
+					<from>stock_of_exeminte</from>
+					<to>level_of_illigent</to>
+				</connector>
+				<connector uid="27" angle="124.84" polarity="+">
+					<from>flow_of_estintant</from>
+					<to>supply_of_raez</to>
+				</connector>
+				<connector uid="28" angle="258.40" polarity="+">
+					<from>supply_of_raez</from>
+					<to>succupserva</to>
+				</connector>
+				<connector uid="29" angle="72.58" polarity="+">
+					<from>succupserva</from>
+					<to>quality_of_burgination</to>
+				</connector>
+				<connector uid="30" angle="182.94" polarity="-">
+					<from>quality_of_burgination</from>
+					<to>level_of_illigent</to>
+				</connector>
+				<connector uid="31" angle="217.74" polarity="+">
+					<from>oc</from>
+					<to>proptimatire</to>
+				</connector>
+				<connector uid="32" angle="165.47" polarity="+">
+					<from>bellignorance</from>
+					<to>younjuring</to>
+				</connector>
+				<connector uid="33" angle="49.36" polarity="+">
+					<from>quality_of_buwheal</from>
+					<to>geyflorrin</to>
+				</connector>
+				<connector uid="34" angle="55.13" polarity="-">
+					<from>flow_of_pablanksill</from>
+					<to>posistorather</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

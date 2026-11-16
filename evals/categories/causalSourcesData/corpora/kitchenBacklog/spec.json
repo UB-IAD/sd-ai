@@ -1,0 +1,67 @@
+{
+ "id": "kitchenBacklog",
+ "title": "Kitchen fitting backlog",
+ "subject": "our kitchen-fitting business",
+ "question": "what drives our backlog of fitting jobs and what keeps it in check",
+ "problemStatement": "I want a picture of what drives our job backlog that I can trace back to our own documents.",
+ "heldOut": true,
+ "glossary": [
+  "job backlog",
+  "waiting time",
+  "new orders",
+  "fitters",
+  "showroom visits"
+ ],
+ "files": [
+  "operations_review_2025.md",
+  "showroom_sales_notes.md",
+  "directors_memo_hiring.md",
+  "depot_parking_permits.md"
+ ],
+ "unrelated": "depot_parking_permits.md",
+ "supported": [
+  {
+   "from": "job backlog",
+   "to": "waiting time",
+   "polarity": "+",
+   "source": "operations_review_2025.md"
+  },
+  {
+   "from": "fitters",
+   "to": "waiting time",
+   "polarity": "-",
+   "source": "operations_review_2025.md"
+  },
+  {
+   "from": "waiting time",
+   "to": "new orders",
+   "polarity": "-",
+   "source": "showroom_sales_notes.md"
+  },
+  {
+   "from": "showroom visits",
+   "to": "new orders",
+   "polarity": "+",
+   "source": "showroom_sales_notes.md"
+  },
+  {
+   "from": "job backlog",
+   "to": "fitters",
+   "polarity": "+",
+   "source": "directors_memo_hiring.md"
+  }
+ ],
+ "unsupported": {
+  "from": "new orders",
+  "to": "job backlog",
+  "polarity": "+"
+ },
+ "words": {
+  "job backlog": "backlog",
+  "waiting time": "waiting time",
+  "new orders": "new order",
+  "fitters": "fitter",
+  "showroom visits": "showroom visit"
+ },
+ "notStated": "orders? (add|adds|go|goes|join|joins|swell|swells|grow|grows|feed|feeds|build|builds|pile|piles)|(added|adds?) to the (backlog|list|book)|onto the (backlog|list|book)|order book|backlog (grows|rises|builds|swells) (with|as|when|because)|more orders (mean|means|make|makes)"
+}

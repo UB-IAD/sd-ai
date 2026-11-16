@@ -78,3 +78,8 @@ htmlcov/
 
 # Third-party binaries
 /third-party/causal-chains/causal-chains
+# local benchmark runs: run outputs and one-off experiment configs
+/benchmark-runs/
+
+# simulation cache for the evals (evals/utilities/simulator/simCache.js)
+evals/.simcache/

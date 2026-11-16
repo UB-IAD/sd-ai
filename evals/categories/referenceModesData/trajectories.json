@@ -1,0 +1,1538 @@
+{
+ "dialysisClinic": {
+  "scenario": "dialysisClinic",
+  "times": [
+   30,
+   36,
+   42,
+   48
+  ],
+  "points": [
+   {
+    "glossary": "waiting list",
+    "at": 30,
+    "truth": 36.8,
+    "band": 2.76,
+    "naive": {
+     "persistence": 37.5,
+     "trend": -1.45,
+     "first": 40.6,
+     "min": 37.5,
+     "max": 109
+    }
+   },
+   {
+    "glossary": "waiting list",
+    "at": 36,
+    "truth": 36.6,
+    "band": 2.74,
+    "naive": {
+     "persistence": 37.5,
+     "trend": -37.6,
+     "first": 40.6,
+     "min": 37.5,
+     "max": 109
+    }
+   },
+   {
+    "glossary": "waiting list",
+    "at": 42,
+    "truth": 36.4,
+    "band": 2.73,
+    "naive": {
+     "persistence": 37.5,
+     "trend": -73.8,
+     "first": 40.6,
+     "min": 37.5,
+     "max": 109
+    }
+   },
+   {
+    "glossary": "waiting list",
+    "at": 48,
+    "truth": 36.2,
+    "band": 2.72,
+    "naive": {
+     "persistence": 37.5,
+     "trend": -110,
+     "first": 40.6,
+     "min": 37.5,
+     "max": 109
+    }
+   },
+   {
+    "glossary": "chairs",
+    "at": 30,
+    "truth": 40.8,
+    "band": 3.06,
+    "naive": {
+     "persistence": 39.4,
+     "trend": 42,
+     "first": 19.4,
+     "min": 19.4,
+     "max": 39.4
+    }
+   },
+   {
+    "glossary": "chairs",
+    "at": 36,
+    "truth": 41.6,
+    "band": 3.12,
+    "naive": {
+     "persistence": 39.4,
+     "trend": 44.6,
+     "first": 19.4,
+     "min": 19.4,
+     "max": 39.4
+    }
+   },
+   {
+    "glossary": "chairs",
+    "at": 42,
+    "truth": 42,
+    "band": 3.15,
+    "naive": {
+     "persistence": 39.4,
+     "trend": 47.2,
+     "first": 19.4,
+     "min": 19.4,
+     "max": 39.4
+    }
+   },
+   {
+    "glossary": "chairs",
+    "at": 48,
+    "truth": 42.3,
+    "band": 3.17,
+    "naive": {
+     "persistence": 39.4,
+     "trend": 49.9,
+     "first": 19.4,
+     "min": 19.4,
+     "max": 39.4
+    }
+   }
+  ]
+ },
+ "bikeShare": {
+  "scenario": "bikeShare",
+  "times": [
+   22.5,
+   27,
+   31.5,
+   36
+  ],
+  "points": [
+   {
+    "glossary": "members",
+    "at": 22.5,
+    "truth": 26000,
+    "band": 1950,
+    "naive": {
+     "persistence": 12900,
+     "trend": 20600,
+     "first": 101,
+     "min": 101,
+     "max": 12900
+    }
+   },
+   {
+    "glossary": "members",
+    "at": 27,
+    "truth": 38500,
+    "band": 2890,
+    "naive": {
+     "persistence": 12900,
+     "trend": 28600,
+     "first": 101,
+     "min": 101,
+     "max": 12900
+    }
+   },
+   {
+    "glossary": "members",
+    "at": 31.5,
+    "truth": 45600,
+    "band": 3420,
+    "naive": {
+     "persistence": 12900,
+     "trend": 36600,
+     "first": 101,
+     "min": 101,
+     "max": 12900
+    }
+   },
+   {
+    "glossary": "members",
+    "at": 36,
+    "truth": 48500,
+    "band": 3640,
+    "naive": {
+     "persistence": 12900,
+     "trend": 44600,
+     "first": 101,
+     "min": 101,
+     "max": 12900
+    }
+   },
+   {
+    "glossary": "signing up",
+    "at": 22.5,
+    "truth": 3130,
+    "band": 235,
+    "naive": {
+     "persistence": 2440,
+     "trend": 3670,
+     "first": 48.5,
+     "min": 48.5,
+     "max": 2440
+    }
+   },
+   {
+    "glossary": "signing up",
+    "at": 27,
+    "truth": 2220,
+    "band": 166,
+    "naive": {
+     "persistence": 2440,
+     "trend": 4930,
+     "first": 48.5,
+     "min": 48.5,
+     "max": 2440
+    }
+   },
+   {
+    "glossary": "signing up",
+    "at": 31.5,
+    "truth": 999,
+    "band": 74.9,
+    "naive": {
+     "persistence": 2440,
+     "trend": 6180,
+     "first": 48.5,
+     "min": 48.5,
+     "max": 2440
+    }
+   },
+   {
+    "glossary": "signing up",
+    "at": 36,
+    "truth": 363,
+    "band": 27.2,
+    "naive": {
+     "persistence": 2440,
+     "trend": 7430,
+     "first": 48.5,
+     "min": 48.5,
+     "max": 2440
+    }
+   }
+  ]
+ },
+ "distributor": {
+  "scenario": "distributor",
+  "times": [
+   37.5,
+   45,
+   52.5,
+   60
+  ],
+  "points": [
+   {
+    "glossary": "inventory",
+    "at": 37.5,
+    "truth": 478,
+    "band": 35.8,
+    "naive": {
+     "persistence": 463,
+     "trend": 431,
+     "first": 406,
+     "min": 346,
+     "max": 518
+    }
+   },
+   {
+    "glossary": "inventory",
+    "at": 45,
+    "truth": 485,
+    "band": 36.4,
+    "naive": {
+     "persistence": 463,
+     "trend": 395,
+     "first": 406,
+     "min": 346,
+     "max": 518
+    }
+   },
+   {
+    "glossary": "inventory",
+    "at": 52.5,
+    "truth": 478,
+    "band": 35.8,
+    "naive": {
+     "persistence": 463,
+     "trend": 359,
+     "first": 406,
+     "min": 346,
+     "max": 518
+    }
+   },
+   {
+    "glossary": "inventory",
+    "at": 60,
+    "truth": 480,
+    "band": 36,
+    "naive": {
+     "persistence": 463,
+     "trend": 324,
+     "first": 406,
+     "min": 346,
+     "max": 518
+    }
+   },
+   {
+    "glossary": "orders",
+    "at": 37.5,
+    "truth": 121,
+    "band": 9.08,
+    "naive": {
+     "persistence": 128,
+     "trend": 151,
+     "first": 97.2,
+     "min": 97.2,
+     "max": 169
+    }
+   },
+   {
+    "glossary": "orders",
+    "at": 45,
+    "truth": 117,
+    "band": 8.8,
+    "naive": {
+     "persistence": 128,
+     "trend": 174,
+     "first": 97.2,
+     "min": 97.2,
+     "max": 169
+    }
+   },
+   {
+    "glossary": "orders",
+    "at": 52.5,
+    "truth": 121,
+    "band": 9.08,
+    "naive": {
+     "persistence": 128,
+     "trend": 196,
+     "first": 97.2,
+     "min": 97.2,
+     "max": 169
+    }
+   },
+   {
+    "glossary": "orders",
+    "at": 60,
+    "truth": 120,
+    "band": 9.02,
+    "naive": {
+     "persistence": 128,
+     "trend": 219,
+     "first": 97.2,
+     "min": 97.2,
+     "max": 169
+    }
+   }
+  ]
+ },
+ "coffeeCoop": {
+  "scenario": "coffeeCoop",
+  "times": [
+   9.38,
+   11.3,
+   13.1,
+   15
+  ],
+  "points": [
+   {
+    "glossary": "harvest",
+    "at": 9.38,
+    "truth": 497,
+    "band": 37.3,
+    "naive": {
+     "persistence": 590,
+     "trend": 577,
+     "first": 330,
+     "min": 330,
+     "max": 631
+    }
+   },
+   {
+    "glossary": "harvest",
+    "at": 11.3,
+    "truth": 396,
+    "band": 29.7,
+    "naive": {
+     "persistence": 590,
+     "trend": 553,
+     "first": 330,
+     "min": 330,
+     "max": 631
+    }
+   },
+   {
+    "glossary": "harvest",
+    "at": 13.1,
+    "truth": 315,
+    "band": 23.6,
+    "naive": {
+     "persistence": 590,
+     "trend": 530,
+     "first": 330,
+     "min": 330,
+     "max": 631
+    }
+   },
+   {
+    "glossary": "harvest",
+    "at": 15,
+    "truth": 254,
+    "band": 19,
+    "naive": {
+     "persistence": 590,
+     "trend": 506,
+     "first": 330,
+     "min": 330,
+     "max": 631
+    }
+   },
+   {
+    "glossary": "soil fertility",
+    "at": 9.38,
+    "truth": 51.5,
+    "band": 3.86,
+    "naive": {
+     "persistence": 62.1,
+     "trend": 50,
+     "first": 92.4,
+     "min": 62.1,
+     "max": 93.5
+    }
+   },
+   {
+    "glossary": "soil fertility",
+    "at": 11.3,
+    "truth": 43.2,
+    "band": 3.24,
+    "naive": {
+     "persistence": 62.1,
+     "trend": 38.1,
+     "first": 92.4,
+     "min": 62.1,
+     "max": 93.5
+    }
+   },
+   {
+    "glossary": "soil fertility",
+    "at": 13.1,
+    "truth": 36.9,
+    "band": 2.77,
+    "naive": {
+     "persistence": 62.1,
+     "trend": 26.9,
+     "first": 92.4,
+     "min": 62.1,
+     "max": 93.5
+    }
+   },
+   {
+    "glossary": "soil fertility",
+    "at": 15,
+    "truth": 32.1,
+    "band": 2.41,
+    "naive": {
+     "persistence": 62.1,
+     "trend": 15.2,
+     "first": 92.4,
+     "min": 62.1,
+     "max": 93.5
+    }
+   },
+   {
+    "glossary": "planted area",
+    "at": 9.38,
+    "truth": 1570,
+    "band": 118,
+    "naive": {
+     "persistence": 1290,
+     "trend": 1580,
+     "first": 300,
+     "min": 300,
+     "max": 1290
+    }
+   },
+   {
+    "glossary": "planted area",
+    "at": 11.3,
+    "truth": 1780,
+    "band": 134,
+    "naive": {
+     "persistence": 1290,
+     "trend": 1880,
+     "first": 300,
+     "min": 300,
+     "max": 1290
+    }
+   },
+   {
+    "glossary": "planted area",
+    "at": 13.1,
+    "truth": 1940,
+    "band": 146,
+    "naive": {
+     "persistence": 1290,
+     "trend": 2170,
+     "first": 300,
+     "min": 300,
+     "max": 1290
+    }
+   },
+   {
+    "glossary": "planted area",
+    "at": 15,
+    "truth": 2080,
+    "band": 156,
+    "naive": {
+     "persistence": 1290,
+     "trend": 2460,
+     "first": 300,
+     "min": 300,
+     "max": 1290
+    }
+   }
+  ]
+ },
+ "kitchenFitters": {
+  "scenario": "kitchenFitters",
+  "times": [
+   48.8,
+   58.5,
+   68.3,
+   78
+  ],
+  "points": [
+   {
+    "glossary": "job backlog",
+    "at": 48.8,
+    "truth": 56.4,
+    "band": 4.23,
+    "naive": {
+     "persistence": 67.9,
+     "trend": 50.8,
+     "first": 44.7,
+     "min": 44.2,
+     "max": 112
+    }
+   },
+   {
+    "glossary": "job backlog",
+    "at": 58.5,
+    "truth": 50.2,
+    "band": 3.77,
+    "naive": {
+     "persistence": 67.9,
+     "trend": 33.6,
+     "first": 44.7,
+     "min": 44.2,
+     "max": 112
+    }
+   },
+   {
+    "glossary": "job backlog",
+    "at": 68.3,
+    "truth": 47.1,
+    "band": 3.53,
+    "naive": {
+     "persistence": 67.9,
+     "trend": 16.2,
+     "first": 44.7,
+     "min": 44.2,
+     "max": 112
+    }
+   },
+   {
+    "glossary": "job backlog",
+    "at": 78,
+    "truth": 45.6,
+    "band": 3.42,
+    "naive": {
+     "persistence": 67.9,
+     "trend": -1.05,
+     "first": 44.7,
+     "min": 44.2,
+     "max": 112
+    }
+   },
+   {
+    "glossary": "fitting crews",
+    "at": 48.8,
+    "truth": 18.1,
+    "band": 1.36,
+    "naive": {
+     "persistence": 18.3,
+     "trend": 18.5,
+     "first": 10.7,
+     "min": 10.7,
+     "max": 18.3
+    }
+   },
+   {
+    "glossary": "fitting crews",
+    "at": 58.5,
+    "truth": 18.1,
+    "band": 1.36,
+    "naive": {
+     "persistence": 18.3,
+     "trend": 18.7,
+     "first": 10.7,
+     "min": 10.7,
+     "max": 18.3
+    }
+   },
+   {
+    "glossary": "fitting crews",
+    "at": 68.3,
+    "truth": 18.1,
+    "band": 1.36,
+    "naive": {
+     "persistence": 18.3,
+     "trend": 18.9,
+     "first": 10.7,
+     "min": 10.7,
+     "max": 18.3
+    }
+   },
+   {
+    "glossary": "fitting crews",
+    "at": 78,
+    "truth": 18.1,
+    "band": 1.36,
+    "naive": {
+     "persistence": 18.3,
+     "trend": 19.1,
+     "first": 10.7,
+     "min": 10.7,
+     "max": 18.3
+    }
+   }
+  ]
+ },
+ "mushroomGrowers": {
+  "scenario": "mushroomGrowers",
+  "times": [
+   45,
+   54,
+   63,
+   72
+  ],
+  "points": [
+   {
+    "glossary": "growing rooms",
+    "at": 45,
+    "truth": 132,
+    "band": 9.92,
+    "naive": {
+     "persistence": 133,
+     "trend": 140,
+     "first": 101,
+     "min": 101,
+     "max": 175
+    }
+   },
+   {
+    "glossary": "growing rooms",
+    "at": 54,
+    "truth": 126,
+    "band": 9.42,
+    "naive": {
+     "persistence": 133,
+     "trend": 149,
+     "first": 101,
+     "min": 101,
+     "max": 175
+    }
+   },
+   {
+    "glossary": "growing rooms",
+    "at": 63,
+    "truth": 135,
+    "band": 10.1,
+    "naive": {
+     "persistence": 133,
+     "trend": 157,
+     "first": 101,
+     "min": 101,
+     "max": 175
+    }
+   },
+   {
+    "glossary": "growing rooms",
+    "at": 72,
+    "truth": 124,
+    "band": 9.28,
+    "naive": {
+     "persistence": 133,
+     "trend": 166,
+     "first": 101,
+     "min": 101,
+     "max": 175
+    }
+   },
+   {
+    "glossary": "price",
+    "at": 45,
+    "truth": 4.94,
+    "band": 0.37,
+    "naive": {
+     "persistence": 4.85,
+     "trend": 4.51,
+     "first": 8.4,
+     "min": 2.99,
+     "max": 8.4
+    }
+   },
+   {
+    "glossary": "price",
+    "at": 54,
+    "truth": 5.47,
+    "band": 0.411,
+    "naive": {
+     "persistence": 4.85,
+     "trend": 3.91,
+     "first": 8.4,
+     "min": 2.99,
+     "max": 8.4
+    }
+   },
+   {
+    "glossary": "price",
+    "at": 63,
+    "truth": 4.74,
+    "band": 0.356,
+    "naive": {
+     "persistence": 4.85,
+     "trend": 3.32,
+     "first": 8.4,
+     "min": 2.99,
+     "max": 8.4
+    }
+   },
+   {
+    "glossary": "price",
+    "at": 72,
+    "truth": 5.65,
+    "band": 0.424,
+    "naive": {
+     "persistence": 4.85,
+     "trend": 2.73,
+     "first": 8.4,
+     "min": 2.99,
+     "max": 8.4
+    }
+   }
+  ]
+ },
+ "ambulanceService": {
+  "scenario": "ambulanceService",
+  "times": [
+   75,
+   90,
+   105,
+   120
+  ],
+  "points": [
+   {
+    "glossary": "response time",
+    "at": 75,
+    "truth": 13.1,
+    "band": 0.984,
+    "naive": {
+     "persistence": 12.4,
+     "trend": 13.5,
+     "first": 10.1,
+     "min": 10.1,
+     "max": 12.4
+    }
+   },
+   {
+    "glossary": "response time",
+    "at": 90,
+    "truth": 13.8,
+    "band": 1.03,
+    "naive": {
+     "persistence": 12.4,
+     "trend": 14.4,
+     "first": 10.1,
+     "min": 10.1,
+     "max": 12.4
+    }
+   },
+   {
+    "glossary": "response time",
+    "at": 105,
+    "truth": 14.5,
+    "band": 1.09,
+    "naive": {
+     "persistence": 12.4,
+     "trend": 15.3,
+     "first": 10.1,
+     "min": 10.1,
+     "max": 12.4
+    }
+   },
+   {
+    "glossary": "response time",
+    "at": 120,
+    "truth": 15.2,
+    "band": 1.14,
+    "naive": {
+     "persistence": 12.4,
+     "trend": 16.2,
+     "first": 10.1,
+     "min": 10.1,
+     "max": 12.4
+    }
+   },
+   {
+    "glossary": "response time target",
+    "at": 75,
+    "truth": 12.6,
+    "band": 0.946,
+    "naive": {
+     "persistence": 12.1,
+     "trend": 12.4,
+     "first": 9.72,
+     "min": 9.72,
+     "max": 12.1
+    }
+   },
+   {
+    "glossary": "response time target",
+    "at": 90,
+    "truth": 13.3,
+    "band": 0.995,
+    "naive": {
+     "persistence": 12.1,
+     "trend": 12.8,
+     "first": 9.72,
+     "min": 9.72,
+     "max": 12.1
+    }
+   },
+   {
+    "glossary": "response time target",
+    "at": 105,
+    "truth": 13.9,
+    "band": 1.05,
+    "naive": {
+     "persistence": 12.1,
+     "trend": 13.2,
+     "first": 9.72,
+     "min": 9.72,
+     "max": 12.1
+    }
+   },
+   {
+    "glossary": "response time target",
+    "at": 120,
+    "truth": 14.7,
+    "band": 1.1,
+    "naive": {
+     "persistence": 12.1,
+     "trend": 13.6,
+     "first": 9.72,
+     "min": 9.72,
+     "max": 12.1
+    }
+   }
+  ]
+ },
+ "deliveryVans": {
+  "scenario": "deliveryVans",
+  "times": [
+   6.25,
+   7.5,
+   8.75,
+   10
+  ],
+  "points": [
+   {
+    "glossary": "average mileage",
+    "at": 6.25,
+    "truth": 97600,
+    "band": 7320,
+    "naive": {
+     "persistence": 94400,
+     "trend": 99600,
+     "first": 91300,
+     "min": 88800,
+     "max": 94800
+    }
+   },
+   {
+    "glossary": "average mileage",
+    "at": 7.5,
+    "truth": 101000,
+    "band": 7570,
+    "naive": {
+     "persistence": 94400,
+     "trend": 104000,
+     "first": 91300,
+     "min": 88800,
+     "max": 94800
+    }
+   },
+   {
+    "glossary": "average mileage",
+    "at": 8.75,
+    "truth": 105000,
+    "band": 7890,
+    "naive": {
+     "persistence": 94400,
+     "trend": 108000,
+     "first": 91300,
+     "min": 88800,
+     "max": 94800
+    }
+   },
+   {
+    "glossary": "average mileage",
+    "at": 10,
+    "truth": 111000,
+    "band": 8310,
+    "naive": {
+     "persistence": 94400,
+     "trend": 112000,
+     "first": 91300,
+     "min": 88800,
+     "max": 94800
+    }
+   },
+   {
+    "glossary": "breakdowns",
+    "at": 6.25,
+    "truth": 471,
+    "band": 35.3,
+    "naive": {
+     "persistence": 449,
+     "trend": 461,
+     "first": 389,
+     "min": 389,
+     "max": 449
+    }
+   },
+   {
+    "glossary": "breakdowns",
+    "at": 7.5,
+    "truth": 503,
+    "band": 37.7,
+    "naive": {
+     "persistence": 449,
+     "trend": 475,
+     "first": 389,
+     "min": 389,
+     "max": 449
+    }
+   },
+   {
+    "glossary": "breakdowns",
+    "at": 8.75,
+    "truth": 546,
+    "band": 41,
+    "naive": {
+     "persistence": 449,
+     "trend": 489,
+     "first": 389,
+     "min": 389,
+     "max": 449
+    }
+   },
+   {
+    "glossary": "breakdowns",
+    "at": 10,
+    "truth": 607,
+    "band": 45.5,
+    "naive": {
+     "persistence": 449,
+     "trend": 504,
+     "first": 389,
+     "min": 389,
+     "max": 449
+    }
+   },
+   {
+    "glossary": "buying vans",
+    "at": 6.25,
+    "truth": 25.8,
+    "band": 1.94,
+    "naive": {
+     "persistence": 27,
+     "trend": 25.7,
+     "first": 33.4,
+     "min": 27,
+     "max": 34.2
+    }
+   },
+   {
+    "glossary": "buying vans",
+    "at": 7.5,
+    "truth": 23.8,
+    "band": 1.79,
+    "naive": {
+     "persistence": 27,
+     "trend": 24.6,
+     "first": 33.4,
+     "min": 27,
+     "max": 34.2
+    }
+   },
+   {
+    "glossary": "buying vans",
+    "at": 8.75,
+    "truth": 21.1,
+    "band": 1.58,
+    "naive": {
+     "persistence": 27,
+     "trend": 23.5,
+     "first": 33.4,
+     "min": 27,
+     "max": 34.2
+    }
+   },
+   {
+    "glossary": "buying vans",
+    "at": 10,
+    "truth": 17.3,
+    "band": 1.3,
+    "naive": {
+     "persistence": 27,
+     "trend": 22.3,
+     "first": 33.4,
+     "min": 27,
+     "max": 34.2
+    }
+   }
+  ]
+ },
+ "foodBank": {
+  "scenario": "foodBank",
+  "times": [
+   22.5,
+   27,
+   31.5,
+   36
+  ],
+  "points": [
+   {
+    "glossary": "volunteers",
+    "at": 22.5,
+    "truth": 59.6,
+    "band": 4.47,
+    "naive": {
+     "persistence": 61.8,
+     "trend": 65.2,
+     "first": 40.6,
+     "min": 40.6,
+     "max": 62.6
+    }
+   },
+   {
+    "glossary": "volunteers",
+    "at": 27,
+    "truth": 53.3,
+    "band": 4,
+    "naive": {
+     "persistence": 61.8,
+     "trend": 67.6,
+     "first": 40.6,
+     "min": 40.6,
+     "max": 62.6
+    }
+   },
+   {
+    "glossary": "volunteers",
+    "at": 31.5,
+    "truth": 43.6,
+    "band": 3.27,
+    "naive": {
+     "persistence": 61.8,
+     "trend": 70.1,
+     "first": 40.6,
+     "min": 40.6,
+     "max": 62.6
+    }
+   },
+   {
+    "glossary": "volunteers",
+    "at": 36,
+    "truth": 31,
+    "band": 2.32,
+    "naive": {
+     "persistence": 61.8,
+     "trend": 72.6,
+     "first": 40.6,
+     "min": 40.6,
+     "max": 62.6
+    }
+   },
+   {
+    "glossary": "families served",
+    "at": 22.5,
+    "truth": 676,
+    "band": 50.7,
+    "naive": {
+     "persistence": 605,
+     "trend": 689,
+     "first": 194,
+     "min": 194,
+     "max": 605
+    }
+   },
+   {
+    "glossary": "families served",
+    "at": 27,
+    "truth": 731,
+    "band": 54.8,
+    "naive": {
+     "persistence": 605,
+     "trend": 776,
+     "first": 194,
+     "min": 194,
+     "max": 605
+    }
+   },
+   {
+    "glossary": "families served",
+    "at": 31.5,
+    "truth": 770,
+    "band": 57.7,
+    "naive": {
+     "persistence": 605,
+     "trend": 863,
+     "first": 194,
+     "min": 194,
+     "max": 605
+    }
+   },
+   {
+    "glossary": "families served",
+    "at": 36,
+    "truth": 795,
+    "band": 59.6,
+    "naive": {
+     "persistence": 605,
+     "trend": 949,
+     "first": 194,
+     "min": 194,
+     "max": 605
+    }
+   }
+  ]
+ },
+ "electricianTraining": {
+  "scenario": "electricianTraining",
+  "times": [
+   90,
+   108,
+   126,
+   144
+  ],
+  "points": [
+   {
+    "glossary": "jobs turned away",
+    "at": 90,
+    "truth": 233,
+    "band": 17.4,
+    "naive": {
+     "persistence": 198,
+     "trend": 320,
+     "first": 0,
+     "min": 0,
+     "max": 198
+    }
+   },
+   {
+    "glossary": "jobs turned away",
+    "at": 108,
+    "truth": 213,
+    "band": 15.9,
+    "naive": {
+     "persistence": 198,
+     "trend": 436,
+     "first": 0,
+     "min": 0,
+     "max": 198
+    }
+   },
+   {
+    "glossary": "jobs turned away",
+    "at": 126,
+    "truth": 159,
+    "band": 11.9,
+    "naive": {
+     "persistence": 198,
+     "trend": 551,
+     "first": 0,
+     "min": 0,
+     "max": 198
+    }
+   },
+   {
+    "glossary": "jobs turned away",
+    "at": 144,
+    "truth": 83.7,
+    "band": 6.28,
+    "naive": {
+     "persistence": 198,
+     "trend": 666,
+     "first": 0,
+     "min": 0,
+     "max": 198
+    }
+   },
+   {
+    "glossary": "apprentices",
+    "at": 90,
+    "truth": 152,
+    "band": 11.4,
+    "naive": {
+     "persistence": 125,
+     "trend": 166,
+     "first": 93.3,
+     "min": 64.6,
+     "max": 125
+    }
+   },
+   {
+    "glossary": "apprentices",
+    "at": 108,
+    "truth": 172,
+    "band": 12.9,
+    "naive": {
+     "persistence": 125,
+     "trend": 208,
+     "first": 93.3,
+     "min": 64.6,
+     "max": 125
+    }
+   },
+   {
+    "glossary": "apprentices",
+    "at": 126,
+    "truth": 187,
+    "band": 14.1,
+    "naive": {
+     "persistence": 125,
+     "trend": 249,
+     "first": 93.3,
+     "min": 64.6,
+     "max": 125
+    }
+   },
+   {
+    "glossary": "apprentices",
+    "at": 144,
+    "truth": 199,
+    "band": 15,
+    "naive": {
+     "persistence": 125,
+     "trend": 290,
+     "first": 93.3,
+     "min": 64.6,
+     "max": 125
+    }
+   }
+  ]
+ },
+ "cleaningStandards": {
+  "scenario": "cleaningStandards",
+  "times": [
+   60,
+   72,
+   84,
+   96
+  ],
+  "points": [
+   {
+    "glossary": "share of rooms failing",
+    "at": 60,
+    "truth": 0.172,
+    "band": 0.0129,
+    "naive": {
+     "persistence": 0.172,
+     "trend": 0.169,
+     "first": 0.101,
+     "min": 0.0986,
+     "max": 0.215
+    }
+   },
+   {
+    "glossary": "share of rooms failing",
+    "at": 72,
+    "truth": 0.172,
+    "band": 0.0129,
+    "naive": {
+     "persistence": 0.172,
+     "trend": 0.165,
+     "first": 0.101,
+     "min": 0.0986,
+     "max": 0.215
+    }
+   },
+   {
+    "glossary": "share of rooms failing",
+    "at": 84,
+    "truth": 0.172,
+    "band": 0.0129,
+    "naive": {
+     "persistence": 0.172,
+     "trend": 0.161,
+     "first": 0.101,
+     "min": 0.0986,
+     "max": 0.215
+    }
+   },
+   {
+    "glossary": "share of rooms failing",
+    "at": 96,
+    "truth": 0.172,
+    "band": 0.0129,
+    "naive": {
+     "persistence": 0.172,
+     "trend": 0.157,
+     "first": 0.101,
+     "min": 0.0986,
+     "max": 0.215
+    }
+   },
+   {
+    "glossary": "inspection standard",
+    "at": 60,
+    "truth": 0.829,
+    "band": 0.0622,
+    "naive": {
+     "persistence": 0.837,
+     "trend": 0.806,
+     "first": 0.875,
+     "min": 0.834,
+     "max": 0.922
+    }
+   },
+   {
+    "glossary": "inspection standard",
+    "at": 72,
+    "truth": 0.828,
+    "band": 0.0621,
+    "naive": {
+     "persistence": 0.837,
+     "trend": 0.781,
+     "first": 0.875,
+     "min": 0.834,
+     "max": 0.922
+    }
+   },
+   {
+    "glossary": "inspection standard",
+    "at": 84,
+    "truth": 0.828,
+    "band": 0.0621,
+    "naive": {
+     "persistence": 0.837,
+     "trend": 0.756,
+     "first": 0.875,
+     "min": 0.834,
+     "max": 0.922
+    }
+   },
+   {
+    "glossary": "inspection standard",
+    "at": 96,
+    "truth": 0.828,
+    "band": 0.0621,
+    "naive": {
+     "persistence": 0.837,
+     "trend": 0.731,
+     "first": 0.875,
+     "min": 0.834,
+     "max": 0.922
+    }
+   }
+  ]
+ },
+ "valleyWater": {
+  "scenario": "valleyWater",
+  "times": [
+   12.5,
+   15,
+   17.5,
+   20
+  ],
+  "points": [
+   {
+    "glossary": "depth to water",
+    "at": 12.5,
+    "truth": 88.2,
+    "band": 6.61,
+    "naive": {
+     "persistence": 79.6,
+     "trend": 91.9,
+     "first": 50.7,
+     "min": 50.5,
+     "max": 79.6
+    }
+   },
+   {
+    "glossary": "depth to water",
+    "at": 15,
+    "truth": 93.8,
+    "band": 7.03,
+    "naive": {
+     "persistence": 79.6,
+     "trend": 103,
+     "first": 50.7,
+     "min": 50.5,
+     "max": 79.6
+    }
+   },
+   {
+    "glossary": "depth to water",
+    "at": 17.5,
+    "truth": 96.9,
+    "band": 7.27,
+    "naive": {
+     "persistence": 79.6,
+     "trend": 115,
+     "first": 50.7,
+     "min": 50.5,
+     "max": 79.6
+    }
+   },
+   {
+    "glossary": "depth to water",
+    "at": 20,
+    "truth": 98,
+    "band": 7.35,
+    "naive": {
+     "persistence": 79.6,
+     "trend": 126,
+     "first": 50.7,
+     "min": 50.5,
+     "max": 79.6
+    }
+   },
+   {
+    "glossary": "orchard acreage",
+    "at": 12.5,
+    "truth": 13200,
+    "band": 989,
+    "naive": {
+     "persistence": 13200,
+     "trend": 13600,
+     "first": 7780,
+     "min": 7780,
+     "max": 13200
+    }
+   },
+   {
+    "glossary": "orchard acreage",
+    "at": 15,
+    "truth": 12800,
+    "band": 958,
+    "naive": {
+     "persistence": 13200,
+     "trend": 14000,
+     "first": 7780,
+     "min": 7780,
+     "max": 13200
+    }
+   },
+   {
+    "glossary": "orchard acreage",
+    "at": 17.5,
+    "truth": 12100,
+    "band": 910,
+    "naive": {
+     "persistence": 13200,
+     "trend": 14400,
+     "first": 7780,
+     "min": 7780,
+     "max": 13200
+    }
+   },
+   {
+    "glossary": "orchard acreage",
+    "at": 20,
+    "truth": 11400,
+    "band": 855,
+    "naive": {
+     "persistence": 13200,
+     "trend": 14800,
+     "first": 7780,
+     "min": 7780,
+     "max": 13200
+    }
+   },
+   {
+    "glossary": "town shortfall",
+    "at": 12.5,
+    "truth": 1750,
+    "band": 131,
+    "naive": {
+     "persistence": 1330,
+     "trend": 1730,
+     "first": 250,
+     "min": 250,
+     "max": 1330
+    }
+   },
+   {
+    "glossary": "town shortfall",
+    "at": 15,
+    "truth": 2110,
+    "band": 158,
+    "naive": {
+     "persistence": 1330,
+     "trend": 2130,
+     "first": 250,
+     "min": 250,
+     "max": 1330
+    }
+   },
+   {
+    "glossary": "town shortfall",
+    "at": 17.5,
+    "truth": 2400,
+    "band": 180,
+    "naive": {
+     "persistence": 1330,
+     "trend": 2530,
+     "first": 250,
+     "min": 250,
+     "max": 1330
+    }
+   },
+   {
+    "glossary": "town shortfall",
+    "at": 20,
+    "truth": 2640,
+    "band": 198,
+    "naive": {
+     "persistence": 1330,
+     "trend": 2940,
+     "first": 250,
+     "min": 250,
+     "max": 1330
+    }
+   }
+  ]
+ }
+}

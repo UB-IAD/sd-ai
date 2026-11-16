@@ -1,0 +1,196 @@
+{
+  "title": "Software project rework",
+  "model": {
+    "variables": [
+      {
+        "name": "Schedule Pressure",
+        "type": "variable"
+      },
+      {
+        "name": "Overtime Hours",
+        "type": "variable"
+      },
+      {
+        "name": "Staff Fatigue",
+        "type": "variable"
+      },
+      {
+        "name": "Error Rate",
+        "type": "variable"
+      },
+      {
+        "name": "Undiscovered Rework",
+        "type": "variable"
+      },
+      {
+        "name": "Rework Discovered",
+        "type": "variable"
+      },
+      {
+        "name": "Work Remaining",
+        "type": "variable"
+      },
+      {
+        "name": "Work Completion Rate",
+        "type": "variable"
+      },
+      {
+        "name": "Hiring Requests",
+        "type": "variable"
+      },
+      {
+        "name": "New Staff",
+        "type": "variable"
+      },
+      {
+        "name": "Average Experience",
+        "type": "variable"
+      },
+      {
+        "name": "Scope Changes",
+        "type": "variable"
+      },
+      {
+        "name": "Features Delivered",
+        "type": "variable"
+      },
+      {
+        "name": "Staff Turnover",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "Schedule Pressure",
+        "to": "Overtime Hours",
+        "polarity": "+"
+      },
+      {
+        "from": "Overtime Hours",
+        "to": "Staff Fatigue",
+        "polarity": "+"
+      },
+      {
+        "from": "Staff Fatigue",
+        "to": "Error Rate",
+        "polarity": "+"
+      },
+      {
+        "from": "Error Rate",
+        "to": "Undiscovered Rework",
+        "polarity": "+"
+      },
+      {
+        "from": "Undiscovered Rework",
+        "to": "Rework Discovered",
+        "polarity": "+"
+      },
+      {
+        "from": "Rework Discovered",
+        "to": "Work Remaining",
+        "polarity": "+"
+      },
+      {
+        "from": "Work Remaining",
+        "to": "Schedule Pressure",
+        "polarity": "+"
+      },
+      {
+        "from": "Overtime Hours",
+        "to": "Work Completion Rate",
+        "polarity": "+"
+      },
+      {
+        "from": "Work Completion Rate",
+        "to": "Work Remaining",
+        "polarity": "-"
+      },
+      {
+        "from": "Schedule Pressure",
+        "to": "Hiring Requests",
+        "polarity": "+"
+      },
+      {
+        "from": "Hiring Requests",
+        "to": "New Staff",
+        "polarity": "+"
+      },
+      {
+        "from": "New Staff",
+        "to": "Average Experience",
+        "polarity": "-"
+      },
+      {
+        "from": "Average Experience",
+        "to": "Error Rate",
+        "polarity": "-"
+      },
+      {
+        "from": "Scope Changes",
+        "to": "Work Remaining",
+        "polarity": "+"
+      },
+      {
+        "from": "Work Completion Rate",
+        "to": "Features Delivered",
+        "polarity": "+"
+      },
+      {
+        "from": "Staff Fatigue",
+        "to": "Staff Turnover",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "Schedule Pressure",
+        "Undiscovered Rework",
+        "Work Remaining"
+      ],
+      "nodes": [
+        "Schedule Pressure",
+        "Overtime Hours",
+        "Staff Fatigue",
+        "Error Rate",
+        "Undiscovered Rework",
+        "Rework Discovered",
+        "Work Remaining"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "Schedule Pressure",
+        "Work Remaining"
+      ],
+      "nodes": [
+        "Schedule Pressure",
+        "Overtime Hours",
+        "Work Completion Rate",
+        "Work Remaining"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "Schedule Pressure",
+        "New Staff",
+        "Undiscovered Rework",
+        "Work Remaining"
+      ],
+      "nodes": [
+        "Schedule Pressure",
+        "Hiring Requests",
+        "New Staff",
+        "Average Experience",
+        "Error Rate",
+        "Undiscovered Rework",
+        "Rework Discovered",
+        "Work Remaining"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

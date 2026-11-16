@@ -1,0 +1,69 @@
+{
+ "id": "ambulanceService",
+ "title": "Ambulance service",
+ "subject": "our regional ambulance service",
+ "question": "why our response times keep getting worse",
+ "problemStatement": "I want to understand why our response times are slipping, in a form I can check against our own documents.",
+ "heldOut": true,
+ "glossary": [
+  "response times",
+  "overtime",
+  "crews off sick",
+  "crews on shift",
+  "handover delays",
+  "emergency calls"
+ ],
+ "files": [
+  "performance_report_q3.md",
+  "occupational_health_review.md",
+  "rota_managers_memo.md",
+  "station_car_park_resurfacing.md"
+ ],
+ "unrelated": "station_car_park_resurfacing.md",
+ "supported": [
+  {
+   "from": "crews on shift",
+   "to": "response times",
+   "polarity": "-",
+   "source": "performance_report_q3.md"
+  },
+  {
+   "from": "handover delays",
+   "to": "response times",
+   "polarity": "+",
+   "source": "performance_report_q3.md"
+  },
+  {
+   "from": "overtime",
+   "to": "crews off sick",
+   "polarity": "+",
+   "source": "occupational_health_review.md"
+  },
+  {
+   "from": "response times",
+   "to": "overtime",
+   "polarity": "+",
+   "source": "rota_managers_memo.md"
+  },
+  {
+   "from": "emergency calls",
+   "to": "response times",
+   "polarity": "+",
+   "source": "rota_managers_memo.md"
+  }
+ ],
+ "unsupported": {
+  "from": "crews off sick",
+  "to": "crews on shift",
+  "polarity": "-"
+ },
+ "words": {
+  "response times": "response time",
+  "overtime": "overtime",
+  "crews off sick": "off sick|sickness absence|sick leave",
+  "crews on shift": "on shift|crews on the road",
+  "handover delays": "handover",
+  "emergency calls": "emergency call"
+ },
+ "notStated": "(sick|absence|absent)[^.]*(fewer|short|gap|uncovered|cover|less|down to)[^.]*(crew|shift|rota|ambulance)|(fewer|short|gaps?|uncovered|cover)[^.]*(crew|shift|rota|ambulance)[^.]*(sick|absence|absent)|(sick|absence|absent)[^.]*(takes?|took|keeps?|kept) [^.]*(off the road|out of service)"
+}

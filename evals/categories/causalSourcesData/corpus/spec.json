@@ -1,0 +1,21 @@
+{
+ "id": "bikeShare",
+ "title": "Bike share",
+ "subject": "the city bike-share scheme",
+ "question": "why membership took off and then stalled",
+ "problemStatement": "I want a causal loop diagram of our bike-share scheme that I can trace back to our documents.",
+ "heldOut": false,
+ "glossary": ["members", "potential members", "signing up", "word of mouth", "advertising"],
+ "files": ["member_survey_2025.md", "marketing_review_2025.md", "city_planning_note.md", "tyre_prices.md"],
+ "unrelated": "tyre_prices.md",
+ "supported": [
+  { "from": "members", "to": "word of mouth", "polarity": "+", "source": "member_survey_2025.md" },
+  { "from": "word of mouth", "to": "signing up", "polarity": "+", "source": "member_survey_2025.md" },
+  { "from": "advertising", "to": "signing up", "polarity": "+", "source": "marketing_review_2025.md" },
+  { "from": "potential members", "to": "signing up", "polarity": "+", "source": "city_planning_note.md" },
+  { "from": "signing up", "to": "potential members", "polarity": "-", "source": "city_planning_note.md" }
+ ],
+ "unsupported": { "from": "signing up", "to": "members", "polarity": "+" },
+ "words": { "members": "member", "word of mouth": "friend|someone they know|talked them|mention", "signing up": "sign", "advertising": "advert|campaign", "potential members": "pool|has not signed up|could realistically sign up" },
+ "notStated": "\\bjoin|become members?|sign-ups? (add|become)"
+}

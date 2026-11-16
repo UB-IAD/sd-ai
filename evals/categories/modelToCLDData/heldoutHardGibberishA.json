@@ -1,0 +1,461 @@
+{
+  "title": "heldoutHardGibberishA",
+  "model": {
+    "variables": [
+      {
+        "name": "buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "rate of obvia",
+        "type": "variable"
+      },
+      {
+        "name": "ih",
+        "type": "variable"
+      },
+      {
+        "name": "pershipfulty",
+        "type": "variable"
+      },
+      {
+        "name": "balack",
+        "type": "variable"
+      },
+      {
+        "name": "stock of gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "demand for whoziewhat",
+        "type": "variable"
+      },
+      {
+        "name": "relity",
+        "type": "variable"
+      },
+      {
+        "name": "raez",
+        "type": "variable"
+      },
+      {
+        "name": "memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "rate of auspong",
+        "type": "variable"
+      },
+      {
+        "name": "stock of whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "illigent",
+        "type": "variable"
+      },
+      {
+        "name": "rate of hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "traze",
+        "type": "variable"
+      },
+      {
+        "name": "quality of funkado",
+        "type": "variable"
+      },
+      {
+        "name": "burgination",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "arinterpord",
+        "type": "variable"
+      },
+      {
+        "name": "hazmick",
+        "type": "variable"
+      },
+      {
+        "name": "copyring",
+        "type": "variable"
+      },
+      {
+        "name": "unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "quality of succupserva",
+        "type": "variable"
+      },
+      {
+        "name": "demand for oc",
+        "type": "variable"
+      },
+      {
+        "name": "quality of priary",
+        "type": "variable"
+      },
+      {
+        "name": "stock of phildiscals",
+        "type": "variable"
+      },
+      {
+        "name": "oclate",
+        "type": "variable"
+      },
+      {
+        "name": "demand for hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "houtal",
+        "type": "variable"
+      },
+      {
+        "name": "outrance",
+        "type": "variable"
+      },
+      {
+        "name": "yelb",
+        "type": "variable"
+      },
+      {
+        "name": "rate of maxabizer",
+        "type": "variable"
+      },
+      {
+        "name": "ku",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "buwheal",
+        "to": "rate of obvia",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of obvia",
+        "to": "ih",
+        "polarity": "+"
+      },
+      {
+        "from": "ih",
+        "to": "pershipfulty",
+        "polarity": "-"
+      },
+      {
+        "from": "pershipfulty",
+        "to": "balack",
+        "polarity": "+"
+      },
+      {
+        "from": "balack",
+        "to": "buwheal",
+        "polarity": "+"
+      },
+      {
+        "from": "buwheal",
+        "to": "stock of gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of gissorm",
+        "to": "marticatene",
+        "polarity": "-"
+      },
+      {
+        "from": "marticatene",
+        "to": "aferraron",
+        "polarity": "+"
+      },
+      {
+        "from": "aferraron",
+        "to": "demand for whoziewhat",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for whoziewhat",
+        "to": "relity",
+        "polarity": "+"
+      },
+      {
+        "from": "relity",
+        "to": "raez",
+        "polarity": "+"
+      },
+      {
+        "from": "raez",
+        "to": "memostorer",
+        "polarity": "+"
+      },
+      {
+        "from": "memostorer",
+        "to": "buwheal",
+        "polarity": "-"
+      },
+      {
+        "from": "buwheal",
+        "to": "perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "perstablintome",
+        "to": "rate of auspong",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of auspong",
+        "to": "stock of whatajig",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of whatajig",
+        "to": "illigent",
+        "polarity": "+"
+      },
+      {
+        "from": "illigent",
+        "to": "rate of hensologic",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of hensologic",
+        "to": "buwheal",
+        "polarity": "-"
+      },
+      {
+        "from": "buwheal",
+        "to": "traze",
+        "polarity": "-"
+      },
+      {
+        "from": "traze",
+        "to": "quality of funkado",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of funkado",
+        "to": "burgination",
+        "polarity": "-"
+      },
+      {
+        "from": "burgination",
+        "to": "pressure on perfecton",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on perfecton",
+        "to": "arinterpord",
+        "polarity": "-"
+      },
+      {
+        "from": "arinterpord",
+        "to": "hazmick",
+        "polarity": "-"
+      },
+      {
+        "from": "hazmick",
+        "to": "buwheal",
+        "polarity": "-"
+      },
+      {
+        "from": "copyring",
+        "to": "unliescatice",
+        "polarity": "+"
+      },
+      {
+        "from": "unliescatice",
+        "to": "geyflorrin",
+        "polarity": "-"
+      },
+      {
+        "from": "geyflorrin",
+        "to": "quality of succupserva",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of succupserva",
+        "to": "copyring",
+        "polarity": "+"
+      },
+      {
+        "from": "copyring",
+        "to": "demand for oc",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for oc",
+        "to": "quality of priary",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of priary",
+        "to": "stock of phildiscals",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of phildiscals",
+        "to": "oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "oclate",
+        "to": "demand for hashtockle",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for hashtockle",
+        "to": "copyring",
+        "polarity": "+"
+      },
+      {
+        "from": "buwheal",
+        "to": "houtal",
+        "polarity": "+"
+      },
+      {
+        "from": "houtal",
+        "to": "copyring",
+        "polarity": "+"
+      },
+      {
+        "from": "outrance",
+        "to": "stock of whatajig",
+        "polarity": "+"
+      },
+      {
+        "from": "yelb",
+        "to": "pressure on perfecton",
+        "polarity": "+"
+      },
+      {
+        "from": "oclate",
+        "to": "rate of maxabizer",
+        "polarity": "+"
+      },
+      {
+        "from": "pershipfulty",
+        "to": "ku",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "buwheal",
+        "pershipfulty"
+      ],
+      "nodes": [
+        "buwheal",
+        "rate of obvia",
+        "ih",
+        "pershipfulty",
+        "balack"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "buwheal",
+        "marticatene",
+        "relity"
+      ],
+      "nodes": [
+        "buwheal",
+        "stock of gissorm",
+        "marticatene",
+        "aferraron",
+        "demand for whoziewhat",
+        "relity",
+        "raez",
+        "memostorer"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "buwheal",
+        "stock of whatajig"
+      ],
+      "nodes": [
+        "buwheal",
+        "perstablintome",
+        "rate of auspong",
+        "stock of whatajig",
+        "illigent",
+        "rate of hensologic"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "buwheal",
+        "burgination",
+        "arinterpord"
+      ],
+      "nodes": [
+        "buwheal",
+        "traze",
+        "quality of funkado",
+        "burgination",
+        "pressure on perfecton",
+        "arinterpord",
+        "hazmick"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "copyring",
+        "geyflorrin"
+      ],
+      "nodes": [
+        "copyring",
+        "unliescatice",
+        "geyflorrin",
+        "quality of succupserva"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "copyring",
+        "stock of phildiscals"
+      ],
+      "nodes": [
+        "copyring",
+        "demand for oc",
+        "quality of priary",
+        "stock of phildiscals",
+        "oclate",
+        "demand for hashtockle"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

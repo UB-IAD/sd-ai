@@ -1,0 +1,522 @@
+{
+ "cases": {
+  "Kitchen fitting backlog, without \"hiring\"": {
+   "name": "Kitchen fitting backlog, without \"hiring\"",
+   "scenario": "kitchenFitters",
+   "kind": "structure",
+   "series": "job backlog",
+   "removed": "hiring",
+   "mechanism": "We recruit fitters when the backlog grows, but finding and training one takes months.",
+   "distractors": [
+    "\"base orders\" keeps growing over time instead of staying steady.",
+    "\"base orders\" rises and falls with the seasons, again and again."
+   ],
+   "distractorModels": [
+    {
+     "mechanism": "\"base orders\" keeps growing over time instead of staying steady.",
+     "strength": "base orders growth rate",
+     "changes": {
+      "set": {
+       "base orders": {
+        "equation": "10 * EXP(base_orders_growth_rate * (TIME - 0))"
+       }
+      },
+      "add": [
+       {
+        "name": "base orders growth rate",
+        "type": "variable",
+        "equation": "0.008887",
+        "units": "1/week"
+       }
+      ]
+     }
+    },
+    {
+     "mechanism": "\"base orders\" rises and falls with the seasons, again and again.",
+     "strength": "base orders seasonal swing",
+     "changes": {
+      "set": {
+       "base orders": {
+        "equation": "10 * (1 + base_orders_seasonal_swing * SIN(2 * 3.14159 * (TIME - 0) / 26))"
+       }
+      },
+      "add": [
+       {
+        "name": "base orders seasonal swing",
+        "type": "variable",
+        "equation": "0.3",
+        "units": "dimensionless"
+       }
+      ]
+     }
+    }
+   ],
+   "calibrated": [
+    "base orders",
+    "jobs per crew",
+    "maximum rush",
+    "normal error fraction"
+   ],
+   "dropped": [
+    "hiring",
+    "desired crews",
+    "hiring time"
+   ],
+   "data": [
+    {
+     "time": 0,
+     "value": 44.47
+    },
+    {
+     "time": 3.25,
+     "value": 44.17
+    },
+    {
+     "time": 6.5,
+     "value": 57.38
+    },
+    {
+     "time": 9.75,
+     "value": 68.14
+    },
+    {
+     "time": 13,
+     "value": 81.77
+    },
+    {
+     "time": 16.25,
+     "value": 93.66
+    },
+    {
+     "time": 19.5,
+     "value": 103.4
+    },
+    {
+     "time": 22.75,
+     "value": 111.8
+    },
+    {
+     "time": 26,
+     "value": 103.4
+    },
+    {
+     "time": 29.25,
+     "value": 85.96
+    },
+    {
+     "time": 32.5,
+     "value": 79.83
+    },
+    {
+     "time": 35.75,
+     "value": 73.98
+    },
+    {
+     "time": 39,
+     "value": 68.05
+    },
+    {
+     "time": 42.25,
+     "value": 64.49
+    },
+    {
+     "time": 45.5,
+     "value": 59.29
+    },
+    {
+     "time": 48.75,
+     "value": 56.29
+    },
+    {
+     "time": 52,
+     "value": 53.34
+    },
+    {
+     "time": 55.25,
+     "value": 52.87
+    },
+    {
+     "time": 58.5,
+     "value": 50.65
+    },
+    {
+     "time": 61.75,
+     "value": 49.66
+    },
+    {
+     "time": 65,
+     "value": 48.6
+    },
+    {
+     "time": 68.25,
+     "value": 46.25
+    },
+    {
+     "time": 71.5,
+     "value": 46.71
+    },
+    {
+     "time": 74.75,
+     "value": 46.77
+    },
+    {
+     "time": 78,
+     "value": 45.07
+    }
+   ]
+  },
+  "Parcel delivery van fleet, without \"mileage wear\"": {
+   "name": "Parcel delivery van fleet, without \"mileage wear\"",
+   "scenario": "deliveryVans",
+   "kind": "structure",
+   "series": "breakdowns",
+   "removed": "mileage wear",
+   "mechanism": "Vans with more miles on them break down a lot more often.",
+   "distractors": [
+    "\"parcel demand\" keeps growing over time instead of staying steady.",
+    "\"parcel demand\" rises and falls with the seasons, again and again."
+   ],
+   "distractorModels": [
+    {
+     "mechanism": "\"parcel demand\" keeps growing over time instead of staying steady.",
+     "strength": "parcel demand growth rate",
+     "changes": {
+      "set": {
+       "parcel demand": {
+        "equation": "2000000 * EXP(parcel_demand_growth_rate * (TIME - 0))"
+       }
+      },
+      "add": [
+       {
+        "name": "parcel demand growth rate",
+        "type": "variable",
+        "equation": "0.06931",
+        "units": "1/year"
+       }
+      ]
+     }
+    },
+    {
+     "mechanism": "\"parcel demand\" rises and falls with the seasons, again and again.",
+     "strength": "parcel demand seasonal swing",
+     "changes": {
+      "set": {
+       "parcel demand": {
+        "equation": "2000000 * (1 + parcel_demand_seasonal_swing * SIN(2 * 3.14159 * (TIME - 0) / 3.333))"
+       }
+      },
+      "add": [
+       {
+        "name": "parcel demand seasonal swing",
+        "type": "variable",
+        "equation": "0.3",
+        "units": "dimensionless"
+       }
+      ]
+     }
+    }
+   ],
+   "calibrated": [
+    "normal breakdown rate",
+    "parcel demand",
+    "parcels per van",
+    "base van budget"
+   ],
+   "dropped": [
+    "average mileage",
+    "normal mileage",
+    "Fleet Miles",
+    "miles driven",
+    "miles retired",
+    "miles per van"
+   ],
+   "data": [
+    {
+     "time": 0,
+     "value": 403.8
+    },
+    {
+     "time": 0.4375,
+     "value": 401
+    },
+    {
+     "time": 0.8125,
+     "value": 399.3
+    },
+    {
+     "time": 1.25,
+     "value": 396.4
+    },
+    {
+     "time": 1.6875,
+     "value": 405.2
+    },
+    {
+     "time": 2.0625,
+     "value": 404.8
+    },
+    {
+     "time": 2.5,
+     "value": 406.4
+    },
+    {
+     "time": 2.9375,
+     "value": 412.6
+    },
+    {
+     "time": 3.3125,
+     "value": 417.8
+    },
+    {
+     "time": 3.75,
+     "value": 415.8
+    },
+    {
+     "time": 4.1875,
+     "value": 432.5
+    },
+    {
+     "time": 4.5625,
+     "value": 439.1
+    },
+    {
+     "time": 5,
+     "value": 443.2
+    },
+    {
+     "time": 5.4375,
+     "value": 459.7
+    },
+    {
+     "time": 5.8125,
+     "value": 458.1
+    },
+    {
+     "time": 6.25,
+     "value": 469.2
+    },
+    {
+     "time": 6.6875,
+     "value": 476.1
+    },
+    {
+     "time": 7.0625,
+     "value": 500.4
+    },
+    {
+     "time": 7.5,
+     "value": 507.4
+    },
+    {
+     "time": 7.9375,
+     "value": 524.4
+    },
+    {
+     "time": 8.3125,
+     "value": 537.1
+    },
+    {
+     "time": 8.75,
+     "value": 536.3
+    },
+    {
+     "time": 9.1875,
+     "value": 567.9
+    },
+    {
+     "time": 9.5625,
+     "value": 593.1
+    },
+    {
+     "time": 10,
+     "value": 600.3
+    }
+   ]
+  },
+  "Community food bank volunteers, without \"worn-out volunteers quit\"": {
+   "name": "Community food bank volunteers, without \"worn-out volunteers quit\"",
+   "scenario": "foodBank",
+   "kind": "structure",
+   "series": "volunteers",
+   "removed": "worn-out volunteers quit",
+   "mechanism": "When each volunteer has a lot of families to look after, they get worn out over a few months, and the more worn out they are, the more likely they are to quit.",
+   "distractors": [
+    "\"recruitment fairs\" keeps growing over time instead of staying steady.",
+    "\"recruitment fairs\" rises and falls with the seasons, again and again."
+   ],
+   "distractorModels": [
+    {
+     "mechanism": "\"recruitment fairs\" keeps growing over time instead of staying steady.",
+     "strength": "recruitment fairs growth rate",
+     "changes": {
+      "set": {
+       "recruitment fairs": {
+        "equation": "0.25 * EXP(recruitment_fairs_growth_rate * (TIME - 0))"
+       }
+      },
+      "add": [
+       {
+        "name": "recruitment fairs growth rate",
+        "type": "variable",
+        "equation": "0.01925",
+        "units": "1/month"
+       }
+      ]
+     }
+    },
+    {
+     "mechanism": "\"recruitment fairs\" rises and falls with the seasons, again and again.",
+     "strength": "recruitment fairs seasonal swing",
+     "changes": {
+      "set": {
+       "recruitment fairs": {
+        "equation": "0.25 * (1 + recruitment_fairs_seasonal_swing * SIN(2 * 3.14159 * (TIME - 0) / 12))"
+       }
+      },
+      "add": [
+       {
+        "name": "recruitment fairs seasonal swing",
+        "type": "variable",
+        "equation": "0.3",
+        "units": "dimensionless"
+       }
+      ]
+     }
+    }
+   ],
+   "calibrated": [
+    "friend recruiting rate",
+    "normal quit fraction",
+    "recruitment fairs"
+   ],
+   "dropped": [
+    "Fatigue",
+    "tiring",
+    "stress",
+    "fatigue time",
+    "workload",
+    "manageable load",
+    "Families Served",
+    "new families",
+    "families moving on",
+    "time on rolls",
+    "agency referrals",
+    "family word of mouth",
+    "word of mouth fraction",
+    "unreached share",
+    "Families Not Yet Reached",
+    "families in need"
+   ],
+   "data": [
+    {
+     "time": 0,
+     "value": 40.38
+    },
+    {
+     "time": 1.5,
+     "value": 42.97
+    },
+    {
+     "time": 3,
+     "value": 45.65
+    },
+    {
+     "time": 4.5,
+     "value": 48.12
+    },
+    {
+     "time": 6,
+     "value": 51.93
+    },
+    {
+     "time": 7.5,
+     "value": 54.33
+    },
+    {
+     "time": 9,
+     "value": 56.07
+    },
+    {
+     "time": 10.5,
+     "value": 58.1
+    },
+    {
+     "time": 12,
+     "value": 59.73
+    },
+    {
+     "time": 13.5,
+     "value": 59.76
+    },
+    {
+     "time": 15,
+     "value": 62.02
+    },
+    {
+     "time": 16.5,
+     "value": 62.49
+    },
+    {
+     "time": 18,
+     "value": 61.97
+    },
+    {
+     "time": 19.5,
+     "value": 62.65
+    },
+    {
+     "time": 21,
+     "value": 60.53
+    },
+    {
+     "time": 22.5,
+     "value": 59.44
+    },
+    {
+     "time": 24,
+     "value": 57.32
+    },
+    {
+     "time": 25.5,
+     "value": 56.9
+    },
+    {
+     "time": 27,
+     "value": 53.77
+    },
+    {
+     "time": 28.5,
+     "value": 51.18
+    },
+    {
+     "time": 30,
+     "value": 47.87
+    },
+    {
+     "time": 31.5,
+     "value": 42.83
+    },
+    {
+     "time": 33,
+     "value": 39.91
+    },
+    {
+     "time": 34.5,
+     "value": 36.09
+    },
+    {
+     "time": 36,
+     "value": 30.63
+    }
+   ]
+  }
+ },
+ "skipped": {
+  "coffeeCoop": "reinvestment: its off switch sets a constant; soil wear: its off switch sets a constant; yield and soil: its off switch sets a constant; soil recovery: its off switch sets a constant",
+  "mushroomGrowers": "building when prices are high: its off switch sets a constant; closing rooms when prices are low: its off switch sets a constant; rooms wearing out: its off switch sets a constant",
+  "ambulanceService": "adding crews: calibrating the model without it makes it fit; relaxing the target: its off switch sets a constant",
+  "electricianTraining": "intake follows the work in hand: its off switch sets a constant; masters supervise apprentices: its off switch sets a constant; masters retiring: its off switch leaves a constant in place of a formula",
+  "cleaningStandards": "adding cleaners: calibrating the model without it makes it fit; lowering the standard: its off switch sets a constant; new wing: its off switch sets a constant",
+  "valleyWater": "wells give less as the table drops: its off switch leaves a constant in place of a formula; deeper water costs more to pump: its off switch sets a constant; orchards planted while they pay: its off switch sets a constant; town keeps growing: its off switch sets a constant"
+ }
+}

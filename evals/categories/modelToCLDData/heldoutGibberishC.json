@@ -1,0 +1,359 @@
+{
+  "title": "heldoutGibberishC",
+  "model": {
+    "variables": [
+      {
+        "name": "pressure on illigent",
+        "type": "variable"
+      },
+      {
+        "name": "yelb",
+        "type": "variable"
+      },
+      {
+        "name": "perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "yoffa",
+        "type": "variable"
+      },
+      {
+        "name": "relity",
+        "type": "variable"
+      },
+      {
+        "name": "demand for younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "rate of priary",
+        "type": "variable"
+      },
+      {
+        "name": "burgination",
+        "type": "variable"
+      },
+      {
+        "name": "demand for arinterpord",
+        "type": "variable"
+      },
+      {
+        "name": "quality of bellignorance",
+        "type": "variable"
+      },
+      {
+        "name": "quality of aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "flow of raez",
+        "type": "variable"
+      },
+      {
+        "name": "supply of posistorather",
+        "type": "variable"
+      },
+      {
+        "name": "stock of ih",
+        "type": "variable"
+      },
+      {
+        "name": "stock of traze",
+        "type": "variable"
+      },
+      {
+        "name": "balack",
+        "type": "variable"
+      },
+      {
+        "name": "houtal",
+        "type": "variable"
+      },
+      {
+        "name": "rate of hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "maxabizer",
+        "type": "variable"
+      },
+      {
+        "name": "quality of frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "stock of marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "baxtoy",
+        "type": "variable"
+      },
+      {
+        "name": "buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "level of oclate",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "demand for crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "rate of copyring",
+        "type": "variable"
+      },
+      {
+        "name": "demand for loopnova",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "pressure on illigent",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "yelb",
+        "to": "perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "perstablintome",
+        "to": "yoffa",
+        "polarity": "+"
+      },
+      {
+        "from": "yoffa",
+        "to": "relity",
+        "polarity": "+"
+      },
+      {
+        "from": "relity",
+        "to": "demand for younjuring",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for younjuring",
+        "to": "pressure on illigent",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on illigent",
+        "to": "rate of priary",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of priary",
+        "to": "burgination",
+        "polarity": "+"
+      },
+      {
+        "from": "burgination",
+        "to": "demand for arinterpord",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for arinterpord",
+        "to": "quality of bellignorance",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of bellignorance",
+        "to": "quality of aferraron",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of aferraron",
+        "to": "flow of raez",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of raez",
+        "to": "supply of posistorather",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of posistorather",
+        "to": "pressure on illigent",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of ih",
+        "to": "stock of traze",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of traze",
+        "to": "balack",
+        "polarity": "+"
+      },
+      {
+        "from": "balack",
+        "to": "houtal",
+        "polarity": "+"
+      },
+      {
+        "from": "houtal",
+        "to": "rate of hensologic",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of hensologic",
+        "to": "geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "geyflorrin",
+        "to": "maxabizer",
+        "polarity": "-"
+      },
+      {
+        "from": "maxabizer",
+        "to": "stock of ih",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of frimbulator",
+        "to": "pressure on whatajig",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on whatajig",
+        "to": "stock of marticatene",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of marticatene",
+        "to": "baxtoy",
+        "polarity": "-"
+      },
+      {
+        "from": "baxtoy",
+        "to": "quality of frimbulator",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on illigent",
+        "to": "buwheal",
+        "polarity": "+"
+      },
+      {
+        "from": "buwheal",
+        "to": "stock of ih",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of ih",
+        "to": "level of oclate",
+        "polarity": "-"
+      },
+      {
+        "from": "level of oclate",
+        "to": "quality of frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "exeminte",
+        "to": "rate of hensologic",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for crypteral",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of ih",
+        "to": "rate of copyring",
+        "polarity": "-"
+      },
+      {
+        "from": "relity",
+        "to": "demand for loopnova",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "pressure on illigent",
+        "yoffa"
+      ],
+      "nodes": [
+        "pressure on illigent",
+        "yelb",
+        "perstablintome",
+        "yoffa",
+        "relity",
+        "demand for younjuring"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "pressure on illigent",
+        "demand for arinterpord",
+        "quality of aferraron"
+      ],
+      "nodes": [
+        "pressure on illigent",
+        "rate of priary",
+        "burgination",
+        "demand for arinterpord",
+        "quality of bellignorance",
+        "quality of aferraron",
+        "flow of raez",
+        "supply of posistorather"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "stock of ih",
+        "houtal",
+        "geyflorrin"
+      ],
+      "nodes": [
+        "stock of ih",
+        "stock of traze",
+        "balack",
+        "houtal",
+        "rate of hensologic",
+        "geyflorrin",
+        "maxabizer"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "quality of frimbulator",
+        "stock of marticatene"
+      ],
+      "nodes": [
+        "quality of frimbulator",
+        "pressure on whatajig",
+        "stock of marticatene",
+        "baxtoy"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

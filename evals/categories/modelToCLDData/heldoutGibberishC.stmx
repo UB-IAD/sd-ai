@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishC</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="pressure on illigent">
+			</aux>
+			<aux name="yelb">
+			</aux>
+			<aux name="perstablintome">
+			</aux>
+			<aux name="yoffa">
+			</aux>
+			<aux name="relity">
+			</aux>
+			<aux name="demand for younjuring">
+			</aux>
+			<aux name="rate of priary">
+			</aux>
+			<aux name="burgination">
+			</aux>
+			<aux name="demand for arinterpord">
+			</aux>
+			<aux name="quality of bellignorance">
+			</aux>
+			<aux name="quality of aferraron">
+			</aux>
+			<aux name="flow of raez">
+			</aux>
+			<aux name="supply of posistorather">
+			</aux>
+			<aux name="stock of ih">
+			</aux>
+			<aux name="stock of traze">
+			</aux>
+			<aux name="balack">
+			</aux>
+			<aux name="houtal">
+			</aux>
+			<aux name="rate of hensologic">
+			</aux>
+			<aux name="geyflorrin">
+			</aux>
+			<aux name="maxabizer">
+			</aux>
+			<aux name="quality of frimbulator">
+			</aux>
+			<aux name="pressure on whatajig">
+			</aux>
+			<aux name="stock of marticatene">
+			</aux>
+			<aux name="baxtoy">
+			</aux>
+			<aux name="buwheal">
+			</aux>
+			<aux name="level of oclate">
+			</aux>
+			<aux name="exeminte">
+			</aux>
+			<aux name="demand for crypteral">
+			</aux>
+			<aux name="rate of copyring">
+			</aux>
+			<aux name="demand for loopnova">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1680" y="870" name="pressure on illigent"/>
+				<aux x="1662" y="1038" name="yelb"/>
+				<aux x="1610" y="1199" name="perstablintome"/>
+				<aux x="1525" y="1346" name="yoffa"/>
+				<aux x="1412" y="1472" name="relity"/>
+				<aux x="1275" y="1571" name="demand for younjuring"/>
+				<aux x="1120" y="1640" name="rate of priary"/>
+				<aux x="955" y="1676" name="burgination"/>
+				<aux x="785" y="1676" name="demand for arinterpord"/>
+				<aux x="620" y="1640" name="quality of bellignorance"/>
+				<aux x="465" y="1571" name="quality of aferraron"/>
+				<aux x="328" y="1472" name="flow of raez"/>
+				<aux x="215" y="1346" name="supply of posistorather"/>
+				<aux x="130" y="1199" name="stock of ih"/>
+				<aux x="78" y="1038" name="stock of traze"/>
+				<aux x="60" y="870" name="balack"/>
+				<aux x="78" y="702" name="houtal"/>
+				<aux x="130" y="541" name="rate of hensologic"/>
+				<aux x="215" y="394" name="geyflorrin"/>
+				<aux x="328" y="268" name="maxabizer"/>
+				<aux x="465" y="169" name="quality of frimbulator"/>
+				<aux x="620" y="100" name="pressure on whatajig"/>
+				<aux x="785" y="64" name="stock of marticatene"/>
+				<aux x="955" y="64" name="baxtoy"/>
+				<aux x="1120" y="100" name="buwheal"/>
+				<aux x="1275" y="169" name="level of oclate"/>
+				<aux x="1412" y="268" name="exeminte"/>
+				<aux x="1525" y="394" name="demand for crypteral"/>
+				<aux x="1610" y="541" name="rate of copyring"/>
+				<aux x="1662" y="702" name="demand for loopnova"/>
+				<connector uid="1" angle="263.88" polarity="+">
+					<from>pressure_on_illigent</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="2" angle="252.10" polarity="+">
+					<from>yelb</from>
+					<to>perstablintome</to>
+				</connector>
+				<connector uid="3" angle="239.96" polarity="+">
+					<from>perstablintome</from>
+					<to>yoffa</to>
+				</connector>
+				<connector uid="4" angle="228.11" polarity="+">
+					<from>yoffa</from>
+					<to>relity</to>
+				</connector>
+				<connector uid="5" angle="215.85" polarity="-">
+					<from>relity</from>
+					<to>demand_for_younjuring</to>
+				</connector>
+				<connector uid="6" angle="59.98" polarity="-">
+					<from>demand_for_younjuring</from>
+					<to>pressure_on_illigent</to>
+				</connector>
+				<connector uid="7" angle="233.97" polarity="+">
+					<from>pressure_on_illigent</from>
+					<to>rate_of_priary</to>
+				</connector>
+				<connector uid="8" angle="192.31" polarity="+">
+					<from>rate_of_priary</from>
+					<to>burgination</to>
+				</connector>
+				<connector uid="9" angle="180.00" polarity="+">
+					<from>burgination</from>
+					<to>demand_for_arinterpord</to>
+				</connector>
+				<connector uid="10" angle="167.69" polarity="+">
+					<from>demand_for_arinterpord</from>
+					<to>quality_of_bellignorance</to>
+				</connector>
+				<connector uid="11" angle="156.00" polarity="+">
+					<from>quality_of_bellignorance</from>
+					<to>quality_of_aferraron</to>
+				</connector>
+				<connector uid="12" angle="144.15" polarity="+">
+					<from>quality_of_aferraron</from>
+					<to>flow_of_raez</to>
+				</connector>
+				<connector uid="13" angle="131.89" polarity="-">
+					<from>flow_of_raez</from>
+					<to>supply_of_posistorather</to>
+				</connector>
+				<connector uid="14" angle="18.00" polarity="-">
+					<from>supply_of_posistorather</from>
+					<to>pressure_on_illigent</to>
+				</connector>
+				<connector uid="15" angle="107.90" polarity="+">
+					<from>stock_of_ih</from>
+					<to>stock_of_traze</to>
+				</connector>
+				<connector uid="16" angle="96.12" polarity="+">
+					<from>stock_of_traze</from>
+					<to>balack</to>
+				</connector>
+				<connector uid="17" angle="83.88" polarity="+">
+					<from>balack</from>
+					<to>houtal</to>
+				</connector>
+				<connector uid="18" angle="72.10" polarity="+">
+					<from>houtal</from>
+					<to>rate_of_hensologic</to>
+				</connector>
+				<connector uid="19" angle="59.96" polarity="+">
+					<from>rate_of_hensologic</from>
+					<to>geyflorrin</to>
+				</connector>
+				<connector uid="20" angle="48.11" polarity="-">
+					<from>geyflorrin</from>
+					<to>maxabizer</to>
+				</connector>
+				<connector uid="21" angle="257.99" polarity="+">
+					<from>maxabizer</from>
+					<to>stock_of_ih</to>
+				</connector>
+				<connector uid="22" angle="24.00" polarity="+">
+					<from>quality_of_frimbulator</from>
+					<to>pressure_on_whatajig</to>
+				</connector>
+				<connector uid="23" angle="12.31" polarity="+">
+					<from>pressure_on_whatajig</from>
+					<to>stock_of_marticatene</to>
+				</connector>
+				<connector uid="24" angle="0.00" polarity="-">
+					<from>stock_of_marticatene</from>
+					<to>baxtoy</to>
+				</connector>
+				<connector uid="25" angle="192.09" polarity="-">
+					<from>baxtoy</from>
+					<to>quality_of_frimbulator</to>
+				</connector>
+				<connector uid="26" angle="126.03" polarity="+">
+					<from>pressure_on_illigent</from>
+					<to>buwheal</to>
+				</connector>
+				<connector uid="27" angle="227.99" polarity="+">
+					<from>buwheal</from>
+					<to>stock_of_ih</to>
+				</connector>
+				<connector uid="28" angle="41.97" polarity="-">
+					<from>stock_of_ih</from>
+					<to>level_of_oclate</to>
+				</connector>
+				<connector uid="29" angle="180.00" polarity="+">
+					<from>level_of_oclate</from>
+					<to>quality_of_frimbulator</to>
+				</connector>
+				<connector uid="30" angle="192.02" polarity="+">
+					<from>exeminte</from>
+					<to>rate_of_hensologic</to>
+				</connector>
+				<connector uid="31" angle="282.01" polarity="+">
+					<from>demand_for_crypteral</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="32" angle="23.97" polarity="-">
+					<from>stock_of_ih</from>
+					<to>rate_of_copyring</to>
+				</connector>
+				<connector uid="33" angle="72.01" polarity="+">
+					<from>relity</from>
+					<to>demand_for_loopnova</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

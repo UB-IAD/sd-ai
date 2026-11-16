@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishO</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="level of priary">
+			</aux>
+			<aux name="rate of obvia">
+			</aux>
+			<aux name="burgination">
+			</aux>
+			<aux name="level of hashtockle">
+			</aux>
+			<aux name="reflupper">
+			</aux>
+			<aux name="phildiscals">
+			</aux>
+			<aux name="balack">
+			</aux>
+			<aux name="rate of gissorm">
+			</aux>
+			<aux name="oclate">
+			</aux>
+			<aux name="ku">
+			</aux>
+			<aux name="flow of posistorather">
+			</aux>
+			<aux name="stock of memostorer">
+			</aux>
+			<aux name="demand for pablanksill">
+			</aux>
+			<aux name="level of oc">
+			</aux>
+			<aux name="frimbulator">
+			</aux>
+			<aux name="demand for hoza">
+			</aux>
+			<aux name="aferraron">
+			</aux>
+			<aux name="flow of poval">
+			</aux>
+			<aux name="pressure on copyring">
+			</aux>
+			<aux name="traze">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1180" y="620" name="level of priary"/>
+				<aux x="1153" y="793" name="rate of obvia"/>
+				<aux x="1073" y="949" name="burgination"/>
+				<aux x="949" y="1073" name="level of hashtockle"/>
+				<aux x="793" y="1153" name="reflupper"/>
+				<aux x="620" y="1180" name="phildiscals"/>
+				<aux x="447" y="1153" name="balack"/>
+				<aux x="291" y="1073" name="rate of gissorm"/>
+				<aux x="167" y="949" name="oclate"/>
+				<aux x="87" y="793" name="ku"/>
+				<aux x="60" y="620" name="flow of posistorather"/>
+				<aux x="87" y="447" name="stock of memostorer"/>
+				<aux x="167" y="291" name="demand for pablanksill"/>
+				<aux x="291" y="167" name="level of oc"/>
+				<aux x="447" y="87" name="frimbulator"/>
+				<aux x="620" y="60" name="demand for hoza"/>
+				<aux x="793" y="87" name="aferraron"/>
+				<aux x="949" y="167" name="flow of poval"/>
+				<aux x="1073" y="291" name="pressure on copyring"/>
+				<aux x="1153" y="447" name="traze"/>
+				<connector uid="1" angle="261.13" polarity="+">
+					<from>level_of_priary</from>
+					<to>rate_of_obvia</to>
+				</connector>
+				<connector uid="2" angle="242.85" polarity="+">
+					<from>rate_of_obvia</from>
+					<to>burgination</to>
+				</connector>
+				<connector uid="3" angle="225.00" polarity="+">
+					<from>burgination</from>
+					<to>level_of_hashtockle</to>
+				</connector>
+				<connector uid="4" angle="62.98" polarity="+">
+					<from>level_of_hashtockle</from>
+					<to>level_of_priary</to>
+				</connector>
+				<connector uid="5" angle="188.87" polarity="+">
+					<from>reflupper</from>
+					<to>phildiscals</to>
+				</connector>
+				<connector uid="6" angle="171.13" polarity="-">
+					<from>phildiscals</from>
+					<to>balack</to>
+				</connector>
+				<connector uid="7" angle="152.85" polarity="+">
+					<from>balack</from>
+					<to>rate_of_gissorm</to>
+				</connector>
+				<connector uid="8" angle="135.00" polarity="+">
+					<from>rate_of_gissorm</from>
+					<to>oclate</to>
+				</connector>
+				<connector uid="9" angle="341.95" polarity="+">
+					<from>oclate</from>
+					<to>reflupper</to>
+				</connector>
+				<connector uid="10" angle="98.87" polarity="+">
+					<from>ku</from>
+					<to>flow_of_posistorather</to>
+				</connector>
+				<connector uid="11" angle="81.13" polarity="+">
+					<from>flow_of_posistorather</from>
+					<to>stock_of_memostorer</to>
+				</connector>
+				<connector uid="12" angle="62.85" polarity="-">
+					<from>stock_of_memostorer</from>
+					<to>demand_for_pablanksill</to>
+				</connector>
+				<connector uid="13" angle="45.00" polarity="+">
+					<from>demand_for_pablanksill</from>
+					<to>level_of_oc</to>
+				</connector>
+				<connector uid="14" angle="251.95" polarity="-">
+					<from>level_of_oc</from>
+					<to>ku</to>
+				</connector>
+				<connector uid="15" angle="143.98" polarity="-">
+					<from>level_of_priary</from>
+					<to>frimbulator</to>
+				</connector>
+				<connector uid="16" angle="287.98" polarity="-">
+					<from>frimbulator</from>
+					<to>reflupper</to>
+				</connector>
+				<connector uid="17" angle="98.99" polarity="+">
+					<from>reflupper</from>
+					<to>demand_for_hoza</to>
+				</connector>
+				<connector uid="18" angle="233.98" polarity="-">
+					<from>demand_for_hoza</from>
+					<to>ku</to>
+				</connector>
+				<connector uid="19" angle="288.00" polarity="-">
+					<from>aferraron</from>
+					<to>burgination</to>
+				</connector>
+				<connector uid="20" angle="297.02" polarity="+">
+					<from>flow_of_poval</from>
+					<to>level_of_priary</to>
+				</connector>
+				<connector uid="21" angle="63.00" polarity="-">
+					<from>phildiscals</from>
+					<to>pressure_on_copyring</to>
+				</connector>
+				<connector uid="22" angle="0.00" polarity="-">
+					<from>stock_of_memostorer</from>
+					<to>traze</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

@@ -1,0 +1,387 @@
+{
+ "City bike-share membership (hard)": {
+  "name": "City bike-share membership (hard)",
+  "scenario": "bikeShare",
+  "description": "the city bike-share membership",
+  "plants": [
+   {
+    "kind": "gap",
+    "id": "total population leaves out potential members",
+    "variable": "total population",
+    "change": {
+     "equation": "members"
+    },
+    "text": "\"total population\" adds up \"members\" and leaves out \"potential members\", so it is not the whole of total population."
+   },
+   {
+    "kind": "doubleDrain",
+    "id": "potential members drained twice by signing up",
+    "variable": "potential members",
+    "change": {
+     "outflows": [
+      "signing up",
+      "potential members leaving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "potential members leaving",
+      "type": "flow",
+      "equation": "potential_members * advertising_effect + word_of_mouth",
+      "units": "people/month",
+      "documentation": "People or things leaving \"potential members\"."
+     }
+    ],
+    "text": "\"potential members\" is drained twice for the same thing: \"potential members leaving\" is a copy of \"signing up\", so whatever leaves through \"signing up\" leaves \"potential members\" a second time."
+   },
+   {
+    "kind": "doubleFill",
+    "id": "members filled twice by signing up",
+    "variable": "members",
+    "change": {
+     "inflows": [
+      "signing up",
+      "members arriving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "members arriving",
+      "type": "flow",
+      "equation": "potential_members * advertising_effect + word_of_mouth",
+      "units": "people/month",
+      "documentation": "People or things arriving in \"members\"."
+     }
+    ],
+    "text": "\"members\" is filled twice for the same thing: \"members arriving\" is a copy of \"signing up\", so whatever arrives through \"signing up\" arrives in \"members\" a second time."
+   }
+  ],
+  "distractors": [
+   "\"advertising effect\" should be a stock.",
+   "\"total population\" should be a stock."
+  ]
+ },
+ "Community food bank volunteers (hard)": {
+  "name": "Community food bank volunteers (hard)",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "plants": [
+   {
+    "kind": "gap",
+    "id": "willing people leaves out Potential Volunteers",
+    "variable": "willing people",
+    "change": {
+     "equation": "volunteers"
+    },
+    "text": "\"willing people\" adds up \"volunteers\" and leaves out \"Potential Volunteers\", so it is not the whole of willing people."
+   },
+   {
+    "kind": "overlap",
+    "id": "families in need counts Families Not Yet Reached twice",
+    "variable": "families in need",
+    "change": {
+     "equation": "Families_Not_Yet_Reached + families_served + Families_Not_Yet_Reached"
+    },
+    "text": "\"families in need\" counts \"Families Not Yet Reached\" twice, so the people or things in \"Families Not Yet Reached\" are counted as if they were a separate group."
+   },
+   {
+    "kind": "doubleDrain",
+    "id": "volunteers drained twice by quitting",
+    "variable": "volunteers",
+    "change": {
+     "outflows": [
+      "quitting",
+      "volunteers leaving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "volunteers leaving",
+      "type": "flow",
+      "equation": "volunteers * normal_quit_fraction * fatigue",
+      "units": "volunteers/month",
+      "documentation": "People or things leaving \"volunteers\"."
+     }
+    ],
+    "text": "\"volunteers\" is drained twice for the same thing: \"volunteers leaving\" is a copy of \"quitting\", so whatever leaves through \"quitting\" leaves \"volunteers\" a second time."
+   },
+   {
+    "kind": "doubleFill",
+    "id": "fatigue filled twice by tiring",
+    "variable": "fatigue",
+    "change": {
+     "inflows": [
+      "tiring",
+      "fatigue arriving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "fatigue arriving",
+      "type": "flow",
+      "equation": "(stress - fatigue) / fatigue_time",
+      "units": "1/month",
+      "documentation": "People or things arriving in \"fatigue\"."
+     }
+    ],
+    "text": "\"fatigue\" is filled twice for the same thing: \"fatigue arriving\" is a copy of \"tiring\", so whatever arrives through \"tiring\" arrives in \"fatigue\" a second time."
+   }
+  ],
+  "distractors": [
+   "\"families served\" and \"Families Not Yet Reached\" overlap and one should be removed.",
+   "\"recruiting\" should be split into separate rates for every kind of willing people."
+  ]
+ },
+ "Regional electricians' guild (hard)": {
+  "name": "Regional electricians' guild (hard)",
+  "scenario": "electricianTraining",
+  "description": "the regional electricians' guild",
+  "plants": [
+   {
+    "kind": "gap",
+    "id": "qualified electricians leaves out journeymen",
+    "variable": "qualified electricians",
+    "change": {
+     "equation": "masters"
+    },
+    "text": "\"qualified electricians\" adds up \"masters\" and leaves out \"journeymen\", so it is not the whole of qualified electricians."
+   },
+   {
+    "kind": "doubleDrain",
+    "id": "apprentices drained twice by qualifying",
+    "variable": "apprentices",
+    "change": {
+     "outflows": [
+      "qualifying",
+      "apprentices leaving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "apprentices leaving",
+      "type": "flow",
+      "equation": "apprentices / apprenticeship_time",
+      "units": "people/month",
+      "documentation": "People or things leaving \"apprentices\"."
+     }
+    ],
+    "text": "\"apprentices\" is drained twice for the same thing: \"apprentices leaving\" is a copy of \"qualifying\", so whatever leaves through \"qualifying\" leaves \"apprentices\" a second time."
+   },
+   {
+    "kind": "doubleFill",
+    "id": "Normal Work filled twice by work growth",
+    "variable": "Normal Work",
+    "change": {
+     "inflows": [
+      "work growth",
+      "Normal Work arriving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "Normal Work arriving",
+      "type": "flow",
+      "equation": "Normal_Work * work_growth_rate",
+      "units": "jobs/month/month",
+      "documentation": "People or things arriving in \"Normal Work\"."
+     }
+    ],
+    "text": "\"Normal Work\" is filled twice for the same thing: \"Normal Work arriving\" is a copy of \"work growth\", so whatever arrives through \"work growth\" arrives in \"Normal Work\" a second time."
+   }
+  ],
+  "distractors": [
+   "\"journeymen\" and \"masters\" overlap and one should be removed.",
+   "\"taking on apprentices\" should be split into separate rates for every kind of qualified electricians."
+  ]
+ },
+ "Endemic Infection (hard)": {
+  "name": "Endemic Infection (hard)",
+  "handCase": "Endemic Infection",
+  "description": "an infection that persists in a population with births and deaths",
+  "plants": [
+   {
+    "kind": "gap",
+    "id": "total population leaves out Susceptible",
+    "variable": "total population",
+    "change": {
+     "equation": "Infected + Recovered"
+    },
+    "text": "\"total population\" adds up \"Infected\" and \"Recovered\" and leaves out \"Susceptible\", so it is not the whole of total population."
+   },
+   {
+    "kind": "doubleDrain",
+    "id": "Susceptible drained twice by infecting",
+    "variable": "Susceptible",
+    "change": {
+     "outflows": [
+      "infecting",
+      "susceptible deaths",
+      "Susceptible leaving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "Susceptible leaving",
+      "type": "flow",
+      "equation": "transmission_rate * Susceptible * Infected / total_population",
+      "units": "people/year",
+      "documentation": "People or things leaving \"Susceptible\"."
+     }
+    ],
+    "text": "\"Susceptible\" is drained twice for the same thing: \"Susceptible leaving\" is a copy of \"infecting\", so whatever leaves through \"infecting\" leaves \"Susceptible\" a second time."
+   },
+   {
+    "kind": "doubleFill",
+    "id": "Infected filled twice by infecting",
+    "variable": "Infected",
+    "change": {
+     "inflows": [
+      "infecting",
+      "Infected arriving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "Infected arriving",
+      "type": "flow",
+      "equation": "transmission_rate * Susceptible * Infected / total_population",
+      "units": "people/year",
+      "documentation": "People or things arriving in \"Infected\"."
+     }
+    ],
+    "text": "\"Infected\" is filled twice for the same thing: \"Infected arriving\" is a copy of \"infecting\", so whatever arrives through \"infecting\" arrives in \"Infected\" a second time."
+   }
+  ],
+  "distractors": [
+   "\"Recovered\" should not be a stock.",
+   "\"births\" should be split into separate rates for every kind of total population."
+  ]
+ },
+ "Road Network Traffic (hard)": {
+  "name": "Road Network Traffic (hard)",
+  "handCase": "Road Network Traffic",
+  "description": "a city's roads wearing out faster under heavier traffic and being resurfaced by crews it sizes to the repair backlog",
+  "heldOut": true,
+  "plants": [
+   {
+    "kind": "gap",
+    "id": "network length leaves out Worn Roads",
+    "variable": "network length",
+    "change": {
+     "equation": "Good_Roads"
+    },
+    "text": "\"network length\" adds up \"Good Roads\" and leaves out \"Worn Roads\", so it is not the whole of network length."
+   },
+   {
+    "kind": "doubleDrain",
+    "id": "Good Roads drained twice by wearing out",
+    "variable": "Good Roads",
+    "change": {
+     "outflows": [
+      "wearing out",
+      "Good Roads leaving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "Good Roads leaving",
+      "type": "flow",
+      "equation": "Good_Roads / road_surface_life * traffic_load",
+      "units": "km/year",
+      "documentation": "People or things leaving \"Good Roads\"."
+     }
+    ],
+    "text": "\"Good Roads\" is drained twice for the same thing: \"Good Roads leaving\" is a copy of \"wearing out\", so whatever leaves through \"wearing out\" leaves \"Good Roads\" a second time."
+   },
+   {
+    "kind": "doubleFill",
+    "id": "Worn Roads filled twice by wearing out",
+    "variable": "Worn Roads",
+    "change": {
+     "inflows": [
+      "wearing out",
+      "Worn Roads arriving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "Worn Roads arriving",
+      "type": "flow",
+      "equation": "Good_Roads / road_surface_life * traffic_load",
+      "units": "km/year",
+      "documentation": "People or things arriving in \"Worn Roads\"."
+     }
+    ],
+    "text": "\"Worn Roads\" is filled twice for the same thing: \"Worn Roads arriving\" is a copy of \"wearing out\", so whatever arrives through \"wearing out\" arrives in \"Worn Roads\" a second time."
+   }
+  ],
+  "distractors": [
+   "\"Repair Crews\" should not be a stock.",
+   "\"resurfacing\" should be split into separate rates for every kind of network length."
+  ]
+ },
+ "Hotel Ready Rooms (hard)": {
+  "name": "Hotel Ready Rooms (hard)",
+  "handCase": "Hotel Ready Rooms",
+  "description": "a hotel whose rooms pass from reservations to guests to housekeeping, and which accepts fewer bookings when few rooms are ready",
+  "heldOut": true,
+  "plants": [
+   {
+    "kind": "gap",
+    "id": "rooms out of service leaves out Occupied Rooms",
+    "variable": "rooms out of service",
+    "change": {
+     "equation": "Rooms_Awaiting_Cleaning"
+    },
+    "text": "\"rooms out of service\" adds up \"Rooms Awaiting Cleaning\" and leaves out \"Occupied Rooms\", so it is not the whole of rooms out of service."
+   },
+   {
+    "kind": "doubleDrain",
+    "id": "Reservations drained twice by checking in",
+    "variable": "Reservations",
+    "change": {
+     "outflows": [
+      "checking in",
+      "cancelling",
+      "Reservations leaving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "Reservations leaving",
+      "type": "flow",
+      "equation": "Reservations / booking_lead_time",
+      "units": "rooms/day",
+      "documentation": "People or things leaving \"Reservations\"."
+     }
+    ],
+    "text": "\"Reservations\" is drained twice for the same thing: \"Reservations leaving\" is a copy of \"checking in\", so whatever leaves through \"checking in\" leaves \"Reservations\" a second time."
+   },
+   {
+    "kind": "doubleFill",
+    "id": "Occupied Rooms filled twice by checking in",
+    "variable": "Occupied Rooms",
+    "change": {
+     "inflows": [
+      "checking in",
+      "Occupied Rooms arriving"
+     ]
+    },
+    "adds": [
+     {
+      "name": "Occupied Rooms arriving",
+      "type": "flow",
+      "equation": "Reservations / booking_lead_time",
+      "units": "rooms/day",
+      "documentation": "People or things arriving in \"Occupied Rooms\"."
+     }
+    ],
+    "text": "\"Occupied Rooms\" is filled twice for the same thing: \"Occupied Rooms arriving\" is a copy of \"checking in\", so whatever arrives through \"checking in\" arrives in \"Occupied Rooms\" a second time."
+   }
+  ],
+  "distractors": [
+   "\"Rooms Awaiting Cleaning\" should not be a stock.",
+   "\"booking\" should be split into separate rates for every kind of rooms out of service."
+  ]
+ }
+}

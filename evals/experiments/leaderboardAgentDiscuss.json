@@ -1,0 +1,106 @@
+{
+    "engineConfigs": {
+        "merlin-agent-sonnet-5-5": {
+            "engine": "test-agent-discuss",
+            "additionalParameters": {
+                "agentName": "merlin",
+                "agentMode": "sdk",
+                "provider": "anthropic",
+                "intelligence": "standard",
+                "toolModels": {
+                    "build": {
+                        "normal": "claude-sonnet-5-5",
+                        "hard": "claude-sonnet-5-5"
+                    },
+                    "nonBuild": {
+                        "normal": "claude-sonnet-5-5",
+                        "hard": "claude-sonnet-5-5"
+                    }
+                },
+                "mode": "sfd-discuss"
+            },
+            "limits": {
+                "tokensPerMinute": 400000,
+                "baselineTokenUsage": 50000,
+                "requestsPerMinute": 3
+            }
+        },
+        "merlin-agent-opus-5-5": {
+            "engine": "test-agent-discuss",
+            "additionalParameters": {
+                "agentName": "merlin",
+                "agentMode": "sdk",
+                "provider": "anthropic",
+                "intelligence": "high",
+                "toolModels": {
+                    "build": {
+                        "normal": "claude-opus-5-5",
+                        "hard": "claude-opus-5-5"
+                    },
+                    "nonBuild": {
+                        "normal": "claude-opus-5-5",
+                        "hard": "claude-opus-5-5"
+                    }
+                },
+                "mode": "sfd-discuss"
+            },
+            "limits": {
+                "tokensPerMinute": 400000,
+                "baselineTokenUsage": 50000,
+                "requestsPerMinute": 3
+            }
+        },
+        "socrates-agent-sonnet-5-5": {
+            "engine": "test-agent-discuss",
+            "additionalParameters": {
+                "agentName": "socrates",
+                "provider": "anthropic",
+                "intelligence": "standard",
+                "toolModels": {
+                    "build": {
+                        "normal": "claude-sonnet-5-5",
+                        "hard": "claude-sonnet-5-5"
+                    },
+                    "nonBuild": {
+                        "normal": "claude-sonnet-5-5",
+                        "hard": "claude-sonnet-5-5"
+                    }
+                },
+                "mode": "sfd-discuss"
+            },
+            "limits": {
+                "tokensPerMinute": 400000,
+                "baselineTokenUsage": 50000,
+                "requestsPerMinute": 3
+            }
+        },
+        "socrates-agent-opus-5-5": {
+            "engine": "test-agent-discuss",
+            "additionalParameters": {
+                "agentName": "socrates",
+                "provider": "anthropic",
+                "intelligence": "high",
+                "toolModels": {
+                    "build": {
+                        "normal": "claude-opus-5-5",
+                        "hard": "claude-opus-5-5"
+                    },
+                    "nonBuild": {
+                        "normal": "claude-opus-5-5",
+                        "hard": "claude-opus-5-5"
+                    }
+                },
+                "mode": "sfd-discuss"
+            },
+            "limits": {
+                "tokensPerMinute": 400000,
+                "baselineTokenUsage": 50000,
+                "requestsPerMinute": 3
+            }
+        }
+    },
+    "categories": {
+        "cldInterpretation": true,
+        "sensitivityInterpretation": true
+    }
+}

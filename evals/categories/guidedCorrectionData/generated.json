@@ -1,0 +1,501 @@
+{
+ "Rural dialysis network": {
+  "name": "Rural dialysis network",
+  "scenario": "dialysisClinic",
+  "description": "the rural dialysis network",
+  "errors": [
+   {
+    "kind": "timeConstant",
+    "id": "returning multiplies by time to return",
+    "variable": "returning",
+    "change": {
+     "equation": "discouraged_patients * time_to_return"
+    },
+    "text": "\"returning\" multiplies by \"time to return\" instead of dividing by it, so a longer time to return makes it bigger instead of smaller (and the units do not work out).",
+    "symptomTopic": "what happens to \"returning\" when \"time to return\" is longer",
+    "symptom": "When I make \"time to return\" longer, \"returning\" gets bigger instead of smaller, which can't be right."
+   },
+   {
+    "kind": "disconnected",
+    "id": "patients giving up not connected to discouraged patients",
+    "variable": "discouraged patients",
+    "change": {
+     "inflows": []
+    },
+    "text": "\"patients giving up\" drains \"waiting list\" but is not connected to \"discouraged patients\", so what leaves \"waiting list\" vanishes instead of arriving in \"discouraged patients\".",
+    "symptomTopic": "what happens to \"discouraged patients\" when \"patients giving up\" happens",
+    "symptom": "When \"patients giving up\" happens, \"waiting list\" goes down but \"discouraged patients\" never goes up."
+   }
+  ],
+  "distractors": [
+   "\"treatments started\" should not drain \"waiting list\".",
+   "\"treatments started\" should multiply by \"minimum wait\" instead of dividing by it."
+  ],
+  "extension": {
+   "request": "Please add a loss from \"waiting list\": a flow called \"waiting list lost\" that drains \"waiting list\" at a constant \"waiting list loss fraction\" of 0.01 per month of \"waiting list\".",
+   "variables": [
+    {
+     "name": "waiting list lost",
+     "type": "flow",
+     "references": [
+      "waiting list"
+     ]
+    },
+    {
+     "name": "waiting list loss fraction"
+    }
+   ],
+   "stockFlows": [
+    {
+     "stock": "waiting list",
+     "outflow": "waiting list lost"
+    }
+   ]
+  },
+  "plantedForExtension": "returning multiplies by time to return"
+ },
+ "Regional distributor inventory": {
+  "name": "Regional distributor inventory",
+  "scenario": "distributor",
+  "description": "the regional distributor inventory",
+  "errors": [
+   {
+    "kind": "missingOutflow",
+    "id": "shipments does not drain inventory",
+    "variable": "inventory",
+    "change": {
+     "outflows": []
+    },
+    "text": "\"shipments\" is not connected as an outflow of \"inventory\", so \"inventory\" never goes down through it and keeps piling up.",
+    "symptomTopic": "what happens to \"inventory\" through \"shipments\"",
+    "symptom": "\"shipments\" is happening, but \"inventory\" never goes down because of it — it just keeps piling up."
+   },
+   {
+    "kind": "timeConstant",
+    "id": "deliveries multiplies by delivery delay",
+    "variable": "deliveries",
+    "change": {
+     "equation": "supply_line * delivery_delay"
+    },
+    "text": "\"deliveries\" multiplies by \"delivery delay\" instead of dividing by it, so a longer delivery delay makes it bigger instead of smaller (and the units do not work out).",
+    "symptomTopic": "what happens to \"deliveries\" when \"delivery delay\" is longer",
+    "symptom": "When I make \"delivery delay\" longer, \"deliveries\" gets bigger instead of smaller, which can't be right."
+   }
+  ],
+  "distractors": [
+   "\"orders\" should use \"inventory\" minus \"desired inventory\" instead of \"desired inventory\" minus \"inventory\".",
+   "\"updating expectations\" should use \"expected demand\" minus \"demand\" instead of \"demand\" minus \"expected demand\"."
+  ],
+  "extension": {
+   "request": "Please add a loss from \"inventory\": a flow called \"inventory lost\" that drains \"inventory\" at a constant \"inventory loss fraction\" of 0.01 per week of \"inventory\".",
+   "variables": [
+    {
+     "name": "inventory lost",
+     "type": "flow",
+     "references": [
+      "inventory"
+     ]
+    },
+    {
+     "name": "inventory loss fraction"
+    }
+   ],
+   "stockFlows": [
+    {
+     "stock": "inventory",
+     "outflow": "inventory lost"
+    }
+   ]
+  },
+  "plantedForExtension": "deliveries multiplies by delivery delay"
+ },
+ "Kitchen fitting backlog": {
+  "name": "Kitchen fitting backlog",
+  "scenario": "kitchenFitters",
+  "description": "the kitchen fitting backlog",
+  "errors": [
+   {
+    "kind": "missingOutflow",
+    "id": "jobs fitted does not drain job backlog",
+    "variable": "job backlog",
+    "change": {
+     "outflows": [
+      "cancellations"
+     ]
+    },
+    "text": "\"jobs fitted\" is not connected as an outflow of \"job backlog\", so \"job backlog\" never goes down through it and keeps piling up.",
+    "symptomTopic": "what happens to \"job backlog\" through \"jobs fitted\"",
+    "symptom": "\"jobs fitted\" is happening, but \"job backlog\" never goes down because of it — it just keeps piling up."
+   },
+   {
+    "kind": "timeConstant",
+    "id": "callbacks multiplies by discovery time",
+    "variable": "callbacks",
+    "change": {
+     "equation": "hidden_faults * discovery_time"
+    },
+    "text": "\"callbacks\" multiplies by \"discovery time\" instead of dividing by it, so a longer discovery time makes it bigger instead of smaller (and the units do not work out).",
+    "symptomTopic": "what happens to \"callbacks\" when \"discovery time\" is longer",
+    "symptom": "When I make \"discovery time\" longer, \"callbacks\" gets bigger instead of smaller, which can't be right."
+   }
+  ],
+  "distractors": [
+   "\"hiring\" should use \"fitting crews\" minus \"desired crews\" instead of \"desired crews\" minus \"fitting crews\".",
+   "\"hiring\" should multiply by \"hiring time\" instead of dividing by it."
+  ],
+  "extension": {
+   "request": "Please add a loss from \"job backlog\": a flow called \"job backlog lost\" that drains \"job backlog\" at a constant \"job backlog loss fraction\" of 0.01 per week of \"job backlog\".",
+   "variables": [
+    {
+     "name": "job backlog lost",
+     "type": "flow",
+     "references": [
+      "job backlog"
+     ]
+    },
+    {
+     "name": "job backlog loss fraction"
+    }
+   ],
+   "stockFlows": [
+    {
+     "stock": "job backlog",
+     "outflow": "job backlog lost"
+    }
+   ]
+  },
+  "plantedForExtension": "callbacks multiplies by discovery time"
+ },
+ "Regional specialty mushroom growers": {
+  "name": "Regional specialty mushroom growers",
+  "scenario": "mushroomGrowers",
+  "description": "the regional specialty mushroom growers",
+  "errors": [
+   {
+    "kind": "missingOutflow",
+    "id": "rooms worn out does not drain growing rooms",
+    "variable": "growing rooms",
+    "change": {
+     "outflows": [
+      "rooms closed"
+     ]
+    },
+    "text": "\"rooms worn out\" is not connected as an outflow of \"growing rooms\", so \"growing rooms\" never goes down through it and keeps piling up.",
+    "symptomTopic": "what happens to \"growing rooms\" through \"rooms worn out\"",
+    "symptom": "\"rooms worn out\" is happening, but \"growing rooms\" never goes down because of it — it just keeps piling up."
+   },
+   {
+    "kind": "timeConstant",
+    "id": "rooms built multiplies by construction time",
+    "variable": "rooms built",
+    "change": {
+     "equation": "rooms_under_construction * construction_time"
+    },
+    "text": "\"rooms built\" multiplies by \"construction time\" instead of dividing by it, so a longer construction time makes it bigger instead of smaller (and the units do not work out).",
+    "symptomTopic": "what happens to \"rooms built\" when \"construction time\" is longer",
+    "symptom": "When I make \"construction time\" longer, \"rooms built\" gets bigger instead of smaller, which can't be right."
+   }
+  ],
+  "distractors": [
+   "\"rooms closed\" should not flow into \"idle rooms\"; it should only drain \"growing rooms\".",
+   "\"rooms built\" should not flow into \"rooms starting up\"; it should only drain \"rooms under construction\"."
+  ],
+  "extension": {
+   "request": "Please add a loss from \"growing rooms\": a flow called \"growing rooms lost\" that drains \"growing rooms\" at a constant \"growing rooms loss fraction\" of 0.01 per month of \"growing rooms\".",
+   "variables": [
+    {
+     "name": "growing rooms lost",
+     "type": "flow",
+     "references": [
+      "growing rooms"
+     ]
+    },
+    {
+     "name": "growing rooms loss fraction"
+    }
+   ],
+   "stockFlows": [
+    {
+     "stock": "growing rooms",
+     "outflow": "growing rooms lost"
+    }
+   ]
+  },
+  "plantedForExtension": "rooms built multiplies by construction time"
+ },
+ "Regional ambulance service": {
+  "name": "Regional ambulance service",
+  "scenario": "ambulanceService",
+  "description": "the regional ambulance service",
+  "errors": [
+   {
+    "kind": "disconnected",
+    "id": "crews starting not connected to crews",
+    "variable": "crews",
+    "change": {
+     "inflows": []
+    },
+    "text": "\"crews starting\" drains \"crews awaiting budget\" but is not connected to \"crews\", so what leaves \"crews awaiting budget\" vanishes instead of arriving in \"crews\".",
+    "symptomTopic": "what happens to \"crews\" when \"crews starting\" happens",
+    "symptom": "When \"crews starting\" happens, \"crews awaiting budget\" goes down but \"crews\" never goes up."
+   },
+   {
+    "kind": "timeConstant",
+    "id": "crews requested multiplies by review time",
+    "variable": "crews requested",
+    "change": {
+     "equation": "MAX(0, crews_needed - crews - crews_awaiting_budget) * review_time"
+    },
+    "text": "\"crews requested\" multiplies by \"review time\" instead of dividing by it, so a longer review time makes it bigger instead of smaller (and the units do not work out).",
+    "symptomTopic": "what happens to \"crews requested\" when \"review time\" is longer",
+    "symptom": "When I make \"review time\" longer, \"crews requested\" gets bigger instead of smaller, which can't be right."
+   }
+  ],
+  "distractors": [
+   "\"crews starting\" should multiply by \"budget delay\" instead of dividing by it.",
+   "\"relaxing the target\" should multiply by \"target adjustment time\" instead of dividing by it."
+  ],
+  "extension": {
+   "request": "Please add a loss from \"population\": a flow called \"population lost\" that drains \"population\" at a constant \"population loss fraction\" of 0.01 per month of \"population\".",
+   "variables": [
+    {
+     "name": "population lost",
+     "type": "flow",
+     "references": [
+      "population"
+     ]
+    },
+    {
+     "name": "population loss fraction"
+    }
+   ],
+   "stockFlows": [
+    {
+     "stock": "population",
+     "outflow": "population lost"
+    }
+   ]
+  },
+  "plantedForExtension": "crews starting not connected to crews"
+ },
+ "Parcel delivery van fleet": {
+  "name": "Parcel delivery van fleet",
+  "scenario": "deliveryVans",
+  "description": "the parcel delivery van fleet",
+  "errors": [
+   {
+    "kind": "timeConstant",
+    "id": "vans due for retirement multiplies by van life",
+    "variable": "vans due for retirement",
+    "change": {
+     "equation": "vans * van_life"
+    },
+    "text": "\"vans due for retirement\" multiplies by \"van life\" instead of dividing by it, so a longer van life makes it bigger instead of smaller (and the units do not work out).",
+    "symptomTopic": "what happens to \"vans due for retirement\" when \"van life\" is longer",
+    "symptom": "When I make \"van life\" longer, \"vans due for retirement\" gets bigger instead of smaller, which can't be right."
+   },
+   {
+    "kind": "missingOutflow",
+    "id": "retiring vans does not drain vans",
+    "variable": "vans",
+    "change": {
+     "outflows": []
+    },
+    "text": "\"retiring vans\" is not connected as an outflow of \"vans\", so \"vans\" never goes down through it and keeps piling up.",
+    "symptomTopic": "what happens to \"vans\" through \"retiring vans\"",
+    "symptom": "\"retiring vans\" is happening, but \"vans\" never goes down because of it — it just keeps piling up."
+   }
+  ],
+  "distractors": [
+   "\"vans wanted\" should use \"vans\" minus \"vans needed\" instead of \"vans needed\" minus \"vans\".",
+   "\"retiring vans\" should multiply by \"fleet adjustment time\" instead of dividing by it."
+  ],
+  "extension": {
+   "request": "Please add a loss from \"vans\": a flow called \"vans lost\" that drains \"vans\" at a constant \"vans loss fraction\" of 0.01 per year of \"vans\".",
+   "variables": [
+    {
+     "name": "vans lost",
+     "type": "flow",
+     "references": [
+      "vans"
+     ]
+    },
+    {
+     "name": "vans loss fraction"
+    }
+   ],
+   "stockFlows": [
+    {
+     "stock": "vans",
+     "outflow": "vans lost"
+    }
+   ]
+  },
+  "plantedForExtension": "vans due for retirement multiplies by van life"
+ },
+ "Community food bank volunteers": {
+  "name": "Community food bank volunteers",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "errors": [
+   {
+    "kind": "timeConstant",
+    "id": "tiring multiplies by fatigue time",
+    "variable": "tiring",
+    "change": {
+     "equation": "(stress - fatigue) * fatigue_time"
+    },
+    "text": "\"tiring\" multiplies by \"fatigue time\" instead of dividing by it, so a longer fatigue time makes it bigger instead of smaller (and the units do not work out).",
+    "symptomTopic": "what happens to \"tiring\" when \"fatigue time\" is longer",
+    "symptom": "When I make \"fatigue time\" longer, \"tiring\" gets bigger instead of smaller, which can't be right."
+   },
+   {
+    "kind": "disconnected",
+    "id": "quitting not connected to Potential Volunteers",
+    "variable": "Potential Volunteers",
+    "change": {
+     "inflows": []
+    },
+    "text": "\"quitting\" drains \"volunteers\" but is not connected to \"Potential Volunteers\", so what leaves \"volunteers\" vanishes instead of arriving in \"Potential Volunteers\".",
+    "symptomTopic": "what happens to \"Potential Volunteers\" when \"quitting\" happens",
+    "symptom": "When \"quitting\" happens, \"volunteers\" goes down but \"Potential Volunteers\" never goes up."
+   }
+  ],
+  "distractors": [
+   "\"families moving on\" should multiply by \"time on rolls\" instead of dividing by it.",
+   "\"recruiting\" should not flow into \"volunteers\"; it should only drain \"Potential Volunteers\"."
+  ],
+  "extension": {
+   "request": "Please add a loss from \"volunteers\": a flow called \"volunteers lost\" that drains \"volunteers\" at a constant \"volunteers loss fraction\" of 0.01 per month of \"volunteers\".",
+   "variables": [
+    {
+     "name": "volunteers lost",
+     "type": "flow",
+     "references": [
+      "volunteers"
+     ]
+    },
+    {
+     "name": "volunteers loss fraction"
+    }
+   ],
+   "stockFlows": [
+    {
+     "stock": "volunteers",
+     "outflow": "volunteers lost"
+    }
+   ]
+  },
+  "plantedForExtension": "tiring multiplies by fatigue time"
+ },
+ "Regional electricians' guild": {
+  "name": "Regional electricians' guild",
+  "scenario": "electricianTraining",
+  "description": "the regional electricians' guild",
+  "errors": [
+   {
+    "kind": "missingOutflow",
+    "id": "retiring does not drain masters",
+    "variable": "masters",
+    "change": {
+     "outflows": []
+    },
+    "text": "\"retiring\" is not connected as an outflow of \"masters\", so \"masters\" never goes down through it and keeps piling up.",
+    "symptomTopic": "what happens to \"masters\" through \"retiring\"",
+    "symptom": "\"retiring\" is happening, but \"masters\" never goes down because of it — it just keeps piling up."
+   },
+   {
+    "kind": "timeConstant",
+    "id": "intake wanted multiplies by intake adjustment time",
+    "variable": "intake wanted",
+    "change": {
+     "equation": "MAX(minimum_intake, retiring + workforce_gap * intake_adjustment_time)"
+    },
+    "text": "\"intake wanted\" multiplies by \"intake adjustment time\" instead of dividing by it, so a longer intake adjustment time makes it bigger instead of smaller (and the units do not work out).",
+    "symptomTopic": "what happens to \"intake wanted\" when \"intake adjustment time\" is longer",
+    "symptom": "When I make \"intake adjustment time\" longer, \"intake wanted\" gets bigger instead of smaller, which can't be right."
+   }
+  ],
+  "distractors": [
+   "\"qualifying\" should not flow into \"journeymen\"; it should only drain \"apprentices\".",
+   "\"qualifying\" should multiply by \"apprenticeship time\" instead of dividing by it."
+  ],
+  "extension": {
+   "request": "Please add a loss from \"Normal Work\": a flow called \"Normal Work lost\" that drains \"Normal Work\" at a constant \"Normal Work loss fraction\" of 0.01 per month of \"Normal Work\".",
+   "variables": [
+    {
+     "name": "Normal Work lost",
+     "type": "flow",
+     "references": [
+      "Normal Work"
+     ]
+    },
+    {
+     "name": "Normal Work loss fraction"
+    }
+   ],
+   "stockFlows": [
+    {
+     "stock": "Normal Work",
+     "outflow": "Normal Work lost"
+    }
+   ]
+  },
+  "plantedForExtension": "retiring does not drain masters"
+ },
+ "Hospital contract cleaning standard": {
+  "name": "Hospital contract cleaning standard",
+  "scenario": "cleaningStandards",
+  "description": "the hospital contract cleaning standard",
+  "errors": [
+   {
+    "kind": "disconnected",
+    "id": "cleaners starting not connected to cleaning staff",
+    "variable": "cleaning staff",
+    "change": {
+     "inflows": []
+    },
+    "text": "\"cleaners starting\" drains \"open positions\" but is not connected to \"cleaning staff\", so what leaves \"open positions\" vanishes instead of arriving in \"cleaning staff\".",
+    "symptomTopic": "what happens to \"cleaning staff\" when \"cleaners starting\" happens",
+    "symptom": "When \"cleaners starting\" happens, \"open positions\" goes down but \"cleaning staff\" never goes up."
+   },
+   {
+    "kind": "timeConstant",
+    "id": "cleaners requested multiplies by review time",
+    "variable": "cleaners requested",
+    "change": {
+     "equation": "MAX(0, cleaners_leaving + (cleaners_needed + cleaners_leaving * hiring_time - cleaning_staff - open_positions) * review_time)"
+    },
+    "text": "\"cleaners requested\" multiplies by \"review time\" instead of dividing by it, so a longer review time makes it bigger instead of smaller (and the units do not work out).",
+    "symptomTopic": "what happens to \"cleaners requested\" when \"review time\" is longer",
+    "symptom": "When I make \"review time\" longer, \"cleaners requested\" gets bigger instead of smaller, which can't be right."
+   }
+  ],
+  "distractors": [
+   "\"lowering the standard\" should not drain \"inspection standard\".",
+   "\"cleaners starting\" should multiply by \"hiring time\" instead of dividing by it."
+  ],
+  "extension": {
+   "request": "Please add a loss from \"cleaning staff\": a flow called \"cleaning staff lost\" that drains \"cleaning staff\" at a constant \"cleaning staff loss fraction\" of 0.01 per month of \"cleaning staff\".",
+   "variables": [
+    {
+     "name": "cleaning staff lost",
+     "type": "flow",
+     "references": [
+      "cleaning staff"
+     ]
+    },
+    {
+     "name": "cleaning staff loss fraction"
+    }
+   ],
+   "stockFlows": [
+    {
+     "stock": "cleaning staff",
+     "outflow": "cleaning staff lost"
+    }
+   ]
+  },
+  "plantedForExtension": "cleaners requested multiplies by review time"
+ }
+}

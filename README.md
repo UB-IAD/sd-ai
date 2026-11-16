@@ -12,7 +12,7 @@ Contains the engines used by [Stella](https://www.iseesystems.com/store/products
     - list all engines
     - list parameters required/supported by each specific engine
     - generating a model using a specific engine
-- all engines can be automatically tested for quality using `evals`
+- all engines can be automatically tested for quality using `evals`, and the conversational agents are tested over whole working sessions by the agent evals
 
 ## Engine
 - an engine only needs to do 2 things:
@@ -522,6 +522,7 @@ Unit tests are provided for:
   - `QualitativeEngineBrain.test.js` - Tests qualitative diagram generation
   - `SeldonBrain.test.js` - Tests discussion engine functionality
 - **Evaluation methods** in `/evals/categories` - Tests cover causal relationship evaluation, conformance validation, and quantitative model assessment
+- **Agent eval infrastructure** in `/tests/evals` - each agent category's own tests (reference answers pass, null agents fail), plus the shared contract, freeze-snapshot, held-out and lookup tests
 - **Model output evaluation** in `/evals/model_output_evaluation` - Standalone tools for classifying System Dynamics model output (time series) into behavioral patterns like exponential growth, oscillation, or S-shaped growth
 
 Run tests with:
@@ -537,7 +538,7 @@ npm run test:coverage
 Tests are built using Jest and Supertest, and use the actual engine implementations (no mocking) to ensure real-world functionality.
 
 ## Evals
-- checkout the [Evals README](evals/README.md)
+- checkout the [Evals README](evals/README.md), which also covers the agent evals (the `agent` leaderboard)
 - for model output behavior classification, see [Model Output Evaluation](evals/model_output_evaluation/behavioral_evaluation_using_ists/README.md)
 
   

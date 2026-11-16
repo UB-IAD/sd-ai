@@ -1,0 +1,1634 @@
+{
+ "Bike share, parameters": [
+  {
+   "time": 0,
+   "value": 101
+  },
+  {
+   "time": 1.5,
+   "value": 255.9
+  },
+  {
+   "time": 3,
+   "value": 502.5
+  },
+  {
+   "time": 4.5,
+   "value": 889.8
+  },
+  {
+   "time": 6,
+   "value": 1540
+  },
+  {
+   "time": 7.5,
+   "value": 2517
+  },
+  {
+   "time": 9,
+   "value": 3979
+  },
+  {
+   "time": 10.5,
+   "value": 6196
+  },
+  {
+   "time": 12,
+   "value": 9353
+  },
+  {
+   "time": 13.5,
+   "value": 13320
+  },
+  {
+   "time": 15,
+   "value": 18910
+  },
+  {
+   "time": 16.5,
+   "value": 24850
+  },
+  {
+   "time": 18,
+   "value": 30560
+  },
+  {
+   "time": 19.5,
+   "value": 36530
+  },
+  {
+   "time": 21,
+   "value": 40100
+  },
+  {
+   "time": 22.5,
+   "value": 43450
+  },
+  {
+   "time": 24,
+   "value": 45370
+  },
+  {
+   "time": 25.5,
+   "value": 48290
+  },
+  {
+   "time": 27,
+   "value": 48750
+  },
+  {
+   "time": 28.5,
+   "value": 49680
+  },
+  {
+   "time": 30,
+   "value": 50060
+  },
+  {
+   "time": 31.5,
+   "value": 48700
+  },
+  {
+   "time": 33,
+   "value": 50010
+  },
+  {
+   "time": 34.5,
+   "value": 50710
+  },
+  {
+   "time": 36,
+   "value": 49360
+  }
+ ],
+ "Bike share, members leaving": [
+  {
+   "time": 0,
+   "value": 101
+  },
+  {
+   "time": 3,
+   "value": 250.4
+  },
+  {
+   "time": 6,
+   "value": 481.1
+  },
+  {
+   "time": 9,
+   "value": 831.4
+  },
+  {
+   "time": 12,
+   "value": 1400
+  },
+  {
+   "time": 15,
+   "value": 2217
+  },
+  {
+   "time": 18,
+   "value": 3378
+  },
+  {
+   "time": 21,
+   "value": 5036
+  },
+  {
+   "time": 24,
+   "value": 7215
+  },
+  {
+   "time": 27,
+   "value": 9639
+  },
+  {
+   "time": 30,
+   "value": 12630
+  },
+  {
+   "time": 33,
+   "value": 15020
+  },
+  {
+   "time": 36,
+   "value": 16270
+  },
+  {
+   "time": 39,
+   "value": 16630
+  },
+  {
+   "time": 42,
+   "value": 15150
+  },
+  {
+   "time": 45,
+   "value": 13230
+  },
+  {
+   "time": 48,
+   "value": 10870
+  },
+  {
+   "time": 51,
+   "value": 8938
+  },
+  {
+   "time": 54,
+   "value": 6875
+  },
+  {
+   "time": 57,
+   "value": 5287
+  },
+  {
+   "time": 60,
+   "value": 3993
+  },
+  {
+   "time": 63,
+   "value": 2899
+  },
+  {
+   "time": 66,
+   "value": 2215
+  },
+  {
+   "time": 69,
+   "value": 1668
+  },
+  {
+   "time": 72,
+   "value": 1205
+  }
+ ],
+ "Dialysis, parameters": [
+  {
+   "time": 0,
+   "value": 40.38
+  },
+  {
+   "time": 2,
+   "value": 65.24
+  },
+  {
+   "time": 4,
+   "value": 87.55
+  },
+  {
+   "time": 6,
+   "value": 105.6
+  },
+  {
+   "time": 8,
+   "value": 121.7
+  },
+  {
+   "time": 10,
+   "value": 128.5
+  },
+  {
+   "time": 12,
+   "value": 127.6
+  },
+  {
+   "time": 14,
+   "value": 121.5
+  },
+  {
+   "time": 16,
+   "value": 109.9
+  },
+  {
+   "time": 18,
+   "value": 92.09
+  },
+  {
+   "time": 20,
+   "value": 75.03
+  },
+  {
+   "time": 22,
+   "value": 53.35
+  },
+  {
+   "time": 24,
+   "value": 39.46
+  },
+  {
+   "time": 26,
+   "value": 38.37
+  },
+  {
+   "time": 28,
+   "value": 37.23
+  },
+  {
+   "time": 30,
+   "value": 37.15
+  },
+  {
+   "time": 32,
+   "value": 36.72
+  },
+  {
+   "time": 34,
+   "value": 37.69
+  },
+  {
+   "time": 36,
+   "value": 37.15
+  },
+  {
+   "time": 38,
+   "value": 37.27
+  },
+  {
+   "time": 40,
+   "value": 37.16
+  },
+  {
+   "time": 42,
+   "value": 35.89
+  },
+  {
+   "time": 44,
+   "value": 36.68
+  },
+  {
+   "time": 46,
+   "value": 37.06
+  },
+  {
+   "time": 48,
+   "value": 35.98
+  }
+ ],
+ "Dialysis, growing referrals": [
+  {
+   "time": 0,
+   "value": 40.38
+  },
+  {
+   "time": 2,
+   "value": 61.53
+  },
+  {
+   "time": 4,
+   "value": 85.13
+  },
+  {
+   "time": 6,
+   "value": 109
+  },
+  {
+   "time": 8,
+   "value": 134.7
+  },
+  {
+   "time": 10,
+   "value": 153.5
+  },
+  {
+   "time": 12,
+   "value": 165.5
+  },
+  {
+   "time": 14,
+   "value": 173.1
+  },
+  {
+   "time": 16,
+   "value": 174.9
+  },
+  {
+   "time": 18,
+   "value": 169.1
+  },
+  {
+   "time": 20,
+   "value": 168.6
+  },
+  {
+   "time": 22,
+   "value": 164.4
+  },
+  {
+   "time": 24,
+   "value": 160.9
+  },
+  {
+   "time": 26,
+   "value": 165.5
+  },
+  {
+   "time": 28,
+   "value": 168.7
+  },
+  {
+   "time": 30,
+   "value": 181.7
+  },
+  {
+   "time": 32,
+   "value": 198.8
+  },
+  {
+   "time": 34,
+   "value": 229.1
+  },
+  {
+   "time": 36,
+   "value": 254.3
+  },
+  {
+   "time": 38,
+   "value": 285.5
+  },
+  {
+   "time": 40,
+   "value": 314.5
+  },
+  {
+   "time": 42,
+   "value": 330.7
+  },
+  {
+   "time": 44,
+   "value": 362.2
+  },
+  {
+   "time": 46,
+   "value": 386.9
+  },
+  {
+   "time": 48,
+   "value": 392.9
+  }
+ ],
+ "Distributor, parameters": [
+  {
+   "time": 0,
+   "value": 403.8
+  },
+  {
+   "time": 2.5,
+   "value": 401
+  },
+  {
+   "time": 5,
+   "value": 379.6
+  },
+  {
+   "time": 7.5,
+   "value": 337.8
+  },
+  {
+   "time": 10,
+   "value": 330.3
+  },
+  {
+   "time": 12.5,
+   "value": 341.3
+  },
+  {
+   "time": 15,
+   "value": 370.1
+  },
+  {
+   "time": 17.5,
+   "value": 413
+  },
+  {
+   "time": 20,
+   "value": 456.1
+  },
+  {
+   "time": 22.5,
+   "value": 482
+  },
+  {
+   "time": 25,
+   "value": 517.1
+  },
+  {
+   "time": 27.5,
+   "value": 528.3
+  },
+  {
+   "time": 30,
+   "value": 522.9
+  },
+  {
+   "time": 32.5,
+   "value": 523
+  },
+  {
+   "time": 35,
+   "value": 499
+  },
+  {
+   "time": 37.5,
+   "value": 486.5
+  },
+  {
+   "time": 40,
+   "value": 471.1
+  },
+  {
+   "time": 42.5,
+   "value": 477.1
+  },
+  {
+   "time": 45,
+   "value": 468.3
+  },
+  {
+   "time": 47.5,
+   "value": 471.5
+  },
+  {
+   "time": 50,
+   "value": 474.4
+  },
+  {
+   "time": 52.5,
+   "value": 463.7
+  },
+  {
+   "time": 55,
+   "value": 479.6
+  },
+  {
+   "time": 57.5,
+   "value": 489.6
+  },
+  {
+   "time": 60,
+   "value": 478.8
+  }
+ ],
+ "Distributor, seasonal demand": [
+  {
+   "time": 0,
+   "value": 403.8
+  },
+  {
+   "time": 2.5,
+   "value": 384.6
+  },
+  {
+   "time": 5,
+   "value": 334.4
+  },
+  {
+   "time": 7.5,
+   "value": 301
+  },
+  {
+   "time": 10,
+   "value": 369.5
+  },
+  {
+   "time": 12.5,
+   "value": 501.1
+  },
+  {
+   "time": 15,
+   "value": 632.5
+  },
+  {
+   "time": 17.5,
+   "value": 705.6
+  },
+  {
+   "time": 20,
+   "value": 686.9
+  },
+  {
+   "time": 22.5,
+   "value": 576.6
+  },
+  {
+   "time": 25,
+   "value": 434.6
+  },
+  {
+   "time": 27.5,
+   "value": 290.1
+  },
+  {
+   "time": 30,
+   "value": 219.4
+  },
+  {
+   "time": 32.5,
+   "value": 261.1
+  },
+  {
+   "time": 35,
+   "value": 383.1
+  },
+  {
+   "time": 37.5,
+   "value": 551.1
+  },
+  {
+   "time": 40,
+   "value": 686.3
+  },
+  {
+   "time": 42.5,
+   "value": 769.3
+  },
+  {
+   "time": 45,
+   "value": 735.2
+  },
+  {
+   "time": 47.5,
+   "value": 642.6
+  },
+  {
+   "time": 50,
+   "value": 485.1
+  },
+  {
+   "time": 52.5,
+   "value": 312.3
+  },
+  {
+   "time": 55,
+   "value": 221.9
+  },
+  {
+   "time": 57.5,
+   "value": 230.1
+  },
+  {
+   "time": 60,
+   "value": 327.8
+  }
+ ],
+ "Coffee-growing cooperative, parameters": [
+  {
+   "time": 0,
+   "value": 210.1
+  },
+  {
+   "time": 0.625,
+   "value": 233.6
+  },
+  {
+   "time": 1.25,
+   "value": 259.8
+  },
+  {
+   "time": 1.875,
+   "value": 287.3
+  },
+  {
+   "time": 2.5,
+   "value": 325.9
+  },
+  {
+   "time": 3.125,
+   "value": 359.3
+  },
+  {
+   "time": 3.75,
+   "value": 391.5
+  },
+  {
+   "time": 4.375,
+   "value": 429
+  },
+  {
+   "time": 5,
+   "value": 467
+  },
+  {
+   "time": 5.625,
+   "value": 495.2
+  },
+  {
+   "time": 6.25,
+   "value": 544.7
+  },
+  {
+   "time": 6.875,
+   "value": 581.8
+  },
+  {
+   "time": 7.5,
+   "value": 611.1
+  },
+  {
+   "time": 8.125,
+   "value": 653.8
+  },
+  {
+   "time": 8.75,
+   "value": 667.8
+  },
+  {
+   "time": 9.375,
+   "value": 692.7
+  },
+  {
+   "time": 10,
+   "value": 705.1
+  },
+  {
+   "time": 10.625,
+   "value": 739
+  },
+  {
+   "time": 11.25,
+   "value": 737.8
+  },
+  {
+   "time": 11.875,
+   "value": 743.9
+  },
+  {
+   "time": 12.5,
+   "value": 740.1
+  },
+  {
+   "time": 13.125,
+   "value": 708.9
+  },
+  {
+   "time": 13.75,
+   "value": 714.3
+  },
+  {
+   "time": 14.375,
+   "value": 708.5
+  },
+  {
+   "time": 15,
+   "value": 672.5
+  }
+ ],
+ "Kitchen fitting backlog, parameters": [
+  {
+   "time": 0,
+   "value": 44.47
+  },
+  {
+   "time": 3.25,
+   "value": 46.96
+  },
+  {
+   "time": 6.5,
+   "value": 67.78
+  },
+  {
+   "time": 9.75,
+   "value": 90.34
+  },
+  {
+   "time": 13,
+   "value": 109.1
+  },
+  {
+   "time": 16.25,
+   "value": 117.1
+  },
+  {
+   "time": 19.5,
+   "value": 115.9
+  },
+  {
+   "time": 22.75,
+   "value": 109.5
+  },
+  {
+   "time": 26,
+   "value": 85.93
+  },
+  {
+   "time": 29.25,
+   "value": 69.95
+  },
+  {
+   "time": 32.5,
+   "value": 64.44
+  },
+  {
+   "time": 35.75,
+   "value": 59.19
+  },
+  {
+   "time": 39,
+   "value": 54.62
+  },
+  {
+   "time": 42.25,
+   "value": 52.35
+  },
+  {
+   "time": 45.5,
+   "value": 48.79
+  },
+  {
+   "time": 48.75,
+   "value": 46.98
+  },
+  {
+   "time": 52,
+   "value": 45.08
+  },
+  {
+   "time": 55.25,
+   "value": 45.2
+  },
+  {
+   "time": 58.5,
+   "value": 43.73
+  },
+  {
+   "time": 61.75,
+   "value": 43.23
+  },
+  {
+   "time": 65,
+   "value": 42.6
+  },
+  {
+   "time": 68.25,
+   "value": 40.77
+  },
+  {
+   "time": 71.5,
+   "value": 41.37
+  },
+  {
+   "time": 74.75,
+   "value": 41.58
+  },
+  {
+   "time": 78,
+   "value": 40.2
+  }
+ ],
+ "Kitchen fitting backlog, growing base orders": [
+  {
+   "time": 0,
+   "value": 44.47
+  },
+  {
+   "time": 3.25,
+   "value": 44.53
+  },
+  {
+   "time": 6.5,
+   "value": 58.63
+  },
+  {
+   "time": 9.75,
+   "value": 71.44
+  },
+  {
+   "time": 13,
+   "value": 88.4
+  },
+  {
+   "time": 16.25,
+   "value": 103.9
+  },
+  {
+   "time": 19.5,
+   "value": 117.2
+  },
+  {
+   "time": 22.75,
+   "value": 129.3
+  },
+  {
+   "time": 26,
+   "value": 124.4
+  },
+  {
+   "time": 29.25,
+   "value": 107
+  },
+  {
+   "time": 32.5,
+   "value": 99.92
+  },
+  {
+   "time": 35.75,
+   "value": 95.82
+  },
+  {
+   "time": 39,
+   "value": 92.24
+  },
+  {
+   "time": 42.25,
+   "value": 91.43
+  },
+  {
+   "time": 45.5,
+   "value": 87.31
+  },
+  {
+   "time": 48.75,
+   "value": 85.48
+  },
+  {
+   "time": 52,
+   "value": 83
+  },
+  {
+   "time": 55.25,
+   "value": 84.1
+  },
+  {
+   "time": 58.5,
+   "value": 82.39
+  },
+  {
+   "time": 61.75,
+   "value": 82.68
+  },
+  {
+   "time": 65,
+   "value": 82.94
+  },
+  {
+   "time": 68.25,
+   "value": 81.02
+  },
+  {
+   "time": 71.5,
+   "value": 84.05
+  },
+  {
+   "time": 74.75,
+   "value": 86.5
+  },
+  {
+   "time": 78,
+   "value": 85.79
+  }
+ ],
+ "Regional specialty mushroom growers, parameters": [
+  {
+   "time": 0,
+   "value": 0
+  },
+  {
+   "time": 3,
+   "value": 0
+  },
+  {
+   "time": 6,
+   "value": 2230000
+  },
+  {
+   "time": 9,
+   "value": 3567000
+  },
+  {
+   "time": 12,
+   "value": 3713000
+  },
+  {
+   "time": 15,
+   "value": 3118000
+  },
+  {
+   "time": 18,
+   "value": 2294000
+  },
+  {
+   "time": 21,
+   "value": 1522000
+  },
+  {
+   "time": 24,
+   "value": 884300
+  },
+  {
+   "time": 27,
+   "value": 411200
+  },
+  {
+   "time": 30,
+   "value": 114700
+  },
+  {
+   "time": 33,
+   "value": 0
+  },
+  {
+   "time": 36,
+   "value": 0
+  },
+  {
+   "time": 39,
+   "value": 0
+  },
+  {
+   "time": 42,
+   "value": 42950
+  },
+  {
+   "time": 45,
+   "value": 199900
+  },
+  {
+   "time": 48,
+   "value": 164000
+  },
+  {
+   "time": 51,
+   "value": 56870
+  },
+  {
+   "time": 54,
+   "value": 0
+  },
+  {
+   "time": 57,
+   "value": 0
+  },
+  {
+   "time": 60,
+   "value": 0
+  },
+  {
+   "time": 63,
+   "value": 0
+  },
+  {
+   "time": 66,
+   "value": 153000
+  },
+  {
+   "time": 69,
+   "value": 128500
+  },
+  {
+   "time": 72,
+   "value": 27050
+  }
+ ],
+ "Regional ambulance service, parameters": [
+  {
+   "time": 0,
+   "value": 15.14
+  },
+  {
+   "time": 5,
+   "value": 15.47
+  },
+  {
+   "time": 10,
+   "value": 15.77
+  },
+  {
+   "time": 15,
+   "value": 15.99
+  },
+  {
+   "time": 20,
+   "value": 16.68
+  },
+  {
+   "time": 25,
+   "value": 16.98
+  },
+  {
+   "time": 30,
+   "value": 17.16
+  },
+  {
+   "time": 35,
+   "value": 17.52
+  },
+  {
+   "time": 40,
+   "value": 17.88
+  },
+  {
+   "time": 45,
+   "value": 17.88
+  },
+  {
+   "time": 50,
+   "value": 18.67
+  },
+  {
+   "time": 55,
+   "value": 19.07
+  },
+  {
+   "time": 60,
+   "value": 19.3
+  },
+  {
+   "time": 65,
+   "value": 20.05
+  },
+  {
+   "time": 70,
+   "value": 20.05
+  },
+  {
+   "time": 75,
+   "value": 20.53
+  },
+  {
+   "time": 80,
+   "value": 20.79
+  },
+  {
+   "time": 85,
+   "value": 21.86
+  },
+  {
+   "time": 90,
+   "value": 22.07
+  },
+  {
+   "time": 95,
+   "value": 22.66
+  },
+  {
+   "time": 100,
+   "value": 23.11
+  },
+  {
+   "time": 105,
+   "value": 22.83
+  },
+  {
+   "time": 110,
+   "value": 23.86
+  },
+  {
+   "time": 115,
+   "value": 24.64
+  },
+  {
+   "time": 120,
+   "value": 24.45
+  }
+ ],
+ "Parcel delivery van fleet, parameters": [
+  {
+   "time": 0,
+   "value": 179.5
+  },
+  {
+   "time": 0.4375,
+   "value": 168.3
+  },
+  {
+   "time": 0.8125,
+   "value": 159.8
+  },
+  {
+   "time": 1.25,
+   "value": 150.5
+  },
+  {
+   "time": 1.6875,
+   "value": 146.3
+  },
+  {
+   "time": 2.0625,
+   "value": 140.1
+  },
+  {
+   "time": 2.5,
+   "value": 132.5
+  },
+  {
+   "time": 2.9375,
+   "value": 126.9
+  },
+  {
+   "time": 3.3125,
+   "value": 122.5
+  },
+  {
+   "time": 3.75,
+   "value": 115.4
+  },
+  {
+   "time": 4.1875,
+   "value": 113.7
+  },
+  {
+   "time": 4.5625,
+   "value": 110.4
+  },
+  {
+   "time": 5,
+   "value": 105.8
+  },
+  {
+   "time": 5.4375,
+   "value": 104.4
+  },
+  {
+   "time": 5.8125,
+   "value": 99.64
+  },
+  {
+   "time": 6.25,
+   "value": 97.15
+  },
+  {
+   "time": 6.6875,
+   "value": 93.86
+  },
+  {
+   "time": 7.0625,
+   "value": 94.61
+  },
+  {
+   "time": 7.5,
+   "value": 91.35
+  },
+  {
+   "time": 7.9375,
+   "value": 89.86
+  },
+  {
+   "time": 8.3125,
+   "value": 88.18
+  },
+  {
+   "time": 8.75,
+   "value": 83.66
+  },
+  {
+   "time": 9.1875,
+   "value": 84.04
+  },
+  {
+   "time": 9.5625,
+   "value": 83.77
+  },
+  {
+   "time": 10,
+   "value": 80.09
+  }
+ ],
+ "Community food bank volunteers, parameters": [
+  {
+   "time": 0,
+   "value": 40.38
+  },
+  {
+   "time": 1.5,
+   "value": 47.86
+  },
+  {
+   "time": 3,
+   "value": 56.33
+  },
+  {
+   "time": 4.5,
+   "value": 65.43
+  },
+  {
+   "time": 6,
+   "value": 77.44
+  },
+  {
+   "time": 7.5,
+   "value": 88.42
+  },
+  {
+   "time": 9,
+   "value": 99.1
+  },
+  {
+   "time": 10.5,
+   "value": 111
+  },
+  {
+   "time": 12,
+   "value": 122.7
+  },
+  {
+   "time": 13.5,
+   "value": 131.4
+  },
+  {
+   "time": 15,
+   "value": 145.3
+  },
+  {
+   "time": 16.5,
+   "value": 155.5
+  },
+  {
+   "time": 18,
+   "value": 163.3
+  },
+  {
+   "time": 19.5,
+   "value": 174.6
+  },
+  {
+   "time": 21,
+   "value": 178.2
+  },
+  {
+   "time": 22.5,
+   "value": 185
+  },
+  {
+   "time": 24,
+   "value": 188.9
+  },
+  {
+   "time": 25.5,
+   "value": 199.1
+  },
+  {
+   "time": 27,
+   "value": 200.7
+  },
+  {
+   "time": 28.5,
+   "value": 205
+  },
+  {
+   "time": 30,
+   "value": 207.5
+  },
+  {
+   "time": 31.5,
+   "value": 202.8
+  },
+  {
+   "time": 33,
+   "value": 209.3
+  },
+  {
+   "time": 34.5,
+   "value": 213.1
+  },
+  {
+   "time": 36,
+   "value": 208.2
+  }
+ ],
+ "Regional electricians' guild, parameters": [
+  {
+   "time": 0,
+   "value": 0
+  },
+  {
+   "time": 6,
+   "value": 0
+  },
+  {
+   "time": 12,
+   "value": 0
+  },
+  {
+   "time": 18,
+   "value": 0
+  },
+  {
+   "time": 24,
+   "value": 0
+  },
+  {
+   "time": 30,
+   "value": 0
+  },
+  {
+   "time": 36,
+   "value": 0
+  },
+  {
+   "time": 42,
+   "value": 0
+  },
+  {
+   "time": 48,
+   "value": 559.7
+  },
+  {
+   "time": 54,
+   "value": 671.6
+  },
+  {
+   "time": 60,
+   "value": 810.5
+  },
+  {
+   "time": 66,
+   "value": 929
+  },
+  {
+   "time": 72,
+   "value": 1030
+  },
+  {
+   "time": 78,
+   "value": 1150
+  },
+  {
+   "time": 84,
+   "value": 1215
+  },
+  {
+   "time": 90,
+   "value": 1298
+  },
+  {
+   "time": 96,
+   "value": 1357
+  },
+  {
+   "time": 102,
+   "value": 1461
+  },
+  {
+   "time": 108,
+   "value": 1501
+  },
+  {
+   "time": 114,
+   "value": 1562
+  },
+  {
+   "time": 120,
+   "value": 1607
+  },
+  {
+   "time": 126,
+   "value": 1597
+  },
+  {
+   "time": 132,
+   "value": 1675
+  },
+  {
+   "time": 138,
+   "value": 1733
+  },
+  {
+   "time": 144,
+   "value": 1720
+  }
+ ],
+ "Hospital contract cleaning standard, parameters": [
+  {
+   "time": 0,
+   "value": 0.003318
+  },
+  {
+   "time": 4,
+   "value": 0.003952
+  },
+  {
+   "time": 8,
+   "value": 0.005159
+  },
+  {
+   "time": 12,
+   "value": 0.006653
+  },
+  {
+   "time": 16,
+   "value": 0.008692
+  },
+  {
+   "time": 20,
+   "value": 0.0109
+  },
+  {
+   "time": 24,
+   "value": 0.05628
+  },
+  {
+   "time": 28,
+   "value": 0.06174
+  },
+  {
+   "time": 32,
+   "value": 0.06561
+  },
+  {
+   "time": 36,
+   "value": 0.06774
+  },
+  {
+   "time": 40,
+   "value": 0.07259
+  },
+  {
+   "time": 44,
+   "value": 0.07566
+  },
+  {
+   "time": 48,
+   "value": 0.07776
+  },
+  {
+   "time": 52,
+   "value": 0.08168
+  },
+  {
+   "time": 56,
+   "value": 0.08228
+  },
+  {
+   "time": 60,
+   "value": 0.08457
+  },
+  {
+   "time": 64,
+   "value": 0.08574
+  },
+  {
+   "time": 68,
+   "value": 0.08999
+  },
+  {
+   "time": 72,
+   "value": 0.09046
+  },
+  {
+   "time": 76,
+   "value": 0.09231
+  },
+  {
+   "time": 80,
+   "value": 0.0934
+  },
+  {
+   "time": 84,
+   "value": 0.0914
+  },
+  {
+   "time": 88,
+   "value": 0.09445
+  },
+  {
+   "time": 92,
+   "value": 0.09638
+  },
+  {
+   "time": 96,
+   "value": 0.09437
+  }
+ ],
+ "Valley groundwater board, parameters": [
+  {
+   "time": 0,
+   "value": 6.731
+  },
+  {
+   "time": 0.8125,
+   "value": 7.499
+  },
+  {
+   "time": 1.6875,
+   "value": 9.178
+  },
+  {
+   "time": 2.5,
+   "value": 11.53
+  },
+  {
+   "time": 3.3125,
+   "value": 15.17
+  },
+  {
+   "time": 4.1875,
+   "value": 19.86
+  },
+  {
+   "time": 5,
+   "value": 25.08
+  },
+  {
+   "time": 5.8125,
+   "value": 31.62
+  },
+  {
+   "time": 6.6875,
+   "value": 39.91
+  },
+  {
+   "time": 7.5,
+   "value": 47.47
+  },
+  {
+   "time": 8.3125,
+   "value": 57.22
+  },
+  {
+   "time": 9.1875,
+   "value": 66.37
+  },
+  {
+   "time": 10,
+   "value": 73.75
+  },
+  {
+   "time": 10.8125,
+   "value": 82.54
+  },
+  {
+   "time": 11.6875,
+   "value": 87.96
+  },
+  {
+   "time": 12.5,
+   "value": 94.04
+  },
+  {
+   "time": 13.3125,
+   "value": 98.32
+  },
+  {
+   "time": 14.1875,
+   "value": 106
+  },
+  {
+   "time": 15,
+   "value": 108.3
+  },
+  {
+   "time": 15.8125,
+   "value": 111.9
+  },
+  {
+   "time": 16.6875,
+   "value": 114.3
+  },
+  {
+   "time": 17.5,
+   "value": 112.3
+  },
+  {
+   "time": 18.3125,
+   "value": 116.2
+  },
+  {
+   "time": 19.1875,
+   "value": 118.5
+  },
+  {
+   "time": 20,
+   "value": 115.7
+  }
+ ]
+}

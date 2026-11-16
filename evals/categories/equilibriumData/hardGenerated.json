@@ -1,0 +1,168 @@
+{
+ "Rural dialysis network, with \"chairs\" held at 20": {
+  "name": "Rural dialysis network, with \"chairs\" held at 20",
+  "group": "scenarioEquilibriumHard",
+  "scenario": "dialysisClinic",
+  "description": "the rural dialysis network",
+  "adjustable": [
+   "waiting list",
+   "chairs",
+   "chairs on order",
+   "discouraged patients"
+  ],
+  "oneConstantOf": [
+   "base referrals",
+   "minimum wait",
+   "patients per chair",
+   "give up fraction",
+   "time to return",
+   "target wait",
+   "order adjustment time",
+   "build delay"
+  ],
+  "equilibriumStocks": [
+   "waiting list",
+   "chairs",
+   "chairs on order",
+   "discouraged patients"
+  ],
+  "fixedInitial": {
+   "chairs": 20
+  },
+  "frozen": "\"chairs\" must sit at 20 in the equilibrium.",
+  "solution": {
+   "waiting list": "36",
+   "chairs": "20",
+   "chairs on order": "0",
+   "discouraged patients": "25.2",
+   "patients per chair": "1.8"
+  },
+  "lever": "patients per chair",
+  "factor": 1.5
+ },
+ "Regional distributor inventory (after its steps), with \"supply line\" held at 1080": {
+  "name": "Regional distributor inventory (after its steps), with \"supply line\" held at 1080",
+  "group": "scenarioEquilibriumHard",
+  "scenario": "distributor",
+  "description": "the regional distributor inventory",
+  "postStep": true,
+  "adjustable": [
+   "inventory",
+   "supply line",
+   "expected demand"
+  ],
+  "oneConstantOf": [
+   "base demand",
+   "demand increase",
+   "step time",
+   "delivery delay",
+   "coverage",
+   "adjustment time",
+   "supply line weight",
+   "expectation time"
+  ],
+  "equilibriumStocks": [
+   "inventory",
+   "supply line",
+   "expected demand"
+  ],
+  "fixedInitial": {
+   "supply line": 1080
+  },
+  "frozen": "\"supply line\" must sit at 1080 in the equilibrium.",
+  "solution": {
+   "inventory": "480",
+   "supply line": "1080",
+   "expected demand": "120",
+   "delivery delay": "9"
+  },
+  "lever": "delivery delay",
+  "factor": 1.5
+ },
+ "Community food bank volunteers, with \"volunteers\" held at 172": {
+  "name": "Community food bank volunteers, with \"volunteers\" held at 172",
+  "group": "scenarioEquilibriumHard",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "adjustable": [
+   "volunteers",
+   "fatigue",
+   "Potential Volunteers",
+   "families served",
+   "Families Not Yet Reached"
+  ],
+  "oneConstantOf": [
+   "friend recruiting rate",
+   "recruitment fairs",
+   "normal quit fraction",
+   "manageable load",
+   "fatigue time",
+   "agency referrals",
+   "word of mouth fraction",
+   "time on rolls"
+  ],
+  "equilibriumStocks": [
+   "volunteers",
+   "fatigue",
+   "Potential Volunteers",
+   "families served",
+   "Families Not Yet Reached"
+  ],
+  "fixedInitial": {
+   "volunteers": 172
+  },
+  "frozen": "\"volunteers\" must sit at 172 in the equilibrium.",
+  "solution": {
+   "volunteers": "171.65",
+   "fatigue": "0.651076",
+   "Potential Volunteers": "78.3502",
+   "families served": "838.178",
+   "Families Not Yet Reached": "361.822",
+   "manageable load": "7.5"
+  },
+  "lever": "manageable load",
+  "factor": 1.5
+ },
+ "Hospital contract cleaning standard (after its steps), with \"cleaning staff\" held at 78.7": {
+  "name": "Hospital contract cleaning standard (after its steps), with \"cleaning staff\" held at 78.7",
+  "group": "scenarioEquilibriumHard",
+  "scenario": "cleaningStandards",
+  "description": "the hospital contract cleaning standard",
+  "postStep": true,
+  "adjustable": [
+   "cleaning staff",
+   "open positions",
+   "inspection standard"
+  ],
+  "oneConstantOf": [
+   "original rooms",
+   "new wing rooms",
+   "wing opening",
+   "hours per cleaner",
+   "porter hours",
+   "reference failing share",
+   "reference hours per room",
+   "average stay",
+   "hiring time",
+   "review time",
+   "revision time"
+  ],
+  "equilibriumStocks": [
+   "cleaning staff",
+   "open positions",
+   "inspection standard"
+  ],
+  "fixedInitial": {
+   "cleaning staff": 78.7
+  },
+  "frozen": "\"cleaning staff\" must sit at 78.7 in the equilibrium.",
+  "solution": {
+   "cleaning staff": "78.6937",
+   "open positions": "13.1156",
+   "inspection standard": "0.710238",
+   "hours per cleaner": "80"
+  },
+  "lever": "hours per cleaner",
+  "factor": 0.5
+ }
+}

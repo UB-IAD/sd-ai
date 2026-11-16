@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import evalsData from '../generated/evals.json';
+import { groupKindExplanation, ROLE_TEXT } from './evalGuide';
 
 // Calculate prev/next navigation for a specific test.
 function calculateNavigation(categories, currentCategory, currentGroup, currentTestName) {
@@ -72,6 +73,19 @@ const OTHER_PARAM_NOTES = {
   depth: 'Depth hint passed through to engines that accept one.',
   supportsArrays: 'Tells the engine that array (subscripted) structure is permitted in the answer.',
   supportsModules: 'Tells the engine that modules are permitted in the answer.',
+  mode: 'The kind of model the agent works in for this test (cld or sfd), overriding the experiment\'s default — a test that asks for a causal loop diagram runs its agent in a CLD session.',
+  attachments:
+    'Files attached to the agent\'s session as if the user had uploaded them. They go through the same document pipeline as a real upload, so the agent has to find and read them with its document tools; the tests check its tool log to see that it did.',
+  turns:
+    'Fixed follow-up messages. After the agent answers the prompt, each of these is sent to it in order, as the user\'s next turn, and the agent answers each in the same session.',
+  userScript:
+    'A scripted user. It holds a fixed bank of facts, each filed under a topic. After every agent turn a judge reads only the agent\'s message and the topic list and decides which topics were specifically asked about; the user replies with those facts (at most maxFactsPerTurn per turn), or with the fixed unknownReply when nothing matches. It stops after maxQuestionTurns rounds, or as soon as the agent asks nothing, then sends closingMessage if there is one. Every released fact is recorded on the transcript.',
+  analysisTools:
+    'Gives the agent the eval analysis tools: run_scenario (what-if runs), run_sensitivity (one-at-a-time sweeps), load_calibration_data and run_calibration (fitting parameters to history) and run_optimization (searching one lever). Every call lands in the tool log, so graders can check what the agent actually ran.',
+  unitChecking:
+    'Turns on the deterministic unit checker: every time the model is echoed back to the agent it carries the checker\'s unit warnings, the way Stella reports its own unit check.',
+  calibrationData:
+    'The historical data that load_calibration_data returns to the agent, and that run_calibration fits against.',
 };
 
 // The panels rendered above verbatim; everything else in additionalParameters is listed
@@ -246,6 +260,25 @@ function EvalDetail() {
                 Groups bucket a category's tests by kind or by difficulty; every test in a
                 category is graded by the same criteria.
               </p>
+              {categoryData.role && (
+                <div className="mb-4 max-w-4xl space-y-2">
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    <span className={`text-xs font-medium border rounded px-2 py-0.5 mr-2 ${ROLE_TEXT[categoryData.role.kind].tone}`}>
+                      {ROLE_TEXT[categoryData.role.kind].label}
+                    </span>
+                    {categoryData.role.reason} {ROLE_TEXT[categoryData.role.kind].short}
+                  </p>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    <span className="font-semibold">This group ({decodedGroup}):</span> {groupKindExplanation(decodedGroup)}
+                  </p>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    This is an agent eval: the agent works through a whole session and is graded on what it actually did.{' '}
+                    <Link to="/evals/agents" className="text-blue-600 hover:underline">
+                      How the agent evals work →
+                    </Link>
+                  </p>
+                </div>
+              )}
               {categoryData.description && (
                 <p className="text-sm text-gray-700 leading-relaxed max-w-4xl">
                   {categoryData.description}
@@ -408,8 +441,15 @@ function EvalDetail() {
                           <dt className="inline">
                             <code className="text-xs font-semibold text-gray-800">{key}</code>
                             <span className="text-gray-500"> = </span>
-                            <code className="text-xs text-gray-700">{String(value)}</code>
+                            {typeof value === 'object' ? null : (
+                              <code className="text-xs text-gray-700">{String(value)}</code>
+                            )}
                           </dt>
+                          {typeof value === 'object' && (
+                            <dd className="mt-1">
+                              <CollapsibleJson label={`Show ${key}`} value={value} />
+                            </dd>
+                          )}
                           {OTHER_PARAM_NOTES[key] && (
                             <dd className="text-xs text-gray-500 leading-relaxed">
                               {OTHER_PARAM_NOTES[key]}

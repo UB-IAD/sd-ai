@@ -1,0 +1,369 @@
+{
+  "title": "heldoutGibberishN",
+  "model": {
+    "variables": [
+      {
+        "name": "flow of estintant",
+        "type": "variable"
+      },
+      {
+        "name": "quality of poval",
+        "type": "variable"
+      },
+      {
+        "name": "flow of funkado",
+        "type": "variable"
+      },
+      {
+        "name": "supply of reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "flow of perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "baxtoy",
+        "type": "variable"
+      },
+      {
+        "name": "flow of pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "succupserva",
+        "type": "variable"
+      },
+      {
+        "name": "quality of buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "flow of whoziewhat",
+        "type": "variable"
+      },
+      {
+        "name": "yelb",
+        "type": "variable"
+      },
+      {
+        "name": "oclate",
+        "type": "variable"
+      },
+      {
+        "name": "proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "demand for obvia",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on reflupper",
+        "type": "variable"
+      },
+      {
+        "name": "relity",
+        "type": "variable"
+      },
+      {
+        "name": "level of hoza",
+        "type": "variable"
+      },
+      {
+        "name": "rate of ku",
+        "type": "variable"
+      },
+      {
+        "name": "aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "level of illigent",
+        "type": "variable"
+      },
+      {
+        "name": "younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "quality of perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "loopnova",
+        "type": "variable"
+      },
+      {
+        "name": "stock of exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "supply of raez",
+        "type": "variable"
+      },
+      {
+        "name": "quality of burgination",
+        "type": "variable"
+      },
+      {
+        "name": "oc",
+        "type": "variable"
+      },
+      {
+        "name": "bellignorance",
+        "type": "variable"
+      },
+      {
+        "name": "geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "posistorather",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "flow of estintant",
+        "to": "quality of poval",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of poval",
+        "to": "flow of funkado",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of funkado",
+        "to": "supply of reveforly",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of reveforly",
+        "to": "flow of perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of perstablintome",
+        "to": "gissorm",
+        "polarity": "-"
+      },
+      {
+        "from": "gissorm",
+        "to": "baxtoy",
+        "polarity": "+"
+      },
+      {
+        "from": "baxtoy",
+        "to": "flow of pablanksill",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of pablanksill",
+        "to": "flow of estintant",
+        "polarity": "-"
+      },
+      {
+        "from": "succupserva",
+        "to": "quality of buwheal",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of buwheal",
+        "to": "flow of whoziewhat",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of whoziewhat",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "yelb",
+        "to": "oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "oclate",
+        "to": "proptimatire",
+        "polarity": "+"
+      },
+      {
+        "from": "proptimatire",
+        "to": "succupserva",
+        "polarity": "+"
+      },
+      {
+        "from": "succupserva",
+        "to": "demand for obvia",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for obvia",
+        "to": "pressure on reflupper",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on reflupper",
+        "to": "relity",
+        "polarity": "+"
+      },
+      {
+        "from": "relity",
+        "to": "level of hoza",
+        "polarity": "+"
+      },
+      {
+        "from": "level of hoza",
+        "to": "rate of ku",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of ku",
+        "to": "aferraron",
+        "polarity": "-"
+      },
+      {
+        "from": "aferraron",
+        "to": "succupserva",
+        "polarity": "+"
+      },
+      {
+        "from": "level of illigent",
+        "to": "younjuring",
+        "polarity": "+"
+      },
+      {
+        "from": "younjuring",
+        "to": "quality of perfecton",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of perfecton",
+        "to": "loopnova",
+        "polarity": "-"
+      },
+      {
+        "from": "loopnova",
+        "to": "stock of exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of exeminte",
+        "to": "level of illigent",
+        "polarity": "-"
+      },
+      {
+        "from": "flow of estintant",
+        "to": "supply of raez",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of raez",
+        "to": "succupserva",
+        "polarity": "+"
+      },
+      {
+        "from": "succupserva",
+        "to": "quality of burgination",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of burgination",
+        "to": "level of illigent",
+        "polarity": "-"
+      },
+      {
+        "from": "oc",
+        "to": "proptimatire",
+        "polarity": "+"
+      },
+      {
+        "from": "bellignorance",
+        "to": "younjuring",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of buwheal",
+        "to": "geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of pablanksill",
+        "to": "posistorather",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "flow of estintant",
+        "supply of reveforly",
+        "gissorm"
+      ],
+      "nodes": [
+        "flow of estintant",
+        "quality of poval",
+        "flow of funkado",
+        "supply of reveforly",
+        "flow of perstablintome",
+        "gissorm",
+        "baxtoy",
+        "flow of pablanksill"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "succupserva",
+        "yelb"
+      ],
+      "nodes": [
+        "succupserva",
+        "quality of buwheal",
+        "flow of whoziewhat",
+        "yelb",
+        "oclate",
+        "proptimatire"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "succupserva",
+        "relity",
+        "rate of ku"
+      ],
+      "nodes": [
+        "succupserva",
+        "demand for obvia",
+        "pressure on reflupper",
+        "relity",
+        "level of hoza",
+        "rate of ku",
+        "aferraron"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "level of illigent",
+        "quality of perfecton"
+      ],
+      "nodes": [
+        "level of illigent",
+        "younjuring",
+        "quality of perfecton",
+        "loopnova",
+        "stock of exeminte"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

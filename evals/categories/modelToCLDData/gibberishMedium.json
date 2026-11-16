@@ -1,0 +1,234 @@
+{
+  "title": "gibberishMedium",
+  "model": {
+    "variables": [
+      {
+        "name": "reflupper",
+        "type": "variable"
+      },
+      {
+        "name": "demand for relity",
+        "type": "variable"
+      },
+      {
+        "name": "pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "estintant",
+        "type": "variable"
+      },
+      {
+        "name": "quality of arinterpord",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "yoffa",
+        "type": "variable"
+      },
+      {
+        "name": "stock of perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "ih",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "flow of whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "quality of whoziewhat",
+        "type": "variable"
+      },
+      {
+        "name": "phildiscals",
+        "type": "variable"
+      },
+      {
+        "name": "crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "stock of hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "supply of baxtoy",
+        "type": "variable"
+      },
+      {
+        "name": "level of gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "houtal",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "reflupper",
+        "to": "demand for relity",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for relity",
+        "to": "pablanksill",
+        "polarity": "+"
+      },
+      {
+        "from": "pablanksill",
+        "to": "estintant",
+        "polarity": "-"
+      },
+      {
+        "from": "estintant",
+        "to": "reflupper",
+        "polarity": "+"
+      },
+      {
+        "from": "reflupper",
+        "to": "quality of arinterpord",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of arinterpord",
+        "to": "exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "exeminte",
+        "to": "yoffa",
+        "polarity": "+"
+      },
+      {
+        "from": "yoffa",
+        "to": "stock of perfecton",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of perfecton",
+        "to": "reflupper",
+        "polarity": "+"
+      },
+      {
+        "from": "ih",
+        "to": "pressure on memostorer",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on memostorer",
+        "to": "flow of whatajig",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of whatajig",
+        "to": "quality of whoziewhat",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of whoziewhat",
+        "to": "phildiscals",
+        "polarity": "-"
+      },
+      {
+        "from": "phildiscals",
+        "to": "crypteral",
+        "polarity": "+"
+      },
+      {
+        "from": "crypteral",
+        "to": "ih",
+        "polarity": "-"
+      },
+      {
+        "from": "reflupper",
+        "to": "stock of hashtockle",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of hashtockle",
+        "to": "ih",
+        "polarity": "-"
+      },
+      {
+        "from": "unliescatice",
+        "to": "yoffa",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of baxtoy",
+        "to": "reflupper",
+        "polarity": "-"
+      },
+      {
+        "from": "crypteral",
+        "to": "level of gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "estintant",
+        "to": "houtal",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "reflupper",
+        "pablanksill"
+      ],
+      "nodes": [
+        "reflupper",
+        "demand for relity",
+        "pablanksill",
+        "estintant"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "reflupper",
+        "yoffa"
+      ],
+      "nodes": [
+        "reflupper",
+        "quality of arinterpord",
+        "exeminte",
+        "yoffa",
+        "stock of perfecton"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "ih",
+        "quality of whoziewhat"
+      ],
+      "nodes": [
+        "ih",
+        "pressure on memostorer",
+        "flow of whatajig",
+        "quality of whoziewhat",
+        "phildiscals",
+        "crypteral"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

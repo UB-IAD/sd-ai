@@ -1,0 +1,410 @@
+{
+ "equilibrium": {
+  "silent": {
+   "passed": 0,
+   "total": 26,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 26,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 26,
+   "share": 0
+  }
+ },
+ "modelToCLD": {
+  "silent": {
+   "passed": 0,
+   "total": 202,
+   "share": 0
+  },
+  "yes": {
+   "passed": 12,
+   "total": 202,
+   "share": 0.059
+  },
+  "no": {
+   "passed": 12,
+   "total": 202,
+   "share": 0.059
+  }
+ },
+ "sensitivityInterpretation": {
+  "silent": {
+   "passed": 0,
+   "total": 135,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 135,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 135,
+   "share": 0
+  }
+ },
+ "guidedCorrection": {
+  "silent": {
+   "passed": 0,
+   "total": 137,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 137,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 137,
+   "share": 0
+  }
+ },
+ "unitConsistency": {
+  "silent": {
+   "passed": 0,
+   "total": 129,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 129,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 129,
+   "share": 0
+  }
+ },
+ "referenceModes": {
+  "silent": {
+   "passed": 0,
+   "total": 72,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 72,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 72,
+   "share": 0
+  }
+ },
+ "sfdFromBoundary": {
+  "silent": {
+   "passed": 0,
+   "total": 166,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 166,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 166,
+   "share": 0
+  }
+ },
+ "elicitation": {
+  "silent": {
+   "passed": 0,
+   "total": 155,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 155,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 155,
+   "share": 0
+  }
+ },
+ "multiplePerspectives": {
+  "silent": {
+   "passed": 0,
+   "total": 55,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 55,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 55,
+   "share": 0
+  }
+ },
+ "cldInterpretation": {
+  "silent": {
+   "passed": 0,
+   "total": 170,
+   "share": 0
+  },
+  "yes": {
+   "passed": 71,
+   "total": 170,
+   "share": 0.418
+  },
+  "no": {
+   "passed": 0,
+   "total": 170,
+   "share": 0
+  }
+ },
+ "formulationCritique": {
+  "silent": {
+   "passed": 0,
+   "total": 68,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 68,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 68,
+   "share": 0
+  }
+ },
+ "noviceCoaching": {
+  "silent": {
+   "passed": 0,
+   "total": 43,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 43,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 43,
+   "share": 0
+  }
+ },
+ "extremeConditions": {
+  "silent": {
+   "passed": 0,
+   "total": 43,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 43,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 43,
+   "share": 0
+  }
+ },
+ "policyImplementation": {
+  "silent": {
+   "passed": 0,
+   "total": 47,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 47,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 47,
+   "share": 0
+  }
+ },
+ "mece": {
+  "silent": {
+   "passed": 0,
+   "total": 53,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 53,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 53,
+   "share": 0
+  }
+ },
+ "cldStocksAndLeverage": {
+  "silent": {
+   "passed": 0,
+   "total": 81,
+   "share": 0
+  },
+  "yes": {
+   "passed": 12,
+   "total": 81,
+   "share": 0.148
+  },
+  "no": {
+   "passed": 0,
+   "total": 81,
+   "share": 0
+  }
+ },
+ "mentalModelVsBug": {
+  "silent": {
+   "passed": 0,
+   "total": 90,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 90,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 90,
+   "share": 0
+  }
+ },
+ "archetypes": {
+  "silent": {
+   "passed": 0,
+   "total": 72,
+   "share": 0
+  },
+  "yes": {
+   "passed": 2,
+   "total": 72,
+   "share": 0.028
+  },
+  "no": {
+   "passed": 0,
+   "total": 72,
+   "share": 0
+  }
+ },
+ "analysisSetup": {
+  "silent": {
+   "passed": 0,
+   "total": 56,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 56,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 56,
+   "share": 0
+  }
+ },
+ "transferability": {
+  "silent": {
+   "passed": 0,
+   "total": 27,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 27,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 27,
+   "share": 0
+  }
+ },
+ "aggregationCritique": {
+  "silent": {
+   "passed": 0,
+   "total": 19,
+   "share": 0
+  },
+  "yes": {
+   "passed": 3,
+   "total": 19,
+   "share": 0.158
+  },
+  "no": {
+   "passed": 0,
+   "total": 19,
+   "share": 0
+  }
+ },
+ "calibration": {
+  "silent": {
+   "passed": 0,
+   "total": 46,
+   "share": 0
+  },
+  "yes": {
+   "passed": 2,
+   "total": 46,
+   "share": 0.043
+  },
+  "no": {
+   "passed": 0,
+   "total": 46,
+   "share": 0
+  }
+ },
+ "policyAnalysisMethods": {
+  "silent": {
+   "passed": 0,
+   "total": 96,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 96,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 96,
+   "share": 0
+  }
+ },
+ "causalSources": {
+  "silent": {
+   "passed": 0,
+   "total": 61,
+   "share": 0
+  },
+  "yes": {
+   "passed": 0,
+   "total": 61,
+   "share": 0
+  },
+  "no": {
+   "passed": 0,
+   "total": 61,
+   "share": 0
+  }
+ }
+}

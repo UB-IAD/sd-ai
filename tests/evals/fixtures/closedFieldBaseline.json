@@ -1,0 +1,178 @@
+[
+ {
+  "category": "guidedCorrection",
+  "group": "findAndFixHardHeldOut",
+  "options": [
+   "the response says the model had problems that needed fixing",
+   "the response says the model is ready to use as it is, with nothing that needed fixing",
+   "the response does not say either way"
+  ],
+  "answer": "the response says the model is ready to use as it is, with nothing that needed fixing",
+  "passed": 1,
+  "reads": 1,
+  "reason": "clean control: the only test that reads the field, and its only right answer is \"ready\""
+ },
+ {
+  "category": "unitConsistency",
+  "group": "fixUnitsHardHeldOut",
+  "options": [
+   "the response says the model had problems that needed fixing",
+   "the response says the model is ready to use as it is, with nothing that needed fixing",
+   "the response does not say either way"
+  ],
+  "answer": "the response says the model is ready to use as it is, with nothing that needed fixing",
+  "passed": 1,
+  "reads": 1,
+  "reason": "clean control: the only test that reads the field, and its only right answer is \"ready\""
+ },
+ {
+  "category": "referenceModes",
+  "group": "referenceModesHeldOut",
+  "options": [
+   "yes",
+   "no"
+  ],
+  "answer": "yes",
+  "passed": 21,
+  "reads": 30,
+  "reason": "structural: two key quantities to one unrelated trend per scenario, so \"proposed\" is right twice as often as not"
+ },
+ {
+  "category": "cldInterpretation",
+  "group": "gibberishCLDsHeldOut",
+  "options": [
+   "reinforcing",
+   "balancing",
+   "unclear"
+  ],
+  "answer": "reinforcing",
+  "passed": 34,
+  "reads": 62,
+  "reason": "key imbalance: slightly more of one answer than the other among the seeded diagrams"
+ },
+ {
+  "category": "cldInterpretation",
+  "group": "gibberishCLDsHeldOut",
+  "options": [
+   "increases",
+   "decreases",
+   "unclear"
+  ],
+  "answer": "decreases",
+  "passed": 29,
+  "reads": 51,
+  "reason": "key imbalance: slightly more of one answer than the other among the seeded diagrams"
+ },
+ {
+  "category": "cldInterpretation",
+  "group": "gibberishCLDsHeldOut",
+  "options": [
+   "0",
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6 or more",
+   "unclear"
+  ],
+  "answer": "2",
+  "passed": 10,
+  "reads": 17,
+  "reason": "key imbalance: slightly more of one answer than the other among the seeded diagrams"
+ },
+ {
+  "category": "formulationCritique",
+  "group": "formulationCritiqueHardHeldOut",
+  "options": [
+   "the response says the model had problems that needed fixing",
+   "the response says the model is ready to use as it is, with nothing that needed fixing",
+   "the response does not say either way"
+  ],
+  "answer": "the response says the model is ready to use as it is, with nothing that needed fixing",
+  "passed": 1,
+  "reads": 1,
+  "reason": "clean control: the only test that reads the field, and its only right answer is \"ready\""
+ },
+ {
+  "category": "extremeConditions",
+  "group": "extremeConditionsHardHeldOut",
+  "options": [
+   "the response says the model had problems that needed fixing",
+   "the response says the model is ready to use as it is, with nothing that needed fixing",
+   "the response does not say either way"
+  ],
+  "answer": "the response says the model is ready to use as it is, with nothing that needed fixing",
+  "passed": 1,
+  "reads": 1,
+  "reason": "clean control: the only test that reads the field, and its only right answer is \"ready\""
+ },
+ {
+  "category": "mece",
+  "group": "meceHardHeldOut",
+  "options": [
+   "the response says the model had problems that needed fixing",
+   "the response says the model is ready to use as it is, with nothing that needed fixing",
+   "the response does not say either way"
+  ],
+  "answer": "the response says the model is ready to use as it is, with nothing that needed fixing",
+  "passed": 1,
+  "reads": 1,
+  "reason": "clean control: the only test that reads the field, and its only right answer is \"ready\""
+ },
+ {
+  "category": "cldStocksAndLeverage",
+  "group": "leverageHeldOut",
+  "options": [
+   "recommended as high leverage on its own",
+   "recommended only alongside other changes",
+   "said to help little or not at all",
+   "not discussed"
+  ],
+  "answer": "recommended only alongside other changes",
+  "passed": 18,
+  "reads": 18,
+  "reason": "possible constant-answer hole: one answer is right for every test that reads the field"
+ },
+ {
+  "category": "mentalModelVsBug",
+  "group": "mentalModelVsBugHeldOut",
+  "options": [
+   "the model has a mistake",
+   "the expectation is mistaken",
+   "unclear"
+  ],
+  "answer": "the expectation is mistaken",
+  "passed": 22,
+  "reads": 33,
+  "reason": "structural: an expectation case has two judge-read tests (classified, left alone), a bug case one (its fix test reads no judge); about half over the whole group"
+ },
+ {
+  "category": "calibration",
+  "group": "calibrationHeldOut",
+  "options": [
+   "\"base orders\" keeps growing over time instead of staying steady.",
+   "\"base orders\" rises and falls with the seasons, again and again.",
+   "\"job backlog\" drains away on its own over time, through a loss the model leaves out.",
+   "none of these"
+  ],
+  "answer": "\"base orders\" keeps growing over time instead of staying steady.",
+  "passed": 2,
+  "reads": 2,
+  "reason": "one case per option set: the only tests that read the field share one right answer"
+ },
+ {
+  "category": "calibration",
+  "group": "calibrationHardHeldOut",
+  "options": [
+   "\"base orders\" keeps growing over time instead of staying steady.",
+   "\"base orders\" rises and falls with the seasons, again and again.",
+   "\"job backlog\" drains away on its own over time, through a loss the model leaves out.",
+   "none of these"
+  ],
+  "answer": "\"base orders\" keeps growing over time instead of staying steady.",
+  "passed": 1,
+  "reads": 1,
+  "reason": "one case per option set: the only test that reads the field"
+ }
+]

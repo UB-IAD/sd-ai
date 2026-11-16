@@ -1,0 +1,318 @@
+{
+ "Coffee-growing cooperative, parameters": {
+  "name": "Coffee-growing cooperative, parameters",
+  "scenario": "coffeeCoop",
+  "kind": "parameters",
+  "series": "harvest",
+  "changes": {
+   "set": {
+    "healthy soil score": {
+     "equation": "150"
+    },
+    "fertility sensitivity": {
+     "equation": "1.2"
+    }
+   }
+  },
+  "parameters": [
+   "healthy soil score",
+   "fertility sensitivity"
+  ],
+  "calibrated": [
+   "healthy soil score",
+   "fertility sensitivity",
+   "depletion per hectare",
+   "best yield"
+  ]
+ },
+ "Kitchen fitting backlog, parameters": {
+  "name": "Kitchen fitting backlog, parameters",
+  "scenario": "kitchenFitters",
+  "kind": "parameters",
+  "series": "job backlog",
+  "changes": {
+   "set": {
+    "base orders": {
+     "equation": "15"
+    },
+    "target lead time": {
+     "equation": "2.4"
+    }
+   }
+  },
+  "parameters": [
+   "base orders",
+   "target lead time"
+  ],
+  "calibrated": [
+   "base orders",
+   "target lead time",
+   "maximum rush",
+   "normal error fraction"
+  ]
+ },
+ "Kitchen fitting backlog, growing base orders": {
+  "name": "Kitchen fitting backlog, growing base orders",
+  "scenario": "kitchenFitters",
+  "kind": "structure",
+  "series": "job backlog",
+  "changes": {
+   "set": {
+    "base orders": {
+     "equation": "10 * EXP(base_orders_growth_rate * (TIME - 0))"
+    }
+   },
+   "add": [
+    {
+     "name": "base orders growth rate",
+     "type": "variable",
+     "equation": "0.008887",
+     "units": "1/week"
+    }
+   ]
+  },
+  "mechanism": "\"base orders\" keeps growing over time instead of staying steady.",
+  "distractors": [
+   "\"base orders\" rises and falls with the seasons, again and again.",
+   "\"job backlog\" drains away on its own over time, through a loss the model leaves out."
+  ],
+  "calibrated": [
+   "base orders",
+   "target lead time",
+   "maximum rush",
+   "normal error fraction"
+  ],
+  "distractorModels": [
+   {
+    "mechanism": "\"base orders\" rises and falls with the seasons, again and again.",
+    "strength": "base orders seasonal swing",
+    "changes": {
+     "set": {
+      "base orders": {
+       "equation": "10 * (1 + base_orders_seasonal_swing * SIN(2 * 3.14159 * (TIME - 0) / 26))"
+      }
+     },
+     "add": [
+      {
+       "name": "base orders seasonal swing",
+       "type": "variable",
+       "equation": "0.3",
+       "units": "dimensionless"
+      }
+     ]
+    }
+   },
+   {
+    "mechanism": "\"job backlog\" drains away on its own over time, through a loss the model leaves out.",
+    "strength": "job backlog loss fraction",
+    "changes": {
+     "set": {
+      "job backlog": {
+       "outflows": [
+        "jobs fitted",
+        "cancellations",
+        "job backlog lost"
+       ]
+      }
+     },
+     "add": [
+      {
+       "name": "job backlog lost",
+       "type": "flow",
+       "equation": "job_backlog * job_backlog_loss_fraction",
+       "units": "jobs/week"
+      },
+      {
+       "name": "job backlog loss fraction",
+       "type": "variable",
+       "equation": "0.01282",
+       "units": "1/week"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "Regional specialty mushroom growers, parameters": {
+  "name": "Regional specialty mushroom growers, parameters",
+  "scenario": "mushroomGrowers",
+  "kind": "parameters",
+  "series": "monthly losses",
+  "changes": {
+   "set": {
+    "reference demand": {
+     "equation": "360000"
+    },
+    "yield per room": {
+     "equation": "1200"
+    }
+   }
+  },
+  "parameters": [
+   "reference demand",
+   "yield per room"
+  ],
+  "calibrated": [
+   "reference demand",
+   "yield per room",
+   "reference price",
+   "closing response"
+  ]
+ },
+ "Regional ambulance service, parameters": {
+  "name": "Regional ambulance service, parameters",
+  "scenario": "ambulanceService",
+  "kind": "parameters",
+  "series": "response time",
+  "changes": {
+   "set": {
+    "normal response time": {
+     "equation": "15"
+    },
+    "target adjustment time": {
+     "equation": "7.2"
+    }
+   }
+  },
+  "parameters": [
+   "normal response time",
+   "target adjustment time"
+  ],
+  "calibrated": [
+   "normal response time",
+   "growth rate",
+   "target adjustment time",
+   "budget delay"
+  ]
+ },
+ "Parcel delivery van fleet, parameters": {
+  "name": "Parcel delivery van fleet, parameters",
+  "scenario": "deliveryVans",
+  "kind": "parameters",
+  "series": "breakdowns",
+  "changes": {
+   "set": {
+    "normal mileage": {
+     "equation": "135000"
+    },
+    "miles per van": {
+     "equation": "9000"
+    }
+   }
+  },
+  "parameters": [
+   "normal mileage",
+   "miles per van"
+  ],
+  "calibrated": [
+   "normal mileage",
+   "normal breakdown rate",
+   "miles per van",
+   "base van budget"
+  ]
+ },
+ "Community food bank volunteers, parameters": {
+  "name": "Community food bank volunteers, parameters",
+  "scenario": "foodBank",
+  "kind": "parameters",
+  "series": "volunteers",
+  "changes": {
+   "set": {
+    "friend recruiting rate": {
+     "equation": "0.18"
+    },
+    "normal quit fraction": {
+     "equation": "0.036"
+    }
+   }
+  },
+  "parameters": [
+   "friend recruiting rate",
+   "normal quit fraction"
+  ],
+  "calibrated": [
+   "friend recruiting rate",
+   "normal quit fraction",
+   "manageable load",
+   "word of mouth fraction"
+  ]
+ },
+ "Regional electricians' guild, parameters": {
+  "name": "Regional electricians' guild, parameters",
+  "scenario": "electricianTraining",
+  "kind": "parameters",
+  "series": "jobs turned away",
+  "changes": {
+   "set": {
+    "normal jobs per electrician": {
+     "equation": "9"
+    },
+    "time as master": {
+     "equation": "108"
+    }
+   }
+  },
+  "parameters": [
+   "normal jobs per electrician",
+   "time as master"
+  ],
+  "calibrated": [
+   "most jobs per electrician",
+   "normal jobs per electrician",
+   "time as master",
+   "apprenticeship time"
+  ]
+ },
+ "Hospital contract cleaning standard, parameters": {
+  "name": "Hospital contract cleaning standard, parameters",
+  "scenario": "cleaningStandards",
+  "kind": "parameters",
+  "series": "share of rooms failing",
+  "changes": {
+   "set": {
+    "hours per cleaner": {
+     "equation": "240"
+    },
+    "reference hours per room": {
+     "equation": "12"
+    }
+   }
+  },
+  "parameters": [
+   "hours per cleaner",
+   "reference hours per room"
+  ],
+  "calibrated": [
+   "hours per cleaner",
+   "reference hours per room",
+   "original rooms",
+   "reference failing share"
+  ]
+ },
+ "Valley groundwater board, parameters": {
+  "name": "Valley groundwater board, parameters",
+  "scenario": "valleyWater",
+  "kind": "parameters",
+  "series": "depth to water",
+  "changes": {
+   "set": {
+    "storage per foot": {
+     "equation": "3000"
+    },
+    "aquifer base depth": {
+     "equation": "240"
+    }
+   }
+  },
+  "parameters": [
+   "storage per foot",
+   "aquifer base depth"
+  ],
+  "calibrated": [
+   "storage per foot",
+   "aquifer base depth",
+   "farm well depth",
+   "full crop value"
+  ]
+ }
+}

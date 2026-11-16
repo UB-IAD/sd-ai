@@ -1,0 +1,321 @@
+{
+  "title": "gibberishLarge",
+  "model": {
+    "variables": [
+      {
+        "name": "estintant",
+        "type": "variable"
+      },
+      {
+        "name": "ih",
+        "type": "variable"
+      },
+      {
+        "name": "houtal",
+        "type": "variable"
+      },
+      {
+        "name": "pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "supply of unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "flow of geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "quality of paffling",
+        "type": "variable"
+      },
+      {
+        "name": "memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "funkado",
+        "type": "variable"
+      },
+      {
+        "name": "quality of succupserva",
+        "type": "variable"
+      },
+      {
+        "name": "level of aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "pershipfulty",
+        "type": "variable"
+      },
+      {
+        "name": "proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "level of gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "level of loopnova",
+        "type": "variable"
+      },
+      {
+        "name": "frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "posistorather",
+        "type": "variable"
+      },
+      {
+        "name": "stock of copyring",
+        "type": "variable"
+      },
+      {
+        "name": "balack",
+        "type": "variable"
+      },
+      {
+        "name": "stock of hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "supply of exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "priary",
+        "type": "variable"
+      },
+      {
+        "name": "flow of oc",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "estintant",
+        "to": "ih",
+        "polarity": "+"
+      },
+      {
+        "from": "ih",
+        "to": "houtal",
+        "polarity": "+"
+      },
+      {
+        "from": "houtal",
+        "to": "pablanksill",
+        "polarity": "+"
+      },
+      {
+        "from": "pablanksill",
+        "to": "supply of unliescatice",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of unliescatice",
+        "to": "estintant",
+        "polarity": "+"
+      },
+      {
+        "from": "estintant",
+        "to": "flow of geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of geyflorrin",
+        "to": "quality of paffling",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of paffling",
+        "to": "memostorer",
+        "polarity": "-"
+      },
+      {
+        "from": "memostorer",
+        "to": "younjuring",
+        "polarity": "-"
+      },
+      {
+        "from": "younjuring",
+        "to": "funkado",
+        "polarity": "-"
+      },
+      {
+        "from": "funkado",
+        "to": "quality of succupserva",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of succupserva",
+        "to": "estintant",
+        "polarity": "+"
+      },
+      {
+        "from": "level of aferraron",
+        "to": "pershipfulty",
+        "polarity": "-"
+      },
+      {
+        "from": "pershipfulty",
+        "to": "proptimatire",
+        "polarity": "-"
+      },
+      {
+        "from": "proptimatire",
+        "to": "perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "perstablintome",
+        "to": "level of gissorm",
+        "polarity": "-"
+      },
+      {
+        "from": "level of gissorm",
+        "to": "level of loopnova",
+        "polarity": "-"
+      },
+      {
+        "from": "level of loopnova",
+        "to": "frimbulator",
+        "polarity": "+"
+      },
+      {
+        "from": "frimbulator",
+        "to": "level of aferraron",
+        "polarity": "+"
+      },
+      {
+        "from": "level of aferraron",
+        "to": "posistorather",
+        "polarity": "+"
+      },
+      {
+        "from": "posistorather",
+        "to": "stock of copyring",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of copyring",
+        "to": "balack",
+        "polarity": "-"
+      },
+      {
+        "from": "balack",
+        "to": "level of aferraron",
+        "polarity": "-"
+      },
+      {
+        "from": "estintant",
+        "to": "stock of hensologic",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of hensologic",
+        "to": "level of aferraron",
+        "polarity": "+"
+      },
+      {
+        "from": "reveforly",
+        "to": "frimbulator",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of exeminte",
+        "to": "perstablintome",
+        "polarity": "-"
+      },
+      {
+        "from": "level of loopnova",
+        "to": "priary",
+        "polarity": "+"
+      },
+      {
+        "from": "level of aferraron",
+        "to": "flow of oc",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "estintant",
+        "pablanksill"
+      ],
+      "nodes": [
+        "estintant",
+        "ih",
+        "houtal",
+        "pablanksill",
+        "supply of unliescatice"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "estintant",
+        "quality of paffling",
+        "younjuring"
+      ],
+      "nodes": [
+        "estintant",
+        "flow of geyflorrin",
+        "quality of paffling",
+        "memostorer",
+        "younjuring",
+        "funkado",
+        "quality of succupserva"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "level of aferraron",
+        "perstablintome",
+        "level of loopnova"
+      ],
+      "nodes": [
+        "level of aferraron",
+        "pershipfulty",
+        "proptimatire",
+        "perstablintome",
+        "level of gissorm",
+        "level of loopnova",
+        "frimbulator"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "level of aferraron",
+        "stock of copyring"
+      ],
+      "nodes": [
+        "level of aferraron",
+        "posistorather",
+        "stock of copyring",
+        "balack"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

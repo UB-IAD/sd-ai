@@ -123,6 +123,36 @@ function Leaderboard() {
     </div>
   );
 
+  // A board that is defined but has nothing published yet still explains its columns, so a
+  // link to it from the evals pages lands on something useful rather than an error.
+  if (config && !leaderboardData) {
+    return (
+      <div className="leaderboard-page py-3 sm:py-5">
+        {backLink}
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 sm:mb-3 text-gray-800">
+          {config.title} Leaderboard
+        </h1>
+        <p className="text-base text-gray-600 mb-3">{config.description}</p>
+        <div className="p-4 bg-amber-50 border border-amber-200 rounded text-amber-900 mb-4 text-sm">
+          No results have been published to this board yet. The columns it will show are listed below.
+        </div>
+        <ul className="mb-3 space-y-1.5 text-sm text-gray-600 list-disc pl-5 marker:text-gray-400">
+          {Object.entries(config.categoryNotes).map(([category, note]) => (
+            <li key={category}>
+              <span className="font-semibold text-gray-800">{camelCaseToWords(category)}</span> — {note}
+            </li>
+          ))}
+        </ul>
+        {config.note && <p className="text-sm text-gray-600 mb-4">{config.note}</p>}
+        {mode === 'agent' && (
+          <Link to="/evals/agents" className="text-blue-600 hover:underline text-sm">
+            How the agent evals work →
+          </Link>
+        )}
+      </div>
+    );
+  }
+
   if (!config || !leaderboardData) {
     return (
       <div className="leaderboard-page py-3 sm:py-5">

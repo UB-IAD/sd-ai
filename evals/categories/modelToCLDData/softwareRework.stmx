@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>Software project rework</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="Schedule Pressure">
+			</aux>
+			<aux name="Overtime Hours">
+			</aux>
+			<aux name="Staff Fatigue">
+			</aux>
+			<aux name="Error Rate">
+			</aux>
+			<aux name="Undiscovered Rework">
+			</aux>
+			<aux name="Rework Discovered">
+			</aux>
+			<aux name="Work Remaining">
+			</aux>
+			<aux name="Work Completion Rate">
+			</aux>
+			<aux name="Hiring Requests">
+			</aux>
+			<aux name="New Staff">
+			</aux>
+			<aux name="Average Experience">
+			</aux>
+			<aux name="Scope Changes">
+			</aux>
+			<aux name="Features Delivered">
+			</aux>
+			<aux name="Staff Turnover">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="880" y="470" name="Schedule Pressure"/>
+				<aux x="839" y="648" name="Overtime Hours"/>
+				<aux x="726" y="791" name="Staff Fatigue"/>
+				<aux x="561" y="870" name="Error Rate"/>
+				<aux x="379" y="870" name="Undiscovered Rework"/>
+				<aux x="214" y="791" name="Rework Discovered"/>
+				<aux x="101" y="648" name="Work Remaining"/>
+				<aux x="60" y="470" name="Work Completion Rate"/>
+				<aux x="101" y="292" name="Hiring Requests"/>
+				<aux x="214" y="149" name="New Staff"/>
+				<aux x="379" y="70" name="Average Experience"/>
+				<aux x="561" y="70" name="Scope Changes"/>
+				<aux x="726" y="149" name="Features Delivered"/>
+				<aux x="839" y="292" name="Staff Turnover"/>
+				<connector uid="1" angle="257.03" polarity="+">
+					<from>Schedule_Pressure</from>
+					<to>Overtime_Hours</to>
+				</connector>
+				<connector uid="2" angle="231.68" polarity="+">
+					<from>Overtime_Hours</from>
+					<to>Staff_Fatigue</to>
+				</connector>
+				<connector uid="3" angle="205.58" polarity="+">
+					<from>Staff_Fatigue</from>
+					<to>Error_Rate</to>
+				</connector>
+				<connector uid="4" angle="180.00" polarity="+">
+					<from>Error_Rate</from>
+					<to>Undiscovered_Rework</to>
+				</connector>
+				<connector uid="5" angle="154.42" polarity="+">
+					<from>Undiscovered_Rework</from>
+					<to>Rework_Discovered</to>
+				</connector>
+				<connector uid="6" angle="128.32" polarity="+">
+					<from>Rework_Discovered</from>
+					<to>Work_Remaining</to>
+				</connector>
+				<connector uid="7" angle="12.87" polarity="+">
+					<from>Work_Remaining</from>
+					<to>Schedule_Pressure</to>
+				</connector>
+				<connector uid="8" angle="167.13" polarity="+">
+					<from>Overtime_Hours</from>
+					<to>Work_Completion_Rate</to>
+				</connector>
+				<connector uid="9" angle="282.97" polarity="-">
+					<from>Work_Completion_Rate</from>
+					<to>Work_Remaining</to>
+				</connector>
+				<connector uid="10" angle="167.13" polarity="+">
+					<from>Schedule_Pressure</from>
+					<to>Hiring_Requests</to>
+				</connector>
+				<connector uid="11" angle="51.68" polarity="+">
+					<from>Hiring_Requests</from>
+					<to>New_Staff</to>
+				</connector>
+				<connector uid="12" angle="25.58" polarity="-">
+					<from>New_Staff</from>
+					<to>Average_Experience</to>
+				</connector>
+				<connector uid="13" angle="282.82" polarity="-">
+					<from>Average_Experience</from>
+					<to>Error_Rate</to>
+				</connector>
+				<connector uid="14" angle="231.49" polarity="+">
+					<from>Scope_Changes</from>
+					<to>Work_Remaining</to>
+				</connector>
+				<connector uid="15" angle="25.73" polarity="+">
+					<from>Work_Completion_Rate</from>
+					<to>Features_Delivered</to>
+				</connector>
+				<connector uid="16" angle="77.24" polarity="+">
+					<from>Staff_Fatigue</from>
+					<to>Staff_Turnover</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

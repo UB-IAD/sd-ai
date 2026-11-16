@@ -1,0 +1,69 @@
+{
+ "id": "mushroomGrowers",
+ "title": "Mushroom growers",
+ "subject": "specialty mushroom growing in our region",
+ "question": "why so many growers started up and what has slowed them down since",
+ "problemStatement": "I want a picture of how the regional mushroom trade works that I can check against our own documents.",
+ "heldOut": true,
+ "glossary": [
+  "growers",
+  "new growers starting",
+  "mushroom supply",
+  "wholesale price",
+  "grower profits",
+  "restaurant demand"
+ ],
+ "files": [
+  "regional_market_report_2025.md",
+  "wholesaler_interview_notes.md",
+  "growers_association_survey.md",
+  "office_cleaning_contract.md"
+ ],
+ "unrelated": "office_cleaning_contract.md",
+ "supported": [
+  {
+   "from": "growers",
+   "to": "mushroom supply",
+   "polarity": "+",
+   "source": "regional_market_report_2025.md"
+  },
+  {
+   "from": "mushroom supply",
+   "to": "wholesale price",
+   "polarity": "-",
+   "source": "wholesaler_interview_notes.md"
+  },
+  {
+   "from": "restaurant demand",
+   "to": "wholesale price",
+   "polarity": "+",
+   "source": "wholesaler_interview_notes.md"
+  },
+  {
+   "from": "wholesale price",
+   "to": "grower profits",
+   "polarity": "+",
+   "source": "growers_association_survey.md"
+  },
+  {
+   "from": "grower profits",
+   "to": "new growers starting",
+   "polarity": "+",
+   "source": "growers_association_survey.md"
+  }
+ ],
+ "unsupported": {
+  "from": "new growers starting",
+  "to": "growers",
+  "polarity": "+"
+ },
+ "words": {
+  "growers": "number of growers|growers in the region",
+  "new growers starting": "new growers?",
+  "mushroom supply": "supply of mushrooms|mushroom supply",
+  "wholesale price": "wholesale price",
+  "grower profits": "profit",
+  "restaurant demand": "restaurant"
+ },
+ "notStated": "\\bjoin|new growers? (add|adds|swell|swells|raise|raises|increase|increases|become)|(added|adds?) to the (number|count|ranks|total)|number of growers (rises|grows|increases|goes up|went up|rose) (with|as|when|because)|ranks of growers|each new grower (adds|means)"
+}

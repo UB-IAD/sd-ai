@@ -1,0 +1,105 @@
+{
+ "bikeShare": {
+  "threshold": 38200,
+  "tighterThreshold": 40800,
+  "bestSingle": "referral bonus",
+  "bestSingleValue": 36600,
+  "combination": "referral bonus and double advertising",
+  "combinationValue": 39800,
+  "reference": {
+   "advertising effect": "0.0015",
+   "persuasion": "0.0375"
+  },
+  "referenceValue": 41700
+ },
+ "kitchenFitters": {
+  "threshold": 46.9,
+  "tighterThreshold": 46.9,
+  "bestSingle": "stop rushing",
+  "bestSingleValue": 48.6,
+  "combination": "final check and stop rushing",
+  "combinationValue": 45.2,
+  "reference": {
+   "maximum rush": "1",
+   "normal error fraction": "0.05",
+   "hiring time": "20",
+   "Crews": "13",
+   "target lead time": "4"
+  },
+  "referenceValue": 43.7
+ },
+ "mushroomGrowers": {
+  "threshold": 398000,
+  "tighterThreshold": 338000,
+  "bestSingle": "build at half the pace",
+  "bestSingleValue": 409000,
+  "combination": "half the pace and faster building",
+  "combinationValue": 386000,
+  "reference": {
+   "building response": "0.4",
+   "construction time": "6",
+   "start up time": "2",
+   "closing response": "0.225",
+   "room lifetime": "36",
+   "reopening response": "0.1",
+   "time to scrap": "4"
+  },
+  "referenceValue": 290000
+ },
+ "ambulanceService": {
+  "threshold": 10.7,
+  "tighterThreshold": 10.7,
+  "bestSingle": "hold the target",
+  "bestSingleValue": 10.9,
+  "combination": "hold the target and fast-track budget",
+  "combinationValue": 10.5,
+  "reference": {
+   "target adjustment time": "1000000000",
+   "budget delay": "6",
+   "review time": "1"
+  },
+  "referenceValue": 10.4
+ },
+ "foodBank": {
+  "threshold": 122,
+  "tighterThreshold": 133,
+  "bestSingle": "pre-packed boxes",
+  "bestSingleValue": 117,
+  "combination": "pre-packed boxes and double the fair stalls",
+  "combinationValue": 128,
+  "reference": {
+   "recruitment fairs": "0.75",
+   "manageable load": "7.5"
+  },
+  "referenceValue": 139
+ },
+ "electricianTraining": {
+  "threshold": 32.7,
+  "tighterThreshold": 10.2,
+  "bestSingle": "keep the intake going",
+  "bestSingleValue": 45,
+  "combination": "keep the intake going and take on faster",
+  "combinationValue": 20.4,
+  "reference": {
+   "minimum intake": "3",
+   "intake adjustment time": "24",
+   "apprentices per master": "0.6"
+  },
+  "referenceValue": 0
+ },
+ "valleyWater": {
+  "threshold": 38,
+  "tighterThreshold": 15.5,
+  "bestSingle": "cap combined pumping",
+  "bestSingleValue": 53,
+  "combination": "cap combined pumping and recharge ponds",
+  "combinationValue": 23,
+  "reference": {
+   "basin pumping cap": "25000",
+   "recharge scheme": "3000",
+   "water use per person": "0.2",
+   "town well depth": "200"
+  },
+  "referenceValue": 8
+ }
+}

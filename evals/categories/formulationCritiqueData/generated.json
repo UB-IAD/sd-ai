@@ -1,0 +1,188 @@
+{
+ "Rural dialysis network": {
+  "name": "Rural dialysis network",
+  "scenario": "dialysisClinic",
+  "description": "the rural dialysis network",
+  "plants": [
+   {
+    "id": "patients per chair embedded in treatments started",
+    "variable": "treatments started",
+    "rule": "embedded constant",
+    "equation": "MIN(waiting_list / minimum_wait, chairs * 1.2)",
+    "text": "\"treatments started\" has the value of \"patients per chair\" (1.2) written into its equation as a number instead of using the named constant \"patients per chair\"."
+   },
+   {
+    "id": "desired chairs inlined into ordering chairs",
+    "variable": "ordering chairs",
+    "rule": "too many inputs",
+    "equation": "MAX(0, ((waiting_list / target_wait / patients_per_chair) - chairs - chairs_on_order) / order_adjustment_time)",
+    "text": "\"ordering chairs\" packs 6 inputs into one equation by writing out the formula for \"desired chairs\" in place instead of using \"desired chairs\"."
+   }
+  ],
+  "distractors": [
+   "\"referrals\" should not depend on \"base referrals\".",
+   "\"waiting list\" should start at zero."
+  ]
+ },
+ "Coffee-growing cooperative": {
+  "name": "Coffee-growing cooperative",
+  "scenario": "coffeeCoop",
+  "description": "the coffee-growing cooperative",
+  "plants": [
+   {
+    "id": "coffee price embedded in planting",
+    "variable": "planting",
+    "rule": "embedded constant",
+    "equation": "harvest * 3000 * reinvestment_share / cost_per_new_hectare",
+    "text": "\"planting\" has the value of \"coffee price\" (3000) written into its equation as a number instead of using the named constant \"coffee price\"."
+   },
+   {
+    "id": "fertility effect inlined into yield per hectare",
+    "variable": "yield per hectare",
+    "rule": "too many inputs",
+    "equation": "best_yield * ((soil_fertility / healthy_soil_score) ^ fertility_sensitivity) * labor_effect",
+    "text": "\"yield per hectare\" packs 5 inputs into one equation by writing out the formula for \"fertility effect\" in place instead of using \"fertility effect\"."
+   }
+  ],
+  "distractors": [
+   "\"soil depletion\" should not depend on \"planted area\".",
+   "\"planted area\" should start at zero."
+  ]
+ },
+ "Kitchen fitting backlog": {
+  "name": "Kitchen fitting backlog",
+  "scenario": "kitchenFitters",
+  "description": "the kitchen fitting backlog",
+  "plants": [
+   {
+    "id": "base orders embedded in new orders",
+    "variable": "new orders",
+    "rule": "embedded constant",
+    "equation": "10 + STEP(surge_size, surge_start) - STEP(surge_size, surge_end)",
+    "text": "\"new orders\" has the value of \"base orders\" (10) written into its equation as a number instead of using the named constant \"base orders\"."
+   }
+  ],
+  "distractors": [
+   "\"jobs fitted\" should not depend on \"desired fitting\".",
+   "\"job backlog\" should start at zero."
+  ]
+ },
+ "Regional specialty mushroom growers": {
+  "name": "Regional specialty mushroom growers",
+  "scenario": "mushroomGrowers",
+  "description": "the regional specialty mushroom growers",
+  "plants": [
+   {
+    "id": "building response embedded in new rooms started",
+    "variable": "new rooms started",
+    "rule": "embedded constant",
+    "equation": "growing_rooms * 0.8 * profit_per_kilo / growing_cost",
+    "text": "\"new rooms started\" has the value of \"building response\" (0.8) written into its equation as a number instead of using the named constant \"building response\"."
+   },
+   {
+    "id": "production inlined into price",
+    "variable": "price",
+    "rule": "too many inputs",
+    "equation": "reference_price * (reference_demand / (growing_rooms * yield_per_room)) ^ price_sensitivity",
+    "text": "\"price\" packs 5 inputs into one equation by writing out the formula for \"production\" in place instead of using \"production\"."
+   }
+  ],
+  "distractors": [
+   "\"rooms built\" should not depend on \"rooms under construction\".",
+   "\"growing rooms\" should start at zero."
+  ]
+ },
+ "Regional ambulance service": {
+  "name": "Regional ambulance service",
+  "scenario": "ambulanceService",
+  "description": "the regional ambulance service",
+  "plants": [
+   {
+    "id": "growth rate embedded in population growth",
+    "variable": "population growth",
+    "rule": "embedded constant",
+    "equation": "population * 0.006",
+    "text": "\"population growth\" has the value of \"growth rate\" (0.006) written into its equation as a number instead of using the named constant \"growth rate\"."
+   },
+   {
+    "id": "crews needed inlined into crews requested",
+    "variable": "crews requested",
+    "rule": "too many inputs",
+    "equation": "MAX(0, (IF response_time_target > 0 THEN crews * (1 + performance_gap / response_time_target) ELSE crews) - crews - crews_awaiting_budget) / review_time",
+    "text": "\"crews requested\" packs 5 inputs into one equation by writing out the formula for \"crews needed\" in place instead of using \"crews needed\"."
+   }
+  ],
+  "distractors": [
+   "\"crews starting\" should not depend on \"crews awaiting budget\".",
+   "\"population\" should start at zero."
+  ]
+ },
+ "Community food bank volunteers": {
+  "name": "Community food bank volunteers",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "plants": [
+   {
+    "id": "recruitment fairs embedded in recruiting",
+    "variable": "recruiting",
+    "rule": "embedded constant",
+    "equation": "friends_joining + 0.25",
+    "text": "\"recruiting\" has the value of \"recruitment fairs\" (0.25) written into its equation as a number instead of using the named constant \"recruitment fairs\"."
+   }
+  ],
+  "distractors": [
+   "\"quitting\" should not depend on \"volunteers\".",
+   "\"volunteers\" should start at zero."
+  ]
+ },
+ "Regional electricians' guild": {
+  "name": "Regional electricians' guild",
+  "scenario": "electricianTraining",
+  "description": "the regional electricians' guild",
+  "plants": [
+   {
+    "id": "work growth rate embedded in work growth",
+    "variable": "work growth",
+    "rule": "embedded constant",
+    "equation": "Normal_Work * 0.002",
+    "text": "\"work growth\" has the value of \"work growth rate\" (0.002) written into its equation as a number instead of using the named constant \"work growth rate\"."
+   },
+   {
+    "id": "intake wanted inlined into taking on apprentices",
+    "variable": "taking on apprentices",
+    "rule": "too many inputs",
+    "equation": "MIN((MAX(minimum_intake, retiring + workforce_gap / intake_adjustment_time)), MIN(places_opening_up, college_places))",
+    "text": "\"taking on apprentices\" packs 6 inputs into one equation by writing out the formula for \"intake wanted\" in place instead of using \"intake wanted\"."
+   }
+  ],
+  "distractors": [
+   "\"qualifying\" should not depend on \"apprentices\".",
+   "\"Normal Work\" should start at zero."
+  ]
+ },
+ "Valley groundwater board": {
+  "name": "Valley groundwater board",
+  "scenario": "valleyWater",
+  "description": "the valley groundwater board",
+  "plants": [
+   {
+    "id": "rain recharge embedded in recharge",
+    "variable": "recharge",
+    "rule": "embedded constant",
+    "equation": "26500 + recharge_scheme",
+    "text": "\"recharge\" has the value of \"rain recharge\" (26500) written into its equation as a number instead of using the named constant \"rain recharge\"."
+   },
+   {
+    "id": "town demand inlined into pumping wanted",
+    "variable": "pumping wanted",
+    "rule": "too many inputs",
+    "equation": "(town_population * water_use_per_person) * town_well_yield + farm_demand * farm_well_yield",
+    "text": "\"pumping wanted\" packs 5 inputs into one equation by writing out the formula for \"town demand\" in place instead of using \"town demand\"."
+   }
+  ],
+  "distractors": [
+   "\"town pumping\" should not depend on \"town demand\".",
+   "\"groundwater\" should start at zero."
+  ]
+ }
+}

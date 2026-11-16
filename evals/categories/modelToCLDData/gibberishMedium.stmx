@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>gibberishMedium</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="reflupper">
+			</aux>
+			<aux name="demand for relity">
+			</aux>
+			<aux name="pablanksill">
+			</aux>
+			<aux name="estintant">
+			</aux>
+			<aux name="quality of arinterpord">
+			</aux>
+			<aux name="exeminte">
+			</aux>
+			<aux name="yoffa">
+			</aux>
+			<aux name="stock of perfecton">
+			</aux>
+			<aux name="ih">
+			</aux>
+			<aux name="pressure on memostorer">
+			</aux>
+			<aux name="flow of whatajig">
+			</aux>
+			<aux name="quality of whoziewhat">
+			</aux>
+			<aux name="phildiscals">
+			</aux>
+			<aux name="crypteral">
+			</aux>
+			<aux name="stock of hashtockle">
+			</aux>
+			<aux name="unliescatice">
+			</aux>
+			<aux name="supply of baxtoy">
+			</aux>
+			<aux name="level of gissorm">
+			</aux>
+			<aux name="houtal">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1130" y="595" name="reflupper"/>
+				<aux x="1101" y="769" name="demand for relity"/>
+				<aux x="1017" y="924" name="pablanksill"/>
+				<aux x="888" y="1043" name="estintant"/>
+				<aux x="726" y="1114" name="quality of arinterpord"/>
+				<aux x="551" y="1128" name="exeminte"/>
+				<aux x="380" y="1085" name="yoffa"/>
+				<aux x="233" y="989" name="stock of perfecton"/>
+				<aux x="124" y="850" name="ih"/>
+				<aux x="67" y="683" name="pressure on memostorer"/>
+				<aux x="67" y="507" name="flow of whatajig"/>
+				<aux x="124" y="340" name="quality of whoziewhat"/>
+				<aux x="233" y="201" name="phildiscals"/>
+				<aux x="380" y="105" name="crypteral"/>
+				<aux x="551" y="62" name="stock of hashtockle"/>
+				<aux x="726" y="76" name="unliescatice"/>
+				<aux x="888" y="147" name="supply of baxtoy"/>
+				<aux x="1017" y="266" name="level of gissorm"/>
+				<aux x="1101" y="421" name="houtal"/>
+				<connector uid="1" angle="260.54" polarity="+">
+					<from>reflupper</from>
+					<to>demand_for_relity</to>
+				</connector>
+				<connector uid="2" angle="241.55" polarity="+">
+					<from>demand_for_relity</from>
+					<to>pablanksill</to>
+				</connector>
+				<connector uid="3" angle="222.69" polarity="-">
+					<from>pablanksill</from>
+					<to>estintant</to>
+				</connector>
+				<connector uid="4" angle="61.62" polarity="+">
+					<from>estintant</from>
+					<to>reflupper</to>
+				</connector>
+				<connector uid="5" angle="232.10" polarity="-">
+					<from>reflupper</from>
+					<to>quality_of_arinterpord</to>
+				</connector>
+				<connector uid="6" angle="184.57" polarity="+">
+					<from>quality_of_arinterpord</from>
+					<to>exeminte</to>
+				</connector>
+				<connector uid="7" angle="165.88" polarity="+">
+					<from>exeminte</from>
+					<to>yoffa</to>
+				</connector>
+				<connector uid="8" angle="146.85" polarity="-">
+					<from>yoffa</from>
+					<to>stock_of_perfecton</to>
+				</connector>
+				<connector uid="9" angle="23.71" polarity="+">
+					<from>stock_of_perfecton</from>
+					<to>reflupper</to>
+				</connector>
+				<connector uid="10" angle="108.85" polarity="+">
+					<from>ih</from>
+					<to>pressure_on_memostorer</to>
+				</connector>
+				<connector uid="11" angle="90.00" polarity="+">
+					<from>pressure_on_memostorer</from>
+					<to>flow_of_whatajig</to>
+				</connector>
+				<connector uid="12" angle="71.15" polarity="-">
+					<from>flow_of_whatajig</from>
+					<to>quality_of_whoziewhat</to>
+				</connector>
+				<connector uid="13" angle="51.90" polarity="-">
+					<from>quality_of_whoziewhat</from>
+					<to>phildiscals</to>
+				</connector>
+				<connector uid="14" angle="33.15" polarity="+">
+					<from>phildiscals</from>
+					<to>crypteral</to>
+				</connector>
+				<connector uid="15" angle="251.04" polarity="-">
+					<from>crypteral</from>
+					<to>ih</to>
+				</connector>
+				<connector uid="16" angle="137.37" polarity="-">
+					<from>reflupper</from>
+					<to>stock_of_hashtockle</to>
+				</connector>
+				<connector uid="17" angle="241.55" polarity="-">
+					<from>stock_of_hashtockle</from>
+					<to>ih</to>
+				</connector>
+				<connector uid="18" angle="251.07" polarity="-">
+					<from>unliescatice</from>
+					<to>yoffa</to>
+				</connector>
+				<connector uid="19" angle="298.38" polarity="-">
+					<from>supply_of_baxtoy</from>
+					<to>reflupper</to>
+				</connector>
+				<connector uid="20" angle="345.82" polarity="+">
+					<from>crypteral</from>
+					<to>level_of_gissorm</to>
+				</connector>
+				<connector uid="21" angle="71.10" polarity="-">
+					<from>estintant</from>
+					<to>houtal</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

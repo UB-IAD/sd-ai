@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishE</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="flow of unliescatice">
+			</aux>
+			<aux name="level of whatajig">
+			</aux>
+			<aux name="frimbulator">
+			</aux>
+			<aux name="hoza">
+			</aux>
+			<aux name="pressure on burgination">
+			</aux>
+			<aux name="houtal">
+			</aux>
+			<aux name="traze">
+			</aux>
+			<aux name="buwheal">
+			</aux>
+			<aux name="pressure on crypteral">
+			</aux>
+			<aux name="bellignorance">
+			</aux>
+			<aux name="level of paffling">
+			</aux>
+			<aux name="supply of reveforly">
+			</aux>
+			<aux name="yelb">
+			</aux>
+			<aux name="reflupper">
+			</aux>
+			<aux name="level of oc">
+			</aux>
+			<aux name="demand for gissorm">
+			</aux>
+			<aux name="demand for succupserva">
+			</aux>
+			<aux name="outrance">
+			</aux>
+			<aux name="pressure on arinterpord">
+			</aux>
+			<aux name="maxabizer">
+			</aux>
+			<aux name="rate of pablanksill">
+			</aux>
+			<aux name="ih">
+			</aux>
+			<aux name="illigent">
+			</aux>
+			<aux name="rate of estintant">
+			</aux>
+			<aux name="quality of perstablintome">
+			</aux>
+			<aux name="stock of baxtoy">
+			</aux>
+			<aux name="rate of copyring">
+			</aux>
+			<aux name="yoffa">
+			</aux>
+			<aux name="flow of relity">
+			</aux>
+			<aux name="obvia">
+			</aux>
+			<aux name="perfecton">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1730" y="895" name="flow of unliescatice"/>
+				<aux x="1713" y="1063" name="level of whatajig"/>
+				<aux x="1662" y="1224" name="frimbulator"/>
+				<aux x="1580" y="1372" name="hoza"/>
+				<aux x="1470" y="1500" name="pressure on burgination"/>
+				<aux x="1337" y="1604" name="houtal"/>
+				<aux x="1185" y="1678" name="traze"/>
+				<aux x="1021" y="1720" name="buwheal"/>
+				<aux x="853" y="1729" name="pressure on crypteral"/>
+				<aux x="686" y="1703" name="bellignorance"/>
+				<aux x="527" y="1645" name="level of paffling"/>
+				<aux x="384" y="1555" name="supply of reveforly"/>
+				<aux x="261" y="1439" name="yelb"/>
+				<aux x="165" y="1300" name="reflupper"/>
+				<aux x="98" y="1145" name="level of oc"/>
+				<aux x="64" y="979" name="demand for gissorm"/>
+				<aux x="64" y="811" name="demand for succupserva"/>
+				<aux x="98" y="645" name="outrance"/>
+				<aux x="165" y="490" name="pressure on arinterpord"/>
+				<aux x="261" y="351" name="maxabizer"/>
+				<aux x="384" y="235" name="rate of pablanksill"/>
+				<aux x="527" y="145" name="ih"/>
+				<aux x="686" y="87" name="illigent"/>
+				<aux x="853" y="61" name="rate of estintant"/>
+				<aux x="1021" y="70" name="quality of perstablintome"/>
+				<aux x="1185" y="112" name="stock of baxtoy"/>
+				<aux x="1337" y="186" name="rate of copyring"/>
+				<aux x="1470" y="290" name="yoffa"/>
+				<aux x="1580" y="418" name="flow of relity"/>
+				<aux x="1662" y="566" name="obvia"/>
+				<aux x="1713" y="727" name="perfecton"/>
+				<connector uid="1" angle="264.22" polarity="-">
+					<from>flow_of_unliescatice</from>
+					<to>level_of_whatajig</to>
+				</connector>
+				<connector uid="2" angle="252.42" polarity="+">
+					<from>level_of_whatajig</from>
+					<to>frimbulator</to>
+				</connector>
+				<connector uid="3" angle="241.01" polarity="+">
+					<from>frimbulator</from>
+					<to>hoza</to>
+				</connector>
+				<connector uid="4" angle="229.33" polarity="+">
+					<from>hoza</from>
+					<to>pressure_on_burgination</to>
+				</connector>
+				<connector uid="5" angle="218.02" polarity="+">
+					<from>pressure_on_burgination</from>
+					<to>houtal</to>
+				</connector>
+				<connector uid="6" angle="205.96" polarity="+">
+					<from>houtal</from>
+					<to>traze</to>
+				</connector>
+				<connector uid="7" angle="194.36" polarity="+">
+					<from>traze</from>
+					<to>buwheal</to>
+				</connector>
+				<connector uid="8" angle="49.32" polarity="+">
+					<from>buwheal</from>
+					<to>flow_of_unliescatice</to>
+				</connector>
+				<connector uid="9" angle="171.15" polarity="+">
+					<from>pressure_on_crypteral</from>
+					<to>bellignorance</to>
+				</connector>
+				<connector uid="10" angle="159.96" polarity="+">
+					<from>bellignorance</from>
+					<to>level_of_paffling</to>
+				</connector>
+				<connector uid="11" angle="147.81" polarity="+">
+					<from>level_of_paffling</from>
+					<to>supply_of_reveforly</to>
+				</connector>
+				<connector uid="12" angle="339.65" polarity="+">
+					<from>supply_of_reveforly</from>
+					<to>pressure_on_crypteral</to>
+				</connector>
+				<connector uid="13" angle="124.63" polarity="+">
+					<from>yelb</from>
+					<to>reflupper</to>
+				</connector>
+				<connector uid="14" angle="113.38" polarity="+">
+					<from>reflupper</from>
+					<to>level_of_oc</to>
+				</connector>
+				<connector uid="15" angle="101.58" polarity="-">
+					<from>level_of_oc</from>
+					<to>demand_for_gissorm</to>
+				</connector>
+				<connector uid="16" angle="90.00" polarity="+">
+					<from>demand_for_gissorm</from>
+					<to>demand_for_succupserva</to>
+				</connector>
+				<connector uid="17" angle="78.42" polarity="-">
+					<from>demand_for_succupserva</from>
+					<to>outrance</to>
+				</connector>
+				<connector uid="18" angle="281.60" polarity="+">
+					<from>outrance</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="19" angle="95.78" polarity="+">
+					<from>yelb</from>
+					<to>pressure_on_arinterpord</to>
+				</connector>
+				<connector uid="20" angle="55.37" polarity="+">
+					<from>pressure_on_arinterpord</from>
+					<to>maxabizer</to>
+				</connector>
+				<connector uid="21" angle="43.32" polarity="+">
+					<from>maxabizer</from>
+					<to>rate_of_pablanksill</to>
+				</connector>
+				<connector uid="22" angle="32.19" polarity="+">
+					<from>rate_of_pablanksill</from>
+					<to>ih</to>
+				</connector>
+				<connector uid="23" angle="20.04" polarity="-">
+					<from>ih</from>
+					<to>illigent</to>
+				</connector>
+				<connector uid="24" angle="8.85" polarity="-">
+					<from>illigent</from>
+					<to>rate_of_estintant</to>
+				</connector>
+				<connector uid="25" angle="356.93" polarity="+">
+					<from>rate_of_estintant</from>
+					<to>quality_of_perstablintome</to>
+				</connector>
+				<connector uid="26" angle="240.96" polarity="+">
+					<from>quality_of_perstablintome</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="27" angle="124.84" polarity="+">
+					<from>flow_of_unliescatice</from>
+					<to>stock_of_baxtoy</to>
+				</connector>
+				<connector uid="28" angle="258.40" polarity="+">
+					<from>stock_of_baxtoy</from>
+					<to>pressure_on_crypteral</to>
+				</connector>
+				<connector uid="29" angle="72.58" polarity="-">
+					<from>pressure_on_crypteral</from>
+					<to>rate_of_copyring</to>
+				</connector>
+				<connector uid="30" angle="229.35" polarity="-">
+					<from>rate_of_copyring</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="31" angle="252.57" polarity="+">
+					<from>yoffa</from>
+					<to>buwheal</to>
+				</connector>
+				<connector uid="32" angle="188.71" polarity="+">
+					<from>flow_of_relity</from>
+					<to>outrance</to>
+				</connector>
+				<connector uid="33" angle="55.18" polarity="-">
+					<from>pressure_on_crypteral</from>
+					<to>obvia</to>
+				</connector>
+				<connector uid="34" angle="14.51" polarity="-">
+					<from>level_of_oc</from>
+					<to>perfecton</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

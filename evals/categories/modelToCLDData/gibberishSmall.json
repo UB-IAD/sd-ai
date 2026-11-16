@@ -1,0 +1,193 @@
+{
+  "title": "gibberishSmall",
+  "model": {
+    "variables": [
+      {
+        "name": "stock of reflupper",
+        "type": "variable"
+      },
+      {
+        "name": "supply of loopnova",
+        "type": "variable"
+      },
+      {
+        "name": "quality of crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "oclate",
+        "type": "variable"
+      },
+      {
+        "name": "perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "rate of succupserva",
+        "type": "variable"
+      },
+      {
+        "name": "rate of aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "quality of reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "level of phildiscals",
+        "type": "variable"
+      },
+      {
+        "name": "hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "rate of gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "relity",
+        "type": "variable"
+      },
+      {
+        "name": "ku",
+        "type": "variable"
+      },
+      {
+        "name": "pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "hoza",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "stock of reflupper",
+        "to": "supply of loopnova",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of loopnova",
+        "to": "quality of crypteral",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of crypteral",
+        "to": "oclate",
+        "polarity": "-"
+      },
+      {
+        "from": "oclate",
+        "to": "perfecton",
+        "polarity": "+"
+      },
+      {
+        "from": "perfecton",
+        "to": "rate of succupserva",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of succupserva",
+        "to": "stock of reflupper",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of reflupper",
+        "to": "rate of aferraron",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of aferraron",
+        "to": "quality of reveforly",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of reveforly",
+        "to": "level of phildiscals",
+        "polarity": "+"
+      },
+      {
+        "from": "level of phildiscals",
+        "to": "hashtockle",
+        "polarity": "+"
+      },
+      {
+        "from": "hashtockle",
+        "to": "rate of gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of gissorm",
+        "to": "memostorer",
+        "polarity": "+"
+      },
+      {
+        "from": "memostorer",
+        "to": "stock of reflupper",
+        "polarity": "-"
+      },
+      {
+        "from": "relity",
+        "to": "rate of aferraron",
+        "polarity": "-"
+      },
+      {
+        "from": "ku",
+        "to": "rate of gissorm",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of reveforly",
+        "to": "pablanksill",
+        "polarity": "+"
+      },
+      {
+        "from": "memostorer",
+        "to": "hoza",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "stock of reflupper",
+        "quality of crypteral",
+        "perfecton"
+      ],
+      "nodes": [
+        "stock of reflupper",
+        "supply of loopnova",
+        "quality of crypteral",
+        "oclate",
+        "perfecton",
+        "rate of succupserva"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "stock of reflupper",
+        "quality of reveforly",
+        "hashtockle"
+      ],
+      "nodes": [
+        "stock of reflupper",
+        "rate of aferraron",
+        "quality of reveforly",
+        "level of phildiscals",
+        "hashtockle",
+        "rate of gissorm",
+        "memostorer"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

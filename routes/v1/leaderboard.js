@@ -15,7 +15,7 @@ import {
 
 const router = express.Router()
 
-// Get leaderboard data for a specific mode (cld, sfd or discussion).
+// Get leaderboard data for a specific mode (cld, sfd, discussion or agent).
 //
 // One file per board holds every generation, so the default is the whole thing —
 // unchanged from before generations existed. `?generation=v2` filters the rows down to
@@ -91,7 +91,8 @@ router.get('/:mode', async (req, res) => {
 const MODE_TITLES = {
   cld: 'Causal Loop Diagrams',
   sfd: 'Stock & Flow Diagrams',
-  discussion: 'Discussion'
+  discussion: 'Discussion',
+  agent: 'Agents'
 }
 
 // Get list of available leaderboard modes, and the generations each one has.

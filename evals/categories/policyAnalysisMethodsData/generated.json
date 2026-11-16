@@ -1,0 +1,353 @@
+{
+ "Coffee-growing cooperative: what if": {
+  "name": "Coffee-growing cooperative: what if",
+  "scenario": "coffeeCoop",
+  "kind": "scenario",
+  "prompt": "Here is my model of the coffee-growing cooperative. If \"depletion per hectare\" had been 0.00015 instead of 0.0001 from the start, what would harvest at year 15 have been? Please work it out with the model and give me the number; don't change the model itself.",
+  "overrideNames": [
+   "depletion per hectare"
+  ],
+  "overrideValue": 0.00015,
+  "quantity": "harvest at year 15",
+  "truth": 140.0618628722567
+ },
+ "Coffee-growing cooperative: which matters": {
+  "name": "Coffee-growing cooperative: which matters",
+  "scenario": "coffeeCoop",
+  "kind": "sensitivity",
+  "prompt": "Here is my model of the coffee-growing cooperative. Neither \"fertility sensitivity\" nor \"reinvestment share\" is known well — either could easily be 20% off. Which of the two matters more for harvest at year 15? Please base your answer on the model, and don't change it.",
+  "parameters": [
+   "fertility sensitivity",
+   "reinvestment share"
+  ],
+  "baseValues": {
+   "fertility sensitivity": 2,
+   "reinvestment share": 0.5
+  },
+  "answer": "fertility sensitivity",
+  "options": [
+   "fertility sensitivity",
+   "reinvestment share"
+  ],
+  "measureLabel": "harvest at year 15"
+ },
+ "Coffee-growing cooperative: history": {
+  "name": "Coffee-growing cooperative: history",
+  "scenario": "coffeeCoop",
+  "kind": "calibration",
+  "prompt": "Here is my model of the coffee-growing cooperative, and we have the history of \"harvest\", which you can load. The model doesn't match it yet. Please find the values of the model's parameters that make it match our history, and return the model with them in place.",
+  "calibrationCase": "Coffee-growing cooperative, parameters"
+ },
+ "Kitchen fitting backlog: what if": {
+  "name": "Kitchen fitting backlog: what if",
+  "scenario": "kitchenFitters",
+  "kind": "scenario",
+  "prompt": "Here is my model of the kitchen fitting backlog. If \"target lead time\" had been 6 instead of 4 from the start, what would job backlog at week 40 have been? Please work it out with the model and give me the number; don't change the model itself.",
+  "overrideNames": [
+   "target lead time"
+  ],
+  "overrideValue": 6,
+  "quantity": "job backlog at week 40",
+  "truth": 103.47821435981402
+ },
+ "Kitchen fitting backlog: which matters": {
+  "name": "Kitchen fitting backlog: which matters",
+  "scenario": "kitchenFitters",
+  "kind": "sensitivity",
+  "prompt": "Here is my model of the kitchen fitting backlog. Neither \"jobs per crew\" nor \"maximum rush\" is known well — either could easily be 20% off. Which of the two matters more for job backlog at week 40? Please base your answer on the model, and don't change it.",
+  "parameters": [
+   "jobs per crew",
+   "maximum rush"
+  ],
+  "baseValues": {
+   "maximum rush": 1.4,
+   "jobs per crew": 1
+  },
+  "answer": "maximum rush",
+  "options": [
+   "jobs per crew",
+   "maximum rush"
+  ],
+  "measureLabel": "job backlog at week 40"
+ },
+ "Kitchen fitting backlog: history": {
+  "name": "Kitchen fitting backlog: history",
+  "scenario": "kitchenFitters",
+  "kind": "calibration",
+  "prompt": "Here is my model of the kitchen fitting backlog, and we have the history of \"job backlog\", which you can load. The model doesn't match it yet. Please find the values of the model's parameters that make it match our history, and return the model with them in place.",
+  "calibrationCase": "Kitchen fitting backlog, parameters"
+ },
+ "Regional specialty mushroom growers: what if": {
+  "name": "Regional specialty mushroom growers: what if",
+  "scenario": "mushroomGrowers",
+  "kind": "scenario",
+  "prompt": "Here is my model of the regional specialty mushroom growers. If \"yield per room\" had been 3000 instead of 2000 from the start, what would the peak of monthly losses have been? Please work it out with the model and give me the number; don't change the model itself.",
+  "overrideNames": [
+   "yield per room"
+  ],
+  "overrideValue": 3000,
+  "quantity": "the peak of monthly losses",
+  "truth": 347999.99999999977
+ },
+ "Regional specialty mushroom growers: which matters": {
+  "name": "Regional specialty mushroom growers: which matters",
+  "scenario": "mushroomGrowers",
+  "kind": "sensitivity",
+  "prompt": "Here is my model of the regional specialty mushroom growers. Neither \"growing cost\" nor \"reference demand\" is known well — either could easily be 20% off. Which of the two matters more for the peak of monthly losses? Please base your answer on the model, and don't change it.",
+  "parameters": [
+   "growing cost",
+   "reference demand"
+  ],
+  "baseValues": {
+   "reference demand": 240000,
+   "growing cost": 5
+  },
+  "answer": "reference demand",
+  "options": [
+   "growing cost",
+   "reference demand"
+  ],
+  "measureLabel": "the peak of monthly losses"
+ },
+ "Regional specialty mushroom growers: history": {
+  "name": "Regional specialty mushroom growers: history",
+  "scenario": "mushroomGrowers",
+  "kind": "calibration",
+  "prompt": "Here is my model of the regional specialty mushroom growers, and we have the history of \"monthly losses\", which you can load. The model doesn't match it yet. Please find the values of the model's parameters that make it match our history, and return the model with them in place.",
+  "calibrationCase": "Regional specialty mushroom growers, parameters"
+ },
+ "Regional ambulance service: what if": {
+  "name": "Regional ambulance service: what if",
+  "scenario": "ambulanceService",
+  "kind": "scenario",
+  "prompt": "Here is my model of the regional ambulance service. If \"growth rate\" had been 0.009 instead of 0.006 from the start, what would the peak of response time have been? Please work it out with the model and give me the number; don't change the model itself.",
+  "overrideNames": [
+   "growth rate"
+  ],
+  "overrideValue": 0.009,
+  "quantity": "the peak of response time",
+  "truth": 18.837277200389057
+ },
+ "Regional ambulance service: which matters": {
+  "name": "Regional ambulance service: which matters",
+  "scenario": "ambulanceService",
+  "kind": "sensitivity",
+  "prompt": "Here is my model of the regional ambulance service. Neither \"normal response time\" nor \"target adjustment time\" is known well — either could easily be 20% off. Which of the two matters more for the peak of response time? Please base your answer on the model, and don't change it.",
+  "parameters": [
+   "normal response time",
+   "target adjustment time"
+  ],
+  "baseValues": {
+   "normal response time": 10,
+   "target adjustment time": 12
+  },
+  "answer": "normal response time",
+  "options": [
+   "normal response time",
+   "target adjustment time"
+  ],
+  "measureLabel": "the peak of response time"
+ },
+ "Regional ambulance service: history": {
+  "name": "Regional ambulance service: history",
+  "scenario": "ambulanceService",
+  "kind": "calibration",
+  "prompt": "Here is my model of the regional ambulance service, and we have the history of \"response time\", which you can load. The model doesn't match it yet. Please find the values of the model's parameters that make it match our history, and return the model with them in place.",
+  "calibrationCase": "Regional ambulance service, parameters"
+ },
+ "Parcel delivery van fleet: what if": {
+  "name": "Parcel delivery van fleet: what if",
+  "scenario": "deliveryVans",
+  "kind": "scenario",
+  "prompt": "Here is my model of the parcel delivery van fleet. If \"base van budget\" had been 3900000 instead of 2600000 from the start, what would the peak of breakdowns have been? Please work it out with the model and give me the number; don't change the model itself.",
+  "overrideNames": [
+   "base van budget"
+  ],
+  "overrideValue": 3900000,
+  "quantity": "the peak of breakdowns",
+  "truth": 400
+ },
+ "Parcel delivery van fleet: which matters": {
+  "name": "Parcel delivery van fleet: which matters",
+  "scenario": "deliveryVans",
+  "kind": "sensitivity",
+  "prompt": "Here is my model of the parcel delivery van fleet. Neither \"normal breakdown rate\" nor \"normal mileage\" is known well — either could easily be 20% off. Which of the two matters more for the peak of breakdowns? Please base your answer on the model, and don't change it.",
+  "parameters": [
+   "normal breakdown rate",
+   "normal mileage"
+  ],
+  "baseValues": {
+   "normal mileage": 90000,
+   "normal breakdown rate": 2
+  },
+  "answer": "normal mileage",
+  "options": [
+   "normal breakdown rate",
+   "normal mileage"
+  ],
+  "measureLabel": "the peak of breakdowns"
+ },
+ "Parcel delivery van fleet: history": {
+  "name": "Parcel delivery van fleet: history",
+  "scenario": "deliveryVans",
+  "kind": "calibration",
+  "prompt": "Here is my model of the parcel delivery van fleet, and we have the history of \"breakdowns\", which you can load. The model doesn't match it yet. Please find the values of the model's parameters that make it match our history, and return the model with them in place.",
+  "calibrationCase": "Parcel delivery van fleet, parameters"
+ },
+ "Community food bank volunteers: what if": {
+  "name": "Community food bank volunteers: what if",
+  "scenario": "foodBank",
+  "kind": "scenario",
+  "prompt": "Here is my model of the community food bank volunteers. If \"manageable load\" had been 7.5 instead of 5 from the start, what would volunteers at month 36 have been? Please work it out with the model and give me the number; don't change the model itself.",
+  "overrideNames": [
+   "manageable load"
+  ],
+  "overrideValue": 7.5,
+  "quantity": "volunteers at month 36",
+  "truth": 116.5464516802769
+ },
+ "Community food bank volunteers: which matters": {
+  "name": "Community food bank volunteers: which matters",
+  "scenario": "foodBank",
+  "kind": "sensitivity",
+  "prompt": "Here is my model of the community food bank volunteers. Neither \"friend recruiting rate\" nor \"time on rolls\" is known well — either could easily be 20% off. Which of the two matters more for volunteers at month 36? Please base your answer on the model, and don't change it.",
+  "parameters": [
+   "friend recruiting rate",
+   "time on rolls"
+  ],
+  "baseValues": {
+   "friend recruiting rate": 0.12,
+   "time on rolls": 20
+  },
+  "answer": "friend recruiting rate",
+  "options": [
+   "friend recruiting rate",
+   "time on rolls"
+  ],
+  "measureLabel": "volunteers at month 36"
+ },
+ "Community food bank volunteers: history": {
+  "name": "Community food bank volunteers: history",
+  "scenario": "foodBank",
+  "kind": "calibration",
+  "prompt": "Here is my model of the community food bank volunteers, and we have the history of \"volunteers\", which you can load. The model doesn't match it yet. Please find the values of the model's parameters that make it match our history, and return the model with them in place.",
+  "calibrationCase": "Community food bank volunteers, parameters"
+ },
+ "Regional electricians' guild: what if": {
+  "name": "Regional electricians' guild: what if",
+  "scenario": "electricianTraining",
+  "kind": "scenario",
+  "prompt": "Here is my model of the regional electricians' guild. If \"normal jobs per electrician\" had been 9 instead of 6 from the start, what would the peak of jobs turned away have been? Please work it out with the model and give me the number; don't change the model itself.",
+  "overrideNames": [
+   "normal jobs per electrician"
+  ],
+  "overrideValue": 9,
+  "quantity": "the peak of jobs turned away",
+  "truth": 1557.3120214264882
+ },
+ "Regional electricians' guild: which matters": {
+  "name": "Regional electricians' guild: which matters",
+  "scenario": "electricianTraining",
+  "kind": "sensitivity",
+  "prompt": "Here is my model of the regional electricians' guild. Neither \"apprenticeship time\" nor \"most jobs per electrician\" is known well — either could easily be 20% off. Which of the two matters more for the peak of jobs turned away? Please base your answer on the model, and don't change it.",
+  "parameters": [
+   "apprenticeship time",
+   "most jobs per electrician"
+  ],
+  "baseValues": {
+   "most jobs per electrician": 6.6,
+   "apprenticeship time": 48
+  },
+  "answer": "most jobs per electrician",
+  "options": [
+   "apprenticeship time",
+   "most jobs per electrician"
+  ],
+  "measureLabel": "the peak of jobs turned away"
+ },
+ "Regional electricians' guild: history": {
+  "name": "Regional electricians' guild: history",
+  "scenario": "electricianTraining",
+  "kind": "calibration",
+  "prompt": "Here is my model of the regional electricians' guild, and we have the history of \"jobs turned away\", which you can load. The model doesn't match it yet. Please find the values of the model's parameters that make it match our history, and return the model with them in place.",
+  "calibrationCase": "Regional electricians' guild, parameters"
+ },
+ "Hospital contract cleaning standard: what if": {
+  "name": "Hospital contract cleaning standard: what if",
+  "scenario": "cleaningStandards",
+  "kind": "scenario",
+  "prompt": "Here is my model of the hospital contract cleaning standard. If \"reference hours per room\" had been 30 instead of 20 from the start, what would share of rooms failing at month 96 have been? Please work it out with the model and give me the number; don't change the model itself.",
+  "overrideNames": [
+   "reference hours per room"
+  ],
+  "overrideValue": 30,
+  "quantity": "share of rooms failing at month 96",
+  "truth": 0.24904955347678448
+ },
+ "Hospital contract cleaning standard: which matters": {
+  "name": "Hospital contract cleaning standard: which matters",
+  "scenario": "cleaningStandards",
+  "kind": "sensitivity",
+  "prompt": "Here is my model of the hospital contract cleaning standard. Neither \"hours per cleaner\" nor \"reference failing share\" is known well — either could easily be 20% off. Which of the two matters more for share of rooms failing at month 96? Please base your answer on the model, and don't change it.",
+  "parameters": [
+   "hours per cleaner",
+   "reference failing share"
+  ],
+  "baseValues": {
+   "hours per cleaner": 160,
+   "reference failing share": 0.1
+  },
+  "answer": "hours per cleaner",
+  "options": [
+   "hours per cleaner",
+   "reference failing share"
+  ],
+  "measureLabel": "share of rooms failing at month 96"
+ },
+ "Hospital contract cleaning standard: history": {
+  "name": "Hospital contract cleaning standard: history",
+  "scenario": "cleaningStandards",
+  "kind": "calibration",
+  "prompt": "Here is my model of the hospital contract cleaning standard, and we have the history of \"share of rooms failing\", which you can load. The model doesn't match it yet. Please find the values of the model's parameters that make it match our history, and return the model with them in place.",
+  "calibrationCase": "Hospital contract cleaning standard, parameters"
+ },
+ "Valley groundwater board: what if": {
+  "name": "Valley groundwater board: what if",
+  "scenario": "valleyWater",
+  "kind": "scenario",
+  "prompt": "Here is my model of the valley groundwater board. If \"aquifer base depth\" had been 600 instead of 400 from the start, what would depth to water at year 20 have been? Please work it out with the model and give me the number; don't change the model itself.",
+  "overrideNames": [
+   "aquifer base depth"
+  ],
+  "overrideValue": 600,
+  "quantity": "depth to water at year 20",
+  "truth": 40.12119152156356
+ },
+ "Valley groundwater board: which matters": {
+  "name": "Valley groundwater board: which matters",
+  "scenario": "valleyWater",
+  "kind": "sensitivity",
+  "prompt": "Here is my model of the valley groundwater board. Neither \"farm well depth\" nor \"lift cost\" is known well — either could easily be 20% off. Which of the two matters more for depth to water at year 20? Please base your answer on the model, and don't change it.",
+  "parameters": [
+   "farm well depth",
+   "lift cost"
+  ],
+  "baseValues": {
+   "farm well depth": 200,
+   "lift cost": 2.5
+  },
+  "answer": "farm well depth",
+  "options": [
+   "farm well depth",
+   "lift cost"
+  ],
+  "measureLabel": "depth to water at year 20"
+ },
+ "Valley groundwater board: history": {
+  "name": "Valley groundwater board: history",
+  "scenario": "valleyWater",
+  "kind": "calibration",
+  "prompt": "Here is my model of the valley groundwater board, and we have the history of \"depth to water\", which you can load. The model doesn't match it yet. Please find the values of the model's parameters that make it match our history, and return the model with them in place.",
+  "calibrationCase": "Valley groundwater board, parameters"
+ }
+}

@@ -1,4 +1,4 @@
-import PySDSimulator from '../../evals/utilities/simulator/PySDSimulator.js';
+import PySDSimulator, { evenLookups, MAX_LOOKUP_POINTS } from '../../evals/utilities/simulator/PySDSimulator.js';
 import SDJsonToXMILE from '../../utilities/SDJsonToXMILE.js';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
@@ -140,6 +140,55 @@ describe('PySDSimulator', () => {
             const results = await simulator.simulate(['doubled']);
             expect(results['doubled'][0]).toBeCloseTo(6, 9);
         }, TIMEOUT);
+    });
+
+    describe('lookups with uneven x points', () => {
+        // PySD ignores <xpts> and spaces <ypts> evenly over <xscale>, so a lookup with
+        // breakpoints at 0, 1 and 10 was read as if they were at 0, 5 and 10.
+        const xmileFor = (points, gfType) => {
+            const xmile = SDJsonToXMILE({
+                model: {
+                    variables: [
+                        { name: 'effect', type: 'variable', equation: 'TIME', graphicalFunction: { points } }
+                    ],
+                    relationships: [],
+                    specs: { startTime: 0, stopTime: 12, dt: 1, timeUnits: 'months' }
+                }
+            }, { modelName: 'lookup test', vendor: 'SD-AI Evaluation', product: 'sd-ai-evals', version: '1.0' });
+            return gfType ? xmile.replace('<gf>', `<gf type="${gfType}">`) : xmile;
+        };
+        const uneven = [{ x: 0, y: 0 }, { x: 1, y: 1 }, { x: 10, y: 2 }];
+        const truth = (t) => (t <= 1 ? t : 1 + (t - 1) / 9);
+
+        test('should honour uneven x points', async () => {
+            const results = await new PySDSimulator(xmileFor(uneven, null)).simulate(['effect']);
+            for (let t = 0; t <= 10; t++) expect(results.effect[t]).toBeCloseTo(truth(t), 6);
+        }, TIMEOUT);
+
+        test('should hold the last value beyond the last point, as before', async () => {
+            const results = await new PySDSimulator(xmileFor(uneven, null)).simulate(['effect']);
+            expect(results.effect[12]).toBeCloseTo(2, 6);
+        }, TIMEOUT);
+
+        test('should resample on the coarsest exact grid, and leave even lookups alone', () => {
+            const resampled = evenLookups(xmileFor(uneven, null));
+            expect(resampled).not.toMatch(/<xpts>/);
+            expect(resampled.match(/<ypts>([^<]*)<\/ypts>/)[1].split(',')).toHaveLength(11);
+            const even = xmileFor([{ x: 0, y: 0 }, { x: 5, y: 1 }, { x: 10, y: 2 }], null);
+            expect(evenLookups(even)).toBe(even);
+        });
+
+        test('should leave a discrete lookup alone', () => {
+            const discrete = xmileFor(uneven, 'discrete');
+            expect(evenLookups(discrete)).toBe(discrete);
+        });
+
+        test('should approximate closely when no small exact grid exists', () => {
+            const points = [{ x: 0, y: 0 }, { x: 0.0000013, y: 1 }, { x: 10, y: 2 }];
+            const ys = evenLookups(xmileFor(points, null)).match(/<ypts>([^<]*)<\/ypts>/)[1].split(',').map(Number);
+            expect(ys).toHaveLength(MAX_LOOKUP_POINTS);
+            expect(ys[ys.length - 1]).toBeCloseTo(2, 12);
+        });
     });
 
     describe('variable names', () => {

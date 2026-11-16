@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishF</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="supply of whatajig">
+			</aux>
+			<aux name="pressure on crypteral">
+			</aux>
+			<aux name="funkado">
+			</aux>
+			<aux name="level of balack">
+			</aux>
+			<aux name="geyflorrin">
+			</aux>
+			<aux name="quality of ku">
+			</aux>
+			<aux name="level of oclate">
+			</aux>
+			<aux name="quality of memostorer">
+			</aux>
+			<aux name="quality of houtal">
+			</aux>
+			<aux name="level of relity">
+			</aux>
+			<aux name="exeminte">
+			</aux>
+			<aux name="stock of hazmick">
+			</aux>
+			<aux name="hensologic">
+			</aux>
+			<aux name="flow of unliescatice">
+			</aux>
+			<aux name="traze">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="930" y="495" name="supply of whatajig"/>
+				<aux x="892" y="672" name="pressure on crypteral"/>
+				<aux x="786" y="818" name="funkado"/>
+				<aux x="629" y="909" name="level of balack"/>
+				<aux x="450" y="928" name="geyflorrin"/>
+				<aux x="278" y="872" name="quality of ku"/>
+				<aux x="143" y="751" name="level of oclate"/>
+				<aux x="70" y="585" name="quality of memostorer"/>
+				<aux x="70" y="405" name="quality of houtal"/>
+				<aux x="143" y="239" name="level of relity"/>
+				<aux x="277" y="118" name="exeminte"/>
+				<aux x="450" y="62" name="stock of hazmick"/>
+				<aux x="629" y="81" name="hensologic"/>
+				<aux x="786" y="172" name="flow of unliescatice"/>
+				<aux x="892" y="318" name="traze"/>
+				<connector uid="1" angle="257.88" polarity="+">
+					<from>supply_of_whatajig</from>
+					<to>pressure_on_crypteral</to>
+				</connector>
+				<connector uid="2" angle="234.02" polarity="+">
+					<from>pressure_on_crypteral</from>
+					<to>funkado</to>
+				</connector>
+				<connector uid="3" angle="210.10" polarity="+">
+					<from>funkado</from>
+					<to>level_of_balack</to>
+				</connector>
+				<connector uid="4" angle="186.06" polarity="+">
+					<from>level_of_balack</from>
+					<to>geyflorrin</to>
+				</connector>
+				<connector uid="5" angle="42.05" polarity="-">
+					<from>geyflorrin</from>
+					<to>supply_of_whatajig</to>
+				</connector>
+				<connector uid="6" angle="210.04" polarity="+">
+					<from>supply_of_whatajig</from>
+					<to>quality_of_ku</to>
+				</connector>
+				<connector uid="7" angle="138.13" polarity="+">
+					<from>quality_of_ku</from>
+					<to>level_of_oclate</to>
+				</connector>
+				<connector uid="8" angle="113.74" polarity="-">
+					<from>level_of_oclate</from>
+					<to>quality_of_memostorer</to>
+				</connector>
+				<connector uid="9" angle="90.00" polarity="+">
+					<from>quality_of_memostorer</from>
+					<to>quality_of_houtal</to>
+				</connector>
+				<connector uid="10" angle="66.26" polarity="+">
+					<from>quality_of_houtal</from>
+					<to>level_of_relity</to>
+				</connector>
+				<connector uid="11" angle="42.08" polarity="-">
+					<from>level_of_relity</from>
+					<to>exeminte</to>
+				</connector>
+				<connector uid="12" angle="330.00" polarity="-">
+					<from>exeminte</from>
+					<to>supply_of_whatajig</to>
+				</connector>
+				<connector uid="13" angle="197.94" polarity="-">
+					<from>stock_of_hazmick</from>
+					<to>exeminte</to>
+				</connector>
+				<connector uid="14" angle="306.02" polarity="-">
+					<from>hensologic</from>
+					<to>supply_of_whatajig</to>
+				</connector>
+				<connector uid="15" angle="101.97" polarity="+">
+					<from>pressure_on_crypteral</from>
+					<to>flow_of_unliescatice</to>
+				</connector>
+				<connector uid="16" angle="66.01" polarity="+">
+					<from>level_of_balack</from>
+					<to>traze</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

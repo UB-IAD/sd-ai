@@ -1,0 +1,817 @@
+{
+ "Rural dialysis network (doubling base referrals, bug in chairs arriving)": {
+  "name": "Rural dialysis network (doubling base referrals, bug in chairs arriving)",
+  "scenario": "dialysisClinic",
+  "kind": "bug",
+  "description": "the rural dialysis network",
+  "error": {
+   "variable": "chairs arriving",
+   "change": {
+    "equation": "chairs_on_order * build_delay"
+   }
+  },
+  "plant": {
+   "variable": "chairs arriving",
+   "fields": [
+    "equation"
+   ]
+  },
+  "report": "When I double \"base referrals\", \"waiting list\" ends the run only about 33% higher than before. I expected doubling \"base referrals\" to roughly double \"waiting list\".",
+  "check": {
+   "outputs": [
+    "waiting list"
+   ],
+   "overrides": {
+    "base referrals": "72"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "waiting list",
+    "min": 1.7,
+    "max": 2.3
+   }
+  }
+ },
+ "Rural dialysis network (doubling target wait)": {
+  "name": "Rural dialysis network (doubling target wait)",
+  "scenario": "dialysisClinic",
+  "kind": "expectation",
+  "description": "the rural dialysis network",
+  "report": "When I double \"target wait\", \"chairs\" ends the run only about 18% lower than before. I expected doubling \"target wait\" to roughly halve \"chairs\".",
+  "check": {
+   "outputs": [
+    "chairs"
+   ],
+   "overrides": {
+    "target wait": "4"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "chairs",
+    "min": 0.8,
+    "max": 0.84
+   }
+  }
+ },
+ "Rural dialysis network (doubling give up fraction, bug in waiting list)": {
+  "name": "Rural dialysis network (doubling give up fraction, bug in waiting list)",
+  "scenario": "dialysisClinic",
+  "kind": "bug",
+  "description": "the rural dialysis network",
+  "error": {
+   "variable": "waiting list",
+   "change": {
+    "outflows": [
+     "patients giving up"
+    ]
+   }
+  },
+  "plant": {
+   "variable": "waiting list",
+   "fields": [
+    "outflows"
+   ]
+  },
+  "report": "When I double \"give up fraction\", \"discouraged patients\" ends the run only about 50% higher than before. I expected doubling \"give up fraction\" to roughly double \"discouraged patients\".",
+  "check": {
+   "outputs": [
+    "discouraged patients"
+   ],
+   "overrides": {
+    "give up fraction": "0.1"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "discouraged patients",
+    "min": 1.7,
+    "max": 2.3
+   }
+  }
+ },
+ "Rural dialysis network (doubling build delay)": {
+  "name": "Rural dialysis network (doubling build delay)",
+  "scenario": "dialysisClinic",
+  "kind": "expectation",
+  "description": "the rural dialysis network",
+  "report": "When I double \"build delay\", \"chairs\" ends the run only about 9% higher than before. I expected doubling \"build delay\" to roughly double \"chairs\".",
+  "check": {
+   "outputs": [
+    "chairs"
+   ],
+   "overrides": {
+    "build delay": "18"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "chairs",
+    "min": 1.07,
+    "max": 1.11
+   }
+  }
+ },
+ "Regional distributor inventory (doubling coverage, bug in orders)": {
+  "name": "Regional distributor inventory (doubling coverage, bug in orders)",
+  "scenario": "distributor",
+  "kind": "bug",
+  "description": "the regional distributor inventory",
+  "error": {
+   "variable": "orders",
+   "change": {
+    "equation": "MAX(0, expected_demand + (inventory - desired_inventory) / adjustment_time + supply_line_weight * (desired_supply_line - supply_line) / adjustment_time)"
+   }
+  },
+  "plant": {
+   "variable": "orders",
+   "fields": [
+    "equation"
+   ]
+  },
+  "report": "When I double \"coverage\", \"inventory\" ends the run only about 13% higher than before. I expected doubling \"coverage\" to roughly double \"inventory\".",
+  "check": {
+   "outputs": [
+    "inventory"
+   ],
+   "overrides": {
+    "coverage": "8"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "inventory",
+    "min": 1.7,
+    "max": 2.3
+   }
+  }
+ },
+ "Regional distributor inventory (doubling demand increase)": {
+  "name": "Regional distributor inventory (doubling demand increase)",
+  "scenario": "distributor",
+  "kind": "expectation",
+  "description": "the regional distributor inventory",
+  "report": "When I double \"demand increase\", \"inventory\" ends the run only about 17% higher than before. I expected doubling \"demand increase\" to roughly double \"inventory\".",
+  "check": {
+   "outputs": [
+    "inventory"
+   ],
+   "overrides": {
+    "demand increase": "40"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "inventory",
+    "min": 1.15,
+    "max": 1.19
+   }
+  }
+ },
+ "Regional distributor inventory (doubling base demand, bug in inventory)": {
+  "name": "Regional distributor inventory (doubling base demand, bug in inventory)",
+  "scenario": "distributor",
+  "kind": "bug",
+  "description": "the regional distributor inventory",
+  "error": {
+   "variable": "inventory",
+   "change": {
+    "outflows": []
+   }
+  },
+  "plant": {
+   "variable": "inventory",
+   "fields": [
+    "outflows"
+   ]
+  },
+  "report": "When I double \"base demand\", \"inventory\" ends the run only about 48% higher than before. I expected doubling \"base demand\" to roughly double \"inventory\".",
+  "check": {
+   "outputs": [
+    "inventory"
+   ],
+   "overrides": {
+    "base demand": "200"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "inventory",
+    "min": 1.7,
+    "max": 2.3
+   }
+  }
+ },
+ "Regional distributor inventory (doubling delivery delay)": {
+  "name": "Regional distributor inventory (doubling delivery delay)",
+  "scenario": "distributor",
+  "kind": "expectation",
+  "description": "the regional distributor inventory",
+  "report": "When I double \"delivery delay\", \"inventory\" ends the run only about 6% higher than before. I expected doubling \"delivery delay\" to roughly double \"inventory\".",
+  "check": {
+   "outputs": [
+    "inventory"
+   ],
+   "overrides": {
+    "delivery delay": "12"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "inventory",
+    "min": 1.04,
+    "max": 1.08
+   }
+  }
+ },
+ "Coffee-growing cooperative (doubling best yield, bug in soil recovery)": {
+  "name": "Coffee-growing cooperative (doubling best yield, bug in soil recovery)",
+  "scenario": "coffeeCoop",
+  "kind": "bug",
+  "description": "the coffee-growing cooperative",
+  "error": {
+   "variable": "soil recovery",
+   "change": {
+    "equation": "(healthy_soil_score - soil_fertility) * soil_recovery_time"
+   }
+  },
+  "plant": {
+   "variable": "soil recovery",
+   "fields": [
+    "equation"
+   ]
+  },
+  "report": "When I double \"best yield\", \"planted area\" ends the run only about 47% higher than before. I expected doubling \"best yield\" to roughly double \"planted area\".",
+  "check": {
+   "outputs": [
+    "planted area"
+   ],
+   "overrides": {
+    "best yield": "2.4"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "planted area",
+    "min": 1.7,
+    "max": 2.3
+   }
+  }
+ },
+ "Coffee-growing cooperative (doubling soil recovery time)": {
+  "name": "Coffee-growing cooperative (doubling soil recovery time)",
+  "scenario": "coffeeCoop",
+  "kind": "expectation",
+  "description": "the coffee-growing cooperative",
+  "report": "When I double \"soil recovery time\", \"planted area\" ends the run only about 11% lower than before. I expected doubling \"soil recovery time\" to roughly halve \"planted area\".",
+  "check": {
+   "outputs": [
+    "planted area"
+   ],
+   "overrides": {
+    "soil recovery time": "30"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "planted area",
+    "min": 0.87,
+    "max": 0.91
+   }
+  }
+ },
+ "Coffee-growing cooperative (doubling coffee price, bug in soil fertility)": {
+  "name": "Coffee-growing cooperative (doubling coffee price, bug in soil fertility)",
+  "scenario": "coffeeCoop",
+  "kind": "bug",
+  "description": "the coffee-growing cooperative",
+  "error": {
+   "variable": "soil fertility",
+   "change": {
+    "outflows": []
+   }
+  },
+  "plant": {
+   "variable": "soil fertility",
+   "fields": [
+    "outflows"
+   ]
+  },
+  "report": "When I double \"coffee price\", \"planted area\" ends the run only about 52% higher than before. I expected doubling \"coffee price\" to roughly double \"planted area\".",
+  "check": {
+   "outputs": [
+    "planted area"
+   ],
+   "overrides": {
+    "coffee price": "6000"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "planted area",
+    "min": 1.7,
+    "max": 2.3
+   }
+  }
+ },
+ "Coffee-growing cooperative (doubling fertility sensitivity)": {
+  "name": "Coffee-growing cooperative (doubling fertility sensitivity)",
+  "scenario": "coffeeCoop",
+  "kind": "expectation",
+  "description": "the coffee-growing cooperative",
+  "report": "When I double \"fertility sensitivity\", \"soil fertility\" ends the run only about 46% higher than before. I expected doubling \"fertility sensitivity\" to roughly double \"soil fertility\".",
+  "check": {
+   "outputs": [
+    "soil fertility"
+   ],
+   "overrides": {
+    "fertility sensitivity": "4"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "soil fertility",
+    "min": 1.44,
+    "max": 1.48
+   }
+  }
+ },
+ "Kitchen fitting backlog (doubling surge end, bug in hiring)": {
+  "name": "Kitchen fitting backlog (doubling surge end, bug in hiring)",
+  "scenario": "kitchenFitters",
+  "kind": "bug",
+  "description": "the kitchen fitting backlog",
+  "error": {
+   "variable": "hiring",
+   "change": {
+    "equation": "MAX(0, (desired_crews - fitting_crews) * hiring_time)"
+   }
+  },
+  "plant": {
+   "variable": "hiring",
+   "fields": [
+    "equation"
+   ]
+  },
+  "report": "When I double \"surge end\", \"hidden faults\" ends the run only about 9% higher than before. I expected doubling \"surge end\" to roughly double \"hidden faults\".",
+  "check": {
+   "outputs": [
+    "hidden faults"
+   ],
+   "overrides": {
+    "surge end": "48"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "hidden faults",
+    "min": 1.7,
+    "max": 2.3
+   }
+  }
+ },
+ "Kitchen fitting backlog (doubling rush error effect)": {
+  "name": "Kitchen fitting backlog (doubling rush error effect)",
+  "scenario": "kitchenFitters",
+  "kind": "expectation",
+  "description": "the kitchen fitting backlog",
+  "report": "When I double \"rush error effect\", \"job backlog\" ends the run only about 35% higher than before. I expected doubling \"rush error effect\" to roughly double \"job backlog\".",
+  "check": {
+   "outputs": [
+    "job backlog"
+   ],
+   "overrides": {
+    "rush error effect": "20"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "job backlog",
+    "min": 1.33,
+    "max": 1.37
+   }
+  }
+ },
+ "Kitchen fitting backlog (doubling normal error fraction, bug in desired fitting)": {
+  "name": "Kitchen fitting backlog (doubling normal error fraction, bug in desired fitting)",
+  "scenario": "kitchenFitters",
+  "kind": "bug",
+  "description": "the kitchen fitting backlog",
+  "error": {
+   "variable": "desired fitting",
+   "change": {
+    "equation": "job_backlog * target_lead_time"
+   }
+  },
+  "plant": {
+   "variable": "desired fitting",
+   "fields": [
+    "equation"
+   ]
+  },
+  "report": "When I double \"normal error fraction\", \"fitting crews\" ends the run only about 14% higher than before. I expected doubling \"normal error fraction\" to roughly double \"fitting crews\".",
+  "check": {
+   "outputs": [
+    "fitting crews"
+   ],
+   "overrides": {
+    "normal error fraction": "0.2"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "fitting crews",
+    "min": 1.7,
+    "max": 2.3
+   }
+  }
+ },
+ "Kitchen fitting backlog (doubling maximum rush)": {
+  "name": "Kitchen fitting backlog (doubling maximum rush)",
+  "scenario": "kitchenFitters",
+  "kind": "expectation",
+  "description": "the kitchen fitting backlog",
+  "report": "When I double \"maximum rush\", \"hidden faults\" ends the run only about 29% higher than before. I expected doubling \"maximum rush\" to roughly double \"hidden faults\".",
+  "check": {
+   "outputs": [
+    "hidden faults"
+   ],
+   "overrides": {
+    "maximum rush": "2.8"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "hidden faults",
+    "min": 1.27,
+    "max": 1.31
+   }
+  }
+ },
+ "Regional specialty mushroom growers (doubling start up time, bug in rooms coming into production)": {
+  "name": "Regional specialty mushroom growers (doubling start up time, bug in rooms coming into production)",
+  "scenario": "mushroomGrowers",
+  "kind": "bug",
+  "description": "the regional specialty mushroom growers",
+  "error": {
+   "variable": "rooms coming into production",
+   "change": {
+    "equation": "rooms_starting_up * start_up_time"
+   }
+  },
+  "plant": {
+   "variable": "rooms coming into production",
+   "fields": [
+    "equation"
+   ]
+  },
+  "report": "When I double \"start up time\", \"idle rooms\" ends the run only about 36% lower than before. I expected doubling \"start up time\" to roughly halve \"idle rooms\".",
+  "check": {
+   "outputs": [
+    "idle rooms"
+   ],
+   "overrides": {
+    "start up time": "6"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "idle rooms",
+    "min": 0.425,
+    "max": 0.575
+   }
+  }
+ },
+ "Regional specialty mushroom growers (doubling reference price)": {
+  "name": "Regional specialty mushroom growers (doubling reference price)",
+  "scenario": "mushroomGrowers",
+  "kind": "expectation",
+  "description": "the regional specialty mushroom growers",
+  "report": "When I double \"reference price\", \"growing rooms\" ends the run only about 46% higher than before. I expected doubling \"reference price\" to roughly double \"growing rooms\".",
+  "check": {
+   "outputs": [
+    "growing rooms"
+   ],
+   "overrides": {
+    "reference price": "12"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "growing rooms",
+    "min": 1.44,
+    "max": 1.48
+   }
+  }
+ },
+ "Regional specialty mushroom growers (doubling yield per room, bug in rooms starting up)": {
+  "name": "Regional specialty mushroom growers (doubling yield per room, bug in rooms starting up)",
+  "scenario": "mushroomGrowers",
+  "kind": "bug",
+  "description": "the regional specialty mushroom growers",
+  "error": {
+   "variable": "rooms starting up",
+   "change": {
+    "inflows": []
+   }
+  },
+  "plant": {
+   "variable": "rooms starting up",
+   "fields": [
+    "inflows"
+   ]
+  },
+  "report": "When I double \"yield per room\", \"growing rooms\" ends the run only about 22% lower than before. I expected doubling \"yield per room\" to roughly halve \"growing rooms\".",
+  "check": {
+   "outputs": [
+    "growing rooms"
+   ],
+   "overrides": {
+    "yield per room": "4000"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "growing rooms",
+    "min": 0.425,
+    "max": 0.575
+   }
+  }
+ },
+ "Regional specialty mushroom growers (doubling growing cost)": {
+  "name": "Regional specialty mushroom growers (doubling growing cost)",
+  "scenario": "mushroomGrowers",
+  "kind": "expectation",
+  "description": "the regional specialty mushroom growers",
+  "report": "When I double \"growing cost\", \"growing rooms\" ends the run only about 29% lower than before. I expected doubling \"growing cost\" to roughly halve \"growing rooms\".",
+  "check": {
+   "outputs": [
+    "growing rooms"
+   ],
+   "overrides": {
+    "growing cost": "10"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "growing rooms",
+    "min": 0.69,
+    "max": 0.73
+   }
+  }
+ },
+ "Parcel delivery van fleet (doubling parcels per van, bug in vans)": {
+  "name": "Parcel delivery van fleet (doubling parcels per van, bug in vans)",
+  "scenario": "deliveryVans",
+  "kind": "bug",
+  "description": "the parcel delivery van fleet",
+  "error": {
+   "variable": "vans",
+   "change": {
+    "outflows": []
+   }
+  },
+  "plant": {
+   "variable": "vans",
+   "fields": [
+    "outflows"
+   ]
+  },
+  "report": "When I double \"parcels per van\", \"vans\" ends the run only about 17% lower than before. I expected doubling \"parcels per van\" to roughly halve \"vans\".",
+  "check": {
+   "outputs": [
+    "vans"
+   ],
+   "overrides": {
+    "parcels per van": "20000"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "vans",
+    "min": 0.425,
+    "max": 0.575
+   }
+  }
+ },
+ "Parcel delivery van fleet (doubling parcel demand)": {
+  "name": "Parcel delivery van fleet (doubling parcel demand)",
+  "scenario": "deliveryVans",
+  "kind": "expectation",
+  "description": "the parcel delivery van fleet",
+  "report": "When I double \"parcel demand\", \"vans\" ends the run only about 6% higher than before. I expected doubling \"parcel demand\" to roughly double \"vans\".",
+  "check": {
+   "outputs": [
+    "vans"
+   ],
+   "overrides": {
+    "parcel demand": "4000000"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "vans",
+    "min": 1.04,
+    "max": 1.08
+   }
+  }
+ },
+ "Community food bank volunteers (doubling agency referrals, bug in tiring)": {
+  "name": "Community food bank volunteers (doubling agency referrals, bug in tiring)",
+  "scenario": "foodBank",
+  "kind": "bug",
+  "description": "the community food bank volunteers",
+  "error": {
+   "variable": "tiring",
+   "change": {
+    "equation": "(stress - fatigue) * fatigue_time"
+   }
+  },
+  "plant": {
+   "variable": "tiring",
+   "fields": [
+    "equation"
+   ]
+  },
+  "report": "When I double \"agency referrals\", \"volunteers\" ends the run only about 6% lower than before. I expected doubling \"agency referrals\" to roughly halve \"volunteers\".",
+  "check": {
+   "outputs": [
+    "volunteers"
+   ],
+   "overrides": {
+    "agency referrals": "8"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "volunteers",
+    "min": 0.425,
+    "max": 0.575
+   }
+  }
+ },
+ "Community food bank volunteers (doubling recruitment fairs)": {
+  "name": "Community food bank volunteers (doubling recruitment fairs)",
+  "scenario": "foodBank",
+  "kind": "expectation",
+  "description": "the community food bank volunteers",
+  "report": "When I double \"recruitment fairs\", \"volunteers\" ends the run only about 52% higher than before. I expected doubling \"recruitment fairs\" to roughly double \"volunteers\".",
+  "check": {
+   "outputs": [
+    "volunteers"
+   ],
+   "overrides": {
+    "recruitment fairs": "0.5"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "volunteers",
+    "min": 1.5,
+    "max": 1.54
+   }
+  }
+ },
+ "Community food bank volunteers (doubling manageable load, bug in volunteers)": {
+  "name": "Community food bank volunteers (doubling manageable load, bug in volunteers)",
+  "scenario": "foodBank",
+  "kind": "bug",
+  "description": "the community food bank volunteers",
+  "error": {
+   "variable": "volunteers",
+   "change": {
+    "inflows": []
+   }
+  },
+  "plant": {
+   "variable": "volunteers",
+   "fields": [
+    "inflows"
+   ]
+  },
+  "report": "When I double \"manageable load\", \"Potential Volunteers\" ends the run only about 6% lower than before. I expected doubling \"manageable load\" to roughly halve \"Potential Volunteers\".",
+  "check": {
+   "outputs": [
+    "Potential Volunteers"
+   ],
+   "overrides": {
+    "manageable load": "10"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "Potential Volunteers",
+    "min": 0.425,
+    "max": 0.575
+   }
+  }
+ },
+ "Community food bank volunteers (doubling fatigue time)": {
+  "name": "Community food bank volunteers (doubling fatigue time)",
+  "scenario": "foodBank",
+  "kind": "expectation",
+  "description": "the community food bank volunteers",
+  "report": "When I double \"fatigue time\", \"fatigue\" ends the run only about 40% lower than before. I expected doubling \"fatigue time\" to roughly halve \"fatigue\".",
+  "check": {
+   "outputs": [
+    "fatigue"
+   ],
+   "overrides": {
+    "fatigue time": "12"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "fatigue",
+    "min": 0.5800000000000001,
+    "max": 0.62
+   }
+  }
+ },
+ "Regional electricians' guild (doubling apprenticeship time, bug in places opening up)": {
+  "name": "Regional electricians' guild (doubling apprenticeship time, bug in places opening up)",
+  "scenario": "electricianTraining",
+  "kind": "bug",
+  "description": "the regional electricians' guild",
+  "error": {
+   "variable": "places opening up",
+   "change": {
+    "equation": "apprentice_places * apprenticeship_time"
+   }
+  },
+  "plant": {
+   "variable": "places opening up",
+   "fields": [
+    "equation"
+   ]
+  },
+  "report": "When I double \"apprenticeship time\", \"journeymen\" ends the run only about 7% lower than before. I expected doubling \"apprenticeship time\" to roughly halve \"journeymen\".",
+  "check": {
+   "outputs": [
+    "journeymen"
+   ],
+   "overrides": {
+    "apprenticeship time": "96"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "journeymen",
+    "min": 0.425,
+    "max": 0.575
+   }
+  }
+ },
+ "Regional electricians' guild (doubling work growth rate)": {
+  "name": "Regional electricians' guild (doubling work growth rate)",
+  "scenario": "electricianTraining",
+  "kind": "expectation",
+  "description": "the regional electricians' guild",
+  "report": "When I double \"work growth rate\", \"Normal Work\" ends the run only about 33% higher than before. I expected doubling \"work growth rate\" to roughly double \"Normal Work\".",
+  "check": {
+   "outputs": [
+    "Normal Work"
+   ],
+   "overrides": {
+    "work growth rate": "0.004"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "Normal Work",
+    "min": 1.31,
+    "max": 1.35
+   }
+  }
+ },
+ "Valley groundwater board (doubling aquifer base depth, bug in groundwater)": {
+  "name": "Valley groundwater board (doubling aquifer base depth, bug in groundwater)",
+  "scenario": "valleyWater",
+  "kind": "bug",
+  "description": "the valley groundwater board",
+  "error": {
+   "variable": "groundwater",
+   "change": {
+    "outflows": [
+     "town pumping",
+     "golf course pumping"
+    ]
+   }
+  },
+  "plant": {
+   "variable": "groundwater",
+   "fields": [
+    "outflows"
+   ]
+  },
+  "report": "When I double \"aquifer base depth\", \"groundwater\" ends the run only about 10% higher than before. I expected doubling \"aquifer base depth\" to roughly double \"groundwater\".",
+  "check": {
+   "outputs": [
+    "groundwater"
+   ],
+   "overrides": {
+    "aquifer base depth": "800"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "groundwater",
+    "min": 1.7,
+    "max": 2.3
+   }
+  }
+ },
+ "Valley groundwater board (doubling growing cost)": {
+  "name": "Valley groundwater board (doubling growing cost)",
+  "scenario": "valleyWater",
+  "kind": "expectation",
+  "description": "the valley groundwater board",
+  "report": "When I double \"growing cost\", \"groundwater\" ends the run only about 43% higher than before. I expected doubling \"growing cost\" to roughly double \"groundwater\".",
+  "check": {
+   "outputs": [
+    "groundwater"
+   ],
+   "overrides": {
+    "growing cost": "3400"
+   },
+   "test": {
+    "type": "endRatio",
+    "variable": "groundwater",
+    "min": 1.41,
+    "max": 1.45
+   }
+  }
+ }
+}

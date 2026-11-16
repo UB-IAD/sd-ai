@@ -1,0 +1,164 @@
+{
+ "Regional distributor inventory (hard)": {
+  "name": "Regional distributor inventory (hard)",
+  "scenario": "distributor",
+  "description": "the regional distributor inventory",
+  "added": [
+   {
+    "variable": "shipments",
+    "equation": "MIN(demand, inventory / minimum_shipments_time)",
+    "constant": {
+     "name": "minimum shipments time",
+     "type": "variable",
+     "equation": "0.25",
+     "units": "weeks"
+    }
+   }
+  ],
+  "plants": [
+   {
+    "id": "orders loses the MAX that limits it to 0",
+    "kind": "guardRemoved",
+    "variable": "orders",
+    "equation": "(expected_demand + (desired_inventory - inventory) / adjustment_time + supply_line_weight * (desired_supply_line - supply_line) / adjustment_time)",
+    "trigger": {
+     "base demand": "0"
+    },
+    "failure": "with \"base demand\" at 0, \"orders\" loses the MAX that limits it to 0, and the model goes impossible: stock \"inventory\" went negative (-111.4)"
+   },
+   {
+    "id": "shipments keeps flowing after \"inventory\" runs out",
+    "kind": "drainUnguarded",
+    "variable": "shipments",
+    "equation": "demand",
+    "trigger": {
+     "coverage": "0"
+    },
+    "failure": "with \"coverage\" at 0, \"shipments\" keeps flowing after \"inventory\" runs out, and the model goes impossible: stock \"inventory\" went negative (-176.3)"
+   }
+  ]
+ },
+ "Kitchen fitting backlog (hard)": {
+  "name": "Kitchen fitting backlog (hard)",
+  "scenario": "kitchenFitters",
+  "description": "the kitchen fitting backlog",
+  "added": [
+   {
+    "variable": "schedule pressure",
+    "equation": "desired_fitting / MAX(capacity, smallest_capacity)",
+    "constant": {
+     "name": "smallest capacity",
+     "type": "variable",
+     "equation": "0.001",
+     "units": "jobs/week"
+    }
+   }
+  ],
+  "plants": [
+   {
+    "id": "schedule pressure divides by \"capacity\" with nothing to keep it off zero",
+    "kind": "divisionUnguarded",
+    "variable": "schedule pressure",
+    "equation": "desired_fitting / capacity",
+    "trigger": {
+     "fitting crews": "0"
+    },
+    "failure": "with \"fitting crews\" at 0, \"schedule pressure\" divides by \"capacity\" with nothing to keep it off zero, and the run fails"
+   }
+  ]
+ },
+ "Regional specialty mushroom growers (hard)": {
+  "name": "Regional specialty mushroom growers (hard)",
+  "scenario": "mushroomGrowers",
+  "description": "the regional specialty mushroom growers",
+  "added": [
+   {
+    "variable": "price",
+    "equation": "reference_price * (reference_demand / MAX(production, smallest_production)) ^ price_sensitivity",
+    "constant": {
+     "name": "smallest production",
+     "type": "variable",
+     "equation": "0.001",
+     "units": "kg/month"
+    }
+   }
+  ],
+  "plants": [
+   {
+    "id": "price divides by \"production\" with nothing to keep it off zero",
+    "kind": "divisionUnguarded",
+    "variable": "price",
+    "equation": "reference_price * (reference_demand / production) ^ price_sensitivity",
+    "trigger": {
+     "growing rooms": "0"
+    },
+    "failure": "with \"growing rooms\" at 0, \"price\" divides by \"production\" with nothing to keep it off zero, and the run fails"
+   }
+  ]
+ },
+ "Regional ambulance service (hard)": {
+  "name": "Regional ambulance service (hard)",
+  "scenario": "ambulanceService",
+  "description": "the regional ambulance service",
+  "added": [
+   {
+    "variable": "workload",
+    "equation": "calls_handled / MAX(crew_capacity, smallest_crew_capacity)",
+    "constant": {
+     "name": "smallest crew capacity",
+     "type": "variable",
+     "equation": "0.001",
+     "units": "calls/month"
+    }
+   }
+  ],
+  "plants": [
+   {
+    "id": "workload divides by \"crew capacity\" with nothing to keep it off zero",
+    "kind": "divisionUnguarded",
+    "variable": "workload",
+    "equation": "calls_handled / crew_capacity",
+    "trigger": {
+     "calls per resident": "0"
+    },
+    "failure": "with \"calls per resident\" at 0, \"workload\" divides by \"crew capacity\" with nothing to keep it off zero, and the run fails"
+   }
+  ]
+ },
+ "Community food bank volunteers (hard)": {
+  "name": "Community food bank volunteers (hard)",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "added": [],
+  "plants": [
+   {
+    "id": "workload loses the MAX that limits it to 1",
+    "kind": "guardRemoved",
+    "variable": "workload",
+    "equation": "families_served / (volunteers)",
+    "trigger": {
+     "friend recruiting rate": "0"
+    },
+    "failure": "with \"friend recruiting rate\" at 0, \"workload\" loses the MAX that limits it to 1, and the run fails"
+   }
+  ]
+ },
+ "Hospital contract cleaning standard (hard)": {
+  "name": "Hospital contract cleaning standard (hard)",
+  "scenario": "cleaningStandards",
+  "description": "the hospital contract cleaning standard",
+  "added": [],
+  "plants": [
+   {
+    "id": "cleaners requested loses the MAX that limits it to 0",
+    "kind": "guardRemoved",
+    "variable": "cleaners requested",
+    "equation": "(cleaners_leaving + (cleaners_needed + cleaners_leaving * hiring_time - cleaning_staff - open_positions) / review_time)",
+    "trigger": {
+     "original rooms": "0"
+    },
+    "failure": "with \"original rooms\" at 0, \"cleaners requested\" loses the MAX that limits it to 0, and the model goes impossible: stock \"open positions\" went negative (-11.82)"
+   }
+  ]
+ }
+}

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishD</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="level of whatajig">
+			</aux>
+			<aux name="stock of houtal">
+			</aux>
+			<aux name="hashtockle">
+			</aux>
+			<aux name="perfecton">
+			</aux>
+			<aux name="perstablintome">
+			</aux>
+			<aux name="level of burgination">
+			</aux>
+			<aux name="pressure on succupserva">
+			</aux>
+			<aux name="supply of loopnova">
+			</aux>
+			<aux name="priary">
+			</aux>
+			<aux name="oc">
+			</aux>
+			<aux name="supply of balack">
+			</aux>
+			<aux name="quality of reveforly">
+			</aux>
+			<aux name="proptimatire">
+			</aux>
+			<aux name="demand for traze">
+			</aux>
+			<aux name="frimbulator">
+			</aux>
+			<aux name="pressure on oclate">
+			</aux>
+			<aux name="auspong">
+			</aux>
+			<aux name="flow of dickstonyx">
+			</aux>
+			<aux name="pressure on poval">
+			</aux>
+			<aux name="obvia">
+			</aux>
+			<aux name="hoza">
+			</aux>
+			<aux name="demand for unliescatice">
+			</aux>
+			<aux name="pressure on pablanksill">
+			</aux>
+			<aux name="demand for funkado">
+			</aux>
+			<aux name="estintant">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1430" y="745" name="level of whatajig"/>
+				<aux x="1408" y="915" name="stock of houtal"/>
+				<aux x="1345" y="1075" name="hashtockle"/>
+				<aux x="1244" y="1214" name="perfecton"/>
+				<aux x="1112" y="1323" name="perstablintome"/>
+				<aux x="957" y="1396" name="level of burgination"/>
+				<aux x="788" y="1429" name="pressure on succupserva"/>
+				<aux x="617" y="1418" name="supply of loopnova"/>
+				<aux x="453" y="1365" name="priary"/>
+				<aux x="308" y="1273" name="oc"/>
+				<aux x="191" y="1148" name="supply of balack"/>
+				<aux x="108" y="997" name="quality of reveforly"/>
+				<aux x="65" y="831" name="proptimatire"/>
+				<aux x="65" y="659" name="demand for traze"/>
+				<aux x="108" y="493" name="frimbulator"/>
+				<aux x="191" y="342" name="pressure on oclate"/>
+				<aux x="308" y="217" name="auspong"/>
+				<aux x="453" y="125" name="flow of dickstonyx"/>
+				<aux x="617" y="72" name="pressure on poval"/>
+				<aux x="788" y="61" name="obvia"/>
+				<aux x="957" y="94" name="hoza"/>
+				<aux x="1112" y="167" name="demand for unliescatice"/>
+				<aux x="1244" y="276" name="pressure on pablanksill"/>
+				<aux x="1345" y="415" name="demand for funkado"/>
+				<aux x="1408" y="575" name="estintant"/>
+				<connector uid="1" angle="262.63" polarity="-">
+					<from>level_of_whatajig</from>
+					<to>stock_of_houtal</to>
+				</connector>
+				<connector uid="2" angle="248.51" polarity="+">
+					<from>stock_of_houtal</from>
+					<to>hashtockle</to>
+				</connector>
+				<connector uid="3" angle="234.00" polarity="-">
+					<from>hashtockle</from>
+					<to>perfecton</to>
+				</connector>
+				<connector uid="4" angle="219.55" polarity="+">
+					<from>perfecton</from>
+					<to>perstablintome</to>
+				</connector>
+				<connector uid="5" angle="61.18" polarity="+">
+					<from>perstablintome</from>
+					<to>level_of_whatajig</to>
+				</connector>
+				<connector uid="6" angle="234.00" polarity="+">
+					<from>level_of_whatajig</from>
+					<to>level_of_burgination</to>
+				</connector>
+				<connector uid="7" angle="191.05" polarity="+">
+					<from>level_of_burgination</from>
+					<to>pressure_on_succupserva</to>
+				</connector>
+				<connector uid="8" angle="176.32" polarity="+">
+					<from>pressure_on_succupserva</from>
+					<to>supply_of_loopnova</to>
+				</connector>
+				<connector uid="9" angle="39.62" polarity="-">
+					<from>supply_of_loopnova</from>
+					<to>level_of_whatajig</to>
+				</connector>
+				<connector uid="10" angle="212.40" polarity="-">
+					<from>level_of_whatajig</from>
+					<to>priary</to>
+				</connector>
+				<connector uid="11" angle="147.61" polarity="+">
+					<from>priary</from>
+					<to>oc</to>
+				</connector>
+				<connector uid="12" angle="133.11" polarity="-">
+					<from>oc</from>
+					<to>supply_of_balack</to>
+				</connector>
+				<connector uid="13" angle="118.80" polarity="-">
+					<from>supply_of_balack</from>
+					<to>quality_of_reveforly</to>
+				</connector>
+				<connector uid="14" angle="104.52" polarity="-">
+					<from>quality_of_reveforly</from>
+					<to>proptimatire</to>
+				</connector>
+				<connector uid="15" angle="90.00" polarity="+">
+					<from>proptimatire</from>
+					<to>demand_for_traze</to>
+				</connector>
+				<connector uid="16" angle="75.48" polarity="-">
+					<from>demand_for_traze</from>
+					<to>frimbulator</to>
+				</connector>
+				<connector uid="17" angle="61.20" polarity="+">
+					<from>frimbulator</from>
+					<to>pressure_on_oclate</to>
+				</connector>
+				<connector uid="18" angle="341.98" polarity="-">
+					<from>pressure_on_oclate</from>
+					<to>level_of_whatajig</to>
+				</connector>
+				<connector uid="19" angle="32.39" polarity="+">
+					<from>auspong</from>
+					<to>flow_of_dickstonyx</to>
+				</connector>
+				<connector uid="20" angle="17.91" polarity="+">
+					<from>flow_of_dickstonyx</from>
+					<to>pressure_on_poval</to>
+				</connector>
+				<connector uid="21" angle="3.68" polarity="-">
+					<from>pressure_on_poval</from>
+					<to>obvia</to>
+				</connector>
+				<connector uid="22" angle="198.00" polarity="-">
+					<from>obvia</from>
+					<to>auspong</to>
+				</connector>
+				<connector uid="23" angle="126.00" polarity="+">
+					<from>level_of_whatajig</from>
+					<to>hoza</to>
+				</connector>
+				<connector uid="24" angle="190.73" polarity="-">
+					<from>hoza</from>
+					<to>auspong</to>
+				</connector>
+				<connector uid="25" angle="248.41" polarity="+">
+					<from>demand_for_unliescatice</from>
+					<to>supply_of_loopnova</to>
+				</connector>
+				<connector uid="26" angle="154.76" polarity="+">
+					<from>pressure_on_pablanksill</from>
+					<to>obvia</to>
+				</connector>
+				<connector uid="27" angle="356.38" polarity="-">
+					<from>pressure_on_oclate</from>
+					<to>demand_for_funkado</to>
+				</connector>
+				<connector uid="28" angle="17.98" polarity="-">
+					<from>quality_of_reveforly</from>
+					<to>estintant</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

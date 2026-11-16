@@ -1,0 +1,110 @@
+{
+ "Regional distributor inventory": {
+  "name": "Regional distributor inventory",
+  "scenario": "distributor",
+  "description": "the regional distributor inventory",
+  "plant": {
+   "variable": "orders",
+   "equation": "(expected_demand + (desired_inventory - inventory) / adjustment_time + supply_line_weight * (desired_supply_line - supply_line) / adjustment_time)"
+  },
+  "trigger": {
+   "base demand": "0"
+  },
+  "failure": "with \"base demand\" at 0, \"orders\" loses the MAX that limits it to 0, and the model goes impossible: stock \"inventory\" went negative (-111.4)"
+ },
+ "Kitchen fitting backlog": {
+  "name": "Kitchen fitting backlog",
+  "scenario": "kitchenFitters",
+  "description": "the kitchen fitting backlog",
+  "added": {
+   "variable": "schedule pressure",
+   "equation": "desired_fitting / MAX(capacity, smallest_capacity)",
+   "constant": {
+    "name": "smallest capacity",
+    "type": "variable",
+    "equation": "0.001",
+    "units": "jobs/week"
+   }
+  },
+  "plant": {
+   "variable": "schedule pressure",
+   "equation": "desired_fitting / capacity"
+  },
+  "trigger": {
+   "fitting crews": "0"
+  },
+  "failure": "with \"fitting crews\" at 0, \"schedule pressure\" divides by \"capacity\" with nothing to keep it off zero, and the run fails"
+ },
+ "Regional specialty mushroom growers": {
+  "name": "Regional specialty mushroom growers",
+  "scenario": "mushroomGrowers",
+  "description": "the regional specialty mushroom growers",
+  "added": {
+   "variable": "price",
+   "equation": "reference_price * (reference_demand / MAX(production, smallest_production)) ^ price_sensitivity",
+   "constant": {
+    "name": "smallest production",
+    "type": "variable",
+    "equation": "0.001",
+    "units": "kg/month"
+   }
+  },
+  "plant": {
+   "variable": "price",
+   "equation": "reference_price * (reference_demand / production) ^ price_sensitivity"
+  },
+  "trigger": {
+   "growing rooms": "0"
+  },
+  "failure": "with \"growing rooms\" at 0, \"price\" divides by \"production\" with nothing to keep it off zero, and the run fails"
+ },
+ "Regional ambulance service": {
+  "name": "Regional ambulance service",
+  "scenario": "ambulanceService",
+  "description": "the regional ambulance service",
+  "added": {
+   "variable": "workload",
+   "equation": "calls_handled / MAX(crew_capacity, smallest_crew_capacity)",
+   "constant": {
+    "name": "smallest crew capacity",
+    "type": "variable",
+    "equation": "0.001",
+    "units": "calls/month"
+   }
+  },
+  "plant": {
+   "variable": "workload",
+   "equation": "calls_handled / crew_capacity"
+  },
+  "trigger": {
+   "calls per resident": "0"
+  },
+  "failure": "with \"calls per resident\" at 0, \"workload\" divides by \"crew capacity\" with nothing to keep it off zero, and the run fails"
+ },
+ "Community food bank volunteers": {
+  "name": "Community food bank volunteers",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "plant": {
+   "variable": "workload",
+   "equation": "families_served / (volunteers)"
+  },
+  "trigger": {
+   "friend recruiting rate": "0"
+  },
+  "failure": "with \"friend recruiting rate\" at 0, \"workload\" loses the MAX that limits it to 1, and the run fails"
+ },
+ "Hospital contract cleaning standard": {
+  "name": "Hospital contract cleaning standard",
+  "scenario": "cleaningStandards",
+  "description": "the hospital contract cleaning standard",
+  "plant": {
+   "variable": "cleaners requested",
+   "equation": "(cleaners_leaving + (cleaners_needed + cleaners_leaving * hiring_time - cleaning_staff - open_positions) / review_time)"
+  },
+  "trigger": {
+   "original rooms": "0"
+  },
+  "failure": "with \"original rooms\" at 0, \"cleaners requested\" loses the MAX that limits it to 0, and the model goes impossible: stock \"open positions\" went negative (-11.82)"
+ }
+}

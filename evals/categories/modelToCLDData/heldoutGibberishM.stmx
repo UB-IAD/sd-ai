@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishM</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="obvia">
+			</aux>
+			<aux name="ku">
+			</aux>
+			<aux name="memostorer">
+			</aux>
+			<aux name="poval">
+			</aux>
+			<aux name="ih">
+			</aux>
+			<aux name="yelb">
+			</aux>
+			<aux name="flow of proptimatire">
+			</aux>
+			<aux name="whatajig">
+			</aux>
+			<aux name="rate of exeminte">
+			</aux>
+			<aux name="arinterpord">
+			</aux>
+			<aux name="rate of unliescatice">
+			</aux>
+			<aux name="quality of posistorather">
+			</aux>
+			<aux name="rate of oclate">
+			</aux>
+			<aux name="level of reveforly">
+			</aux>
+			<aux name="level of yoffa">
+			</aux>
+			<aux name="auspong">
+			</aux>
+			<aux name="phildiscals">
+			</aux>
+			<aux name="raez">
+			</aux>
+			<aux name="perstablintome">
+			</aux>
+			<aux name="illigent">
+			</aux>
+			<aux name="quality of reflupper">
+			</aux>
+			<aux name="outrance">
+			</aux>
+			<aux name="supply of burgination">
+			</aux>
+			<aux name="marticatene">
+			</aux>
+			<aux name="pressure on gissorm">
+			</aux>
+			<aux name="flow of younjuring">
+			</aux>
+			<aux name="crypteral">
+			</aux>
+			<aux name="pressure on frimbulator">
+			</aux>
+			<aux name="level of funkado">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1630" y="845" name="obvia"/>
+				<aux x="1612" y="1014" name="ku"/>
+				<aux x="1557" y="1175" name="memostorer"/>
+				<aux x="1470" y="1320" name="poval"/>
+				<aux x="1353" y="1443" name="ih"/>
+				<aux x="1213" y="1539" name="yelb"/>
+				<aux x="1055" y="1601" name="flow of proptimatire"/>
+				<aux x="887" y="1629" name="whatajig"/>
+				<aux x="718" y="1620" name="rate of exeminte"/>
+				<aux x="554" y="1574" name="arinterpord"/>
+				<aux x="404" y="1495" name="rate of unliescatice"/>
+				<aux x="275" y="1385" name="quality of posistorather"/>
+				<aux x="172" y="1250" name="rate of oclate"/>
+				<aux x="101" y="1096" name="level of reveforly"/>
+				<aux x="65" y="930" name="level of yoffa"/>
+				<aux x="65" y="760" name="auspong"/>
+				<aux x="101" y="594" name="phildiscals"/>
+				<aux x="172" y="440" name="raez"/>
+				<aux x="275" y="305" name="perstablintome"/>
+				<aux x="404" y="195" name="illigent"/>
+				<aux x="554" y="116" name="quality of reflupper"/>
+				<aux x="718" y="70" name="outrance"/>
+				<aux x="887" y="61" name="supply of burgination"/>
+				<aux x="1055" y="89" name="marticatene"/>
+				<aux x="1213" y="151" name="pressure on gissorm"/>
+				<aux x="1353" y="247" name="flow of younjuring"/>
+				<aux x="1470" y="370" name="crypteral"/>
+				<aux x="1557" y="515" name="pressure on frimbulator"/>
+				<aux x="1612" y="676" name="level of funkado"/>
+				<connector uid="1" angle="263.92" polarity="-">
+					<from>obvia</from>
+					<to>ku</to>
+				</connector>
+				<connector uid="2" angle="251.14" polarity="+">
+					<from>ku</from>
+					<to>memostorer</to>
+				</connector>
+				<connector uid="3" angle="239.04" polarity="+">
+					<from>memostorer</from>
+					<to>poval</to>
+				</connector>
+				<connector uid="4" angle="226.43" polarity="+">
+					<from>poval</from>
+					<to>ih</to>
+				</connector>
+				<connector uid="5" angle="214.44" polarity="+">
+					<from>ih</from>
+					<to>yelb</to>
+				</connector>
+				<connector uid="6" angle="59.00" polarity="-">
+					<from>yelb</from>
+					<to>obvia</to>
+				</connector>
+				<connector uid="7" angle="232.74" polarity="-">
+					<from>obvia</from>
+					<to>flow_of_proptimatire</to>
+				</connector>
+				<connector uid="8" angle="189.46" polarity="-">
+					<from>flow_of_proptimatire</from>
+					<to>whatajig</to>
+				</connector>
+				<connector uid="9" angle="176.95" polarity="-">
+					<from>whatajig</from>
+					<to>rate_of_exeminte</to>
+				</connector>
+				<connector uid="10" angle="164.33" polarity="+">
+					<from>rate_of_exeminte</from>
+					<to>arinterpord</to>
+				</connector>
+				<connector uid="11" angle="34.12" polarity="+">
+					<from>arinterpord</from>
+					<to>obvia</to>
+				</connector>
+				<connector uid="12" angle="139.55" polarity="-">
+					<from>rate_of_unliescatice</from>
+					<to>quality_of_posistorather</to>
+				</connector>
+				<connector uid="13" angle="127.34" polarity="+">
+					<from>quality_of_posistorather</from>
+					<to>rate_of_oclate</to>
+				</connector>
+				<connector uid="14" angle="114.75" polarity="+">
+					<from>rate_of_oclate</from>
+					<to>level_of_reveforly</to>
+				</connector>
+				<connector uid="15" angle="102.24" polarity="-">
+					<from>level_of_reveforly</from>
+					<to>level_of_yoffa</to>
+				</connector>
+				<connector uid="16" angle="300.96" polarity="+">
+					<from>level_of_yoffa</from>
+					<to>rate_of_unliescatice</to>
+				</connector>
+				<connector uid="17" angle="77.76" polarity="-">
+					<from>auspong</from>
+					<to>phildiscals</to>
+				</connector>
+				<connector uid="18" angle="65.25" polarity="-">
+					<from>phildiscals</from>
+					<to>raez</to>
+				</connector>
+				<connector uid="19" angle="52.66" polarity="+">
+					<from>raez</from>
+					<to>perstablintome</to>
+				</connector>
+				<connector uid="20" angle="40.45" polarity="-">
+					<from>perstablintome</from>
+					<to>illigent</to>
+				</connector>
+				<connector uid="21" angle="27.77" polarity="-">
+					<from>illigent</from>
+					<to>quality_of_reflupper</to>
+				</connector>
+				<connector uid="22" angle="15.67" polarity="-">
+					<from>quality_of_reflupper</from>
+					<to>outrance</to>
+				</connector>
+				<connector uid="23" angle="3.05" polarity="-">
+					<from>outrance</from>
+					<to>supply_of_burgination</to>
+				</connector>
+				<connector uid="24" angle="220.38" polarity="+">
+					<from>supply_of_burgination</from>
+					<to>auspong</to>
+				</connector>
+				<connector uid="25" angle="127.26" polarity="+">
+					<from>obvia</from>
+					<to>marticatene</to>
+				</connector>
+				<connector uid="26" angle="245.16" polarity="-">
+					<from>marticatene</from>
+					<to>rate_of_unliescatice</to>
+				</connector>
+				<connector uid="27" angle="58.95" polarity="-">
+					<from>rate_of_unliescatice</from>
+					<to>pressure_on_gissorm</to>
+				</connector>
+				<connector uid="28" angle="207.95" polarity="+">
+					<from>pressure_on_gissorm</from>
+					<to>auspong</to>
+				</connector>
+				<connector uid="29" angle="251.37" polarity="-">
+					<from>flow_of_younjuring</from>
+					<to>whatajig</to>
+				</connector>
+				<connector uid="30" angle="263.78" polarity="+">
+					<from>crypteral</from>
+					<to>ih</to>
+				</connector>
+				<connector uid="31" angle="40.36" polarity="-">
+					<from>rate_of_unliescatice</from>
+					<to>pressure_on_frimbulator</to>
+				</connector>
+				<connector uid="32" angle="65.19" polarity="+">
+					<from>yelb</from>
+					<to>level_of_funkado</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

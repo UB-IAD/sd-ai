@@ -1,0 +1,310 @@
+{
+  "title": "heldoutGibberishD",
+  "model": {
+    "variables": [
+      {
+        "name": "level of whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "stock of houtal",
+        "type": "variable"
+      },
+      {
+        "name": "hashtockle",
+        "type": "variable"
+      },
+      {
+        "name": "perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "level of burgination",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on succupserva",
+        "type": "variable"
+      },
+      {
+        "name": "supply of loopnova",
+        "type": "variable"
+      },
+      {
+        "name": "priary",
+        "type": "variable"
+      },
+      {
+        "name": "oc",
+        "type": "variable"
+      },
+      {
+        "name": "supply of balack",
+        "type": "variable"
+      },
+      {
+        "name": "quality of reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "demand for traze",
+        "type": "variable"
+      },
+      {
+        "name": "frimbulator",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on oclate",
+        "type": "variable"
+      },
+      {
+        "name": "auspong",
+        "type": "variable"
+      },
+      {
+        "name": "flow of dickstonyx",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on poval",
+        "type": "variable"
+      },
+      {
+        "name": "obvia",
+        "type": "variable"
+      },
+      {
+        "name": "hoza",
+        "type": "variable"
+      },
+      {
+        "name": "demand for unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "demand for funkado",
+        "type": "variable"
+      },
+      {
+        "name": "estintant",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "level of whatajig",
+        "to": "stock of houtal",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of houtal",
+        "to": "hashtockle",
+        "polarity": "+"
+      },
+      {
+        "from": "hashtockle",
+        "to": "perfecton",
+        "polarity": "-"
+      },
+      {
+        "from": "perfecton",
+        "to": "perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "perstablintome",
+        "to": "level of whatajig",
+        "polarity": "+"
+      },
+      {
+        "from": "level of whatajig",
+        "to": "level of burgination",
+        "polarity": "+"
+      },
+      {
+        "from": "level of burgination",
+        "to": "pressure on succupserva",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on succupserva",
+        "to": "supply of loopnova",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of loopnova",
+        "to": "level of whatajig",
+        "polarity": "-"
+      },
+      {
+        "from": "level of whatajig",
+        "to": "priary",
+        "polarity": "-"
+      },
+      {
+        "from": "priary",
+        "to": "oc",
+        "polarity": "+"
+      },
+      {
+        "from": "oc",
+        "to": "supply of balack",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of balack",
+        "to": "quality of reveforly",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of reveforly",
+        "to": "proptimatire",
+        "polarity": "-"
+      },
+      {
+        "from": "proptimatire",
+        "to": "demand for traze",
+        "polarity": "+"
+      },
+      {
+        "from": "demand for traze",
+        "to": "frimbulator",
+        "polarity": "-"
+      },
+      {
+        "from": "frimbulator",
+        "to": "pressure on oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on oclate",
+        "to": "level of whatajig",
+        "polarity": "-"
+      },
+      {
+        "from": "auspong",
+        "to": "flow of dickstonyx",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of dickstonyx",
+        "to": "pressure on poval",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on poval",
+        "to": "obvia",
+        "polarity": "-"
+      },
+      {
+        "from": "obvia",
+        "to": "auspong",
+        "polarity": "-"
+      },
+      {
+        "from": "level of whatajig",
+        "to": "hoza",
+        "polarity": "+"
+      },
+      {
+        "from": "hoza",
+        "to": "auspong",
+        "polarity": "-"
+      },
+      {
+        "from": "demand for unliescatice",
+        "to": "supply of loopnova",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on pablanksill",
+        "to": "obvia",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on oclate",
+        "to": "demand for funkado",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of reveforly",
+        "to": "estintant",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "level of whatajig",
+        "perfecton"
+      ],
+      "nodes": [
+        "level of whatajig",
+        "stock of houtal",
+        "hashtockle",
+        "perfecton",
+        "perstablintome"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "level of whatajig",
+        "pressure on succupserva"
+      ],
+      "nodes": [
+        "level of whatajig",
+        "level of burgination",
+        "pressure on succupserva",
+        "supply of loopnova"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "level of whatajig",
+        "supply of balack",
+        "demand for traze"
+      ],
+      "nodes": [
+        "level of whatajig",
+        "priary",
+        "oc",
+        "supply of balack",
+        "quality of reveforly",
+        "proptimatire",
+        "demand for traze",
+        "frimbulator",
+        "pressure on oclate"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "auspong",
+        "pressure on poval"
+      ],
+      "nodes": [
+        "auspong",
+        "flow of dickstonyx",
+        "pressure on poval",
+        "obvia"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

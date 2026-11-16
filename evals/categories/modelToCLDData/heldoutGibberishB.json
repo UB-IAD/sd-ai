@@ -1,0 +1,275 @@
+{
+  "title": "heldoutGibberishB",
+  "model": {
+    "variables": [
+      {
+        "name": "maxabizer",
+        "type": "variable"
+      },
+      {
+        "name": "oclate",
+        "type": "variable"
+      },
+      {
+        "name": "phildiscals",
+        "type": "variable"
+      },
+      {
+        "name": "pablanksill",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on perstablintome",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on baxtoy",
+        "type": "variable"
+      },
+      {
+        "name": "hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "rate of gissorm",
+        "type": "variable"
+      },
+      {
+        "name": "copyring",
+        "type": "variable"
+      },
+      {
+        "name": "memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "stock of buwheal",
+        "type": "variable"
+      },
+      {
+        "name": "marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "quality of proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "perfecton",
+        "type": "variable"
+      },
+      {
+        "name": "rate of younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "ku",
+        "type": "variable"
+      },
+      {
+        "name": "yelb",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on outrance",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on relity",
+        "type": "variable"
+      },
+      {
+        "name": "illigent",
+        "type": "variable"
+      },
+      {
+        "name": "arinterpord",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "supply of loopnova",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "maxabizer",
+        "to": "oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "oclate",
+        "to": "phildiscals",
+        "polarity": "-"
+      },
+      {
+        "from": "phildiscals",
+        "to": "pablanksill",
+        "polarity": "-"
+      },
+      {
+        "from": "pablanksill",
+        "to": "pressure on perstablintome",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on perstablintome",
+        "to": "maxabizer",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on baxtoy",
+        "to": "hensologic",
+        "polarity": "+"
+      },
+      {
+        "from": "hensologic",
+        "to": "rate of gissorm",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of gissorm",
+        "to": "copyring",
+        "polarity": "-"
+      },
+      {
+        "from": "copyring",
+        "to": "memostorer",
+        "polarity": "-"
+      },
+      {
+        "from": "memostorer",
+        "to": "stock of buwheal",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of buwheal",
+        "to": "marticatene",
+        "polarity": "+"
+      },
+      {
+        "from": "marticatene",
+        "to": "quality of proptimatire",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of proptimatire",
+        "to": "pressure on baxtoy",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on baxtoy",
+        "to": "perfecton",
+        "polarity": "+"
+      },
+      {
+        "from": "perfecton",
+        "to": "rate of younjuring",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of younjuring",
+        "to": "ku",
+        "polarity": "+"
+      },
+      {
+        "from": "ku",
+        "to": "yelb",
+        "polarity": "+"
+      },
+      {
+        "from": "yelb",
+        "to": "pressure on outrance",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on outrance",
+        "to": "pressure on baxtoy",
+        "polarity": "+"
+      },
+      {
+        "from": "maxabizer",
+        "to": "pressure on relity",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on relity",
+        "to": "pressure on baxtoy",
+        "polarity": "+"
+      },
+      {
+        "from": "illigent",
+        "to": "hensologic",
+        "polarity": "-"
+      },
+      {
+        "from": "arinterpord",
+        "to": "oclate",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of proptimatire",
+        "to": "exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "copyring",
+        "to": "supply of loopnova",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "maxabizer",
+        "pablanksill"
+      ],
+      "nodes": [
+        "maxabizer",
+        "oclate",
+        "phildiscals",
+        "pablanksill",
+        "pressure on perstablintome"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "pressure on baxtoy",
+        "copyring",
+        "marticatene"
+      ],
+      "nodes": [
+        "pressure on baxtoy",
+        "hensologic",
+        "rate of gissorm",
+        "copyring",
+        "memostorer",
+        "stock of buwheal",
+        "marticatene",
+        "quality of proptimatire"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "pressure on baxtoy",
+        "ku"
+      ],
+      "nodes": [
+        "pressure on baxtoy",
+        "perfecton",
+        "rate of younjuring",
+        "ku",
+        "yelb",
+        "pressure on outrance"
+      ],
+      "polarity": "+"
+    }
+  ]
+}

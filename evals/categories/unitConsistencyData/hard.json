@@ -1,0 +1,343 @@
+{
+ "Rural dialysis network (hard)": {
+  "name": "Rural dialysis network (hard)",
+  "scenario": "dialysisClinic",
+  "description": "the rural dialysis network",
+  "errors": [
+   {
+    "id": "returning multiplies by time to return",
+    "kind": "timeConstant",
+    "variable": "returning",
+    "change": {
+     "equation": "discouraged_patients * time_to_return"
+    }
+   },
+   {
+    "id": "patients giving up adds where it should multiply",
+    "kind": "unlikeSum",
+    "variable": "patients giving up",
+    "change": {
+     "equation": "waiting_list + give_up_fraction"
+    }
+   },
+   {
+    "id": "referrals declared without per month",
+    "kind": "flowUnits",
+    "variable": "referrals",
+    "change": {
+     "units": "patients"
+    }
+   }
+  ]
+ },
+ "Regional distributor inventory (hard)": {
+  "name": "Regional distributor inventory (hard)",
+  "scenario": "distributor",
+  "description": "the regional distributor inventory",
+  "errors": [
+   {
+    "id": "deliveries multiplies by delivery delay",
+    "kind": "timeConstant",
+    "variable": "deliveries",
+    "change": {
+     "equation": "supply_line * delivery_delay"
+    }
+   },
+   {
+    "id": "desired inventory adds where it should multiply",
+    "kind": "unlikeSum",
+    "variable": "desired inventory",
+    "change": {
+     "equation": "expected_demand + coverage"
+    }
+   },
+   {
+    "id": "shipments declared without per week",
+    "kind": "flowUnits",
+    "variable": "shipments",
+    "change": {
+     "units": "cases"
+    }
+   }
+  ]
+ },
+ "Coffee-growing cooperative (hard)": {
+  "name": "Coffee-growing cooperative (hard)",
+  "scenario": "coffeeCoop",
+  "description": "the coffee-growing cooperative",
+  "errors": [
+   {
+    "id": "soil recovery multiplies by soil recovery time",
+    "kind": "timeConstant",
+    "variable": "soil recovery",
+    "change": {
+     "equation": "(healthy_soil_score - soil_fertility) * soil_recovery_time"
+    }
+   },
+   {
+    "id": "harvest adds where it should multiply",
+    "kind": "unlikeSum",
+    "variable": "harvest",
+    "change": {
+     "equation": "planted_area + yield_per_hectare"
+    }
+   },
+   {
+    "id": "planting declared without per year",
+    "kind": "flowUnits",
+    "variable": "planting",
+    "change": {
+     "units": "hectares"
+    }
+   }
+  ]
+ },
+ "Kitchen fitting backlog (hard)": {
+  "name": "Kitchen fitting backlog (hard)",
+  "scenario": "kitchenFitters",
+  "description": "the kitchen fitting backlog",
+  "errors": [
+   {
+    "id": "callbacks multiplies by discovery time",
+    "kind": "timeConstant",
+    "variable": "callbacks",
+    "change": {
+     "equation": "hidden_faults * discovery_time"
+    }
+   },
+   {
+    "id": "cancellations adds where it should multiply",
+    "kind": "unlikeSum",
+    "variable": "cancellations",
+    "change": {
+     "equation": "job_backlog + cancel_fraction"
+    }
+   },
+   {
+    "id": "new orders declared without per week",
+    "kind": "flowUnits",
+    "variable": "new orders",
+    "change": {
+     "units": "jobs"
+    }
+   }
+  ]
+ },
+ "Regional specialty mushroom growers (hard)": {
+  "name": "Regional specialty mushroom growers (hard)",
+  "scenario": "mushroomGrowers",
+  "description": "the regional specialty mushroom growers",
+  "errors": [
+   {
+    "id": "rooms built multiplies by construction time",
+    "kind": "timeConstant",
+    "variable": "rooms built",
+    "change": {
+     "equation": "rooms_under_construction * construction_time"
+    }
+   },
+   {
+    "id": "production adds where it should multiply",
+    "kind": "unlikeSum",
+    "variable": "production",
+    "change": {
+     "equation": "growing_rooms + yield_per_room"
+    }
+   },
+   {
+    "id": "new rooms started declared without per month",
+    "kind": "flowUnits",
+    "variable": "new rooms started",
+    "change": {
+     "units": "rooms"
+    }
+   }
+  ]
+ },
+ "Regional ambulance service (hard)": {
+  "name": "Regional ambulance service (hard)",
+  "scenario": "ambulanceService",
+  "description": "the regional ambulance service",
+  "errors": [
+   {
+    "id": "crews requested multiplies by review time",
+    "kind": "timeConstant",
+    "variable": "crews requested",
+    "change": {
+     "equation": "MAX(0, crews_needed - crews - crews_awaiting_budget) * review_time"
+    }
+   },
+   {
+    "id": "population growth adds where it should multiply",
+    "kind": "unlikeSum",
+    "variable": "population growth",
+    "change": {
+     "equation": "population + growth_rate"
+    }
+   },
+   {
+    "id": "crews starting declared without per month",
+    "kind": "flowUnits",
+    "variable": "crews starting",
+    "change": {
+     "units": "crews"
+    }
+   }
+  ]
+ },
+ "Parcel delivery van fleet (hard)": {
+  "name": "Parcel delivery van fleet (hard)",
+  "scenario": "deliveryVans",
+  "description": "the parcel delivery van fleet",
+  "errors": [
+   {
+    "id": "vans due for retirement multiplies by van life",
+    "kind": "timeConstant",
+    "variable": "vans due for retirement",
+    "change": {
+     "equation": "vans * van_life"
+    }
+   },
+   {
+    "id": "miles driven adds where it should multiply",
+    "kind": "unlikeSum",
+    "variable": "miles driven",
+    "change": {
+     "equation": "vans + miles_per_van"
+    }
+   },
+   {
+    "id": "buying vans declared without per year",
+    "kind": "flowUnits",
+    "variable": "buying vans",
+    "change": {
+     "units": "vans"
+    }
+   }
+  ]
+ },
+ "Community food bank volunteers (hard)": {
+  "name": "Community food bank volunteers (hard)",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "errors": [
+   {
+    "id": "tiring multiplies by fatigue time",
+    "kind": "timeConstant",
+    "variable": "tiring",
+    "change": {
+     "equation": "(stress - fatigue) * fatigue_time"
+    }
+   },
+   {
+    "id": "recruiting declared without per month",
+    "kind": "flowUnits",
+    "variable": "recruiting",
+    "change": {
+     "units": "volunteers"
+    }
+   },
+   {
+    "id": "recruitment fairs declared per month only",
+    "kind": "constantUnits",
+    "variable": "recruitment fairs",
+    "change": {
+     "units": "1/month"
+    }
+   }
+  ]
+ },
+ "Regional electricians' guild (hard)": {
+  "name": "Regional electricians' guild (hard)",
+  "scenario": "electricianTraining",
+  "description": "the regional electricians' guild",
+  "errors": [
+   {
+    "id": "intake wanted multiplies by intake adjustment time",
+    "kind": "timeConstant",
+    "variable": "intake wanted",
+    "change": {
+     "equation": "MAX(minimum_intake, retiring + workforce_gap * intake_adjustment_time)"
+    }
+   },
+   {
+    "id": "work growth adds where it should multiply",
+    "kind": "unlikeSum",
+    "variable": "work growth",
+    "change": {
+     "equation": "Normal_Work + work_growth_rate"
+    }
+   },
+   {
+    "id": "taking on apprentices declared without per month",
+    "kind": "flowUnits",
+    "variable": "taking on apprentices",
+    "change": {
+     "units": "people"
+    }
+   }
+  ]
+ },
+ "Hospital contract cleaning standard (hard)": {
+  "name": "Hospital contract cleaning standard (hard)",
+  "scenario": "cleaningStandards",
+  "description": "the hospital contract cleaning standard",
+  "errors": [
+   {
+    "id": "cleaners requested multiplies by review time",
+    "kind": "timeConstant",
+    "variable": "cleaners requested",
+    "change": {
+     "equation": "MAX(0, cleaners_leaving + (cleaners_needed + cleaners_leaving * hiring_time - cleaning_staff - open_positions) * review_time)"
+    }
+   },
+   {
+    "id": "cleaners starting declared without per month",
+    "kind": "flowUnits",
+    "variable": "cleaners starting",
+    "change": {
+     "units": "cleaners"
+    }
+   },
+   {
+    "id": "porter hours declared per month only",
+    "kind": "constantUnits",
+    "variable": "porter hours",
+    "change": {
+     "units": "1/month"
+    }
+   }
+  ]
+ },
+ "Valley groundwater board (hard)": {
+  "name": "Valley groundwater board (hard)",
+  "scenario": "valleyWater",
+  "description": "the valley groundwater board",
+  "errors": [
+   {
+    "id": "population growth adds where it should multiply",
+    "kind": "unlikeSum",
+    "variable": "population growth",
+    "change": {
+     "equation": "town_population + town_growth_rate"
+    }
+   },
+   {
+    "id": "recharge declared without per year",
+    "kind": "flowUnits",
+    "variable": "recharge",
+    "change": {
+     "units": "acre-feet"
+    }
+   },
+   {
+    "id": "rain recharge declared per year only",
+    "kind": "constantUnits",
+    "variable": "rain recharge",
+    "change": {
+     "units": "1/year"
+    }
+   }
+  ]
+ }
+}

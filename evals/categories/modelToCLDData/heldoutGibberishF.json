@@ -1,0 +1,182 @@
+{
+  "title": "heldoutGibberishF",
+  "model": {
+    "variables": [
+      {
+        "name": "supply of whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "funkado",
+        "type": "variable"
+      },
+      {
+        "name": "level of balack",
+        "type": "variable"
+      },
+      {
+        "name": "geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "quality of ku",
+        "type": "variable"
+      },
+      {
+        "name": "level of oclate",
+        "type": "variable"
+      },
+      {
+        "name": "quality of memostorer",
+        "type": "variable"
+      },
+      {
+        "name": "quality of houtal",
+        "type": "variable"
+      },
+      {
+        "name": "level of relity",
+        "type": "variable"
+      },
+      {
+        "name": "exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "stock of hazmick",
+        "type": "variable"
+      },
+      {
+        "name": "hensologic",
+        "type": "variable"
+      },
+      {
+        "name": "flow of unliescatice",
+        "type": "variable"
+      },
+      {
+        "name": "traze",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "supply of whatajig",
+        "to": "pressure on crypteral",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on crypteral",
+        "to": "funkado",
+        "polarity": "+"
+      },
+      {
+        "from": "funkado",
+        "to": "level of balack",
+        "polarity": "+"
+      },
+      {
+        "from": "level of balack",
+        "to": "geyflorrin",
+        "polarity": "+"
+      },
+      {
+        "from": "geyflorrin",
+        "to": "supply of whatajig",
+        "polarity": "-"
+      },
+      {
+        "from": "supply of whatajig",
+        "to": "quality of ku",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of ku",
+        "to": "level of oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "level of oclate",
+        "to": "quality of memostorer",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of memostorer",
+        "to": "quality of houtal",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of houtal",
+        "to": "level of relity",
+        "polarity": "+"
+      },
+      {
+        "from": "level of relity",
+        "to": "exeminte",
+        "polarity": "-"
+      },
+      {
+        "from": "exeminte",
+        "to": "supply of whatajig",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of hazmick",
+        "to": "exeminte",
+        "polarity": "-"
+      },
+      {
+        "from": "hensologic",
+        "to": "supply of whatajig",
+        "polarity": "-"
+      },
+      {
+        "from": "pressure on crypteral",
+        "to": "flow of unliescatice",
+        "polarity": "+"
+      },
+      {
+        "from": "level of balack",
+        "to": "traze",
+        "polarity": "+"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "supply of whatajig",
+        "level of balack"
+      ],
+      "nodes": [
+        "supply of whatajig",
+        "pressure on crypteral",
+        "funkado",
+        "level of balack",
+        "geyflorrin"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "supply of whatajig",
+        "level of oclate",
+        "quality of houtal"
+      ],
+      "nodes": [
+        "supply of whatajig",
+        "quality of ku",
+        "level of oclate",
+        "quality of memostorer",
+        "quality of houtal",
+        "level of relity",
+        "exeminte"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

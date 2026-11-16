@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutHardGibberishB</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="estintant">
+			</aux>
+			<aux name="bellignorance">
+			</aux>
+			<aux name="priary">
+			</aux>
+			<aux name="oc">
+			</aux>
+			<aux name="supply of geyflorrin">
+			</aux>
+			<aux name="copyring">
+			</aux>
+			<aux name="flow of houtal">
+			</aux>
+			<aux name="stock of loopnova">
+			</aux>
+			<aux name="stock of ih">
+			</aux>
+			<aux name="quality of funkado">
+			</aux>
+			<aux name="maxabizer">
+			</aux>
+			<aux name="gissorm">
+			</aux>
+			<aux name="relity">
+			</aux>
+			<aux name="pablanksill">
+			</aux>
+			<aux name="flow of hensologic">
+			</aux>
+			<aux name="stock of pershipfulty">
+			</aux>
+			<aux name="younjuring">
+			</aux>
+			<aux name="quality of hoza">
+			</aux>
+			<aux name="hashtockle">
+			</aux>
+			<aux name="aferraron">
+			</aux>
+			<aux name="demand for posistorather">
+			</aux>
+			<aux name="rate of balack">
+			</aux>
+			<aux name="obvia">
+			</aux>
+			<aux name="supply of buwheal">
+			</aux>
+			<aux name="phildiscals">
+			</aux>
+			<aux name="flow of burgination">
+			</aux>
+			<aux name="marticatene">
+			</aux>
+			<aux name="demand for paffling">
+			</aux>
+			<aux name="auspong">
+			</aux>
+			<aux name="unliescatice">
+			</aux>
+			<aux name="pressure on perstablintome">
+			</aux>
+			<aux name="reveforly">
+			</aux>
+			<aux name="whatajig">
+			</aux>
+			<aux name="ku">
+			</aux>
+			<aux name="supply of dickstonyx">
+			</aux>
+			<aux name="arinterpord">
+			</aux>
+			<aux name="yoffa">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="2030" y="1045" name="estintant"/>
+				<aux x="2016" y="1211" name="bellignorance"/>
+				<aux x="1974" y="1373" name="priary"/>
+				<aux x="1905" y="1525" name="oc"/>
+				<aux x="1811" y="1664" name="supply of geyflorrin"/>
+				<aux x="1696" y="1784" name="copyring"/>
+				<aux x="1561" y="1884" name="flow of houtal"/>
+				<aux x="1412" y="1959" name="stock of loopnova"/>
+				<aux x="1253" y="2008" name="stock of ih"/>
+				<aux x="1087" y="2029" name="quality of funkado"/>
+				<aux x="920" y="2022" name="maxabizer"/>
+				<aux x="757" y="1987" name="gissorm"/>
+				<aux x="602" y="1925" name="relity"/>
+				<aux x="459" y="1837" name="pablanksill"/>
+				<aux x="334" y="1727" name="flow of hensologic"/>
+				<aux x="229" y="1597" name="stock of pershipfulty"/>
+				<aux x="147" y="1451" name="younjuring"/>
+				<aux x="92" y="1293" name="quality of hoza"/>
+				<aux x="64" y="1129" name="hashtockle"/>
+				<aux x="64" y="961" name="aferraron"/>
+				<aux x="92" y="797" name="demand for posistorather"/>
+				<aux x="147" y="639" name="rate of balack"/>
+				<aux x="229" y="493" name="obvia"/>
+				<aux x="334" y="363" name="supply of buwheal"/>
+				<aux x="459" y="253" name="phildiscals"/>
+				<aux x="602" y="165" name="flow of burgination"/>
+				<aux x="757" y="103" name="marticatene"/>
+				<aux x="920" y="68" name="demand for paffling"/>
+				<aux x="1087" y="61" name="auspong"/>
+				<aux x="1253" y="82" name="unliescatice"/>
+				<aux x="1412" y="131" name="pressure on perstablintome"/>
+				<aux x="1561" y="206" name="reveforly"/>
+				<aux x="1696" y="306" name="whatajig"/>
+				<aux x="1811" y="426" name="ku"/>
+				<aux x="1905" y="565" name="supply of dickstonyx"/>
+				<aux x="1974" y="717" name="arinterpord"/>
+				<aux x="2016" y="879" name="yoffa"/>
+				<connector uid="1" angle="265.18" polarity="-">
+					<from>estintant</from>
+					<to>bellignorance</to>
+				</connector>
+				<connector uid="2" angle="255.47" polarity="+">
+					<from>bellignorance</from>
+					<to>priary</to>
+				</connector>
+				<connector uid="3" angle="245.58" polarity="+">
+					<from>priary</from>
+					<to>oc</to>
+				</connector>
+				<connector uid="4" angle="235.93" polarity="+">
+					<from>oc</from>
+					<to>supply_of_geyflorrin</to>
+				</connector>
+				<connector uid="5" angle="226.22" polarity="+">
+					<from>supply_of_geyflorrin</from>
+					<to>copyring</to>
+				</connector>
+				<connector uid="6" angle="216.53" polarity="+">
+					<from>copyring</from>
+					<to>flow_of_houtal</to>
+				</connector>
+				<connector uid="7" angle="206.72" polarity="-">
+					<from>flow_of_houtal</from>
+					<to>stock_of_loopnova</to>
+				</connector>
+				<connector uid="8" angle="55.94" polarity="-">
+					<from>stock_of_loopnova</from>
+					<to>estintant</to>
+				</connector>
+				<connector uid="9" angle="231.10" polarity="-">
+					<from>estintant</from>
+					<to>stock_of_ih</to>
+				</connector>
+				<connector uid="10" angle="187.21" polarity="+">
+					<from>stock_of_ih</from>
+					<to>quality_of_funkado</to>
+				</connector>
+				<connector uid="11" angle="177.60" polarity="-">
+					<from>quality_of_funkado</from>
+					<to>maxabizer</to>
+				</connector>
+				<connector uid="12" angle="41.35" polarity="+">
+					<from>maxabizer</from>
+					<to>estintant</to>
+				</connector>
+				<connector uid="13" angle="216.50" polarity="+">
+					<from>estintant</from>
+					<to>gissorm</to>
+				</connector>
+				<connector uid="14" angle="158.20" polarity="+">
+					<from>gissorm</from>
+					<to>relity</to>
+				</connector>
+				<connector uid="15" angle="148.39" polarity="-">
+					<from>relity</from>
+					<to>pablanksill</to>
+				</connector>
+				<connector uid="16" angle="138.65" polarity="+">
+					<from>pablanksill</from>
+					<to>flow_of_hensologic</to>
+				</connector>
+				<connector uid="17" angle="128.93" polarity="-">
+					<from>flow_of_hensologic</from>
+					<to>stock_of_pershipfulty</to>
+				</connector>
+				<connector uid="18" angle="17.04" polarity="-">
+					<from>stock_of_pershipfulty</from>
+					<to>estintant</to>
+				</connector>
+				<connector uid="19" angle="109.19" polarity="+">
+					<from>younjuring</from>
+					<to>quality_of_hoza</to>
+				</connector>
+				<connector uid="20" angle="99.69" polarity="+">
+					<from>quality_of_hoza</from>
+					<to>hashtockle</to>
+				</connector>
+				<connector uid="21" angle="90.00" polarity="+">
+					<from>hashtockle</from>
+					<to>aferraron</to>
+				</connector>
+				<connector uid="22" angle="279.61" polarity="+">
+					<from>aferraron</from>
+					<to>younjuring</to>
+				</connector>
+				<connector uid="23" angle="94.81" polarity="+">
+					<from>younjuring</from>
+					<to>demand_for_posistorather</to>
+				</connector>
+				<connector uid="24" angle="70.81" polarity="+">
+					<from>demand_for_posistorather</from>
+					<to>rate_of_balack</to>
+				</connector>
+				<connector uid="25" angle="60.68" polarity="+">
+					<from>rate_of_balack</from>
+					<to>obvia</to>
+				</connector>
+				<connector uid="26" angle="51.07" polarity="+">
+					<from>obvia</from>
+					<to>supply_of_buwheal</to>
+				</connector>
+				<connector uid="27" angle="41.35" polarity="-">
+					<from>supply_of_buwheal</from>
+					<to>phildiscals</to>
+				</connector>
+				<connector uid="28" angle="255.40" polarity="+">
+					<from>phildiscals</from>
+					<to>younjuring</to>
+				</connector>
+				<connector uid="29" angle="21.80" polarity="-">
+					<from>flow_of_burgination</from>
+					<to>marticatene</to>
+				</connector>
+				<connector uid="30" angle="12.12" polarity="+">
+					<from>marticatene</from>
+					<to>demand_for_paffling</to>
+				</connector>
+				<connector uid="31" angle="2.40" polarity="+">
+					<from>demand_for_paffling</from>
+					<to>auspong</to>
+				</connector>
+				<connector uid="32" angle="352.79" polarity="-">
+					<from>auspong</from>
+					<to>unliescatice</to>
+				</connector>
+				<connector uid="33" angle="342.87" polarity="-">
+					<from>unliescatice</from>
+					<to>pressure_on_perstablintome</to>
+				</connector>
+				<connector uid="34" angle="182.40" polarity="+">
+					<from>pressure_on_perstablintome</from>
+					<to>flow_of_burgination</to>
+				</connector>
+				<connector uid="35" angle="119.21" polarity="+">
+					<from>estintant</from>
+					<to>reveforly</to>
+				</connector>
+				<connector uid="36" angle="221.36" polarity="-">
+					<from>reveforly</from>
+					<to>younjuring</to>
+				</connector>
+				<connector uid="37" angle="36.47" polarity="+">
+					<from>younjuring</from>
+					<to>whatajig</to>
+				</connector>
+				<connector uid="38" angle="172.66" polarity="+">
+					<from>whatajig</from>
+					<to>flow_of_burgination</to>
+				</connector>
+				<connector uid="39" angle="226.22" polarity="-">
+					<from>ku</from>
+					<to>pablanksill</to>
+				</connector>
+				<connector uid="40" angle="260.27" polarity="-">
+					<from>supply_of_dickstonyx</from>
+					<to>copyring</to>
+				</connector>
+				<connector uid="41" angle="36.47" polarity="+">
+					<from>pablanksill</from>
+					<to>arinterpord</to>
+				</connector>
+				<connector uid="42" angle="70.53" polarity="+">
+					<from>copyring</from>
+					<to>yoffa</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

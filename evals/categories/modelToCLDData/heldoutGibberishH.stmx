@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xmile version="1.0" xmlns="http://docs.oasis-open.org/xmile/ns/XMILE/v1.0" xmlns:isee="http://iseesystems.com/XMILE">
+	<header>
+		<smile version="1.0" namespace="std, isee"/>
+		<name>heldoutGibberishH</name>
+		<vendor>sd-ai-evals</vendor>
+		<product version="1.0">sd-ai-evals</product>
+	</header>
+	<sim_specs method="Euler" time_units="Months">
+		<start>1</start>
+		<stop>13</stop>
+		<dt>0.25</dt>
+	</sim_specs>
+	<model>
+		<variables>
+			<aux name="supply of obvia">
+			</aux>
+			<aux name="ih">
+			</aux>
+			<aux name="flow of oclate">
+			</aux>
+			<aux name="stock of pablanksill">
+			</aux>
+			<aux name="demand for phildiscals">
+			</aux>
+			<aux name="balack">
+			</aux>
+			<aux name="posistorather">
+			</aux>
+			<aux name="rate of hensologic">
+			</aux>
+			<aux name="poval">
+			</aux>
+			<aux name="level of aferraron">
+			</aux>
+			<aux name="stock of geyflorrin">
+			</aux>
+			<aux name="pershipfulty">
+			</aux>
+			<aux name="stock of marticatene">
+			</aux>
+			<aux name="auspong">
+			</aux>
+			<aux name="quality of unliescatice">
+			</aux>
+			<aux name="flow of maxabizer">
+			</aux>
+			<aux name="raez">
+			</aux>
+			<aux name="funkado">
+			</aux>
+			<aux name="hazmick">
+			</aux>
+			<aux name="buwheal">
+			</aux>
+			<aux name="proptimatire">
+			</aux>
+			<aux name="supply of ku">
+			</aux>
+			<aux name="hashtockle">
+			</aux>
+			<aux name="gissorm">
+			</aux>
+			<aux name="level of perfecton">
+			</aux>
+			<aux name="illigent">
+			</aux>
+			<aux name="houtal">
+			</aux>
+			<aux name="exeminte">
+			</aux>
+		</variables>
+		<views>
+			<view type="stock_flow">
+				<aux x="1580" y="820" name="supply of obvia"/>
+				<aux x="1561" y="989" name="ih"/>
+				<aux x="1505" y="1150" name="flow of oclate"/>
+				<aux x="1414" y="1294" name="stock of pablanksill"/>
+				<aux x="1294" y="1414" name="demand for phildiscals"/>
+				<aux x="1150" y="1505" name="balack"/>
+				<aux x="989" y="1561" name="posistorather"/>
+				<aux x="820" y="1580" name="rate of hensologic"/>
+				<aux x="651" y="1561" name="poval"/>
+				<aux x="490" y="1505" name="level of aferraron"/>
+				<aux x="346" y="1414" name="stock of geyflorrin"/>
+				<aux x="226" y="1294" name="pershipfulty"/>
+				<aux x="135" y="1150" name="stock of marticatene"/>
+				<aux x="79" y="989" name="auspong"/>
+				<aux x="60" y="820" name="quality of unliescatice"/>
+				<aux x="79" y="651" name="flow of maxabizer"/>
+				<aux x="135" y="490" name="raez"/>
+				<aux x="226" y="346" name="funkado"/>
+				<aux x="346" y="226" name="hazmick"/>
+				<aux x="490" y="135" name="buwheal"/>
+				<aux x="651" y="79" name="proptimatire"/>
+				<aux x="820" y="60" name="supply of ku"/>
+				<aux x="989" y="79" name="hashtockle"/>
+				<aux x="1150" y="135" name="gissorm"/>
+				<aux x="1294" y="226" name="level of perfecton"/>
+				<aux x="1414" y="346" name="illigent"/>
+				<aux x="1505" y="490" name="houtal"/>
+				<aux x="1561" y="651" name="exeminte"/>
+				<connector uid="1" angle="263.59" polarity="+">
+					<from>supply_of_obvia</from>
+					<to>ih</to>
+				</connector>
+				<connector uid="2" angle="250.82" polarity="+">
+					<from>ih</from>
+					<to>flow_of_oclate</to>
+				</connector>
+				<connector uid="3" angle="237.71" polarity="-">
+					<from>flow_of_oclate</from>
+					<to>stock_of_pablanksill</to>
+				</connector>
+				<connector uid="4" angle="225.00" polarity="+">
+					<from>stock_of_pablanksill</from>
+					<to>demand_for_phildiscals</to>
+				</connector>
+				<connector uid="5" angle="212.29" polarity="-">
+					<from>demand_for_phildiscals</from>
+					<to>balack</to>
+				</connector>
+				<connector uid="6" angle="199.18" polarity="-">
+					<from>balack</from>
+					<to>posistorather</to>
+				</connector>
+				<connector uid="7" angle="186.41" polarity="+">
+					<from>posistorather</from>
+					<to>rate_of_hensologic</to>
+				</connector>
+				<connector uid="8" angle="45.00" polarity="+">
+					<from>rate_of_hensologic</from>
+					<to>supply_of_obvia</to>
+				</connector>
+				<connector uid="9" angle="160.82" polarity="-">
+					<from>poval</from>
+					<to>level_of_aferraron</to>
+				</connector>
+				<connector uid="10" angle="147.71" polarity="+">
+					<from>level_of_aferraron</from>
+					<to>stock_of_geyflorrin</to>
+				</connector>
+				<connector uid="11" angle="135.00" polarity="+">
+					<from>stock_of_geyflorrin</from>
+					<to>pershipfulty</to>
+				</connector>
+				<connector uid="12" angle="122.29" polarity="-">
+					<from>pershipfulty</from>
+					<to>stock_of_marticatene</to>
+				</connector>
+				<connector uid="13" angle="109.18" polarity="+">
+					<from>stock_of_marticatene</from>
+					<to>auspong</to>
+				</connector>
+				<connector uid="14" angle="96.41" polarity="+">
+					<from>auspong</from>
+					<to>quality_of_unliescatice</to>
+				</connector>
+				<connector uid="15" angle="83.59" polarity="+">
+					<from>quality_of_unliescatice</from>
+					<to>flow_of_maxabizer</to>
+				</connector>
+				<connector uid="16" angle="302.15" polarity="+">
+					<from>flow_of_maxabizer</from>
+					<to>poval</to>
+				</connector>
+				<connector uid="17" angle="115.72" polarity="-">
+					<from>poval</from>
+					<to>raez</to>
+				</connector>
+				<connector uid="18" angle="57.71" polarity="-">
+					<from>raez</from>
+					<to>funkado</to>
+				</connector>
+				<connector uid="19" angle="45.00" polarity="-">
+					<from>funkado</from>
+					<to>hazmick</to>
+				</connector>
+				<connector uid="20" angle="32.29" polarity="+">
+					<from>hazmick</from>
+					<to>buwheal</to>
+				</connector>
+				<connector uid="21" angle="19.18" polarity="+">
+					<from>buwheal</from>
+					<to>proptimatire</to>
+				</connector>
+				<connector uid="22" angle="6.41" polarity="+">
+					<from>proptimatire</from>
+					<to>supply_of_ku</to>
+				</connector>
+				<connector uid="23" angle="353.59" polarity="+">
+					<from>supply_of_ku</from>
+					<to>hashtockle</to>
+				</connector>
+				<connector uid="24" angle="257.15" polarity="+">
+					<from>hashtockle</from>
+					<to>poval</to>
+				</connector>
+				<connector uid="25" angle="122.12" polarity="+">
+					<from>supply_of_obvia</from>
+					<to>gissorm</to>
+				</connector>
+				<connector uid="26" angle="250.71" polarity="+">
+					<from>gissorm</from>
+					<to>poval</to>
+				</connector>
+				<connector uid="27" angle="199.28" polarity="+">
+					<from>level_of_perfecton</from>
+					<to>flow_of_maxabizer</to>
+				</connector>
+				<connector uid="28" angle="192.87" polarity="-">
+					<from>illigent</from>
+					<to>flow_of_maxabizer</to>
+				</connector>
+				<connector uid="29" angle="12.86" polarity="-">
+					<from>quality_of_unliescatice</from>
+					<to>houtal</to>
+				</connector>
+				<connector uid="30" angle="32.13" polarity="+">
+					<from>stock_of_geyflorrin</from>
+					<to>exeminte</to>
+				</connector>
+			</view>
+		</views>
+	</model>
+</xmile>

@@ -1,0 +1,382 @@
+{
+  "title": "heldoutGibberishK",
+  "model": {
+    "variables": [
+      {
+        "name": "paffling",
+        "type": "variable"
+      },
+      {
+        "name": "burgination",
+        "type": "variable"
+      },
+      {
+        "name": "whoziewhat",
+        "type": "variable"
+      },
+      {
+        "name": "crypteral",
+        "type": "variable"
+      },
+      {
+        "name": "copyring",
+        "type": "variable"
+      },
+      {
+        "name": "pershipfulty",
+        "type": "variable"
+      },
+      {
+        "name": "ih",
+        "type": "variable"
+      },
+      {
+        "name": "supply of proptimatire",
+        "type": "variable"
+      },
+      {
+        "name": "quality of hoza",
+        "type": "variable"
+      },
+      {
+        "name": "level of aferraron",
+        "type": "variable"
+      },
+      {
+        "name": "rate of balack",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on oclate",
+        "type": "variable"
+      },
+      {
+        "name": "whatajig",
+        "type": "variable"
+      },
+      {
+        "name": "dickstonyx",
+        "type": "variable"
+      },
+      {
+        "name": "quality of bellignorance",
+        "type": "variable"
+      },
+      {
+        "name": "reveforly",
+        "type": "variable"
+      },
+      {
+        "name": "quality of funkado",
+        "type": "variable"
+      },
+      {
+        "name": "rate of yelb",
+        "type": "variable"
+      },
+      {
+        "name": "stock of outrance",
+        "type": "variable"
+      },
+      {
+        "name": "oc",
+        "type": "variable"
+      },
+      {
+        "name": "relity",
+        "type": "variable"
+      },
+      {
+        "name": "marticatene",
+        "type": "variable"
+      },
+      {
+        "name": "level of exeminte",
+        "type": "variable"
+      },
+      {
+        "name": "rate of estintant",
+        "type": "variable"
+      },
+      {
+        "name": "quality of raez",
+        "type": "variable"
+      },
+      {
+        "name": "illigent",
+        "type": "variable"
+      },
+      {
+        "name": "flow of hazmick",
+        "type": "variable"
+      },
+      {
+        "name": "geyflorrin",
+        "type": "variable"
+      },
+      {
+        "name": "younjuring",
+        "type": "variable"
+      },
+      {
+        "name": "stock of houtal",
+        "type": "variable"
+      },
+      {
+        "name": "pressure on loopnova",
+        "type": "variable"
+      },
+      {
+        "name": "flow of hensologic",
+        "type": "variable"
+      }
+    ],
+    "relationships": [
+      {
+        "from": "paffling",
+        "to": "burgination",
+        "polarity": "-"
+      },
+      {
+        "from": "burgination",
+        "to": "whoziewhat",
+        "polarity": "+"
+      },
+      {
+        "from": "whoziewhat",
+        "to": "crypteral",
+        "polarity": "-"
+      },
+      {
+        "from": "crypteral",
+        "to": "copyring",
+        "polarity": "+"
+      },
+      {
+        "from": "copyring",
+        "to": "pershipfulty",
+        "polarity": "-"
+      },
+      {
+        "from": "pershipfulty",
+        "to": "ih",
+        "polarity": "+"
+      },
+      {
+        "from": "ih",
+        "to": "supply of proptimatire",
+        "polarity": "+"
+      },
+      {
+        "from": "supply of proptimatire",
+        "to": "paffling",
+        "polarity": "+"
+      },
+      {
+        "from": "paffling",
+        "to": "quality of hoza",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of hoza",
+        "to": "level of aferraron",
+        "polarity": "+"
+      },
+      {
+        "from": "level of aferraron",
+        "to": "rate of balack",
+        "polarity": "+"
+      },
+      {
+        "from": "rate of balack",
+        "to": "pressure on oclate",
+        "polarity": "+"
+      },
+      {
+        "from": "pressure on oclate",
+        "to": "whatajig",
+        "polarity": "+"
+      },
+      {
+        "from": "whatajig",
+        "to": "paffling",
+        "polarity": "+"
+      },
+      {
+        "from": "paffling",
+        "to": "dickstonyx",
+        "polarity": "-"
+      },
+      {
+        "from": "dickstonyx",
+        "to": "quality of bellignorance",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of bellignorance",
+        "to": "reveforly",
+        "polarity": "-"
+      },
+      {
+        "from": "reveforly",
+        "to": "quality of funkado",
+        "polarity": "+"
+      },
+      {
+        "from": "quality of funkado",
+        "to": "rate of yelb",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of yelb",
+        "to": "stock of outrance",
+        "polarity": "-"
+      },
+      {
+        "from": "stock of outrance",
+        "to": "oc",
+        "polarity": "+"
+      },
+      {
+        "from": "oc",
+        "to": "paffling",
+        "polarity": "+"
+      },
+      {
+        "from": "relity",
+        "to": "marticatene",
+        "polarity": "-"
+      },
+      {
+        "from": "marticatene",
+        "to": "level of exeminte",
+        "polarity": "+"
+      },
+      {
+        "from": "level of exeminte",
+        "to": "rate of estintant",
+        "polarity": "-"
+      },
+      {
+        "from": "rate of estintant",
+        "to": "quality of raez",
+        "polarity": "-"
+      },
+      {
+        "from": "quality of raez",
+        "to": "illigent",
+        "polarity": "+"
+      },
+      {
+        "from": "illigent",
+        "to": "flow of hazmick",
+        "polarity": "+"
+      },
+      {
+        "from": "flow of hazmick",
+        "to": "relity",
+        "polarity": "+"
+      },
+      {
+        "from": "paffling",
+        "to": "geyflorrin",
+        "polarity": "-"
+      },
+      {
+        "from": "geyflorrin",
+        "to": "relity",
+        "polarity": "-"
+      },
+      {
+        "from": "younjuring",
+        "to": "paffling",
+        "polarity": "+"
+      },
+      {
+        "from": "stock of houtal",
+        "to": "dickstonyx",
+        "polarity": "+"
+      },
+      {
+        "from": "relity",
+        "to": "pressure on loopnova",
+        "polarity": "-"
+      },
+      {
+        "from": "copyring",
+        "to": "flow of hensologic",
+        "polarity": "-"
+      }
+    ]
+  },
+  "loops": [
+    {
+      "core": [
+        "paffling",
+        "whoziewhat",
+        "pershipfulty"
+      ],
+      "nodes": [
+        "paffling",
+        "burgination",
+        "whoziewhat",
+        "crypteral",
+        "copyring",
+        "pershipfulty",
+        "ih",
+        "supply of proptimatire"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "paffling",
+        "rate of balack"
+      ],
+      "nodes": [
+        "paffling",
+        "quality of hoza",
+        "level of aferraron",
+        "rate of balack",
+        "pressure on oclate",
+        "whatajig"
+      ],
+      "polarity": "+"
+    },
+    {
+      "core": [
+        "paffling",
+        "reveforly",
+        "rate of yelb"
+      ],
+      "nodes": [
+        "paffling",
+        "dickstonyx",
+        "quality of bellignorance",
+        "reveforly",
+        "quality of funkado",
+        "rate of yelb",
+        "stock of outrance",
+        "oc"
+      ],
+      "polarity": "-"
+    },
+    {
+      "core": [
+        "relity",
+        "rate of estintant",
+        "illigent"
+      ],
+      "nodes": [
+        "relity",
+        "marticatene",
+        "level of exeminte",
+        "rate of estintant",
+        "quality of raez",
+        "illigent",
+        "flow of hazmick"
+      ],
+      "polarity": "-"
+    }
+  ]
+}

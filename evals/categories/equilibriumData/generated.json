@@ -1,0 +1,130 @@
+{
+ "Rural dialysis network": {
+  "name": "Rural dialysis network",
+  "group": "scenarioEquilibrium",
+  "scenario": "dialysisClinic",
+  "description": "the rural dialysis network",
+  "adjustable": [
+   "waiting list",
+   "chairs",
+   "chairs on order",
+   "discouraged patients"
+  ],
+  "equilibriumStocks": [
+   "waiting list",
+   "chairs",
+   "chairs on order",
+   "discouraged patients"
+  ],
+  "solution": {
+   "waiting list": "36",
+   "chairs": "42.4955",
+   "chairs on order": "0",
+   "discouraged patients": "25.2"
+  },
+  "nonTrivial": {
+   "chairs": 21.25
+  }
+ },
+ "City bike-share membership": {
+  "name": "City bike-share membership",
+  "group": "scenarioEquilibrium",
+  "scenario": "bikeShare",
+  "description": "the city bike-share membership",
+  "adjustable": [
+   "potential members",
+   "members"
+  ],
+  "equilibriumStocks": [
+   "potential members",
+   "members"
+  ],
+  "solution": {
+   "potential members": "0",
+   "members": "50000"
+  },
+  "nonTrivial": {
+   "members": 25000
+  }
+ },
+ "Regional distributor inventory (after its steps)": {
+  "name": "Regional distributor inventory (after its steps)",
+  "group": "scenarioEquilibrium",
+  "scenario": "distributor",
+  "description": "the regional distributor inventory",
+  "postStep": true,
+  "adjustable": [
+   "inventory",
+   "supply line",
+   "expected demand"
+  ],
+  "equilibriumStocks": [
+   "inventory",
+   "supply line",
+   "expected demand"
+  ],
+  "solution": {
+   "inventory": "480",
+   "supply line": "720",
+   "expected demand": "120"
+  },
+  "nonTrivial": {
+   "supply line": 360
+  }
+ },
+ "Community food bank volunteers": {
+  "name": "Community food bank volunteers",
+  "group": "scenarioEquilibrium",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "adjustable": [
+   "volunteers",
+   "fatigue",
+   "Potential Volunteers",
+   "families served",
+   "Families Not Yet Reached"
+  ],
+  "equilibriumStocks": [
+   "volunteers",
+   "fatigue",
+   "Potential Volunteers",
+   "families served",
+   "Families Not Yet Reached"
+  ],
+  "solution": {
+   "volunteers": "0.0251556",
+   "fatigue": "167.636",
+   "Potential Volunteers": "249.975",
+   "families served": "838.178",
+   "Families Not Yet Reached": "361.822"
+  },
+  "nonTrivial": {
+   "families served": 419.1
+  }
+ },
+ "Hospital contract cleaning standard (after its steps)": {
+  "name": "Hospital contract cleaning standard (after its steps)",
+  "group": "scenarioEquilibrium",
+  "scenario": "cleaningStandards",
+  "description": "the hospital contract cleaning standard",
+  "postStep": true,
+  "adjustable": [
+   "cleaning staff",
+   "open positions",
+   "inspection standard"
+  ],
+  "equilibriumStocks": [
+   "cleaning staff",
+   "open positions",
+   "inspection standard"
+  ],
+  "solution": {
+   "cleaning staff": "56.4093",
+   "open positions": "9.40156",
+   "inspection standard": "0.82839"
+  },
+  "nonTrivial": {
+   "cleaning staff": 28.2
+  }
+ }
+}

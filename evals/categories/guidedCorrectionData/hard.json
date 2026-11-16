@@ -1,0 +1,223 @@
+{
+ "Rural dialysis network (hard)": {
+  "name": "Rural dialysis network (hard)",
+  "scenario": "dialysisClinic",
+  "description": "the rural dialysis network",
+  "errors": [
+   {
+    "kind": "timeConstant",
+    "id": "returning multiplies by time to return",
+    "variable": "returning",
+    "change": {
+     "equation": "discouraged_patients * time_to_return"
+    },
+    "text": "\"returning\" multiplies by \"time to return\" instead of dividing by it, so a longer time to return makes it bigger instead of smaller (and the units do not work out)."
+   },
+   {
+    "kind": "disconnected",
+    "id": "patients giving up not connected to discouraged patients",
+    "variable": "discouraged patients",
+    "change": {
+     "inflows": []
+    },
+    "text": "\"patients giving up\" drains \"waiting list\" but is not connected to \"discouraged patients\", so what leaves \"waiting list\" vanishes instead of arriving in \"discouraged patients\"."
+   },
+   {
+    "kind": "missingOutflow",
+    "id": "treatments started does not drain waiting list",
+    "variable": "waiting list",
+    "change": {
+     "outflows": [
+      "patients giving up"
+     ]
+    },
+    "text": "\"treatments started\" is not connected as an outflow of \"waiting list\", so \"waiting list\" never goes down through it and keeps piling up."
+   },
+   {
+    "kind": "timeConstant",
+    "id": "ordering chairs multiplies by order adjustment time",
+    "variable": "ordering chairs",
+    "change": {
+     "equation": "MAX(0, (desired_chairs - chairs - chairs_on_order) * order_adjustment_time)"
+    },
+    "text": "\"ordering chairs\" multiplies by \"order adjustment time\" instead of dividing by it, so a longer order adjustment time makes it bigger instead of smaller (and the units do not work out)."
+   }
+  ],
+  "distractors": [
+   "\"chairs arriving\" should multiply by \"build delay\" instead of dividing by it.",
+   "\"desired chairs\" should multiply by \"target wait\" instead of dividing by it."
+  ]
+ },
+ "Regional distributor inventory (hard)": {
+  "name": "Regional distributor inventory (hard)",
+  "scenario": "distributor",
+  "description": "the regional distributor inventory",
+  "errors": [
+   {
+    "kind": "timeConstant",
+    "id": "deliveries multiplies by delivery delay",
+    "variable": "deliveries",
+    "change": {
+     "equation": "supply_line * delivery_delay"
+    },
+    "text": "\"deliveries\" multiplies by \"delivery delay\" instead of dividing by it, so a longer delivery delay makes it bigger instead of smaller (and the units do not work out)."
+   },
+   {
+    "kind": "reversedGap",
+    "id": "orders takes its gap backwards",
+    "variable": "orders",
+    "change": {
+     "equation": "MAX(0, expected_demand + (inventory - desired_inventory) / adjustment_time + supply_line_weight * (desired_supply_line - supply_line) / adjustment_time)"
+    },
+    "text": "\"orders\" takes the gap the wrong way round (\"inventory\" minus \"desired inventory\" instead of \"desired inventory\" minus \"inventory\"), so it pushes the opposite way to what is needed."
+   },
+   {
+    "kind": "disconnected",
+    "id": "deliveries not connected to inventory",
+    "variable": "inventory",
+    "change": {
+     "inflows": []
+    },
+    "text": "\"deliveries\" drains \"supply line\" but is not connected to \"inventory\", so what leaves \"supply line\" vanishes instead of arriving in \"inventory\"."
+   }
+  ],
+  "distractors": [
+   "\"updating expectations\" should multiply by \"expectation time\" instead of dividing by it.",
+   "\"updating expectations\" should use \"expected demand\" minus \"demand\" instead of \"demand\" minus \"expected demand\"."
+  ]
+ },
+ "Regional specialty mushroom growers (hard)": {
+  "name": "Regional specialty mushroom growers (hard)",
+  "scenario": "mushroomGrowers",
+  "description": "the regional specialty mushroom growers",
+  "errors": [
+   {
+    "kind": "timeConstant",
+    "id": "rooms built multiplies by construction time",
+    "variable": "rooms built",
+    "change": {
+     "equation": "rooms_under_construction * construction_time"
+    },
+    "text": "\"rooms built\" multiplies by \"construction time\" instead of dividing by it, so a longer construction time makes it bigger instead of smaller (and the units do not work out)."
+   },
+   {
+    "kind": "disconnected",
+    "id": "rooms closed not connected to idle rooms",
+    "variable": "idle rooms",
+    "change": {
+     "inflows": []
+    },
+    "text": "\"rooms closed\" drains \"growing rooms\" but is not connected to \"idle rooms\", so what leaves \"growing rooms\" vanishes instead of arriving in \"idle rooms\"."
+   },
+   {
+    "kind": "missingOutflow",
+    "id": "rooms worn out does not drain growing rooms",
+    "variable": "growing rooms",
+    "change": {
+     "outflows": [
+      "rooms closed"
+     ]
+    },
+    "text": "\"rooms worn out\" is not connected as an outflow of \"growing rooms\", so \"growing rooms\" never goes down through it and keeps piling up."
+   },
+   {
+    "kind": "timeConstant",
+    "id": "rooms coming into production multiplies by start up time",
+    "variable": "rooms coming into production",
+    "change": {
+     "equation": "rooms_starting_up * start_up_time"
+    },
+    "text": "\"rooms coming into production\" multiplies by \"start up time\" instead of dividing by it, so a longer start up time makes it bigger instead of smaller (and the units do not work out)."
+   }
+  ],
+  "distractors": [
+   "\"idle rooms scrapped\" should multiply by \"time to scrap\" instead of dividing by it.",
+   "\"rooms built\" should not flow into \"rooms starting up\"; it should only drain \"rooms under construction\"."
+  ]
+ },
+ "Community food bank volunteers (hard)": {
+  "name": "Community food bank volunteers (hard)",
+  "scenario": "foodBank",
+  "description": "the community food bank volunteers",
+  "errors": [
+   {
+    "kind": "timeConstant",
+    "id": "families moving on multiplies by time on rolls",
+    "variable": "families moving on",
+    "change": {
+     "equation": "families_served * time_on_rolls"
+    },
+    "text": "\"families moving on\" multiplies by \"time on rolls\" instead of dividing by it, so a longer time on rolls makes it bigger instead of smaller (and the units do not work out)."
+   },
+   {
+    "kind": "reversedGap",
+    "id": "tiring takes its gap backwards",
+    "variable": "tiring",
+    "change": {
+     "equation": "(fatigue - stress) / fatigue_time"
+    },
+    "text": "\"tiring\" takes the gap the wrong way round (\"fatigue\" minus \"stress\" instead of \"stress\" minus \"fatigue\"), so it pushes the opposite way to what is needed."
+   },
+   {
+    "kind": "disconnected",
+    "id": "quitting not connected to Potential Volunteers",
+    "variable": "Potential Volunteers",
+    "change": {
+     "inflows": []
+    },
+    "text": "\"quitting\" drains \"volunteers\" but is not connected to \"Potential Volunteers\", so what leaves \"volunteers\" vanishes instead of arriving in \"Potential Volunteers\"."
+   },
+   {
+    "kind": "disconnected",
+    "id": "recruiting not connected to volunteers",
+    "variable": "volunteers",
+    "change": {
+     "inflows": []
+    },
+    "text": "\"recruiting\" drains \"Potential Volunteers\" but is not connected to \"volunteers\", so what leaves \"Potential Volunteers\" vanishes instead of arriving in \"volunteers\"."
+   }
+  ],
+  "distractors": [
+   "\"families moving on\" should not flow into \"Families Not Yet Reached\"; it should only drain \"families served\".",
+   "\"new families\" should not flow into \"families served\"; it should only drain \"Families Not Yet Reached\"."
+  ]
+ },
+ "Regional electricians' guild (hard)": {
+  "name": "Regional electricians' guild (hard)",
+  "scenario": "electricianTraining",
+  "description": "the regional electricians' guild",
+  "errors": [
+   {
+    "kind": "timeConstant",
+    "id": "intake wanted multiplies by intake adjustment time",
+    "variable": "intake wanted",
+    "change": {
+     "equation": "MAX(minimum_intake, retiring + workforce_gap * intake_adjustment_time)"
+    },
+    "text": "\"intake wanted\" multiplies by \"intake adjustment time\" instead of dividing by it, so a longer intake adjustment time makes it bigger instead of smaller (and the units do not work out)."
+   },
+   {
+    "kind": "disconnected",
+    "id": "qualifying not connected to journeymen",
+    "variable": "journeymen",
+    "change": {
+     "inflows": []
+    },
+    "text": "\"qualifying\" drains \"apprentices\" but is not connected to \"journeymen\", so what leaves \"apprentices\" vanishes instead of arriving in \"journeymen\"."
+   },
+   {
+    "kind": "missingOutflow",
+    "id": "retiring does not drain masters",
+    "variable": "masters",
+    "change": {
+     "outflows": []
+    },
+    "text": "\"retiring\" is not connected as an outflow of \"masters\", so \"masters\" never goes down through it and keeps piling up."
+   }
+  ],
+  "distractors": [
+   "\"becoming masters\" should multiply by \"time as journeyman\" instead of dividing by it.",
+   "\"places opening up\" should multiply by \"apprenticeship time\" instead of dividing by it."
+  ]
+ }
+}

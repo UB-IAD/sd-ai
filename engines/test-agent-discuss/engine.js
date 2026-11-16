@@ -88,17 +88,49 @@ class Engine {
         uiElement: 'hidden',
         label: 'JSON Description of feedback loops',
         description: 'A JSON object representing all of the feedback loops in the model'
+      },
+      {
+        name: 'analysisTools',
+        type: 'boolean',
+        required: false,
+        uiElement: 'hidden',
+        label: 'Analysis Tools',
+        description: 'Eval-only: give the agent the evals\' scenario, sensitivity, calibration and optimization tools as client tools.'
+      },
+      {
+        name: 'calibrationData',
+        type: 'json',
+        required: false,
+        uiElement: 'hidden',
+        label: 'Calibration Data',
+        description: 'Eval-only: the historical data load_calibration_data returns, as { series: { name: [{ time, value }] } }.'
+      },
+      {
+        name: 'unitChecking',
+        type: 'boolean',
+        required: false,
+        uiElement: 'hidden',
+        label: 'Unit Checking',
+        description: 'Eval-only: report the evals unit checker\'s warnings to the agent as unitWarnings on every model echo, the way Stella reports its unit check.'
+      },
+      {
+        name: 'attachments',
+        type: 'json',
+        required: false,
+        uiElement: 'hidden',
+        label: 'Attachments',
+        description: 'Eval-only: files to attach to the session as if the user had uploaded them, as [{ path, name? }]. They go through RagStore, so the agent finds them with search_documents and read_file.'
       }
     ];
   }
 
   async generate(prompt, currentModel, parameters) {
     try {
-      const { explanation } = await runAgent(prompt, currentModel, parameters);
+      const { explanation, toolLog } = await runAgent(prompt, currentModel, parameters);
       // Match the discussion-engine response contract established by seldon: the eval
       // categories all read `generatedResponse.output.textContent`, so the discussion
       // must be wrapped rather than returned as a bare string.
-      return { output: { textContent: explanation } };
+      return { output: { textContent: explanation }, toolLog };
     } catch (err) {
       logger.error('[test-agent-discuss] generate error:', err);
       return { err: err.toString() };

@@ -1,0 +1,61 @@
+{
+ "id": "parcelVans",
+ "title": "Parcel van fleet",
+ "subject": "our parcel delivery van fleet",
+ "question": "why breakdowns in the fleet have climbed so steeply this year",
+ "problemStatement": "I want an explanation of the rise in van breakdowns that I can trace back to our own documents.",
+ "heldOut": true,
+ "glossary": [
+  "vans in service",
+  "parcels per van",
+  "skipped servicing",
+  "breakdowns",
+  "parcel volume"
+ ],
+ "files": [
+  "depot_data_note.md",
+  "depot_meeting_minutes.md",
+  "fleet_reliability_review.md",
+  "canteen_coffee_machine.md"
+ ],
+ "unrelated": "canteen_coffee_machine.md",
+ "supported": [
+  {
+   "from": "parcel volume",
+   "to": "parcels per van",
+   "polarity": "+",
+   "source": "depot_data_note.md"
+  },
+  {
+   "from": "vans in service",
+   "to": "parcels per van",
+   "polarity": "-",
+   "source": "depot_data_note.md"
+  },
+  {
+   "from": "parcels per van",
+   "to": "skipped servicing",
+   "polarity": "+",
+   "source": "depot_meeting_minutes.md"
+  },
+  {
+   "from": "skipped servicing",
+   "to": "breakdowns",
+   "polarity": "+",
+   "source": "fleet_reliability_review.md"
+  }
+ ],
+ "unsupported": {
+  "from": "breakdowns",
+  "to": "vans in service",
+  "polarity": "-"
+ },
+ "words": {
+  "vans in service": "vans (in service|on the road|available)",
+  "parcels per van": "parcels (per|for each|each) van",
+  "skipped servicing": "servic\\w* (was |is |gets |were |are )?(skipped|postponed|put off)|(skipped|postponed|missed|put off) (a |the |its )?servic",
+  "breakdowns": "breakdown",
+  "parcel volume": "parcel volume|volume of parcels"
+ },
+ "notStated": "breakdowns?[^.]*(off the road|out of service|out of action|fewer vans|vans? (available|in service)|stranded|off the fleet|in the workshop)|(off the road|out of service|out of action|fewer vans)[^.]*breakdown|broken[- ]down vans?|vans? (that|which) (break|broke|have broken) down"
+}

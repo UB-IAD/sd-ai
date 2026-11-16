@@ -1,0 +1,79 @@
+{
+ "dialysisClinic": {
+  "low": {
+   "exact": 40,
+   "shown": 40
+  },
+  "high": {
+   "exact": 208.453,
+   "shown": 208.411
+  },
+  "base": 107.295
+ },
+ "distributor": {
+  "low": {
+   "exact": 19.2599,
+   "shown": 18.996
+  },
+  "high": {
+   "exact": 57.7798,
+   "shown": 56.9879
+  },
+  "base": 38.5199
+ },
+ "mushroomGrowers": {
+  "low": {
+   "exact": 153280,
+   "shown": 146746
+  },
+  "high": {
+   "exact": 2328790,
+   "shown": 2328500
+  },
+  "base": 728461
+ },
+ "ambulanceService": {
+  "low": {
+   "exact": 7.6242,
+   "shown": 7.6242
+  },
+  "high": {
+   "exact": 22.8726,
+   "shown": 22.8726
+  },
+  "base": 15.2484
+ },
+ "deliveryVans": {
+  "low": {
+   "exact": 177.778,
+   "shown": 177.778
+  },
+  "high": {
+   "exact": 11377.8,
+   "shown": 11377.8
+  },
+  "base": 606.88
+ },
+ "electricianTraining": {
+  "low": {
+   "exact": 0,
+   "shown": 0
+  },
+  "high": {
+   "exact": 2242.46,
+   "shown": 2242.46
+  },
+  "base": 232.643
+ },
+ "cleaningStandards": {
+  "low": {
+   "exact": 0.138504,
+   "shown": 0.138504
+  },
+  "high": {
+   "exact": 0.199791,
+   "shown": 0.199791
+  },
+  "base": 0.171611
+ }
+}

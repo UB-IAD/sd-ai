@@ -15,6 +15,7 @@ import utils from '../../utilities/utils.js';
 import { LLMWrapper } from '../../utilities/LLMWrapper.js';
 import { z } from 'zod';
 import { validateEvaluationResult } from '../evaluationSchema.js';
+import { compareNames, findVariable, equationMatchesThroughHelpers } from '../utilities/modelDiff.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,105 +52,6 @@ const generateCovidTest = function(name, errorFileName, errorExplanations) {
             errorExplanations: errorExplanations        
         }
     };
-};
-
-/**
- * Compare two variable names (case-insensitive and flexible matching)
- */
-const compareNames = function(name1, name2) {
-    return utils.sameVars(name1, name2);
-};
-
-/**
- * Find a variable by name in an array of variables
- */
-const findVariable = function(variables, name) {
-    return variables.find(v => compareNames(v.name, name));
-};
-
-/**
- * Compare two equations.
- *
- * The comparison is textual because an SD equation's *form* is part of what this category
- * measures — DELAY3(Infection, tau) and Exposed/tau compute similar things and only one of
- * them is the pipeline delay the prompt asked to preserve. But two forms of the same
- * literal, and two orderings of the same sum, say nothing about the modelling, and scoring
- * them as errors put false failures on the board: `1.7e+07` was marked wrong for being
- * written `17000000`, and a correct sum was marked wrong for listing its terms in a
- * different order.
- *
- * @param {String} eq1 The generated equation
- * @param {String} eq2 The expected equation
- * @returns {boolean} True when the two equations are the same equation
- */
-const compareEquations = function(eq1, eq2) {
-    // "//" is SD-JSON's safe division, the same division with a guard against a zero
-    // denominator, so a/b and a//b are the same formulation. Engines routinely write it,
-    // and scoring it as a different equation failed otherwise correct repairs.
-    const normalize = (eq) => {
-        if (eq === undefined || eq === null) return '';
-        return eq.toString().replace(/\s+/g, '').toLowerCase().replace(/\/\//g, '/');
-    };
-
-    const a = normalize(eq1);
-    const b = normalize(eq2);
-    if (a === b)
-        return true;
-
-    // Two spellings of one number. Number() rather than parseFloat: parseFloat("1x") is 1,
-    // which would call an equation equal to a constant it merely starts with.
-    const numA = Number(a);
-    const numB = Number(b);
-    if (a !== '' && b !== '' && Number.isFinite(numA) && Number.isFinite(numB))
-        return numA === numB;
-
-    // A sum of the same terms in a different order. Only plain sums qualify: once any other
-    // operator is present the order of the terms can change what the equation computes.
-    const sumTerms = (eq) => {
-        if (!eq.includes('+') || /[-*\/^()]/.test(eq)) return null;
-        return eq.split('+').map((term) => { return term.trim() }).sort();
-    };
-    const termsA = sumTerms(a);
-    const termsB = sumTerms(b);
-    if (termsA && termsB && termsA.length === termsB.length)
-        return termsA.every((term, i) => { return term === termsB[i] });
-
-    return false;
-};
-
-/**
- * Compare a generated equation to the expected one, looking through helper auxiliaries.
- *
- * The sum-error models carry a helper the correct model lacks ("Total population net flow",
- * a flow summing the stocks that feeds a "Total population" stock). Turning the helper into
- * an auxiliary and pointing the sum at it — Total population = Total_population_net_flow —
- * computes exactly what the reference computes, but a textual match against the sum failed
- * it. So when the generated equation is nothing but the name of another variable, and that
- * variable is an auxiliary the correct model does not have, its equation stands in for the
- * name. Only such helpers are looked through: aliasing a variable the correct model defines
- * is a different formulation, and flows and stocks are not pass-throughs.
- *
- * @param {Object} generatedVar The generated variable whose equation is being checked
- * @param {Object} correctVar The matching variable in the correct model
- * @param {Array<Object>} generatedVars Every variable in the generated model
- * @param {Array<Object>} correctVars Every variable in the correct model
- * @returns {boolean} True when the equations match directly or through helper auxiliaries
- */
-const equationMatchesThroughHelpers = function(generatedVar, correctVar, generatedVars, correctVars) {
-    const seen = new Set();
-    let equation = generatedVar.equation;
-    while (true) {
-        if (compareEquations(equation, correctVar.equation))
-            return true;
-
-        const reference = (equation ?? '').toString().trim();
-        const helper = findVariable(generatedVars, reference);
-        if (!helper || helper.type !== 'variable' || findVariable(correctVars, helper.name) || seen.has(helper.name))
-            return false;
-
-        seen.add(helper.name);
-        equation = helper.equation;
-    }
 };
 
 /**

@@ -11,6 +11,7 @@ const Agents = lazy(() => import('./pages/Agents'));
 const AgentDetail = lazy(() => import('./pages/AgentDetail'));
 const EvalsList = lazy(() => import('./pages/EvalsList'));
 const EvalDetail = lazy(() => import('./pages/EvalDetail'));
+const AgentEvalsGuide = lazy(() => import('./pages/AgentEvalsGuide'));
 const Leaderboard = lazy(() => import('./pages/Leaderboard'));
 const LeaderboardsList = lazy(() => import('./pages/LeaderboardsList'));
 const GetInvolved = lazy(() => import('./pages/GetInvolved'));
@@ -29,6 +30,7 @@ function App() {
             <Route path="/agents" element={<Agents />} />
             <Route path="/agents/:agentId" element={<AgentDetail />} />
             <Route path="/evals" element={<EvalsList />} />
+            <Route path="/evals/agents" element={<AgentEvalsGuide />} />
             <Route path="/evals/:category/:group/:testname" element={<EvalDetail />} />
             <Route path="/leaderboards" element={<LeaderboardsList />} />
             <Route path="/leaderboard/:mode" element={<Leaderboard />} />

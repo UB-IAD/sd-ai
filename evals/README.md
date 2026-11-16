@@ -13,9 +13,11 @@ CLI (command line interface) app that runs within sd-ai project to measure outpu
     - execute the tests, creating several results files in top-level project directory 
 - everything is configured in the required (`-e`) experiment json file defined in `evals/experiments/`
 - an `experiment.json` runs all specified test categories against all specified engine configurations
-- by default two experiments are included but feel free to add your own too
-    - `leaderboardCLD.json` and `leaderboardSFD.json` run every applicable engine (often with several underlying LLMs) against every test
+- several experiments are included; feel free to add your own too
+    - `leaderboardCLD.json`, `leaderboardSFD.json` and `leaderboardDiscuss.json` run every applicable engine (often with several underlying LLMs) against every test of their board
         - **warning** this can be quite expensive, $50+ for a single execution
+    - `leaderboardAgentBuild.json`, `leaderboardAgentDiscuss.json` and `leaderboardAgentConverse.json` together run the whole agent suite (see "Agent Evals" below) for Merlin and Socrates on Claude Sonnet 5.5 and Opus 5.5
+        - **warning** one pass of all three is very roughly $600–1,150
     - `careful.json` is an example of using evals for testing and development
         - `verbose: true` removes the progress bar in favor of detailed output
         - `sequential: true` runs only a single test at a time
@@ -44,9 +46,88 @@ CLI (command line interface) app that runs within sd-ai project to measure outpu
           `methodology` does not is a site that lies about how it scores, and that is much easier
           to notice in the same file than in the frontend
     - optionally a `link` function returning a URL to read more (a paper, usually)
+    - agent categories add a `role` to their methodology (see "Agent Evals"); the site shows it
+      on every test page
 - all `tests` must have a `name`, `prompt`, and `expectations` object:
     - `additionalParameters` can be specified if, for example, you have a `problemStatement` you wish to provide to the engine's generate function
     - `expectations` is an object you can put anything in we just hold on to it then pass it back to your `evaluate` function later
+
+# Agent Evals
+The `agent` leaderboard holds 24 categories that test an **agent** (Merlin, Athena, Socrates,
+Themis) working through a whole session, rather than one engine call. The documentation site's
+"How the agent evals work" page (`#/evals/agents`) explains them in full; this is the summary a
+contributor needs.
+
+## How a test runs
+- every test goes through `agent/utilities/AgentEvalRunner.js`, via one of three harness engines:
+    - `test-agent-build`: the agent must leave a model in the session
+    - `test-agent-discuss`: an answer in text is enough
+    - `test-agent-converse`: a multi-turn conversation, with fixed follow-up `turns` or a scripted user
+- an experiment file runs one engine, so the agent board is fed by three experiment files that share
+  their engine config names; `evals:collect` merges on that name, so each agent/model pair becomes
+  one row on the board
+- the response a category's `evaluate` receives carries the final `model`, the agent's text, the
+  `toolLog` (every tool call, in order, with its arguments) and, for conversations, the `transcript`
+  and a model `snapshot` after every agent turn. Graders read what the agent did, not what it says it did
+- eval-only `additionalParameters`, all off unless a test sets them:
+    - `attachments`: files uploaded into the session through the real upload pipeline
+    - `analysisTools`: `run_scenario`, `run_sensitivity`, `load_calibration_data`,
+      `run_calibration` and `run_optimization`, from `evals/utilities/analysisTools.js`
+    - `calibrationData`: the history `load_calibration_data` returns
+    - `unitChecking`: the deterministic unit checker's warnings on every model echo
+    - `turns`, `userScript`: follow-up turns, or a scripted user (`evals/utilities/scriptedUser.js`)
+      who answers only the topics a judge says were asked about, from a fixed fact bank
+
+## What the categories are built on
+- **hidden scenarios** (`evals/utilities/scenarios/`): small working models the agent never sees,
+  with a plain-language account, mechanisms that can be switched off (ablation decides which
+  matter), goals, candidate policies and, for some, rival stakeholder variants. Every answer key
+  comes from simulating them
+- hand-written models with planted errors, seeded gibberish-named causal loop diagrams, and small
+  document corpora for the categories that do not use scenarios
+
+## Groups: dev, held out, hard
+- `<group>`: dev tests, on material the grader was developed against
+- `<group>HeldOut`: tests on material written after the grader was frozen and never used to tune it.
+  The split is applied by `evals/utilities/heldOut.js`; every test also carries `heldOut: true|false`
+- `<group>Hard`, `<group>Hard2`: the same task with a difficulty lever applied by rule (never chosen by
+  which cases an agent failed), each with its own `HeldOut` half
+- each category's grader is frozen before its held-out material is first run. A grader fault found by a
+  held-out run is not fixed in place: that material moves to dev instead.
+  `tests/evals/freezeSnapshot.test.js` fails if any frozen test changes
+
+## Roles, floors and contract tests
+- each agent category is a **regression guard** (correctness a good agent should always pass) or
+  **discriminating** (a judgement skill whose held-out hard group must leave headroom), set in
+  `evals/utilities/categoryRoles.js`
+- **floors**: `evals/floors/` runs three null agents (silent, always-assertive, always-noncommittal)
+  through every agent category's grader; each methodology states what they score
+- **contract test** (`tests/evals/contract.test.js`), the same for every agent category: every test
+  has a unique name, a prompt and expectations; no null agent passes half the held-out tests or does
+  clearly better on held-out than on dev; and no closed-answer judge field lets a constant answer pass
+  more than half of the held-out tests that read it. The checks that need a category's own knowledge (its
+  reference answers pass, a planted model really differs from the correct one) live in that
+  category's own test file. Frozen groups that predate that check are recorded in
+  `tests/evals/fixtures/closedFieldBaseline.json`; their scores should be read beside the
+  constant-answer rate
+
+## Running them
+- smoke-test a category on one cheap config before any full run; a full pass of the agent suite is
+  `npm run evals -- -e evals/experiments/leaderboardAgent<Build|Discuss|Converse>.json` for each of
+  the three files, then `npm run evals:collect -- --leaderboard agent --generation <id> <run files>`
+- the agent's model is chosen by `intelligence` from `config.agentIntelligence`; for Anthropic that
+  ladder has Sonnet 5.5 (`standard`), Opus 5.5 (`high`) and Fable 5.2 (`maximum`), so there is no
+  way to run the agent itself on Haiku. `toolModels` sets the engine tools' models separately
+
+# Simulation
+- every simulation, by graders and by the agent's own `run_model` and analysis tools, goes through
+  `evals/utilities/simulator/PySDSimulator.js`, which works around PySD gaps without changing PySD:
+  bare `PI`, Runge-Kutta models run with Euler at a finer step, modules flattened, and lookups with
+  unevenly spaced x points resampled onto an even grid (PySD otherwise ignores `<xpts>`). PySD also
+  ignores `type="extrapolate"` on lookups; that is not worked around
+- results are cached on disk in `evals/.simcache` (git-ignored), keyed on the XMILE, the variables
+  asked for and the simulator's own source, so a change to the wrapper or the Python side misses the
+  cache. `SDAI_SIM_CACHE=off` bypasses it; delete the folder after upgrading the Python environment
 
 # Caching Engine Responses
 - evals can get expensive, run slowly, and crash unexpectedly, so we cache each test result to prevent data loss if you `ctrl+c` or encounter an error
@@ -69,7 +150,8 @@ CLI (command line interface) app that runs within sd-ai project to measure outpu
 
 # Leaderboard Generations
 - there is **one results file per leaderboard** — `evals/results/leaderboard_<board>_full_results.json.gz`
-  for `cld`, `sfd` and `discussion` — holding exactly one current result per test
+  for `cld`, `sfd`, `discussion` and `agent` — holding exactly one current result per test. The
+  `agent` file is created by the first `evals:collect` into it
 - the benchmark itself changes (categories added, buggy tests fixed), so results are tagged with the
   generation of the benchmark that produced them. Generations are declared in
   `evals/leaderboardGenerations.js`:
