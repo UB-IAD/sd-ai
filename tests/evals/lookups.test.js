@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { simTest } from './simTest.js';
 import path from 'path';
 import { scenarios } from '../../evals/utilities/scenarios/library.js';
 import { CATEGORIES } from '../../evals/floors/nullAgents.js';
@@ -33,7 +34,7 @@ describe('lookups are evenly spaced', () => {
         for (const l of found) expect([l.where, l.xs, evenlySpaced(l.xs)]).toEqual([l.where, l.xs, true]);
     });
 
-    test('every new category: its data files, and the models its tests hand over', async () => {
+    simTest('every new category: its data files, and the models its tests hand over', async () => {
         const found = [];
         for (const name of CATEGORIES) {
             const dir = path.join('evals/categories', `${name}Data`);

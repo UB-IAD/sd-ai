@@ -1,4 +1,5 @@
 import { groupTests, laterBatch } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let identified = new Set();
@@ -28,7 +29,7 @@ const run = async (tests, response) => {
 describe('mece category', () => {
     jest.setTimeout(600000);
 
-    test('every planted error changes what the model computes', async () => {
+    simTest('every planted error changes what the model computes', async () => {
         for (const [name, c] of Object.entries(cases)) expect([name, Boolean(await behaviorMismatch(plantedModel(c), c.correct, 0.02))]).toEqual([name, true]);
     });
 
@@ -39,7 +40,7 @@ describe('mece category', () => {
         }
     });
 
-    test('generated cases are the general rule applied to every scenario in the library', async () => {
+    simTest('generated cases are the general rule applied to every scenario in the library', async () => {
         const { generateCases } = await import('../../../evals/categories/meceData/generate.js');
         const { generatedCases } = await import('../../../evals/categories/meceData/cases.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
@@ -48,7 +49,7 @@ describe('mece category', () => {
         expect(Object.fromEntries(Object.entries(generatedCases).map(([n, { correct, ...g }]) => [n, g]))).toEqual(expected);
     }, 1800000);
 
-    test('a fix in a neighbouring variable counts; a compensation that leaves the miscounted quantity wrong does not', async () => {
+    simTest('a fix in a neighbouring variable counts; a compensation that leaves the miscounted quantity wrong does not', async () => {
         const { evaluate, groups } = await import('../../../evals/categories/mece.js');
         const { cases, plantedModel } = await import('../../../evals/categories/meceData/cases.js');
         const name = 'Hotel Ready Rooms';
@@ -85,7 +86,7 @@ describe('mece category', () => {
         expect(await fixedElsewhere(zeroed, g)).toBe(false);
     }, 600000);
 
-    test('the elsewhere rule accepts a model whose whole run and planted quantity both match the correct one', async () => {
+    simTest('the elsewhere rule accepts a model whose whole run and planted quantity both match the correct one', async () => {
         const { fixedElsewhere } = await import('../../../evals/categories/mece.js');
         const { cases, plantedModel } = await import('../../../evals/categories/meceData/cases.js');
         for (const name of ['Hotel Ready Rooms', 'Project Backlog and Staff']) {
@@ -101,24 +102,24 @@ describe('mece category', () => {
 
     describe.each(Object.keys(cases))('%s', (name) => {
         const c = cases[name];
-        test('the correct model with the error explained passes', async () => {
+        simTest('the correct model with the error explained passes', async () => {
             identified = new Set([c.text]);
             expect(await run(testsFor(name), { model: structuredClone(c.correct), supportingInfo: { explanation: 'x' } })).toEqual({ error: [], behavior: [] });
         });
-        test('the planted model returned unexplained fails both', async () => {
+        simTest('the planted model returned unexplained fails both', async () => {
             identified = new Set();
             const results = await run(testsFor(name), { model: plantedModel(c), supportingInfo: { explanation: 'fine' } });
             expect(results.error).toEqual(['MECE error not fixed', 'MECE error not identified']);
             expect(results.behavior).toEqual(['Model still miscounts']);
         });
-        test('naming a distractor instead of the real error does not count', async () => {
+        simTest('naming a distractor instead of the real error does not count', async () => {
             identified = new Set(c.distractors);
             const results = await run(testsFor(name).filter((t) => t.expectations.criterion === 'error'), { model: structuredClone(c.correct), supportingInfo: { explanation: 'x' } });
             expect(results.error).toEqual(['MECE error not identified']);
         });
     });
 
-    test('removing the duplicate flow fixes the double drain, even if the flow variable stays behind', async () => {
+    simTest('removing the duplicate flow fixes the double drain, even if the flow variable stays behind', async () => {
         const c = cases['Inventory and Workforce'];
         identified = new Set([c.text]);
         const model = plantedModel(c);
@@ -143,7 +144,7 @@ describe('mece hard group', () => {
         return out;
     };
 
-    test('hard cases are the rule applied to every scenario and hand case', async () => {
+    simTest('hard cases are the rule applied to every scenario and hand case', async () => {
         const { allHardCases } = await import('../../../evals/categories/meceData/hard.js');
         expect(Object.fromEntries(Object.entries(hardCases).map(([n, { correct, ...g }]) => [n, g]))).toEqual(await allHardCases());
     });
@@ -158,7 +159,7 @@ describe('mece hard group', () => {
         expect(new Set(groupTests(groups, 'meceHard').map((t) => JSON.stringify([t.prompt, t.currentModel]))).size).toBe(HARD.faulty.length + HARD.clean.length);
     });
 
-    test('every hard case has errors of at least two kinds in different variables, each changing behavior; the request names none', async () => {
+    simTest('every hard case has errors of at least two kinds in different variables, each changing behavior; the request names none', async () => {
         const { plantAll } = await import('../../../evals/categories/meceData/hard.js');
         for (const [name, c] of Object.entries(hardCases)) {
             expect(c.plants.length).toBeGreaterThanOrEqual(2);
@@ -182,23 +183,23 @@ describe('mece hard group', () => {
 
     describe.each(HARD.faulty)('%s', (name) => {
         const c = () => hardCases[name];
-        test('the correct model with every error explained passes every hard test', async () => {
+        simTest('the correct model with every error explained passes every hard test', async () => {
             identified = new Set(c().plants.map((p) => p.text));
             expect(Object.values(await failuresFor(hardTests(name), { model: structuredClone(c().correct), supportingInfo: { explanation: 'x' } })).flat()).toEqual([]);
         });
-        test('returning the planted model unexplained fails every hard test', async () => {
+        simTest('returning the planted model unexplained fails every hard test', async () => {
             identified = new Set();
             const results = await failuresFor(hardTests(name), { model: plantedHardModel(c()), supportingInfo: { explanation: 'It is ready.' } });
             for (const [n, types] of Object.entries(results)) expect([n, types.length > 0]).toEqual([n, true]);
         });
-        test('fixing all but the last error fails that error and the behavior test only', async () => {
+        simTest('fixing all but the last error fails that error and the behavior test only', async () => {
             const { plantAll } = await import('../../../evals/categories/meceData/hard.js');
             identified = new Set(c().plants.map((p) => p.text));
             const left = c().plants.at(-1);
             const results = await failuresFor(hardTests(name), { model: plantAll(c().correct, [left]), supportingInfo: { explanation: 'x' } });
             for (const t of hardTests(name)) expect([t.name, results[t.name].length > 0]).toEqual([t.name, t.expectations.criterion === 'behavior' || t.expectations.plantId === left.id]);
         });
-        test('naming the distractors instead of the real errors does not count', async () => {
+        simTest('naming the distractors instead of the real errors does not count', async () => {
             identified = new Set(c().distractors);
             const results = await failuresFor(hardTests(name).filter((t) => t.expectations.criterion === 'error'), { model: structuredClone(c().correct), supportingInfo: { explanation: 'x' } });
             for (const types of Object.values(results)) expect(types).toEqual(['MECE error not identified']);
@@ -207,17 +208,17 @@ describe('mece hard group', () => {
 
     describe.each(HARD.clean)('%s (clean control)', (name) => {
         const c = () => hardCases[name];
-        test('leaving the correct model alone and saying it is ready passes', async () => {
+        simTest('leaving the correct model alone and saying it is ready passes', async () => {
             cleanVerdict = CLEAN.ready;
             expect(await evaluate({ model: structuredClone(c().correct), supportingInfo: { explanation: 'Nothing to fix.' } }, cleanTest(name).expectations)).toEqual([]);
         });
-        test('reporting problems that are not there, or not saying, fails even with the model unchanged', async () => {
+        simTest('reporting problems that are not there, or not saying, fails even with the model unchanged', async () => {
             for (const verdict of [CLEAN.problems, CLEAN.silent]) {
                 cleanVerdict = verdict;
                 expect((await evaluate({ model: structuredClone(c().correct), supportingInfo: { explanation: 'x' } }, cleanTest(name).expectations)).map((f) => f.type)).toEqual(['Problem reported in a correct model']);
             }
         });
-        test('"fixing" something that is not broken fails', async () => {
+        simTest('"fixing" something that is not broken fails', async () => {
             const { plantAll } = await import('../../../evals/categories/meceData/hard.js');
             cleanVerdict = CLEAN.ready;
             for (const p of c().plants) {

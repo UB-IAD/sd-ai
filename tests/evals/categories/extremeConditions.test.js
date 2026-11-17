@@ -1,4 +1,5 @@
 import { groupTests, laterBatch } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 import { evaluate, groups, methodology } from '../../../evals/categories/extremeConditions.js';
 import { cases, plantedModel } from '../../../evals/categories/extremeConditionsData/cases.js';
@@ -17,7 +18,7 @@ const scenarioCall = (overrides) => ({ toolName: 'mcp__sd-ai__run_scenario', arg
 describe('extremeConditions category', () => {
     jest.setTimeout(900000);
 
-    test('each plant fails under its extreme, the robust model does not, and normally they agree', async () => {
+    simTest('each plant fails under its extreme, the robust model does not, and normally they agree', async () => {
         for (const [name, c] of Object.entries(cases)) {
             expect([name, Boolean(await impossibleUnder(plantedModel(c), c.trigger))]).toEqual([name, true]);
             expect([name, await impossibleUnder(c.clean, c.trigger)]).toEqual([name, null]);
@@ -32,7 +33,7 @@ describe('extremeConditions category', () => {
         }
     });
 
-    test('generated cases are the general rule applied to every scenario in the library', async () => {
+    simTest('generated cases are the general rule applied to every scenario in the library', async () => {
         const { generateCase } = await import('../../../evals/categories/extremeConditionsData/generate.js');
         const { generatedCases } = await import('../../../evals/categories/extremeConditionsData/cases.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
@@ -51,26 +52,26 @@ describe('extremeConditions category', () => {
     describe.each(Object.keys(cases))('%s', (name) => {
         const c = cases[name];
 
-        test('testing the right extreme and returning the robust model passes everything', async () => {
+        simTest('testing the right extreme and returning the robust model passes everything', async () => {
             const results = await run(testsFor(name), { model: structuredClone(c.clean), toolLog: [scenarioCall(c.trigger)] });
             expect(results).toEqual({ found: [], fixed: [], robust: [] });
         });
 
-        test('never testing and returning the model unchanged fails everything', async () => {
+        simTest('never testing and returning the model unchanged fails everything', async () => {
             const results = await run(testsFor(name), { model: plantedModel(c), toolLog: [] });
             expect(results.found).toEqual(['Problem not found by testing']);
             expect(results.fixed).toEqual(['Formulation not fixed']);
             expect(results.robust).toEqual(['Model not robust']);
         });
 
-        test('a what-if run that does not expose the problem does not count as finding it', async () => {
+        simTest('a what-if run that does not expose the problem does not count as finding it', async () => {
             const harmless = Object.fromEntries(Object.keys(c.trigger).map((k) => [k, String(findVariable(c.clean.variables, k).equation)]));
             const results = await run(testsFor(name).filter((t) => t.expectations.criterion === 'found'), { model: c.clean, toolLog: [scenarioCall(harmless)] });
             expect(results.found).toEqual(['Problem not found by testing']);
         });
     });
 
-    test('runs that do not expose the planted formulation do not count: a typo, or an extreme that breaks any model', async () => {
+    simTest('runs that do not expose the planted formulation do not count: a typo, or an extreme that breaks any model', async () => {
         const inv = testsFor('Inventory and Workforce').find((x) => x.expectations.criterion === 'found');
         for (const overrides of [{ demandd: 0 }, { demand: -50 }]) {
             expect([overrides, (await evaluate({ model: cases['Inventory and Workforce'].clean, toolLog: [scenarioCall(overrides)] }, inv.expectations)).map((f) => f.type)]).toEqual([overrides, ['Problem not found by testing']]);
@@ -79,7 +80,7 @@ describe('extremeConditions category', () => {
         expect((await evaluate({ model: cases['Endemic Infection'].clean, toolLog: [scenarioCall({ 'illness duration': 0 })] }, inf.expectations)).map((f) => f.type)).toEqual(['Problem not found by testing']);
     });
 
-    test('client tools are recognized whatever prefix the route gives them', async () => {
+    simTest('client tools are recognized whatever prefix the route gives them', async () => {
         const c = cases['Inventory and Workforce'];
         const t = testsFor('Inventory and Workforce').find((x) => x.expectations.criterion === 'found');
         for (const toolName of ['client_run_scenario', 'mcp__sd-ai__client_run_scenario', 'run_scenario']) {
@@ -87,7 +88,7 @@ describe('extremeConditions category', () => {
         }
     });
 
-    test('a "fix" that zeroes the flow survives the extreme but changes normal behavior', async () => {
+    simTest('a "fix" that zeroes the flow survives the extreme but changes normal behavior', async () => {
         const c = cases['Project Backlog and Staff'];
         const model = plantedModel(c);
         findVariable(model.variables, c.plant.variable).equation = '0';
@@ -95,7 +96,7 @@ describe('extremeConditions category', () => {
         expect((await evaluate({ model }, t.expectations)).map((f) => f.type)).toEqual(['Normal behavior changed']);
     });
 
-    test('a different correct fix (a MAX guard) also counts', async () => {
+    simTest('a different correct fix (a MAX guard) also counts', async () => {
         const c = cases['Endemic Infection'];
         const model = plantedModel(c);
         findVariable(model.variables, 'infecting').equation = 'transmission_rate * Susceptible * Infected / MAX(Susceptible + Infected + Recovered, 0.001)';
@@ -125,7 +126,7 @@ describe('extremeConditions hard group', () => {
         return out;
     };
 
-    test('hard cases are the rule applied to every scenario in the library', async () => {
+    simTest('hard cases are the rule applied to every scenario in the library', async () => {
         const { generateHardCase } = await import('../../../evals/categories/extremeConditionsData/hard.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         const expected = {};
@@ -146,7 +147,7 @@ describe('extremeConditions hard group', () => {
         expect(new Set(groupTests(groups, 'extremeConditionsHard').map((t) => JSON.stringify([t.prompt, t.currentModel]))).size).toBe(HARD.faulty.length + HARD.clean.length);
     });
 
-    test('each plant fails under its own extreme, the robust model survives every extreme, and normally they agree; the request does not mention extremes', async () => {
+    simTest('each plant fails under its own extreme, the robust model survives every extreme, and normally they agree; the request does not mention extremes', async () => {
         for (const [name, c] of Object.entries(hardCases)) {
             expect(c.plants.length).toBeGreaterThanOrEqual(1);
             expect(new Set(c.plants.map((p) => p.variable)).size).toBe(c.plants.length);
@@ -164,7 +165,7 @@ describe('extremeConditions hard group', () => {
         }
     });
 
-    test('testing every extreme and returning the robust model passes every hard test; doing nothing fails every one; fixing all but one plant fails that plant and robustness only', async () => {
+    simTest('testing every extreme and returning the robust model passes every hard test; doing nothing fails every one; fixing all but one plant fails that plant and robustness only', async () => {
         for (const name of HARD.faulty) {
             const c = hardCases[name];
             const calls = c.plants.map((p) => scenarioCall(p.trigger));
@@ -181,7 +182,7 @@ describe('extremeConditions hard group', () => {
         }
     });
 
-    test('a run that exposes only another plant does not count as finding this one', async () => {
+    simTest('a run that exposes only another plant does not count as finding this one', async () => {
         for (const name of HARD.faulty) {
             const c = hardCases[name];
             for (const p of c.plants) {
@@ -192,7 +193,7 @@ describe('extremeConditions hard group', () => {
         }
     });
 
-    test('clean controls: leaving the robust model alone and saying so passes; reporting problems, not saying, or "fixing" what is not broken fails', async () => {
+    simTest('clean controls: leaving the robust model alone and saying so passes; reporting problems, not saying, or "fixing" what is not broken fails', async () => {
         for (const name of HARD.clean) {
             const c = hardCases[name];
             const t = cleanTest(name);

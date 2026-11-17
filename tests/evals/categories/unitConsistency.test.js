@@ -1,4 +1,5 @@
 import { groupTests, laterBatch } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 import { evaluate, groups, methodology } from '../../../evals/categories/unitConsistency.js';
 import { buildCases, fixCases, plantUnitErrors } from '../../../evals/categories/unitConsistencyData/cases.js';
@@ -35,7 +36,7 @@ describe('unitConsistency category', () => {
         }
     });
 
-    test('generated fix cases are the general rule applied to every scenario in the library', async () => {
+    simTest('generated fix cases are the general rule applied to every scenario in the library', async () => {
         const { generateCase } = await import('../../../evals/categories/unitConsistencyData/generate.js');
         const { generatedFixCases } = await import('../../../evals/categories/unitConsistencyData/cases.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
@@ -67,18 +68,18 @@ describe('unitConsistency category', () => {
         const c = buildCases[name];
         const tests = testsFor('buildWithUnits', name);
 
-        test('the reference model passes everything', async () => {
+        simTest('the reference model passes everything', async () => {
             expect(Object.values(await failuresFor(tests, { model: structuredClone(c.reference) })).flat()).toEqual([]);
         });
 
-        test('the reference with its units stripped fails both units tests, not the behavior test', async () => {
+        simTest('the reference with its units stripped fails both units tests, not the behavior test', async () => {
             const model = structuredClone(c.reference);
             for (const v of model.variables) delete v.units;
             const results = await failuresFor(tests, { model });
             expect(results).toEqual({ consistent: expect.arrayContaining(['Unit inconsistency']), allHaveUnits: expect.arrayContaining(['Missing units']), behavior: [] });
         });
 
-        test('a flow multiplied where it should divide fails consistency and behavior', async () => {
+        simTest('a flow multiplied where it should divide fails consistency and behavior', async () => {
             const model = structuredClone(c.reference);
             // A generated case uses its scenario's planted time-constant error, which moves a stock
             // by at least 10%; a hand-written case, its first flow with a division.
@@ -96,17 +97,17 @@ describe('unitConsistency category', () => {
         const c = fixCases[name];
         const tests = testsFor('fixUnits', name);
 
-        test('the correct model passes everything', async () => {
+        simTest('the correct model passes everything', async () => {
             expect(Object.values(await failuresFor(tests, { model: structuredClone(c.correct) })).flat()).toEqual([]);
         });
 
-        test('returning the broken model fails every error and the consistency test', async () => {
+        simTest('returning the broken model fails every error and the consistency test', async () => {
             const results = await failuresFor(tests, { model: plantUnitErrors(c.correct, c.errors) });
             for (const error of c.errors) expect(results[`error:${error.id}`]).toEqual(['Unit error not fixed']);
             expect(results.consistent.length).toBeGreaterThan(0);
         });
 
-        test('fixing one error passes that error only', async () => {
+        simTest('fixing one error passes that error only', async () => {
             const [, left] = c.errors;
             const results = await failuresFor(tests, { model: plantUnitErrors(c.correct, [left]) });
             expect(results[`error:${c.errors[0].id}`]).toEqual([]);
@@ -114,7 +115,7 @@ describe('unitConsistency category', () => {
         });
     });
 
-    test('silencing a unit error by changing what the model computes does not count as a fix', async () => {
+    simTest('silencing a unit error by changing what the model computes does not count as a fix', async () => {
         // "release" was Water * residence_time (wrong units). Making it Water / residence_time / 2
         // has the right units but drains twice as slowly.
         const c = fixCases['Reservoir'];
@@ -124,7 +125,7 @@ describe('unitConsistency category', () => {
         expect(results['error:release multiplies by residence time']).toEqual(['Unit error not fixed']);
     });
 
-    test('deleting the units of the erroneous variables does not count as fixing them', async () => {
+    simTest('deleting the units of the erroneous variables does not count as fixing them', async () => {
         for (const [name, c] of Object.entries(fixCases)) {
             const model = plantUnitErrors(c.correct, c.errors);
             for (const error of c.errors) findVariable(model.variables, error.variable).units = '';
@@ -155,7 +156,7 @@ describe('unitConsistency hard group', () => {
     const hardTests = (name) => testsFor('fixUnitsHard', name).filter((t) => t.expectations.criterion !== 'clean');
     const cleanTest = (name) => testsFor('fixUnitsHard', name).find((t) => t.expectations.criterion === 'clean');
 
-    test('hard cases are the rule applied to every scenario in the library', async () => {
+    simTest('hard cases are the rule applied to every scenario in the library', async () => {
         const { generateHardCase } = await import('../../../evals/categories/unitConsistencyData/hard.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         const expected = {};
@@ -176,7 +177,7 @@ describe('unitConsistency hard group', () => {
         expect(new Set(groupTests(groups, 'fixUnitsHard').map((t) => JSON.stringify([t.prompt, t.currentModel]))).size).toBe(HARD.faulty.length + HARD.clean.length);
     });
 
-    test('every hard case has three errors of three kinds in three variables, each flagged; equation errors change behavior; the request names none', async () => {
+    simTest('every hard case has three errors of three kinds in three variables, each flagged; equation errors change behavior; the request names none', async () => {
         const { behaviorMismatch } = await import('../../../evals/utilities/behaviorCompare.js');
         for (const [name, c] of Object.entries(hardFixCases)) {
             expect(new Set(c.errors.map((e) => e.kind)).size).toBe(3);
@@ -197,7 +198,7 @@ describe('unitConsistency hard group', () => {
         for (const g of ['fixUnits', 'buildWithUnits']) for (const t of groupTests(groups, g)) expect(t.additionalParameters.unitChecking).toBe(true);
     });
 
-    test('the correct model passes every hard test; the planted model fails every one; fixing all but one error fails that error only', async () => {
+    simTest('the correct model passes every hard test; the planted model fails every one; fixing all but one error fails that error only', async () => {
         for (const name of HARD.faulty) {
             const c = hardFixCases[name];
             const good = await failuresFor(hardTests(name), { model: structuredClone(c.correct) });
@@ -211,7 +212,7 @@ describe('unitConsistency hard group', () => {
         }
     });
 
-    test('clean controls: leaving the model alone and saying so passes; reporting problems, not saying, or "fixing" what is not broken fails', async () => {
+    simTest('clean controls: leaving the model alone and saying so passes; reporting problems, not saying, or "fixing" what is not broken fails', async () => {
         for (const name of HARD.clean) {
             const c = hardFixCases[name];
             const t = cleanTest(name);

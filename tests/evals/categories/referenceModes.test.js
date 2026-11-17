@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let reading = null;
@@ -37,7 +38,7 @@ const run = async (tests, response) => {
 describe('referenceModes category', () => {
     jest.setTimeout(600000);
 
-    test('every scenario is honest: the narrative shapes are what the hidden model does, and every explaining loop matters', async () => {
+    simTest('every scenario is honest: the narrative shapes are what the hidden model does, and every explaining loop matters', async () => {
         for (const s of Object.values(scenarios)) {
             const key = await computeKey(s);
             for (const k of s.keyVariables) expect([s.id, k.model, key.shapes[k.model]]).toEqual([s.id, k.model, k.narrativeShape]);
@@ -137,7 +138,7 @@ describe('referenceModes category', () => {
             for (const types of Object.values(results)) expect(types).toEqual([]);
         });
 
-        test('forecasts.json is the general rule applied to every scenario, re-derived by simulation', async () => {
+        simTest('forecasts.json is the general rule applied to every scenario, re-derived by simulation', async () => {
             for (const s of Object.values(scenarios)) expect([s.id, await forecastFor(s)]).toEqual([s.id, FORECASTS[s.id]]);
         });
 
@@ -226,7 +227,7 @@ describe('referenceModes second hard group: a path of forecasts, graded together
     const grade = async (id, response) => (await evaluate(response, testOf(id).expectations)).map((f) => f.type);
     const answer = conversation('my forecast', []);
 
-    test('trajectories.json is the general rule applied to every scenario, re-derived by simulation', async () => {
+    simTest('trajectories.json is the general rule applied to every scenario, re-derived by simulation', async () => {
         for (const s of Object.values(scenarios)) expect([s.id, await trajectoryFor(s, FORECASTS[s.id])]).toEqual([s.id, TRAJECTORIES[s.id]]);
         for (const tr of Object.values(TRAJECTORIES)) expect(tr.times.length).toBe(HORIZONS.length);
     });

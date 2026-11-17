@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 // The stubbed judge: `said` maps a quantity (stocks) or a candidate's text (leverage) to the
@@ -46,7 +47,7 @@ describe('cldStocksAndLeverage category', () => {
         expect(stockKey('distributor').others).not.toContain('orders');
     });
 
-    test('every leverage candidate is one of the scenario\'s policies, at least one meets the goal, and the misconception does not', async () => {
+    simTest('every leverage candidate is one of the scenario\'s policies, at least one meets the goal, and the misconception does not', async () => {
         for (const [id, candidates] of Object.entries(LEVERAGE_CANDIDATES)) {
             const s = scenarios[id];
             const policies = candidates.map((c) => s.policies.find((p) => p.id === c.policy));
@@ -242,7 +243,7 @@ describe('cldStocksAndLeverage category', () => {
             expect(methodology().criteria.map((c) => c.name)).toEqual(expect.arrayContaining(['Lever not judged', 'Wrong direction']));
         });
 
-        test('leverKeys.json is the rule applied to every held-out scenario, re-derived by simulation', async () => {
+        simTest('leverKeys.json is the rule applied to every held-out scenario, re-derived by simulation', async () => {
             const { leverKey } = await import('../../../evals/categories/cldStocksAndLeverageData/leverKey.js');
             const heldOut = Object.keys(scenarios).filter((id) => scenarios[id].split === 'heldout');
             expect(Object.keys(LEVER_KEYS).sort()).toEqual([...heldOut].sort());

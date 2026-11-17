@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 // The stubbed judge: `answer(caseName)` gives the verdict read for each question of a test.
@@ -20,11 +21,11 @@ const tests = groupTests(groups, 'aggregationCritique');
 describe('aggregationCritique category', () => {
     jest.setTimeout(600000);
 
-    test.each(Object.keys(cases))('%s: the written verdict is the simulated one, with a clear margin', async (name) => {
+    simTest.each(Object.keys(cases))('%s: the written verdict is the simulated one, with a clear margin', async (name) => {
         expect((await keyFor(cases[name])).verdict).toBe(VERDICTS[name]);
     });
 
-    test('a split model whose groups are identical in everything reproduces the aggregate', async () => {
+    simTest('a split model whose groups are identical in everything reproduces the aggregate', async () => {
         const { splitModel } = await import('../../../evals/categories/aggregationCritiqueData/split.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         const m = scenarios.dialysisClinic.model;
@@ -47,7 +48,7 @@ describe('aggregationCritique category', () => {
         }
     });
 
-    test('generated cases are the general rule applied to every scenario without hand-written ones', async () => {
+    simTest('generated cases are the general rule applied to every scenario without hand-written ones', async () => {
         const { generateCases } = await import('../../../evals/categories/aggregationCritiqueData/generate.js');
         const { handCases, generatedCases } = await import('../../../evals/categories/aggregationCritiqueData/cases.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
@@ -57,7 +58,7 @@ describe('aggregationCritique category', () => {
         expect(Object.fromEntries(Object.entries(generatedCases).map(([n, c]) => [n, c.verdict]))).toEqual(expected);
     });
 
-    test('the general rule gives sound cases on the dev scenarios: the even split reproduces the aggregate, and keyFor agrees with each verdict', async () => {
+    simTest('the general rule gives sound cases on the dev scenarios: the even split reproduces the aggregate, and keyFor agrees with each verdict', async () => {
         const { generateCases, splitFor, MEASURES } = await import('../../../evals/categories/aggregationCritiqueData/generate.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         let n = 0;
@@ -109,7 +110,7 @@ describe('aggregationCritique category', () => {
         const hard = groupTests(groups, 'aggregationCritiqueHard');
         const response = { supportingInfo: { explanation: 'x' } };
 
-        test('hardCases.json is the general rule applied to every scenario without hand-written cases, re-derived by simulation', async () => {
+        simTest('hardCases.json is the general rule applied to every scenario without hand-written cases, re-derived by simulation', async () => {
             const { hardCaseFor } = await import('../../../evals/categories/aggregationCritiqueData/hard.js');
             const { handCases } = await import('../../../evals/categories/aggregationCritiqueData/cases.js');
             const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
@@ -134,7 +135,7 @@ describe('aggregationCritique category', () => {
             }
         });
 
-        test('the hand-written scenarios\' hard verdicts are their cases\' simulated ones', async () => {
+        simTest('the hand-written scenarios\' hard verdicts are their cases\' simulated ones', async () => {
             for (const t of hard.filter((x) => x.expectations.questions.every((q) => cases[q.id]))) {
                 for (const [i, q] of t.expectations.questions.entries()) expect([q.id, (await keyFor(cases[q.id])).verdict]).toEqual([q.id, t.expectations.verdicts[i]]);
             }
@@ -166,7 +167,7 @@ describe('aggregationCritique second hard group: which way the model errs, where
     const hard2 = groupTests(groups, 'aggregationCritiqueHard2');
     const response = { supportingInfo: { explanation: 'x' } };
 
-    test('hard2Cases.json is the rule applied to every held-out scenario, re-derived by simulation', async () => {
+    simTest('hard2Cases.json is the rule applied to every held-out scenario, re-derived by simulation', async () => {
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         const expected = {};
         for (const id of Object.keys(scenarios).filter((x) => scenarios[x].split === 'heldout')) {

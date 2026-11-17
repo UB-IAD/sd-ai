@@ -1,4 +1,5 @@
 import { groupTests, laterBatch } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 // The judge is the only LLM call; stand in for it so the tests run offline and exactly.
@@ -58,7 +59,7 @@ const extended = function(name) {
 describe('guidedCorrection category', () => {
     jest.setTimeout(600000);
 
-    test('every planted error visibly changes behavior (so fixing it is measurable)', async () => {
+    simTest('every planted error visibly changes behavior (so fixing it is measurable)', async () => {
         for (const [name, c] of Object.entries(cases)) {
             const stocks = c.correct.variables.filter((v) => v.type === 'stock').map((v) => v.name);
             const truth = await simulateModel(c.correct, stocks, null);
@@ -95,7 +96,7 @@ describe('guidedCorrection category', () => {
         }
     });
 
-    test('generated cases are the general rule applied to every scenario in the library', async () => {
+    simTest('generated cases are the general rule applied to every scenario in the library', async () => {
         const { generateCase } = await import('../../../evals/categories/guidedCorrectionData/generate.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         const expected = {};
@@ -124,13 +125,13 @@ describe('guidedCorrection category', () => {
     describe.each(Object.keys(cases))('%s', (name) => {
         const c = cases[name];
 
-        test('findAndFix: the correct model with every error explained passes everything', async () => {
+        simTest('findAndFix: the correct model with every error explained passes everything', async () => {
             identified = new Set(c.errors.map((e) => e.text));
             const results = await failuresFor(testsFor('findAndFix', name), withText(structuredClone(c.correct), 'I found and fixed the problems.'));
             expect(Object.values(results).flat()).toEqual([]);
         });
 
-        test('findAndFix: returning the broken model unexplained fails every error and the behavior test', async () => {
+        simTest('findAndFix: returning the broken model unexplained fails every error and the behavior test', async () => {
             identified = new Set();
             const results = await failuresFor(testsFor('findAndFix', name), withText(plantErrors(c.correct, c.errors), 'Looks fine to me.'));
             // Each error test must fail on the fix itself, not only on the missing explanation.
@@ -141,7 +142,7 @@ describe('guidedCorrection category', () => {
             }
         });
 
-        test('findAndFix: fixing one error and explaining it passes that error only', async () => {
+        simTest('findAndFix: fixing one error and explaining it passes that error only', async () => {
             const [fixed, left] = c.errors;
             identified = new Set([fixed.text]);
             const results = await failuresFor(testsFor('findAndFix', name), withText(plantErrors(c.correct, [left]), 'One problem.'));
@@ -149,24 +150,24 @@ describe('guidedCorrection category', () => {
             expect(results[`${name}: finds and fixes "${left.id}"`]).toEqual(expect.arrayContaining(['Error not fixed', 'Error not explained']));
         });
 
-        test('findAndFix: fixing silently, without explaining, is not enough', async () => {
+        simTest('findAndFix: fixing silently, without explaining, is not enough', async () => {
             identified = new Set();
             const results = await failuresFor(testsFor('findAndFix', name), withText(structuredClone(c.correct), 'Done.'));
             expect(results[`${name}: finds and fixes "${c.errors[0].id}"`]).toEqual(['Error not explained']);
         });
 
-        test('selfCorrection: fixing the earlier error while adding what was asked passes everything', async () => {
+        simTest('selfCorrection: fixing the earlier error while adding what was asked passes everything', async () => {
             const results = await failuresFor(testsFor('selfCorrection', name), { model: extended(name) });
             expect(Object.values(results).flat()).toEqual([]);
         });
 
-        test('selfCorrection: adding what was asked but leaving the error fails only the self-correction test', async () => {
+        simTest('selfCorrection: adding what was asked but leaving the error fails only the self-correction test', async () => {
             const planted = c.errors.find((e) => e.id === c.plantedForExtension);
             const results = await failuresFor(testsFor('selfCorrection', name), { model: plantErrors(extended(name), [planted]) });
             expect(Object.entries(results).filter(([, types]) => types.length).map(([n, types]) => [n.split(': ')[1].split(' ')[0], types])).toEqual([['fixes', ['Own error not fixed']]]);
         });
 
-        test('selfCorrection: fixing the error but skipping the addition fails the addition test, and the simulates test with it', async () => {
+        simTest('selfCorrection: fixing the error but skipping the addition fails the addition test, and the simulates test with it', async () => {
             const results = await failuresFor(testsFor('selfCorrection', name), { model: structuredClone(c.correct) });
             const failed = Object.entries(results).filter(([, types]) => types.length);
             // The simulates test counts only once the addition is made, so it fails with the addition test.
@@ -175,7 +176,7 @@ describe('guidedCorrection category', () => {
         });
     });
 
-    test('a fix that introduces a helper variable still counts', async () => {
+    simTest('a fix that introduces a helper variable still counts', async () => {
         const c = cases['Endemic Infection'];
         identified = new Set(c.errors.map((e) => e.text));
         const model = structuredClone(c.correct);
@@ -185,7 +186,7 @@ describe('guidedCorrection category', () => {
         expect(results['Endemic Infection: finds and fixes "recovery formulation"']).toEqual([]);
     });
 
-    test('fixing a stock\'s flows while also changing its initial value still fixes the flow error', async () => {
+    simTest('fixing a stock\'s flows while also changing its initial value still fixes the flow error', async () => {
         const c = cases['Endemic Infection'];
         identified = new Set(c.errors.map((e) => e.text));
         const model = structuredClone(c.correct);
@@ -225,7 +226,7 @@ describe('guidedCorrection conversation group', () => {
         expect(notes).toEqual([]);
     });
 
-    test('the per-error tests work the same in the conversation group', async () => {
+    simTest('the per-error tests work the same in the conversation group', async () => {
         const name = 'Endemic Infection';
         const c = cases[name];
         identified = new Set(c.errors.map((e) => e.text));
@@ -239,7 +240,7 @@ describe('guidedCorrection hard group', () => {
     const hardTests = (name) => groupTests(groups, 'findAndFixHard').filter((t) => t.expectations.caseName === name && t.expectations.criterion !== 'clean');
     const cleanTest = (name) => groupTests(groups, 'findAndFixHard').find((t) => t.expectations.caseName === name && t.expectations.criterion === 'clean');
 
-    test('hard cases are the rule applied to every scenario in the library', async () => {
+    simTest('hard cases are the rule applied to every scenario in the library', async () => {
         const { generateHardCase } = await import('../../../evals/categories/guidedCorrectionData/hard.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         const expected = {};
@@ -264,7 +265,7 @@ describe('guidedCorrection hard group', () => {
         expect(groups.findAndFixHardHeldOut.length).toBeGreaterThan(0);
     });
 
-    test('every hard case has three errors of three kinds plus at most one more, each in its own variable and changing behavior, and distractors the model does not bear out', async () => {
+    simTest('every hard case has three errors of three kinds plus at most one more, each in its own variable and changing behavior, and distractors the model does not bear out', async () => {
         const { candidatesFor } = await import('../../../evals/categories/guidedCorrectionData/generate.js');
         for (const [name, c] of Object.entries(hardCases)) {
             expect(new Set(c.errors.slice(0, 3).map((e) => e.kind)).size).toBe(3);
@@ -298,19 +299,19 @@ describe('guidedCorrection hard group', () => {
     describe.each(HARD.faulty)('%s', (name) => {
         const c = () => hardCases[name];
 
-        test('the correct model with every error explained passes every hard test', async () => {
+        simTest('the correct model with every error explained passes every hard test', async () => {
             identified = new Set(c().errors.map((e) => e.text));
             const results = await failuresFor(hardTests(name), withText(structuredClone(c().correct), 'I found and fixed every problem.'));
             expect(Object.values(results).flat()).toEqual([]);
         });
 
-        test('returning the planted model unexplained fails every hard test', async () => {
+        simTest('returning the planted model unexplained fails every hard test', async () => {
             identified = new Set();
             const results = await failuresFor(hardTests(name), withText(plantErrors(c().correct, c().errors), 'It is ready.'));
             for (const [n, types] of Object.entries(results)) expect([n, types.length > 0]).toEqual([n, true]);
         });
 
-        test('fixing all but the last error fails that one and the behavior test only', async () => {
+        simTest('fixing all but the last error fails that one and the behavior test only', async () => {
             identified = new Set(c().errors.map((e) => e.text));
             const [left] = c().errors.slice(-1);
             const results = await failuresFor(hardTests(name), withText(plantErrors(c().correct, [left]), 'Fixed what I found.'));
@@ -324,19 +325,19 @@ describe('guidedCorrection hard group', () => {
     describe.each(HARD.clean)('%s (clean control)', (name) => {
         const c = () => hardCases[name];
 
-        test('leaving the correct model alone and saying it is ready passes', async () => {
+        simTest('leaving the correct model alone and saying it is ready passes', async () => {
             cleanVerdict = CLEAN.ready;
             expect(await evaluate(withText(structuredClone(c().correct), 'Nothing needs fixing.'), cleanTest(name).expectations)).toEqual([]);
         });
 
-        test('reporting problems that are not there fails, even with the model unchanged', async () => {
+        simTest('reporting problems that are not there fails, even with the model unchanged', async () => {
             cleanVerdict = CLEAN.problems;
             expect((await evaluate(withText(structuredClone(c().correct), 'I fixed several problems.'), cleanTest(name).expectations)).map((f) => f.type)).toEqual(['Problem reported in a correct model']);
             cleanVerdict = CLEAN.silent;
             expect((await evaluate(withText(structuredClone(c().correct), 'Here is the model.'), cleanTest(name).expectations)).map((f) => f.type)).toEqual(['Problem reported in a correct model']);
         });
 
-        test('"fixing" something that is not broken fails', async () => {
+        simTest('"fixing" something that is not broken fails', async () => {
             // Any of the planted errors, applied to the correct model as a "fix", changes it.
             for (const error of c().errors) {
                 cleanVerdict = CLEAN.problems;

@@ -1,4 +1,5 @@
 import { groupTests, laterBatch } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let identified = new Set();
@@ -29,7 +30,7 @@ const run = async (tests, response) => {
 describe('formulationCritique category', () => {
     jest.setTimeout(600000);
 
-    test('every plant trips its rule, the clean formulation does not, and the plant computes the same thing', async () => {
+    simTest('every plant trips its rule, the clean formulation does not, and the plant computes the same thing', async () => {
         for (const [name, c] of Object.entries(cases)) {
             const clean = lintFormulations(c.clean);
             const planted = lintFormulations(plantedModel(c));
@@ -67,20 +68,20 @@ describe('formulationCritique category', () => {
     describe.each(Object.keys(cases))('%s', (name) => {
         const c = cases[name];
 
-        test('the clean model with every plant named passes everything', async () => {
+        simTest('the clean model with every plant named passes everything', async () => {
             identified = new Set(c.plants.map((p) => p.text));
             const results = await run(testsFor(name), { model: structuredClone(c.clean), supportingInfo: { explanation: 'review' } });
             expect(Object.values(results).flat()).toEqual([]);
         });
 
-        test('returning the planted model unchanged, with nothing named, fails every plant', async () => {
+        simTest('returning the planted model unchanged, with nothing named, fails every plant', async () => {
             identified = new Set();
             const results = await run(testsFor(name).filter((t) => t.expectations.criterion === 'plant'), { model: plantedModel(c), supportingInfo: { explanation: 'looks fine' } });
             for (const types of Object.values(results)) expect(types).toEqual(expect.arrayContaining(['Formulation not fixed', 'Formulation not identified']));
         });
     });
 
-    test('a fix that names a new constant counts; one that changes the value does not', async () => {
+    simTest('a fix that names a new constant counts; one that changes the value does not', async () => {
         const c = cases['Predators and Prey'];
         identified = new Set(c.plants.map((p) => p.text));
         const t = testsFor('Predators and Prey').find((x) => x.expectations.criterion === 'plant');
@@ -95,7 +96,7 @@ describe('formulationCritique category', () => {
         expect(new Set(types)).toEqual(new Set(['Formulation not fixed']));
     });
 
-    test('splitting an inlined formula into a named intermediate fixes too-many-inputs', async () => {
+    simTest('splitting an inlined formula into a named intermediate fixes too-many-inputs', async () => {
         const c = cases['Inventory and Workforce'];
         identified = new Set(c.plants.map((p) => p.text));
         const t = testsFor('Inventory and Workforce').find((x) => x.expectations.plantId === 'desired workers inlined');
@@ -116,7 +117,7 @@ describe('formulationCritique hard group', () => {
     const hardTests = (name) => groupTests(groups, 'formulationCritiqueHard').filter((t) => t.expectations.caseName === name && t.expectations.criterion !== 'clean');
     const cleanTest = (name) => groupTests(groups, 'formulationCritiqueHard').find((t) => t.expectations.caseName === name && t.expectations.criterion === 'clean');
 
-    test('hard cases are the rule applied to every scenario in the library', async () => {
+    simTest('hard cases are the rule applied to every scenario in the library', async () => {
         const { generateHardCase } = await import('../../../evals/categories/formulationCritiqueData/hard.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         const expected = {};
@@ -137,7 +138,7 @@ describe('formulationCritique hard group', () => {
         expect(new Set(groupTests(groups, 'formulationCritiqueHard').map((t) => JSON.stringify([t.prompt, t.currentModel]))).size).toBe(HARD.faulty.length + HARD.clean.length);
     });
 
-    test('every hard case has three or more plants of two or more kinds in different variables; each trips its rule and computes the same thing; the request names none', async () => {
+    simTest('every hard case has three or more plants of two or more kinds in different variables; each trips its rule and computes the same thing; the request names none', async () => {
         for (const [name, c] of Object.entries(hardCases)) {
             expect(c.plants.length).toBeGreaterThanOrEqual(3);
             expect(new Set(c.plants.map((p) => p.rule)).size).toBeGreaterThanOrEqual(2);
@@ -152,16 +153,16 @@ describe('formulationCritique hard group', () => {
 
     describe.each(HARD.faulty)('%s', (name) => {
         const c = () => hardCases[name];
-        test('the clean model with every plant named passes every hard test', async () => {
+        simTest('the clean model with every plant named passes every hard test', async () => {
             identified = new Set(c().plants.map((p) => p.text));
             expect(Object.values(await run(hardTests(name), { model: structuredClone(c().clean), supportingInfo: { explanation: 'review' } })).flat()).toEqual([]);
         });
-        test('returning the planted model unchanged, with nothing named, fails every hard test', async () => {
+        simTest('returning the planted model unchanged, with nothing named, fails every hard test', async () => {
             identified = new Set();
             const results = await run(hardTests(name), { model: plantedModel(c()), supportingInfo: { explanation: 'It is ready.' } });
             for (const [n, types] of Object.entries(results)) expect([n, types.length > 0]).toEqual([n, true]);
         });
-        test('more faults: the second pass gives the case more than the first three plants, and fixing only the first three fails every later one', async () => {
+        simTest('more faults: the second pass gives the case more than the first three plants, and fixing only the first three fails every later one', async () => {
             const { HARD_PLANTS, MAX_PLANTS } = await import('../../../evals/categories/formulationCritiqueData/hard.js');
             expect(c().plants.length).toBeGreaterThan(HARD_PLANTS);
             expect(c().plants.length).toBeLessThanOrEqual(MAX_PLANTS);
@@ -170,7 +171,7 @@ describe('formulationCritique hard group', () => {
             const results = await run(hardTests(name), { model: plantedModel({ ...c(), plants: later }), supportingInfo: { explanation: 'x' } });
             for (const t of hardTests(name).filter((x) => x.expectations.criterion === 'plant')) expect([t.name, results[t.name].length > 0]).toEqual([t.name, later.some((p) => p.id === t.expectations.plantId)]);
         });
-        test('fixing all but the last plant fails that plant only', async () => {
+        simTest('fixing all but the last plant fails that plant only', async () => {
             identified = new Set(c().plants.map((p) => p.text));
             const left = c().plants.at(-1);
             const results = await run(hardTests(name), { model: plantedModel({ ...c(), plants: [left] }), supportingInfo: { explanation: 'x' } });
@@ -180,17 +181,17 @@ describe('formulationCritique hard group', () => {
 
     describe.each(HARD.clean)('%s (clean control)', (name) => {
         const c = () => hardCases[name];
-        test('leaving the clean model alone and saying it is ready passes', async () => {
+        simTest('leaving the clean model alone and saying it is ready passes', async () => {
             cleanVerdict = CLEAN.ready;
             expect(await evaluate({ model: structuredClone(c().clean), supportingInfo: { explanation: 'Nothing to fix.' } }, cleanTest(name).expectations)).toEqual([]);
         });
-        test('reporting problems that are not there, or not saying, fails even with the model unchanged', async () => {
+        simTest('reporting problems that are not there, or not saying, fails even with the model unchanged', async () => {
             for (const verdict of [CLEAN.problems, CLEAN.silent]) {
                 cleanVerdict = verdict;
                 expect((await evaluate({ model: structuredClone(c().clean), supportingInfo: { explanation: 'x' } }, cleanTest(name).expectations)).map((f) => f.type)).toEqual(['Problem reported in a correct model']);
             }
         });
-        test('"fixing" something that is not broken fails: a plant put in, or a constant changed', async () => {
+        simTest('"fixing" something that is not broken fails: a plant put in, or a constant changed', async () => {
             cleanVerdict = CLEAN.ready;
             for (const p of c().plants) {
                 expect([p.id, (await evaluate({ model: plantedModel({ ...c(), plants: [p] }), supportingInfo: { explanation: 'Fixed.' } }, cleanTest(name).expectations)).map((f) => f.type)]).toEqual([p.id, ['Correct model changed']]);

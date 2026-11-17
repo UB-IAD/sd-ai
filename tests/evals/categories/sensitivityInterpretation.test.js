@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals';
+import { simTest } from '../simTest.js';
 import fs from 'fs';
 import path from 'path';
 
@@ -17,6 +18,12 @@ const cases = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'evals/categor
 const allTests = Object.values(groups).flat();
 const testsFor = (name) => allTests.filter((t) => t.expectations.caseName === name);
 const isHard = (name) => cases[name].group.endsWith('Hard');
+
+// Simulated values differ in the last bits between platforms (the keys were built on macOS, CI runs Linux),
+// so numbers in these comparisons are equal when within a relative 1e-9.
+expect.addEqualityTesters([(a, b) => typeof a === 'number' && typeof b === 'number'
+    ? a === b || Math.abs(a - b) <= 1e-9 * Math.max(Math.abs(a), Math.abs(b))
+    : undefined]);
 
 /** A reading that states exactly the key's answers. */
 const perfectReading = function(name) {
@@ -48,7 +55,7 @@ const wrongReading = function(name) {
 describe('sensitivityInterpretation category', () => {
     jest.setTimeout(600000);
 
-    test('the committed keys are exactly what the sweeps produce', async () => {
+    simTest('the committed keys are exactly what the sweeps produce', async () => {
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         const { scenarioSpec } = await import('../../../evals/categories/sensitivityInterpretationData/buildCases.js');
         for (const s of Object.values(scenarios)) {
@@ -62,7 +69,7 @@ describe('sensitivityInterpretation category', () => {
         }
     });
 
-    test('the hard cases are exactly what the wide sweeps produce, kept by the pairs rule', async () => {
+    simTest('the hard cases are exactly what the wide sweeps produce, kept by the pairs rule', async () => {
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         for (const s of Object.values(scenarios)) {
             const name = `${s.title} (wide sweep)`;

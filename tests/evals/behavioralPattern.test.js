@@ -1,4 +1,5 @@
 import { describe, test, expect } from '@jest/globals';
+import { simTest } from './simTest.js';
 import * as behavioralPattern from '../../evals/categories/behavioralPattern.js';
 
 describe('Behavioral Pattern Evaluation', () => {
@@ -31,7 +32,7 @@ describe('Behavioral Pattern Evaluation', () => {
             expect(result[0].type).toBe('Missing output variable');
         });
 
-        test('should detect output variable case-insensitively', async () => {
+        simTest('should detect output variable case-insensitively', async () => {
             const response = {
                 model: {
                     variables: [

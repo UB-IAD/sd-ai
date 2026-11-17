@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals';
+import { simTest } from '../simTest.js';
 import { evaluate, groups, methodology, cases, generatedCases, hardGeneratedCases, RELATIVE_TOLERANCE } from '../../../evals/categories/equilibrium.js';
 import { findVariable } from '../../../evals/utilities/modelDiff.js';
 
@@ -37,7 +38,7 @@ describe('equilibrium category', () => {
         }
     });
 
-    test('generated cases are the general rule applied to every scenario in the library', async () => {
+    simTest('generated cases are the general rule applied to every scenario in the library', async () => {
         const { generateCase, RELATIVE_TOLERANCE: ruleTolerance } = await import('../../../evals/categories/equilibriumData/generate.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         expect(ruleTolerance).toBe(RELATIVE_TOLERANCE);
@@ -53,17 +54,17 @@ describe('equilibrium category', () => {
         const c = cases[name];
         const evalTest = testsByCase[name];
 
-        test('the model as given is not in equilibrium (an engine that changes nothing fails)', async () => {
+        simTest('the model as given is not in equilibrium (an engine that changes nothing fails)', async () => {
             const failures = await evaluate({ model: structuredClone(c.model) }, evalTest.expectations);
             expect(typesOf(failures)).toContain('Stock not in equilibrium');
         });
 
-        test('the known solution passes (the case is solvable within its rules)', async () => {
+        simTest('the known solution passes (the case is solvable within its rules)', async () => {
             const failures = await evaluate(withEquations(c.model, c.solution), evalTest.expectations);
             expect(failures).toEqual([]);
         });
 
-        test('zeroing every flow fails as a structural change, even though the stocks are flat', async () => {
+        simTest('zeroing every flow fails as a structural change, even though the stocks are flat', async () => {
             const flows = c.model.variables.filter((v) => v.type === 'flow').map((v) => v.name);
             const zeroed = withEquations(c.model, Object.fromEntries(flows.map((f) => [f, '0'])));
             const failures = await evaluate(zeroed, evalTest.expectations);
@@ -72,34 +73,34 @@ describe('equilibrium category', () => {
         });
     });
 
-    test('a helper constant feeding only an initial value is allowed', async () => {
+    simTest('a helper constant feeding only an initial value is allowed', async () => {
         const c = cases['Predators and Prey'];
         const response = withEquations(c.model, { 'Prey': 'initial_prey', 'Predators': '300' });
         response.model.variables.push({ name: 'initial prey', type: 'variable', equation: '400', units: 'animals' });
         expect(await evaluate(response, testsByCase['Predators and Prey'].expectations)).toEqual([]);
     });
 
-    test('the trivial empty equilibrium is rejected where the case forbids it', async () => {
+    simTest('the trivial empty equilibrium is rejected where the case forbids it', async () => {
         const c = cases['Predators and Prey'];
         const failures = await evaluate(withEquations(c.model, { 'Prey': '0', 'Predators': '0' }), testsByCase['Predators and Prey'].expectations);
         expect(typesOf(failures)).toContain('Constraint violated');
     });
 
-    test('balancing by changing a constant the case did not permit fails', async () => {
+    simTest('balancing by changing a constant the case did not permit fails', async () => {
         const c = cases['Town Population'];
         // birth fraction 0.035 balances deaths of 0.025 plus 10 newcomers... but it is not adjustable here.
         const failures = await evaluate(withEquations(c.model, { 'birth fraction': '0.015' }), testsByCase['Town Population'].expectations);
         expect(typesOf(failures)).toContain('Model structure changed');
     });
 
-    test('turning an adjustable constant into a feedback expression fails, even though the stock is flat', async () => {
+    simTest('turning an adjustable constant into a feedback expression fails, even though the stock is flat', async () => {
         const c = cases['Town Population'];
         const response = withEquations(c.model, { 'newcomers per year': 'Population / average_lifetime - Population * birth_fraction' });
         const failures = await evaluate(response, testsByCase['Town Population'].expectations);
         expect(typesOf(failures)).toEqual(['Model structure changed']);
     });
 
-    test('an adjustable constant written as arithmetic on numbers is still a constant', async () => {
+    simTest('an adjustable constant written as arithmetic on numbers is still a constant', async () => {
         const c = cases['Population Aging Chain'];
         const response = withEquations(c.model, { ...c.solution, fertility: '1/45' });
         expect(await evaluate(response, testsByCase['Population Aging Chain'].expectations)).toEqual([]);
@@ -113,7 +114,7 @@ describe('equilibrium category', () => {
     });
 
     describe('hard group: one stock at a stated level only a changed constant gives', () => {
-        test('hardGenerated.json is the general rule applied to every scenario, re-derived by simulation, dev and held out', async () => {
+        simTest('hardGenerated.json is the general rule applied to every scenario, re-derived by simulation, dev and held out', async () => {
             const { hardCaseFor } = await import('../../../evals/categories/equilibriumData/hard.js');
             const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
             const expected = {};
@@ -141,21 +142,21 @@ describe('equilibrium category', () => {
                 expect(c.oneConstantOf.length).toBeGreaterThan(1);
             });
 
-            test('the known solution with the lever passes; moving a second constant as well fails', async () => {
+            simTest('the known solution with the lever passes; moving a second constant as well fails', async () => {
                 expect(await evaluate(withEquations(c.model, c.solution), t.expectations)).toEqual([]);
                 const other = c.model.variables.find((v) => c.oneConstantOf.includes(v.name) && v.name !== c.lever);
                 const two = withEquations(c.model, { ...c.solution, [other.name]: String(Number(other.equation) + 1) });
                 expect(typesOf(await evaluate(two, t.expectations))).toContain('Model structure changed');
             });
 
-            test('the model\'s own equilibrium (constant unchanged), that equilibrium with the stock forced to the level, and emptying the model all fail', async () => {
+            simTest('the model\'s own equilibrium (constant unchanged), that equilibrium with the stock forced to the level, and emptying the model all fail', async () => {
                 expect(typesOf(await evaluate(withEquations(c.model, base.solution), t.expectations))).toEqual(['Constraint violated']);
                 const forced = typesOf(await evaluate(withEquations(c.model, { ...base.solution, [held]: String(c.fixedInitial[held]) }), t.expectations));
                 expect(forced).toContain('Stock not in equilibrium');
                 expect((await evaluate(withEquations(c.model, Object.fromEntries(c.equilibriumStocks.map((n) => [n, '0']))), t.expectations)).length).toBeGreaterThan(0);
             });
 
-            test('a constant answer — every adjustable value set to the stated level — fails, and so does no model', async () => {
+            simTest('a constant answer — every adjustable value set to the stated level — fails, and so does no model', async () => {
                 const constant = Object.fromEntries(c.adjustable.map((n) => [n, String(c.fixedInitial[held])]));
                 expect((await evaluate(withEquations(c.model, constant), t.expectations)).length).toBeGreaterThan(0);
                 expect(typesOf(await evaluate({ model: { variables: [] } }, t.expectations))).toEqual(['No model produced']);

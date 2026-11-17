@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals';
+import { simTest } from '../simTest.js';
 import { runAnalysisTool, nelderMead, fitError, ANALYSIS_TOOL_DEFINITIONS } from '../../../evals/utilities/analysisTools.js';
 import { cases } from '../../../evals/categories/equilibriumData/models.js';
 
@@ -31,14 +32,14 @@ describe('analysis tools', () => {
         expect(fitError([0, 1, 2], [0, 10, 20], [{ time: 0.5, value: 5 }, { time: 2, value: 21 }])).toBeCloseTo(1, 9);
     });
 
-    test('run_scenario applies overrides without changing the model', async () => {
+    simTest('run_scenario applies overrides without changing the model', async () => {
         const before = JSON.stringify(reservoir);
         const r = await runAnalysisTool('run_scenario', { overrides: { 'inflow rate': 0 }, outputs: ['Water in Reservoir'] }, reservoir, null);
         expect(r.outputs['Water in Reservoir'].at(-1)).toBeLessThan(5);
         expect(JSON.stringify(reservoir)).toBe(before);
     });
 
-    test('run_calibration recovers a parameter from data the model itself produced', async () => {
+    simTest('run_calibration recovers a parameter from data the model itself produced', async () => {
         const truth = await runAnalysisTool('run_scenario', { overrides: { 'residence time': 6 }, outputs: ['Water in Reservoir'] }, reservoir, null);
         const data = { series: { water: truth.time.map((t, i) => ({ time: t, value: truth.outputs['Water in Reservoir'][i] })) } };
         const r = await runAnalysisTool('run_calibration', { parameters: [{ name: 'residence time', min: 1, max: 12 }], variable: 'Water in Reservoir', series: 'water' }, reservoir, data);
@@ -46,7 +47,7 @@ describe('analysis tools', () => {
         expect(r.rSquared).toBeGreaterThan(0.99);
     });
 
-    test('run_optimization finds the lever value that best meets the objective', async () => {
+    simTest('run_optimization finds the lever value that best meets the objective', async () => {
         const r = await runAnalysisTool('run_optimization', { lever: { name: 'residence time', min: 1, max: 10 }, variable: 'Water in Reservoir', measure: 'final', goal: 'minimize' }, reservoir, null);
         expect(r.best['residence time']).toBe(1);
     });

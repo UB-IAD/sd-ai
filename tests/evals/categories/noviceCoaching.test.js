@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let recReading = null;
@@ -32,7 +33,7 @@ const run = async (tests, response) => {
 describe('noviceCoaching category', () => {
     jest.setTimeout(600000);
 
-    test('every policy outcome written in the library is what the hidden simulation says, by at least 2%', async () => {
+    simTest('every policy outcome written in the library is what the hidden simulation says, by at least 2%', async () => {
         for (const s of Object.values(scenarios)) {
             const base = await evaluatePolicy(s, null);
             expect([s.id, 'no policy meets the goal', base.meets]).toEqual([s.id, 'no policy meets the goal', false]);
@@ -70,7 +71,7 @@ describe('noviceCoaching category', () => {
     describe.each(Object.keys(scenarios))('%s', (id) => {
         const s = scenarios[id];
 
-        test('a coach who asks, corrects the misconception and recommends what works passes', async () => {
+        simTest('a coach who asks, corrects the misconception and recommends what works passes', async () => {
             recReading = recommend(s, (p) => p.effective && !p.parts);
             misReading = { addressed: 'yes' };
             askReading = { asksBeforeAdvising: 'yes' };
@@ -78,7 +79,7 @@ describe('noviceCoaching category', () => {
             expect(results).toEqual({ recommendation: [], misconception: [], asksFirst: [] });
         });
 
-        test('endorsing the misconception without asking fails all three', async () => {
+        simTest('endorsing the misconception without asking fails all three', async () => {
             recReading = recommend(s, (p) => p.id === s.misconception);
             misReading = { addressed: 'no' };
             askReading = { asksBeforeAdvising: 'no' };
@@ -88,7 +89,7 @@ describe('noviceCoaching category', () => {
             expect(results.asksFirst).toContain('Told instead of asked');
         });
 
-        test('asking and correcting the misconception count only with a recommendation that works (the gate holds on every scenario, held out or not)', async () => {
+        simTest('asking and correcting the misconception count only with a recommendation that works (the gate holds on every scenario, held out or not)', async () => {
             recReading = recommend(s, (p) => p.id === s.misconception);
             misReading = { addressed: 'yes' };
             askReading = { asksBeforeAdvising: 'yes' };
@@ -97,7 +98,7 @@ describe('noviceCoaching category', () => {
             expect(results.asksFirst.length).toBeGreaterThan(0);
         });
 
-        test('recommending a working policy alongside a compatible extra is judged by doing both', async () => {
+        simTest('recommending a working policy alongside a compatible extra is judged by doing both', async () => {
             const effective = s.policies.find((p) => p.effective && !p.parts);
             const extra = s.policies.find((p) => p.id !== s.misconception && p !== effective && Object.keys(p.overrides).every((k) => !(k in effective.overrides)));
             recReading = recommend(s, (p) => p === effective || p === extra);
@@ -117,7 +118,7 @@ describe('noviceCoaching category', () => {
             expect(failures[0].details).toMatch(rule);
         });
 
-        test('recommending only policies that do not work fails, alone or together', async () => {
+        simTest('recommending only policies that do not work fails, alone or together', async () => {
             recReading = recommend(s, (p) => !p.effective && p.id !== s.misconception);
             const results = await run(testsFor(id).filter((t) => t.expectations.criterion === 'recommendation'), conversation('?', 'x'));
             expect(results.recommendation).toEqual(['Ineffective recommendation']);
@@ -131,14 +132,14 @@ describe('noviceCoaching category', () => {
         expect((await evaluate(conversation('?', 'x'), tb.expectations)).map((f) => f.details).join(' ')).toMatch(/contradicts itself/);
     });
 
-    test('recommending a working combination is not read as recommending its failing part', async () => {
+    simTest('recommending a working combination is not read as recommending its failing part', async () => {
         const s = scenarios.bikeShare;
         recReading = recommend(s, (p) => ['referral bonus and double advertising', 'double advertising', 'referral bonus'].includes(p.id));
         const t = testsFor('bikeShare').find((x) => x.expectations.criterion === 'recommendation');
         expect(await evaluate(conversation('?', 'Do both.'), t.expectations)).toEqual([]);
     });
 
-    test('the recommendation is the answer to the closing question, not a reply to a harness nudge', async () => {
+    simTest('the recommendation is the answer to the closing question, not a reply to a harness nudge', async () => {
         const s = scenarios.dialysisClinic;
         const response = conversation('?', 'ANSWER');
         response.transcript.push({ role: 'user', turn: 3, text: 'nudge', synthetic: 'modelNotWritten' }, { role: 'agent', turn: 3, text: 'REPLY TO NUDGE' });
@@ -149,7 +150,7 @@ describe('noviceCoaching category', () => {
         expect(JSON.stringify(calls[0].messages)).not.toContain('REPLY TO NUDGE');
     });
 
-    test('the recommendation is read from the final turn only, and the judge is never told which policies work', async () => {
+    simTest('the recommendation is read from the final turn only, and the judge is never told which policies work', async () => {
         const s = scenarios.bikeShare;
         recReading = recommend(s, (p) => p.effective);
         calls.length = 0;
@@ -184,13 +185,13 @@ describe('noviceCoaching category', () => {
             const s = scenarios[id];
             const combination = s.policies.find((p) => p.id === HARD_GOALS[id].combination);
 
-            test('the threshold is the simulated one: the combination meets it and no single policy does', async () => {
+            simTest('the threshold is the simulated one: the combination meets it and no single policy does', async () => {
                 const goal = { ...s.goal, threshold: HARD_GOALS[id].threshold };
                 expect((await evaluatePolicy({ ...s, goal }, combination.overrides)).meets).toBe(true);
                 for (const p of s.policies.filter((x) => !x.parts)) expect([p.id, (await evaluatePolicy({ ...s, goal }, p.overrides)).meets]).toEqual([p.id, false]);
             });
 
-            test('recommending the combination (or its parts) and showing why the favoured policy falls short passes', async () => {
+            simTest('recommending the combination (or its parts) and showing why the favoured policy falls short passes', async () => {
                 misReading = { addressed: 'yes' };
                 recReading = recommend(s, (p) => p === combination);
                 expect(await grade(id, talk)).toEqual([]);
@@ -198,7 +199,7 @@ describe('noviceCoaching category', () => {
                 expect(await grade(id, talk)).toEqual([]);
             });
 
-            test('silence, every single policy, every option, nothing, or leaving the favoured policy unaddressed fails', async () => {
+            simTest('silence, every single policy, every option, nothing, or leaving the favoured policy unaddressed fails', async () => {
                 misReading = { addressed: 'yes' };
                 expect(await grade(id, { transcript: [] })).toEqual(['No response produced']);
                 for (const p of s.policies.filter((x) => !x.parts)) {

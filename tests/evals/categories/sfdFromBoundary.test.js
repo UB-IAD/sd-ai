@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let decisions = null;
@@ -37,7 +38,7 @@ const referenceAnswer = function(s) {
 describe('sfdFromBoundary category', () => {
     jest.setTimeout(600000);
 
-    test('every mechanism verdict written in the library is what ablation of the hidden model says', async () => {
+    simTest('every mechanism verdict written in the library is what ablation of the hidden model says', async () => {
         for (const s of Object.values(scenarios)) {
             const key = await computeKey(s);
             for (const m of s.mechanisms) expect([s.id, m.id, key.mechanisms[m.id].verdict]).toEqual([s.id, m.id, m.verdict]);
@@ -64,13 +65,13 @@ describe('sfdFromBoundary category', () => {
     describe.each(Object.keys(scenarios))('%s', (id) => {
         const s = scenarios[id];
 
-        test('the reference answer with the right decisions passes everything', async () => {
+        simTest('the reference answer with the right decisions passes everything', async () => {
             decisions = rightDecisions(s);
             const results = await run(testsFor(id), { model: referenceAnswer(s), supportingInfo: { explanation: 'my decisions' } });
             expect(Object.entries(results).filter(([, t]) => t.length)).toEqual([]);
         });
 
-        test('wrong decisions fail every decision test and nothing else', async () => {
+        simTest('wrong decisions fail every decision test and nothing else', async () => {
             decisions = { decisions: pointsFor(s).map((p, i) => ({ number: i + 1, decision: p.include ? 'exclude' : 'include' })) };
             const results = await run(testsFor(id), { model: referenceAnswer(s), supportingInfo: { explanation: 'my decisions' } });
             for (const t of testsFor(id)) {
@@ -137,7 +138,7 @@ describe('sfdFromBoundary category', () => {
         expect((await evaluate({ model }, units.expectations)).length).toBeGreaterThan(0);
     });
 
-    test('a model that does not reproduce the behavior fails the shape test', async () => {
+    simTest('a model that does not reproduce the behavior fails the shape test', async () => {
         const s = scenarios.dialysisClinic;
         const model = referenceAnswer(s);
         findVariable(model.variables, 'chairs on order').inflows = [];
@@ -175,7 +176,7 @@ describe('sfdFromBoundary category', () => {
             }
         });
 
-        test.each(hardIds)('%s: the truth and band are the hidden run\'s end values, and no naive guess lands in the band', async (id) => {
+        simTest.each(hardIds)('%s: the truth and band are the hidden run\'s end values, and no naive guess lands in the band', async (id) => {
             const s = scenarios[id];
             const glossary = glossaryModel(s);
             const names = gradedQuantities(id).map((q) => findVariable(glossary.variables, q.glossary).name);
@@ -192,7 +193,7 @@ describe('sfdFromBoundary category', () => {
             });
         });
 
-        test.each(hardIds)('%s: a model that ends inside the forecast band but outside the tighter one fails', async (id) => {
+        simTest.each(hardIds)('%s: a model that ends inside the forecast band but outside the tighter one fails', async (id) => {
             const s = scenarios[id];
             const quantities = gradedQuantities(id);
             const wide = (q) => FORECASTS[id].quantities.find((x) => x.glossary === q.glossary).band;
@@ -205,11 +206,11 @@ describe('sfdFromBoundary category', () => {
         describe.each(hardIds)('%s', (id) => {
             const s = scenarios[id];
 
-            test('the hidden model in glossary names passes', async () => {
+            simTest('the hidden model in glossary names passes', async () => {
                 expect(await grade(id, { model: referenceAnswer(s) })).toEqual([]);
             });
 
-            test('no model, a model frozen at its start, and a constant model fail', async () => {
+            simTest('no model, a model frozen at its start, and a constant model fail', async () => {
                 expect(await grade(id, { model: { variables: [], relationships: [] } })).toEqual(['No model produced']);
                 const frozen = referenceAnswer(s);
                 for (const v of frozen.variables) if (v.type === 'flow') v.equation = '0';
@@ -220,7 +221,7 @@ describe('sfdFromBoundary category', () => {
                 }
             });
 
-            test('one quantity left out or off by more than its band fails', async () => {
+            simTest('one quantity left out or off by more than its band fails', async () => {
                 const off = referenceAnswer(s);
                 const [q] = gradedQuantities(id);
                 off.variables = off.variables.filter((v) => findVariable([v], q.glossary) === undefined);

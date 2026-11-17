@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 import { evaluate, groups, methodology, goalOn, HARD_GOALS, HARD2_GOALS } from '../../../evals/categories/policyImplementation.js';
 import { MIN_GAP } from '../../../evals/categories/policyImplementationData/hardGoals.js';
@@ -24,7 +25,7 @@ const withPolicy = (s, policy) => {
 describe('policyImplementation category', () => {
     jest.setTimeout(900000);
 
-    test('every protected quantity exists in the glossary model, and the goal is missed as things stand', async () => {
+    simTest('every protected quantity exists in the glossary model, and the goal is missed as things stand', async () => {
         for (const id of ids) {
             const s = scenarios[id];
             const m = glossaryModel(s);
@@ -64,17 +65,17 @@ describe('policyImplementation category', () => {
     describe.each(ids)('%s', (id) => {
         const s = scenarios[id];
 
-        test('implementing a policy that works passes everything', async () => {
+        simTest('implementing a policy that works passes everything', async () => {
             const policy = s.policies.find((p) => p.effective && !p.parts);
             expect(await run(testsFor(id), withPolicy(s, policy))).toEqual({ meetsGoal: [], intact: [], sensible: [] });
         });
 
-        test('implementing the misconception misses the goal', async () => {
+        simTest('implementing the misconception misses the goal', async () => {
             const policy = s.policies.find((p) => p.id === s.misconception);
             expect((await run(testsFor(id), withPolicy(s, policy))).meetsGoal).toEqual(['Goal not met']);
         });
 
-        test('changing what management does not control is caught', async () => {
+        simTest('changing what management does not control is caught', async () => {
             const model = glossaryModel(s);
             const v = findVariable(model.variables, s.protected.variables[0]);
             v.equation = v.type === 'stock' ? String(Number(v.equation) / 2) : `(${v.equation}) * 0.5`;
@@ -82,7 +83,7 @@ describe('policyImplementation category', () => {
         });
     });
 
-    test('moving the goalposts is caught: driving patients away, rewriting structure', async () => {
+    simTest('moving the goalposts is caught: driving patients away, rewriting structure', async () => {
         const d = glossaryModel(scenarios.dialysisClinic);
         findVariable(d.variables, 'give up fraction').equation = '0.5';
         expect((await run(testsFor('dialysisClinic'), d)).intact.filter((t) => t !== 'Goal not met')).toEqual(['Problem changed']);
@@ -91,13 +92,13 @@ describe('policyImplementation category', () => {
         expect((await run(testsFor('bikeShare'), b)).intact.filter((t) => t !== 'Goal not met')).toEqual(['Problem changed']);
     });
 
-    test('lowering the inventory target does not count as removing the overshoot', async () => {
+    simTest('lowering the inventory target does not count as removing the overshoot', async () => {
         const m = glossaryModel(scenarios.distributor);
         findVariable(m.variables, 'coverage').equation = '3';
         expect((await run(testsFor('distributor'), m)).meetsGoal).toEqual(['Goal not met']);
     });
 
-    test('a new policy variable wired into an existing equation is allowed', async () => {
+    simTest('a new policy variable wired into an existing equation is allowed', async () => {
         const m = glossaryModel(scenarios.bikeShare);
         findVariable(m.variables, 'word of mouth').equation = 'contact_rate * members * potential_members / total_population * persuasion * referral_multiplier';
         m.variables.push({ name: 'referral multiplier', type: 'variable', equation: '1.5', units: 'dimensionless' });
@@ -110,7 +111,7 @@ describe('policyImplementation category', () => {
         expect((await run(testsFor('dialysisClinic'), d)).intact.filter((t) => t !== 'Goal not met')).toEqual([]);
     });
 
-    test('a do-nothing policy variable cannot be used to rewrite a constant or an identity', async () => {
+    simTest('a do-nothing policy variable cannot be used to rewrite a constant or an identity', async () => {
         const d = glossaryModel(scenarios.dialysisClinic);
         findVariable(d.variables, 'give up fraction').equation = '0.5 * retention_policy';
         d.variables.push({ name: 'retention policy', type: 'variable', equation: '1', units: 'dimensionless' });
@@ -125,7 +126,7 @@ describe('policyImplementation category', () => {
         expect((await run(testsFor('bikeShare'), w)).intact.filter((t) => t !== 'Goal not met')).toEqual(['Problem changed']);
     });
 
-    test('a policy variable cannot scale what patients or customers do', async () => {
+    simTest('a policy variable cannot scale what patients or customers do', async () => {
         const d = glossaryModel(scenarios.dialysisClinic);
         findVariable(d.variables, 'patients giving up').equation = 'waiting_list * give_up_fraction * retention_policy';
         d.variables.push({ name: 'retention policy', type: 'variable', equation: '10', units: 'dimensionless' });
@@ -136,7 +137,7 @@ describe('policyImplementation category', () => {
         expect((await run(testsFor('distributor'), w)).intact.filter((t) => t !== 'Goal not met')).toEqual(['Problem changed']);
     });
 
-    test('pushing a lever past what the organization could do is caught: 1000 chairs, a one-week build', async () => {
+    simTest('pushing a lever past what the organization could do is caught: 1000 chairs, a one-week build', async () => {
         const d = glossaryModel(scenarios.dialysisClinic);
         findVariable(d.variables, 'chairs').equation = '1000';
         expect((await run(testsFor('dialysisClinic'), d)).intact.filter((t) => t !== 'Goal not met')).toEqual(['Unrealistic lever']);
@@ -158,7 +159,7 @@ describe('policyImplementation category', () => {
         }
     });
 
-    test('a starting value written as a formula with the same value is not a change; a different start is', async () => {
+    simTest('a starting value written as a formula with the same value is not a change; a different start is', async () => {
         const m = glossaryModel(scenarios.distributor);
         findVariable(m.variables, 'supply line').equation = 'base_demand * delivery_delay';
         expect((await run(testsFor('distributor'), m)).intact.filter((t) => t !== 'Goal not met')).toEqual([]);
@@ -167,7 +168,7 @@ describe('policyImplementation category', () => {
         expect((await run(testsFor('distributor'), n)).intact.filter((t) => t !== 'Goal not met')).toEqual(['Problem changed']);
     });
 
-    test('a layered policy cannot carry a lever past its realistic limit: tripled word of mouth, three shifts', async () => {
+    simTest('a layered policy cannot carry a lever past its realistic limit: tripled word of mouth, three shifts', async () => {
         const b = glossaryModel(scenarios.bikeShare);
         findVariable(b.variables, 'word of mouth').equation = '(contact_rate * members * potential_members / total_population * persuasion) * referral_boost';
         b.variables.push({ name: 'referral boost', type: 'variable', equation: '3', units: 'dimensionless' });
@@ -184,14 +185,14 @@ describe('policyImplementation category', () => {
         expect((await run(testsFor('dialysisClinic'), d)).intact).toContain('Unrealistic lever');
     });
 
-    test('an unchanged model earns nothing: intact and sensible count only for a policy that meets the goal', async () => {
+    simTest('an unchanged model earns nothing: intact and sensible count only for a policy that meets the goal', async () => {
         for (const id of ids) {
             const results = await run(testsFor(id), glossaryModel(scenarios[id]));
             expect([id, results]).toEqual([id, { meetsGoal: ['Goal not met'], intact: ['Goal not met'], sensible: ['Goal not met'] }]);
         }
     });
 
-    test('meeting the goal by removing a stock is caught as changing the problem', async () => {
+    simTest('meeting the goal by removing a stock is caught as changing the problem', async () => {
         const s = scenarios.dialysisClinic;
         const model = glossaryModel(s);
         model.variables = model.variables.filter((v) => v.name !== 'discouraged patients');
@@ -203,7 +204,7 @@ describe('policyImplementation category', () => {
         const hardIds = hardTests.map((t) => t.expectations.scenario);
         const gradeHard = async (id, model) => (await evaluate({ model }, hardTests.find((t) => t.expectations.scenario === id).expectations)).map((f) => f.type);
 
-        test('hardGoals.json is what the rule gives, re-derived by simulation, from both splits', async () => {
+        simTest('hardGoals.json is what the rule gives, re-derived by simulation, from both splits', async () => {
             const derived = {};
             for (const [id, s] of Object.entries(scenarios)) {
                 const g = await hardGoal(s);
@@ -238,7 +239,7 @@ describe('policyImplementation category', () => {
             }
         });
 
-        test.each(Object.keys(HARD_GOALS))('%s: the best realistic setting passes; every listed policy (single or combined, or single only where the goal falls back), the unchanged model and nothing fail', async (id) => {
+        simTest.each(Object.keys(HARD_GOALS))('%s: the best realistic setting passes; every listed policy (single or combined, or single only where the goal falls back), the unchanged model and nothing fail', async (id) => {
             const s = scenarios[id];
             expect(await gradeHard(id, withPolicy(s, { overrides: HARD_GOALS[id].reference }))).toEqual([]);
             expect(Math.abs(HARD_GOALS[id].tighterThreshold - HARD_GOALS[id].referenceValue) >= MIN_GAP * Math.abs(s.goal.threshold) || HARD_GOALS[id].tighterThreshold === HARD_GOALS[id].threshold).toBe(true);
@@ -251,7 +252,7 @@ describe('policyImplementation category', () => {
             expect(await gradeHard(id, { variables: [], relationships: [] })).toEqual(['No model produced']);
         });
 
-        test.each(Object.keys(HARD_GOALS))('%s: meeting the tighter goal by changing what management does not control fails', async (id) => {
+        simTest.each(Object.keys(HARD_GOALS))('%s: meeting the tighter goal by changing what management does not control fails', async (id) => {
             const s = scenarios[id];
             const model = withPolicy(s, { overrides: HARD_GOALS[id].reference });
             const v = findVariable(model.variables, s.protected.variables[0]);
@@ -265,7 +266,7 @@ describe('policyImplementation category', () => {
         const gradeHard2 = async (id, model) => (await evaluate({ model }, hard2Tests.find((t) => t.expectations.scenario === id).expectations)).map((f) => f.type);
         const gradeHard = async (id, model) => (await evaluate({ model }, groupTests(groups, 'policyImplementationHard').find((t) => t.expectations.scenario === id).expectations)).map((f) => f.type);
 
-        test('hard2Goals.json is what the rule gives from the first hard goals, re-derived by simulation; every case is held out, at least three', async () => {
+        simTest('hard2Goals.json is what the rule gives from the first hard goals, re-derived by simulation; every case is held out, at least three', async () => {
             const derived = {};
             for (const [id, s] of Object.entries(scenarios).filter(([x]) => scenarios[x].split === 'heldout')) {
                 const g = await hard2Goal(s, HARD_GOALS[id]);
@@ -295,7 +296,7 @@ describe('policyImplementation category', () => {
             }
         });
 
-        test.each(Object.keys(HARD2_GOALS))('%s: the best realistic setting passes with a clear margin; the setting that meets the first hard goal, every listed policy, the unchanged model and nothing fail', async (id) => {
+        simTest.each(Object.keys(HARD2_GOALS))('%s: the best realistic setting passes with a clear margin; the setting that meets the first hard goal, every listed policy, the unchanged model and nothing fail', async (id) => {
             const s = scenarios[id];
             const t2 = HARD2_GOALS[id].threshold;
             const reference = withPolicy(s, { overrides: HARD_GOALS[id].reference });
@@ -311,7 +312,7 @@ describe('policyImplementation category', () => {
             expect(await gradeHard2(id, { variables: [], relationships: [] })).toEqual(['No model produced']);
         });
 
-        test.each(Object.keys(HARD2_GOALS))('%s: meeting the new goal by changing what management does not control fails', async (id) => {
+        simTest.each(Object.keys(HARD2_GOALS))('%s: meeting the new goal by changing what management does not control fails', async (id) => {
             const s = scenarios[id];
             const model = withPolicy(s, { overrides: HARD_GOALS[id].reference });
             const v = findVariable(model.variables, s.protected.variables[0]);

@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let reply = {};
@@ -22,11 +23,11 @@ const RELEVANT = { bikeShare: ['persuasion', 'advertising effect', 'contact rate
 describe('calibration category', () => {
     jest.setTimeout(1800000);
 
-    test('the frozen data are what the truths produce', async () => {
+    simTest('the frozen data are what the truths produce', async () => {
         for (const [name, c] of Object.entries(cases)) expect([name, await dataFor(c)]).toEqual([name, dataOf(name)]);
     });
 
-    test.each(Object.keys(cases))('%s: the truth fits its data, the given model does not, and calibration behaves as the case says', async (name) => {
+    simTest.each(Object.keys(cases))('%s: the truth fits its data, the given model does not, and calibration behaves as the case says', async (name) => {
         const c = cases[name];
         const data = dataOf(name);
         expect(await rSquared(c.truth, c, data)).toBeGreaterThan(0.98);
@@ -45,7 +46,7 @@ describe('calibration category', () => {
         for (const n of Object.keys(cases).filter((x) => cases[x].kind === 'structure')) expect(mechanismList(n)).toHaveLength(3);
     });
 
-    test.each(Object.keys(generatedCases).filter((n) => generatedCases[n].kind === 'structure'))('%s: the data rule out each distractor mechanism, even with its strength calibrated', async (name) => {
+    simTest.each(Object.keys(generatedCases).filter((n) => generatedCases[n].kind === 'structure'))('%s: the data rule out each distractor mechanism, even with its strength calibrated', async (name) => {
         const c = generatedCases[name];
         const data = dataOf(name);
         expect(c.distractorModels.map((d) => d.mechanism)).toEqual(c.distractors);
@@ -64,7 +65,7 @@ describe('calibration category', () => {
         }
     });
 
-    test('fitting a parameters case by changing structure fails, even when it fits', async () => {
+    simTest('fitting a parameters case by changing structure fails, even when it fits', async () => {
         const name = 'Bike share, parameters';
         const c = cases[name];
         reply = { diagnosis: SAYS.parameters };
@@ -75,7 +76,7 @@ describe('calibration category', () => {
         expect((await evaluate({ model: forced, supportingInfo: { explanation: 'x' } }, t.expectations)).map((f) => f.type)).toEqual(['Structure changed']);
     });
 
-    test('a parameter written as arithmetic is still calibration', async () => {
+    simTest('a parameter written as arithmetic is still calibration', async () => {
         const name = 'Bike share, parameters';
         const c = cases[name];
         reply = { diagnosis: SAYS.parameters };
@@ -85,7 +86,7 @@ describe('calibration category', () => {
         expect(await evaluate({ model: m, supportingInfo: { explanation: 'x' } }, t.expectations)).toEqual([]);
     });
 
-    test('a parameter rewritten to change over time is structure, not calibration', async () => {
+    simTest('a parameter rewritten to change over time is structure, not calibration', async () => {
         const name = 'Bike share, parameters';
         const c = cases[name];
         reply = { diagnosis: SAYS.parameters };
@@ -123,7 +124,7 @@ describe('calibration category', () => {
             for (const t of hardTests()) expect(t.prompt.replace(/"[^"]*"/g, '""')).not.toMatch(/calibrat|parameter|structur|missing|mechanism|\bfit(s|ted)?\b/i);
         });
 
-        test.each(groupTests(groups, 'calibrationHard').map((t) => t.expectations.caseName))('%s: the reference answer passes; nothing, a constant answer or the other diagnosis fails', async (name) => {
+        simTest.each(groupTests(groups, 'calibrationHard').map((t) => t.expectations.caseName))('%s: the reference answer passes; nothing, a constant answer or the other diagnosis fails', async (name) => {
             const c = cases[name];
             const fixed = c.kind === 'parameters' ? { ...structuredClone(c.truth), specs: specsFor(c) } : givenModel(c);
             reply = { diagnosis: SAYS[c.kind], missing: c.mechanism };
@@ -141,7 +142,7 @@ describe('calibration category', () => {
             expect(await verdict(name, { model: fixed, supportingInfo: { explanation: 'x' } })).toContain('Wrong diagnosis');
         });
 
-        test.each(groupTests(groups, 'calibrationHard').map((t) => t.expectations.caseName).filter((n) => cases[n].kind === 'parameters'))('%s: the tighter fit is within reach — calibrating the given model reaches it, and the truth clears it', async (name) => {
+        simTest.each(groupTests(groups, 'calibrationHard').map((t) => t.expectations.caseName).filter((n) => cases[n].kind === 'parameters'))('%s: the tighter fit is within reach — calibrating the given model reaches it, and the truth clears it', async (name) => {
             const c = cases[name];
             const data = dataOf(name);
             expect(await rSquared(c.truth, c, data)).toBeGreaterThan(FIT_R_SQUARED_HARD);
@@ -151,7 +152,7 @@ describe('calibration category', () => {
             expect(fit.rSquared).toBeGreaterThan(FIT_R_SQUARED_HARD);
         });
 
-        test('a fit good enough for the dev test but short of the tighter one fails the hard test', async () => {
+        simTest('a fit good enough for the dev test but short of the tighter one fails the hard test', async () => {
             const name = 'Bike share, parameters';
             const c = cases[name];
             reply = { diagnosis: SAYS.parameters };
@@ -174,7 +175,7 @@ describe('calibration category', () => {
         const hard2Of = (name) => hard2().find((t) => t.expectations.caseName === name);
         const verdict2 = async (name, response) => (await evaluate(response, hard2Of(name).expectations)).map((f) => f.type);
 
-        test('hard2.json is the rule applied to every held-out scenario, re-derived by simulation', async () => {
+        simTest('hard2.json is the rule applied to every held-out scenario, re-derived by simulation', async () => {
             const { hard2Cases, hard2Skipped } = await import('../../../evals/categories/calibration.js');
             const { removedMechanismCase } = await import('../../../evals/categories/calibrationData/removedMechanism.js');
             const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
@@ -210,7 +211,7 @@ describe('calibration category', () => {
             for (const p of [0, 1, 2]) expect([p, places.filter((x) => x === p).length <= structureNames.length / 2]).toEqual([p, true]);
         });
 
-        test('every structure case: the given model lacks the mechanism and everything only it fed, and its data come from the full model', async () => {
+        simTest('every structure case: the given model lacks the mechanism and everything only it fed, and its data come from the full model', async () => {
             const { hard2Cases } = await import('../../../evals/categories/calibration.js');
             const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
             const { sampledData, baseModel, plainFit } = await import('../../../evals/categories/calibrationData/generate.js');
@@ -226,7 +227,7 @@ describe('calibration category', () => {
             }
         });
 
-        test.each(groupTests(groups, 'calibrationHard2').map((t) => t.expectations.caseName))('%s: the reference answer passes; nothing, a constant diagnosis, the other diagnosis or a generic mechanism fails', async (name) => {
+        simTest.each(groupTests(groups, 'calibrationHard2').map((t) => t.expectations.caseName))('%s: the reference answer passes; nothing, a constant diagnosis, the other diagnosis or a generic mechanism fails', async (name) => {
             const { hard2Cases, hard2MechanismList } = await import('../../../evals/categories/calibration.js');
             const structure = !cases[name];
             const c = structure ? hard2Cases[name] : cases[name];
@@ -263,14 +264,14 @@ describe('calibration category', () => {
             return out;
         };
 
-        test('the right answer passes', async () => {
+        simTest('the right answer passes', async () => {
             reply = { diagnosis: SAYS[c.kind], missing: c.mechanism };
             const model = c.kind === 'parameters' ? { ...structuredClone(c.truth), specs: specsFor(c) } : givenModel(c);
             const results = await run({ model, supportingInfo: { explanation: 'x' } });
             expect(Object.values(results).flat()).toEqual([]);
         });
 
-        test('the wrong diagnosis fails, and so does an uncalibrated model or a distractor', async () => {
+        simTest('the wrong diagnosis fails, and so does an uncalibrated model or a distractor', async () => {
             reply = { diagnosis: SAYS[c.kind === 'parameters' ? 'structure' : 'parameters'], missing: c.distractors?.[0] };
             const results = await run({ model: givenModel(c), supportingInfo: { explanation: 'x' } });
             expect(results.diagnosis).toContain('Wrong diagnosis');

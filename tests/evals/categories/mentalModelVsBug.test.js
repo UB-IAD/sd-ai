@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let verdict = 'unclear';
@@ -36,7 +37,7 @@ describe('mentalModelVsBug category', () => {
         expect(kinds.filter((k) => k === 'bug').length).toBe(kinds.filter((k) => k === 'expectation').length);
     });
 
-    test('every bug changes what the model does, and the expectation holds in the correct model but not the planted one', async () => {
+    simTest('every bug changes what the model does, and the expectation holds in the correct model but not the planted one', async () => {
         const holds = async (model, check) => {
             const r = await simulateModel(model, check.outputs, check.overrides || null);
             const base = await simulateModel(model, check.outputs, null);
@@ -48,7 +49,7 @@ describe('mentalModelVsBug category', () => {
         }
     });
 
-    test('every mistaken expectation describes what the correct model really does', async () => {
+    simTest('every mistaken expectation describes what the correct model really does', async () => {
         for (const [name, c] of Object.entries(cases).filter(([, c]) => c.kind === 'expectation')) {
             const r = await simulateModel(c.correct, c.check.outputs, c.check.overrides || null);
             const base = await simulateModel(c.correct, c.check.outputs, null);
@@ -60,7 +61,7 @@ describe('mentalModelVsBug category', () => {
         for (const t of groupTests(groups, 'mentalModelVsBug')) expect(t.prompt).toMatch(/Is this a mistake in the model, or is my expectation wrong\?/);
     });
 
-    test('generated cases are the general rule applied to every scenario in the library, in pairs', async () => {
+    simTest('generated cases are the general rule applied to every scenario in the library, in pairs', async () => {
         const { generateCases } = await import('../../../evals/categories/mentalModelVsBugData/generate.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         const fs = await import('fs');
@@ -90,12 +91,12 @@ describe('mentalModelVsBug category', () => {
         const c = cases[name];
         const second = c.kind === 'bug' ? 'fixed' : 'leftAlone';
 
-        test('the right diagnosis with the correct model passes', async () => {
+        simTest('the right diagnosis with the correct model passes', async () => {
             verdict = VERDICT[c.kind];
             expect(await run(name, { model: structuredClone(c.correct), supportingInfo: { explanation: 'x' } })).toEqual({ classified: [], [second]: [] });
         });
 
-        test('the wrong diagnosis fails', async () => {
+        simTest('the wrong diagnosis fails', async () => {
             verdict = VERDICT[c.kind === 'bug' ? 'expectation' : 'bug'];
             expect((await run(name, { model: structuredClone(c.correct), supportingInfo: { explanation: 'x' } })).classified).toEqual(['Wrong diagnosis']);
             verdict = 'unclear';
@@ -103,7 +104,7 @@ describe('mentalModelVsBug category', () => {
         });
 
         if (c.kind === 'bug') {
-            test('returning the model unchanged leaves the bug', async () => {
+            simTest('returning the model unchanged leaves the bug', async () => {
                 expect((await run(name, { model: structuredClone(c.given), supportingInfo: { explanation: 'x' } })).fixed).toEqual(['Bug not fixed']);
             });
         }
@@ -114,7 +115,7 @@ describe('mentalModelVsBug category', () => {
         expect([cases['Closed Town'].kind, cases['Town Population'].kind]).toEqual(['bug', 'expectation']);
     });
 
-    test('removing the planted variable altogether counts as a fix when the model then behaves correctly', async () => {
+    simTest('removing the planted variable altogether counts as a fix when the model then behaves correctly', async () => {
         verdict = VERDICT.bug;
         const town = structuredClone(cases['Closed Town'].given);
         town.variables = town.variables.filter((v) => v.name !== 'newcomers per year' && v.name !== 'immigration');
@@ -122,7 +123,7 @@ describe('mentalModelVsBug category', () => {
         expect(await run('Closed Town', { model: town, supportingInfo: { explanation: 'x' } })).toEqual({ classified: [], fixed: [] });
     });
 
-    test('the closed town can be fixed through its immigration flow too', async () => {
+    simTest('the closed town can be fixed through its immigration flow too', async () => {
         verdict = VERDICT.bug;
         const variants = {
             'immigration zeroed': (m) => { findVariable(m.variables, 'immigration').equation = '0'; },
@@ -136,7 +137,7 @@ describe('mentalModelVsBug category', () => {
         }
     });
 
-    test('saying "bug" to everything, or returning every model unchanged, scores nothing', async () => {
+    simTest('saying "bug" to everything, or returning every model unchanged, scores nothing', async () => {
         for (const [name, c] of Object.entries(cases)) {
             verdict = VERDICT.bug;
             const yes = await run(name, { model: structuredClone(c.given), supportingInfo: { explanation: 'x' } });
@@ -146,7 +147,7 @@ describe('mentalModelVsBug category', () => {
         }
     });
 
-    test('changing a correct model to match the expectation fails', async () => {
+    simTest('changing a correct model to match the expectation fails', async () => {
         const coffee = structuredClone(cases['Cooling Coffee'].correct);
         findVariable(coffee.variables, 'cooling').equation = 'MIN(7, (Coffee_Temperature - Room_Temperature) / 0.25)';
         expect((await run('Cooling Coffee', { model: coffee, supportingInfo: { explanation: 'x' } })).leftAlone).toContain('Correct model changed');
@@ -171,7 +172,7 @@ describe('mentalModelVsBug hard group', () => {
     };
     const respond = (model) => ({ model, supportingInfo: { explanation: 'answer' } });
 
-    test('hard cases are the rule applied to every scenario in the library', async () => {
+    simTest('hard cases are the rule applied to every scenario in the library', async () => {
         const { generateHardCase } = await import('../../../evals/categories/mentalModelVsBugData/hard.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
         const expected = {};
@@ -191,7 +192,7 @@ describe('mentalModelVsBug hard group', () => {
         expect(new Set(groupTests(groups, 'mentalModelVsBugHard').map((t) => JSON.stringify([t.prompt, t.currentModel]))).size).toBe(HARD.faulty.length + HARD.clean.length);
     });
 
-    test('every hard case mixes bugs and mistaken expectations; every report holds in the given model, every bug changes behavior, and every expectation stays wrong in the correct model', async () => {
+    simTest('every hard case mixes bugs and mistaken expectations; every report holds in the given model, every bug changes behavior, and every expectation stays wrong in the correct model', async () => {
         const { doublingRatio, isOnly } = await import('../../../evals/categories/mentalModelVsBugData/generate.js');
         const { plant } = await import('../../../evals/categories/guidedCorrectionData/generate.js');
         for (const [name, c] of Object.entries(hardCases)) {
@@ -213,12 +214,12 @@ describe('mentalModelVsBug hard group', () => {
         const c = () => hardCases[name];
         const right = () => c().items.map((x) => (x.kind === 'bug' ? VERDICT.bug : VERDICT.expectation));
 
-        test('telling every surprise for what it is and returning the correct model passes every hard test', async () => {
+        simTest('telling every surprise for what it is and returning the correct model passes every hard test', async () => {
             surpriseVerdicts = right();
             expect(Object.values(await runAll(hardTests(name), respond(structuredClone(c().correct)))).flat()).toEqual([]);
         });
 
-        test('returning the model unchanged fails every hard test, whether every surprise is called a bug or nothing is decided', async () => {
+        simTest('returning the model unchanged fails every hard test, whether every surprise is called a bug or nothing is decided', async () => {
             for (const verdicts of [c().items.map(() => VERDICT.bug), []]) {
                 surpriseVerdicts = verdicts;
                 const results = await runAll(hardTests(name), respond(structuredClone(c().given)));
@@ -226,7 +227,7 @@ describe('mentalModelVsBug hard group', () => {
             }
         });
 
-        test('calling every surprise a bug and "fixing" the expectations too fails the expectation surprises', async () => {
+        simTest('calling every surprise a bug and "fixing" the expectations too fails the expectation surprises', async () => {
             surpriseVerdicts = c().items.map(() => VERDICT.bug);
             const results = await runAll(hardTests(name), respond(structuredClone(c().correct)));
             for (const t of hardTests(name).filter((x) => x.expectations.criterion === 'item')) {
@@ -234,7 +235,7 @@ describe('mentalModelVsBug hard group', () => {
             }
         });
 
-        test('bending the model to a mistaken expectation fails that surprise', async () => {
+        simTest('bending the model to a mistaken expectation fails that surprise', async () => {
             surpriseVerdicts = right();
             const i = c().items.findIndex((x) => x.kind === 'expectation');
             const x = c().items[i];
@@ -261,19 +262,19 @@ describe('mentalModelVsBug hard group', () => {
             for (const x of c().items.filter((y) => y.kind === 'bug')) expect(cleanTest(name).prompt).not.toContain(x.report);
         });
 
-        test('calling every surprise a mistaken expectation and leaving the model alone passes', async () => {
+        simTest('calling every surprise a mistaken expectation and leaving the model alone passes', async () => {
             surpriseVerdicts = Array(n()).fill(VERDICT.expectation);
             expect(await evaluate(respond(structuredClone(c().correct)), cleanTest(name).expectations)).toEqual([]);
         });
 
-        test('calling one a bug, or not deciding, fails even with the model unchanged', async () => {
+        simTest('calling one a bug, or not deciding, fails even with the model unchanged', async () => {
             for (const verdicts of [[VERDICT.bug, ...Array(n() - 1).fill(VERDICT.expectation)], []]) {
                 surpriseVerdicts = verdicts;
                 expect((await evaluate(respond(structuredClone(c().correct)), cleanTest(name).expectations)).map((f) => f.type)).toContain('Wrong diagnosis');
             }
         });
 
-        test('"fixing" the correct model fails', async () => {
+        simTest('"fixing" the correct model fails', async () => {
             const { plant } = await import('../../../evals/categories/guidedCorrectionData/generate.js');
             surpriseVerdicts = Array(n()).fill(VERDICT.expectation);
             for (const e of c().errors) {
@@ -292,7 +293,7 @@ describe('mentalModelVsBug second hard group (every surprise graded together)', 
     const grade = async (name, model) => (await evaluate(respond(model), hard2Test(name).expectations)).map((f) => f.type);
     const names = Object.keys(hard2Cases);
 
-    test('hard2.json is the rule applied to every held-out scenario, from the generated pairs and the first hard group', async () => {
+    simTest('hard2.json is the rule applied to every held-out scenario, from the generated pairs and the first hard group', async () => {
         const fs = await import('fs');
         const { generateHard2Case } = await import('../../../evals/categories/mentalModelVsBugData/hard2.js');
         const { scenarios } = await import('../../../evals/utilities/scenarios/library.js');
@@ -315,7 +316,7 @@ describe('mentalModelVsBug second hard group (every surprise graded together)', 
         for (const n of names) expect([n, earlier.has(hard2Test(n).prompt)]).toEqual([n, false]);
     });
 
-    test('every case has as many bugs as mistaken expectations; every report holds in the given model, every bug changes behavior, every expectation stays wrong in the correct model', async () => {
+    simTest('every case has as many bugs as mistaken expectations; every report holds in the given model, every bug changes behavior, every expectation stays wrong in the correct model', async () => {
         const { doublingRatio, isOnly } = await import('../../../evals/categories/mentalModelVsBugData/generate.js');
         const { plant } = await import('../../../evals/categories/guidedCorrectionData/generate.js');
         for (const [name, c] of Object.entries(hard2Cases)) {
@@ -338,12 +339,12 @@ describe('mentalModelVsBug second hard group (every surprise graded together)', 
         const c = () => hard2Cases[name];
         const right = () => c().items.map((x) => (x.kind === 'bug' ? VERDICT.bug : VERDICT.expectation));
 
-        test('telling every surprise for what it is and returning the correct model passes', async () => {
+        simTest('telling every surprise for what it is and returning the correct model passes', async () => {
             surpriseVerdicts = right();
             expect(await grade(name, structuredClone(c().correct))).toEqual([]);
         });
 
-        test('doing nothing fails: the model unchanged, whatever is said, and no model at all', async () => {
+        simTest('doing nothing fails: the model unchanged, whatever is said, and no model at all', async () => {
             for (const verdicts of [right(), c().items.map(() => VERDICT.bug), c().items.map(() => VERDICT.expectation), []]) {
                 surpriseVerdicts = verdicts;
                 expect((await grade(name, structuredClone(c().given))).length > 0).toBe(true);
@@ -352,14 +353,14 @@ describe('mentalModelVsBug second hard group (every surprise graded together)', 
             expect(await grade(name, { variables: [], relationships: [] })).toEqual(['No model produced']);
         });
 
-        test('a constant verdict fails even with the correct model returned: all bugs, all mistaken expectations, or none decided', async () => {
+        simTest('a constant verdict fails even with the correct model returned: all bugs, all mistaken expectations, or none decided', async () => {
             for (const verdicts of [c().items.map(() => VERDICT.bug), c().items.map(() => VERDICT.expectation), []]) {
                 surpriseVerdicts = verdicts;
                 expect(await grade(name, structuredClone(c().correct))).toContain('Wrong diagnosis');
             }
         });
 
-        test('an answer at the level of the first hard group fails: every surprise but one right, or every verdict right with a bug left in', async () => {
+        simTest('an answer at the level of the first hard group fails: every surprise but one right, or every verdict right with a bug left in', async () => {
             for (let i = 0; i < c().items.length; i++) {
                 surpriseVerdicts = right().map((v, j) => (j === i ? (v === VERDICT.bug ? VERDICT.expectation : VERDICT.bug) : v));
                 expect(await grade(name, structuredClone(c().correct))).toEqual(['Wrong diagnosis']);
@@ -368,7 +369,7 @@ describe('mentalModelVsBug second hard group (every surprise graded together)', 
             expect(await grade(name, structuredClone(c().given))).toContain('Bug not fixed');
         });
 
-        test('bending the model to a mistaken expectation fails', async () => {
+        simTest('bending the model to a mistaken expectation fails', async () => {
             surpriseVerdicts = right();
             const x = c().items.find((y) => y.kind === 'expectation');
             const model = structuredClone(c().correct);

@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let said = {};
@@ -55,7 +56,7 @@ const session = (id, names, explanation) => {
 describe('analysisSetup category', () => {
     jest.setTimeout(900000);
 
-    test('every key is the general rule applied to its scenario, and no scenario has a hand-made entry', async () => {
+    simTest('every key is the general rule applied to its scenario, and no scenario has a hand-made entry', async () => {
         const { deriveKey } = await import('../../../evals/categories/analysisSetupData/deriveKey.js');
         for (const id of Object.keys(scenarios)) {
             const derived = await deriveKey(scenarios[id]);
@@ -174,7 +175,7 @@ describe('analysisSetup category', () => {
             }
         });
 
-        test('hardRanges.json is the rule applied to every hard scenario, re-derived by simulation, and counting more parameters than the influential ones moves neither end', async () => {
+        simTest('hardRanges.json is the rule applied to every hard scenario, re-derived by simulation, and counting more parameters than the influential ones moves neither end', async () => {
             const { rangeOver, endWithin } = await import('../../../evals/categories/analysisSetupData/hardRange.js');
             const { measureFor } = await import('../../../evals/categories/analysisSetupData/deriveKey.js');
             expect(Object.keys(HARD_RANGES).sort()).toEqual([...hardIds].sort());
@@ -217,7 +218,7 @@ describe('analysisSetup category', () => {
         const jointTest = (id) => jointTests().find((t) => t.expectations.scenario === id);
         const types = async (id, reading, text) => { range = reading; return (await evaluate({ supportingInfo: { explanation: text ?? 'x' } }, jointTest(id).expectations)).map((f) => f.type); };
 
-        test('jointRanges.json is the rule applied to every held-out scenario, re-derived by simulation', async () => {
+        simTest('jointRanges.json is the rule applied to every held-out scenario, re-derived by simulation', async () => {
             const { jointRange } = await import('../../../evals/categories/analysisSetupData/jointRange.js');
             const heldOut = Object.keys(scenarios).filter((id) => scenarios[id].split === 'heldout');
             expect(Object.keys(JOINT_RANGES).sort()).toEqual([...heldOut].sort());

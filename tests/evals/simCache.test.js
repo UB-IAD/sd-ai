@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals';
+import { simTest } from './simTest.js';
 import { simulateModel } from '../../evals/utilities/simulateModel.js';
 import { keyFor, readCached } from '../../evals/utilities/simulator/simCache.js';
 import SDJsonToXMILE from '../../utilities/SDJsonToXMILE.js';
@@ -10,7 +11,7 @@ describe('simulation cache', () => {
     const model = scenarios.dialysisClinic.model;
     const outputs = ['Waiting List', 'Chairs'];
 
-    test('a cached result equals a fresh one, and the switch bypasses the cache', async () => {
+    simTest('a cached result equals a fresh one, and the switch bypasses the cache', async () => {
         const before = process.env.SDAI_SIM_CACHE;
         try {
             process.env.SDAI_SIM_CACHE = 'off';
@@ -33,7 +34,7 @@ describe('simulation cache', () => {
         expect(keyFor('<xmile a/>', ['x'])).toBe(keyFor('<xmile a/>', ['x']));
     });
 
-    test('a failed run is not stored', async () => {
+    simTest('a failed run is not stored', async () => {
         // Checked by the run's own key, not by counting files: other processes may write the cache meanwhile.
         const broken = structuredClone(model);
         broken.variables.find((v) => v.name === 'referrals').equation = 'base_referrals / 0 +';

@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let reading = null;
@@ -33,7 +34,7 @@ const run = async (tests, response) => {
 describe('multiplePerspectives category', () => {
     jest.setTimeout(600000);
 
-    test('every experiment label is what the two variants say, with a clear margin', async () => {
+    simTest('every experiment label is what the two variants say, with a clear margin', async () => {
         for (const id of ids) {
             const s = scenarios[id];
             for (const e of s.experiments) {
@@ -46,7 +47,7 @@ describe('multiplePerspectives category', () => {
         }
     });
 
-    test('every stakeholder\'s world reproduces the history the agent is told, so neither view is already refuted', async () => {
+    simTest('every stakeholder\'s world reproduces the history the agent is told, so neither view is already refuted', async () => {
         const { simulateModel } = await import('../../../evals/utilities/simulateModel.js');
         const { shapeOf } = await import('../../../evals/utilities/shape.js');
         for (const id of ids) {

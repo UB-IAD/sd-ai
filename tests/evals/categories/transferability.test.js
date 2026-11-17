@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let said = {};
@@ -28,7 +29,7 @@ const run = async (name, explanation) => {
 describe('transferability category', () => {
     jest.setTimeout(600000);
 
-    test.each(Object.keys(cases))('%s: the policy meets the goal as given, and misses it once the unrealistic assumptions are reverted', async (name) => {
+    simTest.each(Object.keys(cases))('%s: the policy meets the goal as given, and misses it once the unrealistic assumptions are reverted', async (name) => {
         const c = cases[name];
         const s = scenarios[c.scenario];
         expect((await goalOn(modelFor(c, false), s)).meets).toBe(true);
@@ -63,7 +64,7 @@ describe('transferability category', () => {
         expect(Object.values(await run(name, 'x')).flat()).toEqual([]);
     });
 
-    test('every generated case is the general rule applied to its scenario, and every scenario without a hand-written case has one or cannot give one', async () => {
+    simTest('every generated case is the general rule applied to its scenario, and every scenario without a hand-written case has one or cannot give one', async () => {
         const { generateCase } = await import('../../../evals/categories/transferabilityData/generate.js');
         const { handCases } = await import('../../../evals/categories/transferabilityData/cases.js');
         const covered = new Set(Object.values(handCases).map((c) => c.scenario));
@@ -74,7 +75,7 @@ describe('transferability category', () => {
         }
     });
 
-    test('the general rule gives a valid case on every dev scenario too: met as given, missed when reverted, wording balanced', async () => {
+    simTest('the general rule gives a valid case on every dev scenario too: met as given, missed when reverted, wording balanced', async () => {
         const { generateCase } = await import('../../../evals/categories/transferabilityData/generate.js');
         for (const id of ['dialysisClinic', 'bikeShare', 'distributor']) {
             const c = await generateCase(scenarios[id]);
@@ -85,7 +86,7 @@ describe('transferability category', () => {
         }
     });
 
-    test('the rule gives no case when the policy alone already meets the goal, or a limit cannot be passed', async () => {
+    simTest('the rule gives no case when the policy alone already meets the goal, or a limit cannot be passed', async () => {
         const { generateCase } = await import('../../../evals/categories/transferabilityData/generate.js');
         // Shallow copies: a scenario's physical limits hold functions, which cannot be cloned.
         expect(await generateCase({ ...scenarios.dialysisClinic, misconception: 'order more aggressively' })).toBeNull();
@@ -126,7 +127,7 @@ describe('transferability category', () => {
         const hard = groupTests(groups, 'transferabilityHard');
         const hardRun = async (name, explanation) => (await evaluate({ supportingInfo: { explanation } }, hard.find((t) => t.expectations.caseName === name).expectations)).map((f) => f.type);
 
-        test('hardGenerated.json is the general rule applied to every scenario, re-derived by simulation', async () => {
+        simTest('hardGenerated.json is the general rule applied to every scenario, re-derived by simulation', async () => {
             const { generateHardCase } = await import('../../../evals/categories/transferabilityData/generate.js');
             const expected = {};
             for (const s of Object.values(scenarios)) {
@@ -152,7 +153,7 @@ describe('transferability category', () => {
             expect(HARD_TAKEN.length).toBeGreaterThan(0);
         });
 
-        test.each(HARD_TAKEN)('%s: three unrealistic, three sound and every other limited lever within its limit, distinct variables, wording balanced; meets the goal as given, misses it reverted', async (name) => {
+        simTest.each(HARD_TAKEN)('%s: three unrealistic, three sound and every other limited lever within its limit, distinct variables, wording balanced; meets the goal as given, misses it reverted', async (name) => {
             const c = hardCases[name];
             const s = scenarios[c.scenario];
             const base = glossaryModel(s);

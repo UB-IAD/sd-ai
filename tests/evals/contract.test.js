@@ -1,4 +1,5 @@
 import { jest } from '@jest/globals';
+import { simTest } from './simTest.js';
 import { setReader } from '../../evals/utilities/judge.js';
 import { CATEGORIES, NULL_AGENTS, schemaReading, nullResponse } from '../../evals/floors/nullAgents.js';
 import { HELD_OUT_SUFFIX } from '../../evals/utilities/heldOut.js';
@@ -46,7 +47,7 @@ describe('agent category contract', () => {
         }
     });
 
-    test.each(CATEGORIES)('%s: no null agent does better on the held-out tests than the dev ones, nor passes half of them', async (name) => {
+    simTest.each(CATEGORIES)('%s: no null agent does better on the held-out tests than the dev ones, nor passes half of them', async (name) => {
         const category = await import(`../../evals/categories/${name}.js`);
         const held = Object.entries(category.groups).filter(([g]) => g.endsWith(HELD_OUT_SUFFIX)).flatMap(([, t]) => t);
         const dev = Object.entries(category.groups).filter(([g]) => !g.endsWith(HELD_OUT_SUFFIX)).flatMap(([, t]) => t);
@@ -74,7 +75,7 @@ describe('agent category contract', () => {
     // A closed-field check: no reading that answers one closed question the same way every time, the
     // rest read right, passes more than half of the held-out tests that read it — except the findings
     // recorded in the baseline, none of which may grow, and every one of which must still occur.
-    test.each(CATEGORIES)('%s: no constant answer to one closed field passes more than half of a held-out group, beyond the recorded baseline', async (name) => {
+    simTest.each(CATEGORIES)('%s: no constant answer to one closed field passes more than half of a held-out group, beyond the recorded baseline', async (name) => {
         const category = await import(`../../evals/categories/${name}.js`);
         const found = await closedFieldViolations(category);
         const baseline = CLOSED_FIELD_BASELINE.filter((b) => b.category === name);

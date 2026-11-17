@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { simTest } from './simTest.js';
 import path from 'path';
 import { jest } from '@jest/globals';
 import { z } from 'zod';
@@ -42,7 +43,7 @@ describe('null-agent floors', () => {
         }
     });
 
-    test.each(CATEGORIES)('%s: floors.json is what the null agents score', async (name) => {
+    simTest.each(CATEGORIES)('%s: floors.json is what the null agents score', async (name) => {
         const category = await import(`../../evals/categories/${name}.js`);
         try {
             for (const agent of NULL_AGENTS) {

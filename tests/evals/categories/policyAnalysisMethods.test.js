@@ -1,4 +1,5 @@
 import { groupTests } from '../../../evals/utilities/heldOut.js';
+import { simTest } from '../simTest.js';
 import { jest } from '@jest/globals';
 
 let reply = {};
@@ -21,7 +22,7 @@ const call = (toolName, args) => ({ toolName, arguments: args });
 describe('policyAnalysisMethods category', () => {
     jest.setTimeout(900000);
 
-    test('the cost optimum is inside the range, and the current target wait is well short of it', async () => {
+    simTest('the cost optimum is inside the range, and the current target wait is well short of it', async () => {
         const best = await bestCost();
         expect(best.targetWait).toBeGreaterThan(0.4);
         expect(best.targetWait).toBeLessThan(1.5);
@@ -30,7 +31,7 @@ describe('policyAnalysisMethods category', () => {
         expect(await costAt(6)).toBeGreaterThan(best.cost * (1 + COST_TOLERANCE));
     });
 
-    test('in the bike-share model, persuasion moves members at month 18 several times as much as advertising', async () => {
+    simTest('in the bike-share model, persuasion moves members at month 18 several times as much as advertising', async () => {
         const m = { ...glossaryModel(scenarios.bikeShare), specs: scenarios.bikeShare.model.specs };
         const at18 = async (o) => { const r = await simulateModel(m, ['members'], o); return r.series.members[r.time.findIndex((t) => t >= 18 - 1e-9)]; };
         const base = await at18(null);
@@ -38,13 +39,13 @@ describe('policyAnalysisMethods category', () => {
         expect(await swing('persuasion', 0.025)).toBeGreaterThan(3 * (await swing('advertising effect', 0.0005)));
     });
 
-    test('the referral jump raises the peak well beyond the tolerance', async () => {
+    simTest('the referral jump raises the peak well beyond the tolerance', async () => {
         const m = { ...glossaryModel(scenarios.dialysisClinic), specs: scenarios.dialysisClinic.model.specs };
         const r = await simulateModel(m, ['waiting list'], null);
         expect(await truePeak()).toBeGreaterThan(1.3 * Math.max(...r.series['waiting list']));
     });
 
-    test('generated cases are the general rule applied to every scenario the hand-written cases do not use', async () => {
+    simTest('generated cases are the general rule applied to every scenario the hand-written cases do not use', async () => {
         const { generateCases } = await import('../../../evals/categories/policyAnalysisMethodsData/generate.js');
         const { generatedCases } = await import('../../../evals/categories/policyAnalysisMethods.js');
         const HAND = ['dialysisClinic', 'bikeShare', 'distributor'];
@@ -53,7 +54,7 @@ describe('policyAnalysisMethods category', () => {
         expect(Object.fromEntries(Object.entries(generatedCases).map(([n, { model, ...g }]) => [n, g]))).toEqual(expected);
     });
 
-    test('generated cases: the right answers pass, a wrong one fails, and the method is needed', async () => {
+    simTest('generated cases: the right answers pass, a wrong one fails, and the method is needed', async () => {
         const { generatedCases } = await import('../../../evals/categories/policyAnalysisMethods.js');
         for (const [name, c] of Object.entries(generatedCases)) {
             if (c.kind === 'scenario') {
@@ -79,7 +80,7 @@ describe('policyAnalysisMethods category', () => {
         }
     });
 
-    test('generated cases: each scenario answer is what the model gives, and each sensitivity answer clearly leads', async () => {
+    simTest('generated cases: each scenario answer is what the model gives, and each sensitivity answer clearly leads', async () => {
         const { generatedCases } = await import('../../../evals/categories/policyAnalysisMethods.js');
         const { measureOf, SENSITIVITY_MARGIN, MIN_SCENARIO_CHANGE, MIN_TRUTH_SHARE } = await import('../../../evals/categories/policyAnalysisMethodsData/generate.js');
         for (const [name, c] of Object.entries(generatedCases)) {
@@ -107,7 +108,7 @@ describe('policyAnalysisMethods category', () => {
         const hardTest = (name, criterion) => hardTests().find((t) => t.expectations.caseName === name && t.expectations.criterion === criterion);
         const hardTypes = async (name, criterion, response) => (await evaluate(response, hardTest(name, criterion).expectations)).map((f) => f.type);
 
-        test('the hard cases are the rule applied to every scenario, re-derived by simulation, from dev and held-out scenarios alike', async () => {
+        simTest('the hard cases are the rule applied to every scenario, re-derived by simulation, from dev and held-out scenarios alike', async () => {
             const { generateHardCase, generateUnreachableCase } = await import('../../../evals/categories/policyAnalysisMethodsData/generate.js');
             const { hardCases } = await import('../../../evals/categories/policyAnalysisMethods.js');
             const expected = {};
@@ -124,7 +125,7 @@ describe('policyAnalysisMethods category', () => {
             expect(Object.keys(expected).length).toBeGreaterThanOrEqual(4);
         });
 
-        test('every hard case: the goal is missed now, met at the limit, and flips at the crossing', async () => {
+        simTest('every hard case: the goal is missed now, met at the limit, and flips at the crossing', async () => {
             const { hardCases } = await import('../../../evals/categories/policyAnalysisMethods.js');
             const { measureOf } = await import('../../../evals/categories/policyAnalysisMethodsData/generate.js');
             for (const [name, c] of Object.entries(hardCases).filter(([, x]) => x.reachable)) {
@@ -136,7 +137,7 @@ describe('policyAnalysisMethods category', () => {
             }
         });
 
-        test('every out-of-reach case: the goal is missed now and all the way to the limit, though the lever helps; answers balance both ways in dev and held out', async () => {
+        simTest('every out-of-reach case: the goal is missed now and all the way to the limit, though the lever helps; answers balance both ways in dev and held out', async () => {
             const { hardCases } = await import('../../../evals/categories/policyAnalysisMethods.js');
             const { measureOf, REACH_MOVE } = await import('../../../evals/categories/policyAnalysisMethodsData/generate.js');
             for (const [name, c] of Object.entries(hardCases).filter(([, x]) => x.reachable === false)) {
@@ -157,7 +158,7 @@ describe('policyAnalysisMethods category', () => {
             }
         });
 
-        test('every hard case: the measure read off the run_scenario grid is the stored one, and an answer giving it passes', async () => {
+        simTest('every hard case: the measure read off the run_scenario grid is the stored one, and an answer giving it passes', async () => {
             const { hardCases, REACH } = await import('../../../evals/categories/policyAnalysisMethods.js');
             const { sampledMeasureOf } = await import('../../../evals/categories/policyAnalysisMethodsData/generate.js');
             const { runAnalysisTool } = await import('../../../evals/utilities/analysisTools.js');
@@ -179,7 +180,7 @@ describe('policyAnalysisMethods category', () => {
             for (const t of hardTests()) expect(t.prompt.replace(/"[^"]*"/g, '""')).not.toMatch(/optimi[sz]|sensitivity|calibrat|scenario|search|sweep/i);
         });
 
-        test('every hard case: the reference answer passes; nothing, constants, the status quo or one number alone fail', async () => {
+        simTest('every hard case: the reference answer passes; nothing, constants, the status quo or one number alone fail', async () => {
             const { hardCases } = await import('../../../evals/categories/policyAnalysisMethods.js');
             const { measureOf } = await import('../../../evals/categories/policyAnalysisMethodsData/generate.js');
             const { REACH } = await import('../../../evals/categories/policyAnalysisMethods.js');
@@ -210,7 +211,7 @@ describe('policyAnalysisMethods category', () => {
             }
         });
 
-        test('every out-of-reach case: the reference answer passes; a value, no verdict, constants or the status quo fail; one run at the limit is the method', async () => {
+        simTest('every out-of-reach case: the reference answer passes; a value, no verdict, constants or the status quo fail; one run at the limit is the method', async () => {
             const { hardCases, REACH } = await import('../../../evals/categories/policyAnalysisMethods.js');
             const { measureOf } = await import('../../../evals/categories/policyAnalysisMethodsData/generate.js');
             for (const [name, c] of Object.entries(hardCases).filter(([, x]) => x.reachable === false)) {
@@ -234,7 +235,7 @@ describe('policyAnalysisMethods category', () => {
         const hard2 = () => groupTests(groups, 'policyAnalysisMethodsHard2');
         const hard2Types = async (name, response) => (await evaluate(response, hard2().find((t) => t.expectations.caseName === name).expectations)).map((f) => f.type);
 
-        test('robustGenerated.json is the rule applied to every held-out scenario, re-derived by simulation', async () => {
+        simTest('robustGenerated.json is the rule applied to every held-out scenario, re-derived by simulation', async () => {
             const { generateRobustCase } = await import('../../../evals/categories/policyAnalysisMethodsData/generate.js');
             const { robustCases, robustSkipped } = await import('../../../evals/categories/policyAnalysisMethods.js');
             const expected = {};
@@ -259,7 +260,7 @@ describe('policyAnalysisMethods category', () => {
             }
         });
 
-        test('every case: the goal flips at both stored crossings, with the uncertain quantity as it is and at its adverse end', async () => {
+        simTest('every case: the goal flips at both stored crossings, with the uncertain quantity as it is and at its adverse end', async () => {
             const { robustCases } = await import('../../../evals/categories/policyAnalysisMethods.js');
             const { measureOf } = await import('../../../evals/categories/policyAnalysisMethodsData/generate.js');
             for (const [name, c] of Object.entries(robustCases)) {
@@ -314,7 +315,7 @@ describe('policyAnalysisMethods category', () => {
         expect(usedMethod(cases['Bike share drivers'], [call('run_scenario', { overrides: { persuasion: 0.0251 } }), call('run_scenario', { overrides: { 'advertising effect': 0.0006 } })])).toBe(false);
     });
 
-    test('result: the optimum passes, the current setting fails', async () => {
+    simTest('result: the optimum passes, the current setting fails', async () => {
         const best = await bestCost();
         const m = costModel();
         findVariable(m.variables, 'target wait').equation = String(best.targetWait);
@@ -331,7 +332,7 @@ describe('policyAnalysisMethods category', () => {
         expect(await types('Bike share drivers', 'result', { supportingInfo: { explanation: 'x' }, toolLog: swept })).toEqual(['Wrong answer']);
     });
 
-    test('result: the true model fits the history, the given one does not', async () => {
+    simTest('result: the true model fits the history, the given one does not', async () => {
         const cal = calibrationCases['Distributor, parameters'];
         expect(await types('Distributor history', 'result', { model: structuredClone(cal.truth) })).toEqual([]);
         expect(await types('Distributor history', 'result', { model: givenModel(cal) })).toEqual(['Wrong answer']);
@@ -340,7 +341,7 @@ describe('policyAnalysisMethods category', () => {
         expect(await types('Distributor history', 'result', { model: forced })).toEqual(['Wrong answer']);
     });
 
-    test('result: a peak within 10% passes, one further off or none fails', async () => {
+    simTest('result: a peak within 10% passes, one further off or none fails', async () => {
         const truth = await truePeak();
         reply = { peak: truth * 1.05 };
         expect(await types('Dialysis referral jump', 'result', { supportingInfo: { explanation: 'x' } })).toEqual([]);
