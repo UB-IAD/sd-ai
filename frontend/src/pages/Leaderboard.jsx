@@ -201,7 +201,13 @@ function Leaderboard() {
   // labelled from the config, and only the link keeps pointing at the real thing.
   const labelFor = (engine) =>
     engine.agentName ? engine.configName.split('-').slice(0, 2).join('-') : engine.engineName;
-  const engineLabelOf = new Map(allEngines.map((e) => [e.engineName, labelFor(e)]));
+  // A row's own title. One agent runs on several models, so its rows would read identically
+  // on the family label alone; the model is added to tell them apart. labelFor stays the
+  // family, which is what colour and the family legend group on.
+  const titleFor = (engine) =>
+    engine.agentName && engine.llmModels?.length
+      ? `${labelFor(engine)} · ${engine.llmModels.join(' + ')}`
+      : labelFor(engine);
 
   const hasLocal = allEngines.some((e) => e.isLocal);
   const hasBaseline = allEngines.some((e) => e.engineName === 'qualitative-zero');
@@ -572,7 +578,7 @@ function Leaderboard() {
                         }
                         className="text-blue-600 hover:text-blue-800 no-underline font-medium"
                       >
-                        {engineLabelOf.get(row.engineName)}
+                        {titleFor(row)}
                       </Link>
                       <span
                         className={`px-1.5 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wide border ${
